@@ -2,5 +2,5 @@ class MainProgram
 {
   private:
   public:
-  int main ();
+  int main (void);
 };

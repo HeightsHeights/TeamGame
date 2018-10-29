@@ -5,8 +5,9 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
-class Vector3f {
-public:
+class Vector3f
+{
+  public:
     //フィールド
     float x;
     float y;
@@ -23,32 +24,33 @@ public:
 
     //コンストラクタ
     Vector3f();
-    Vector3f(float a, float b, float c);
+    Vector3f(float x, float y, float z);
 
     //メソッド
-    float magnitude_second_power();
+    float magnitudeSquared();
     float magnitude();
     Vector3f normalize();
     static float dot(Vector3f a, Vector3f b);
     static Vector3f cross(Vector3f a, Vector3f b);
-    Vector3f Matrix_multiplication(float matrix[3][3]);
-    Vector3f Scaling(Vector3f scale_vector);
-    Vector3f Rotate(Vector3f v, float angle);
-    float BetweenAngleRdian(Vector3f v);
-    float BetweenAngleDegree(Vector3f v);
+    Vector3f matrixMultiplication(float matrix[3][3]);
+    Vector3f scaling(Vector3f scale_vector);
+    Vector3f rotate(Vector3f v, float angle);
+    float betweenAngleRdian(Vector3f v);
+    float betweenAngleDegree(Vector3f v);
 };
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
-class Vector2f {
-public:
+class Vector2f
+{
+  public:
     //フィールド
     float x;
     float y;
 
     //コンストラクタ
     Vector2f();
-    Vector2f(float a, float b);
+    Vector2f(float x, float y);
 
     //演算子のオーバーロード
     Vector2f operator+(Vector2f obj);
@@ -59,7 +61,7 @@ public:
     Vector2f operator+();
     Vector2f operator-();
 
-    float magnitude_second_power();
+    float magnitudeSquared();
     float magnitude();
     Vector2f normalize();
     static float dot(Vector2f a, Vector2f b);

@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //ベクトル演算などを定義
-#include "../header/vector.h"
+#include "./header/vector.h"
 #include <cmath>
 #include <stdio.h>
 
@@ -14,11 +14,11 @@ Vector3f::Vector3f()
     y = 0;
     z = 0;
 }
-Vector3f::Vector3f(float a, float b, float c)
+Vector3f::Vector3f(float x, float y, float z)
 {
-    x = a;
-    y = b;
-    z = c;
+    this->x = x;
+    this->y = y;
+    this->z = z;
 }
 
 //演算子のオーバーロード
@@ -59,13 +59,13 @@ Vector3f Vector3f::operator-()
 //メソッド
 //絶対値
 
-float Vector3f::magnitude_second_power()
+float Vector3f::magnitudeSquared()
 {
     return (float)(std::pow(x, 2.0) + std::pow(y, 2.0) + std::pow(z, 2.0));
 }
 float Vector3f::magnitude()
 {
-    return (float)sqrt(magnitude_second_power());
+    return (float)sqrt(magnitudeSquared());
 }
 //単位ベクトル
 Vector3f Vector3f::normalize()
@@ -83,7 +83,7 @@ Vector3f Vector3f::cross(Vector3f a, Vector3f b)
     return *new Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
 
-Vector3f Vector3f::Matrix_multiplication(float matrix[3][3])
+Vector3f Vector3f::matrixMultiplication(float matrix[3][3])
 {
     Vector3f ret;
     ret.x = matrix[0][0] * x + matrix[0][1] * y + matrix[0][2] * z;
@@ -92,20 +92,20 @@ Vector3f Vector3f::Matrix_multiplication(float matrix[3][3])
     return ret;
 }
 
-Vector3f Vector3f::Scaling(Vector3f scale_vector)
+Vector3f Vector3f::scaling(Vector3f scale_vector)
 {
     return *new Vector3f(x * scale_vector.x, y * scale_vector.y, z * scale_vector.z);
 }
 
 //ベクトル回転
-Vector3f Vector3f::Rotate(Vector3f v, float angle)
+Vector3f Vector3f::rotate(Vector3f v, float angle)
 {
     v = v.normalize();
     float rotation_matrix[3][3];
     float Radian_angle = angle * M_PI / 180.0f;
 
     float COSINE = (float)std::cos(Radian_angle);
-    float SINE   = (float)std::sin(Radian_angle);
+    float SINE = (float)std::sin(Radian_angle);
 
     rotation_matrix[0][0] = COSINE + (float)std::pow(v.x, 2.0) * (1.0f - COSINE);
     rotation_matrix[0][1] = v.x * v.y * (1.0f - COSINE) - v.z * SINE;
@@ -119,20 +119,20 @@ Vector3f Vector3f::Rotate(Vector3f v, float angle)
     rotation_matrix[2][1] = v.z * v.y * (1.0f - COSINE) + v.x * SINE;
     rotation_matrix[2][2] = COSINE + (float)std::pow(v.z, 2.0) * (1.0f - COSINE);
 
-    Vector3f ret = Matrix_multiplication(rotation_matrix);
+    Vector3f ret = matrixMultiplication(rotation_matrix);
     return ret;
 }
 
 //角度計算
-float Vector3f::BetweenAngleRdian(Vector3f v)
+float Vector3f::betweenAngleRdian(Vector3f v)
 {
     Vector3f THIS = *new Vector3f(x, y, z);
     return acosf(dot(THIS, v) / (THIS.magnitude() * v.magnitude()));
 }
 
-float Vector3f::BetweenAngleDegree(Vector3f v)
+float Vector3f::betweenAngleDegree(Vector3f v)
 {
-    return BetweenAngleRdian(v) * 180.0f / M_PI;
+    return betweenAngleRdian(v) * 180.0f / M_PI;
 }
 
 //使い方
@@ -159,10 +159,10 @@ Vector2f::Vector2f()
     x = 0;
     y = 0;
 }
-Vector2f::Vector2f(float a, float b)
+Vector2f::Vector2f(float x, float y)
 {
-    x = a;
-    y = b;
+    this->x = x;
+    this->y = y;
 }
 
 //演算子のオーバーロード
@@ -201,13 +201,13 @@ Vector2f Vector2f::operator-()
     return *this * -1;
 }
 
-float Vector2f::magnitude_second_power()
+float Vector2f::magnitudeSquared()
 {
     return (float)(std::pow(x, 2.0) + std::pow(y, 2.0));
 }
 float Vector2f::magnitude()
 {
-    return (float)sqrt(magnitude_second_power());
+    return (float)sqrt(magnitudeSquared());
 }
 //単位ベクトル
 Vector2f Vector2f::normalize()

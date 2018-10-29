@@ -1,3 +1,5 @@
 class MainProgram
 {
+  private:
+  public:
 };

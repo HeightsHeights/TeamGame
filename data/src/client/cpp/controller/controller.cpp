@@ -72,6 +72,7 @@ void Joystick::scanButton(ControllerParam *param)
         if (SDL_JoystickGetButton(joy, i) > 0)
         {
             param->buttonDown[i] = true;
+            param->buttonUp[i] = false;
         }
         else
         {

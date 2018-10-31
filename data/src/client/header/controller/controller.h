@@ -12,12 +12,15 @@
 ******************************************************************************/
 class Joystick
 {
-  private:
-    SDL_Joystick *joystick;
+private:
+  SDL_Joystick *joy;
+  void scanAnalogStick(ControllerParam *param);
+  void scanButton(ControllerParam *param);
 
-  public:
-    Joystick(const unsigned int controllerID);
-    ControllerParam readStateController();
+public:
+  Joystick();
+  Joystick(const unsigned int controllerID);
+  ControllerParam readStateController();
 };
 /******************************************************************************
  * class Joystick
@@ -27,10 +30,12 @@ class Joystick
 ******************************************************************************/
 class ControllerManager
 {
-  private:
-  public:
-    static bool init();
-    static int updateController();
-    static void requestReaction();
-    static void cleanUp();
+private:
+  static Joystick joystick;
+
+public:
+  static bool init();
+  static int updateController();
+  static void requestReaction(ControllerParam param);
+  static void cleanUp();
 };

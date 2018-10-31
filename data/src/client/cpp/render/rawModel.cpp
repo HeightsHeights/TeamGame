@@ -122,11 +122,19 @@ bool ModelLoader::loadOBJFile(const char *filename)
             }
         }
     }
-
-    for (unsigned int i = 0; i < normalIndex.size(); i++)
-    {
-        normalArray.push_back(normals[normalIndex[i]]);
+    Vector3f normalsArraySum[vertices.size()];
+    for (unsigned int i = 0 ; i < vertices.size(); i++){
+        normalsArraySum[i] = Vector3f_ZERO;
     }
+    for (unsigned int i = 0 ; i < indices.size(); i++){
+        normalsArraySum[indices[i] ]= normalsArraySum[indices[i]] + normals[normalIndex[i]];
+    }
+    for (unsigned int i = 0 ; i < vertices.size(); i++){
+        normalsArraySum[i] = normalsArraySum[i ].normalize();
+    }
+
+    
+
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -147,7 +155,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
     GLuint normalBufferObject;
     glGenBuffers(1, &normalBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, normalBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, normalArray.size() * sizeof(Vector3f), &normalArray[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()* sizeof(Vector3f), &normalsArraySum[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

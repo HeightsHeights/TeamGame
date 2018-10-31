@@ -14,6 +14,8 @@
 ******************************************************************************/
 class ControllerParam
 {
+  private:
+  public:
     Vector2f axisR;
     Vector2f axisL;
     bool buttonUp[MAX_BUTTON];

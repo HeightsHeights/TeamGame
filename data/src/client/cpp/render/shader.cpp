@@ -5,7 +5,7 @@
 const char *VERTEX_FILE = "./shader/vertexShader.vert";
 const char *FRAGMENT_FILE = "./shader/fragmentShader.frag";
 
-ShaderProgram ShaderManager::shaders = *new ShaderProgram();
+ShaderProgram ShaderManager::shaders;
 
 /******************************************************************************
  * コンストラクタ

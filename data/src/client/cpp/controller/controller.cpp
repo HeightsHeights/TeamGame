@@ -41,7 +41,7 @@ ControllerParam Joystick::readStateController()
 /******************************************************************************
  * class ControllerManager
 ******************************************************************************/
-Joystick ControllerManager::joystick = NULL;
+Joystick ControllerManager::joystick;
 
 bool ControllerManager::init()
 {

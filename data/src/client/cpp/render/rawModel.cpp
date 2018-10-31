@@ -133,9 +133,6 @@ bool ModelLoader::loadOBJFile(const char *filename)
         normalsArraySum[i] = normalsArraySum[i ].normalize();
     }
 
-    
-
-
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 

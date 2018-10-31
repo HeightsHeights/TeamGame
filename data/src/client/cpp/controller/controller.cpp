@@ -52,9 +52,9 @@ bool ControllerManager::init()
 }
 int ControllerManager::updateController()
 {
-    //SDLの更新
+    //SDLの更新←
 
-    //コントローラーの更新
+    //コントローラーの更新←
 
     ControllerParam param = joystick.readStateController();
 

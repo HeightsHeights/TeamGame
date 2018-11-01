@@ -10,12 +10,30 @@
 ******************************************************************************/
 class NetworkManager
 {
-  private:
-    static DataBlockGenerator dataBlockGenerator;
-    static Sender sender;
-    static Reciever reciever;
+private:
+  static DataBlockGenerator dataBlockGenerator;
+  static NetSender sender;
+  static NetReciever reciever;
 
-  public:
+public:
+  static bool init();
+  static bool connect();
+  static void send(void *data, int dataSize);
+  static void recieve(void *data, int dataSize);
+};
+/******************************************************************************
+ * class NetConnector
+ * 機能1：
+******************************************************************************/
+class NetConnector
+{
+private:
+  NetSender sender;
+  NetReciever reciever;
+
+public:
+  NetConnector(NetSender sender, NetReciever reciever);
+  bool connectServer(); //引数にサーバー情報
 };
 /******************************************************************************
  * class DataBlockGenerator
@@ -23,27 +41,27 @@ class NetworkManager
 ******************************************************************************/
 class DataBlockGenerator
 {
-  private:
-  public:
-    void setDataBlock();
+private:
+public:
+  void setDataBlock(void *dataBlock, void *data, int *dataSize);
 };
 /******************************************************************************
- * class Sender
+ * class NetSender
  * 機能1：
 ******************************************************************************/
-class Sender
+class NetSender
 {
-  private:
-  public:
-    void sendData();
+private:
+public:
+  void sendData(void *data, int dataSize);
 };
 /******************************************************************************
- * class Reciever
+ * class NetReciever
  * 機能1：
 ******************************************************************************/
-class Reciever
+class NetReciever
 {
-  private:
-  public:
-    void recieveData();
+private:
+public:
+  void recieveData(void *data, int dataSize);
 };

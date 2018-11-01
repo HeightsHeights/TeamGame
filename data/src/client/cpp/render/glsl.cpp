@@ -17,7 +17,7 @@
 #include <GL/glut.h>
 #endif
 
-#include "./header/glsl.h"
+#include "../../header/glsl.h"
 
 #if defined(WIN32)
 PFNGLATTACHSHADERPROC glAttachShader;

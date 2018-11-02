@@ -1,6 +1,6 @@
 //モデルデータ保存
 //
-#include "../../header/rawmodel.h"
+#include "../../header/render/rawmodel.h"
 #include <fstream>
 #include <string.h>
 #define OBJ_NAME_LENGTH 128

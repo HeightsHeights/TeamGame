@@ -1,5 +1,5 @@
-#include "../../header/shader.h"
-#include "../../header/glsl.h"
+#include "../../header/render/shader.h"
+#include "../../header/render/glsl.h"
 #include <stdio.h>
 
 const char *VERTEX_FILE = "../../shader/staticVertexShader.vert";

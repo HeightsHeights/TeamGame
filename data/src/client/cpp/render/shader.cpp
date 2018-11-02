@@ -2,8 +2,8 @@
 #include "../../header/render/glsl.h"
 #include <stdio.h>
 
-const char *VERTEX_FILE = "../../shader/staticVertexShader.vert";
-const char *FRAGMENT_FILE = "../../shader/staticFragmentShader.frag";
+const char *VERTEX_FILE = "./data/src/client/shader/staticVertexShader.vert";
+const char *FRAGMENT_FILE = "./data/src/client/shader/staticFragmentShader.frag";
 
 ShaderProgram ShaderManager::shaders;
 

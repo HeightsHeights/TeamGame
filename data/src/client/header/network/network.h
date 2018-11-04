@@ -17,30 +17,19 @@ public:
   void setDataBlock(void *dataBlock, void *data, int *dataSize);
 };
 /******************************************************************************
- * class NetSender
+ * class SendRecvManager
  * 機能1：
 ******************************************************************************/
-class NetSender
+class SendRecvManager
 {
 private:
   int gSocket;
 
 public:
-  NetSender(int gSocket);
+  SendRecvManager();
+  SendRecvManager(int gSocket);
   void sendData(void *data, int dataSize);
-};
-/******************************************************************************
- * class NetReciever
- * 機能1：
-******************************************************************************/
-class NetReciever
-{
-private:
-  int gSocket;
-
-public:
-  NetReciever(int gSocket);
-  void recieveData(void *data, int dataSize);
+  int recieveData(void *data, int dataSize);
 };
 /******************************************************************************
  * class NetConnector
@@ -67,16 +56,12 @@ class NetworkManager
 {
 private:
   static DataBlockGenerator dataBlockGenerator;
-  static NetSender sender;
-  static NetReciever reciever;
+  static SendRecvManager sendRecvManager;
   static NetConnector connector;
 
 public:
-  static NetSender getSender();
-  static NetReciever getReciever();
+  static SendRecvManager getSendRecvManager();
   static bool init(char *hostName);
   static bool connect();
   static void disconnect();
-  static void send(void *data, int dataSize);
-  static void recieve(void *data, int dataSize);
 };

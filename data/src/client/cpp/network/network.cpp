@@ -5,6 +5,33 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <strings.h>
+#include <assert.h>
+/******************************************************************************
+ * class SendRecvManager
+******************************************************************************/
+SendRecvManager::SendRecvManager()
+{
+}
+SendRecvManager::SendRecvManager(int gSocket)
+{
+    this->gSocket = gSocket;
+}
+void SendRecvManager::sendData(void *data, int dataSize)
+{
+    /* 引き数チェック */
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    write(gSocket, data, dataSize);
+}
+int SendRecvManager::recieveData(void *data, int dataSize)
+{
+    /* 引き数チェック */
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    return read(gSocket, data, dataSize);
+}
 /******************************************************************************
  * class NetConnector
 ******************************************************************************/
@@ -65,7 +92,10 @@ bool NetworkManager::init(char *hostName)
 
     return true;
 }
-
+SendRecvManager NetworkManager::getSendRecvManager()
+{
+    return sendRecvManager;
+}
 bool NetworkManager::connect()
 {
     if (!connector.connectServer())

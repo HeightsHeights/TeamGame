@@ -5,6 +5,56 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <strings.h>
+#include <assert.h>
+/******************************************************************************
+ * class SendRecvManager
+******************************************************************************/
+SendRecvManager::SendRecvManager()
+{
+}
+SendRecvManager::SendRecvManager(int gSocket, int gClientNum, Client clients[])
+{
+    this->gSocket = gSocket;
+    this->gClientNum = gClientNum;
+    for (int i = 0; i < MAX_CLIENTS; i++)
+    {
+        this->gClients[i] = clients[i];
+    }
+}
+void SendRecvManager::sendData(int pos, void *data, int dataSize)
+{
+    int i;
+
+    /* 引き数チェック */
+    assert(0 <= pos && pos < gClientNum || pos == ALL_CLIENTS);
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    if (pos == ALL_CLIENTS)
+    {
+        /* 全クライアントにデータを送る */
+        for (i = 0; i < gClientNum; i++)
+        {
+            write(gClients[i].fd, data, dataSize);
+        }
+    }
+    else
+    {
+        write(gClients[pos].fd, data, dataSize);
+    }
+}
+int SendRecvManager::recieveData(int pos, void *data, int dataSize)
+{
+    int n;
+
+    assert(0 <= pos && pos < gClientNum);
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    n = read(gClients[pos].fd, data, dataSize);
+
+    return n;
+}
 /******************************************************************************
  * class NetConnector
 ******************************************************************************/
@@ -16,15 +66,16 @@ NetConnector::NetConnector(int gSocket, sockaddr_in server)
     this->gSocket = gSocket;
     this->server = server;
 }
-bool NetConnector::connectServer()
+bool NetConnector::connectClient()
 {
 }
-void NetConnector::disconnectServer()
+void NetConnector::disconnectClient()
 {
 }
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
+SendRecvManager NetworkManager::sendRecvManager;
 NetConnector NetworkManager::connector;
 
 bool NetworkManager::init()
@@ -75,6 +126,11 @@ bool NetworkManager::init()
     fprintf(stderr, "Accept client\n");
     close(dstSocket);
     return true;
+}
+
+SendRecvManager NetworkManager::getSendRecvManager()
+{
+    return sendRecvManager;
 }
 
 bool NetworkManager::connect()

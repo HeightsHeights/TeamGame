@@ -1,5 +1,3 @@
-#define MAX_CLIENTS 4
-
 #include <stdlib.h>
 #include <SDL/SDL.h>
 #include "../../header/main/mainProgram.h"

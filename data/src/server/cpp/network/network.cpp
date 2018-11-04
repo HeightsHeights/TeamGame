@@ -18,64 +18,65 @@ NetConnector::NetConnector(int gSocket, sockaddr_in server)
 }
 bool NetConnector::connectServer()
 {
-    if (connect(gSocket, (struct sockaddr *)&server, sizeof(server)) == -1)
-    {
-        fprintf(stderr, "ERROR --> cannot connect\n");
-        close(gSocket);
-        return false;
-    }
-    fprintf(stderr, "connected\n");
-    return true;
 }
 void NetConnector::disconnectServer()
 {
-    printf("...Connection closed\n");
-    close(gSocket);
 }
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
 NetConnector NetworkManager::connector;
 
-bool NetworkManager::init(char *hostName)
+bool NetworkManager::init()
 {
-    struct hostent *servHost;
     struct sockaddr_in server;
-
-    /* ホスト名からホスト情報を得る */
-    if ((servHost = gethostbyname(hostName)) == NULL)
-    {
-        fprintf(stderr, "ERROR --> Unknown host\n");
-        return false;
-    }
+    int srcSocket;
+    int dstSocket;
+    int val = 1;
 
     bzero((char *)&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons(PORT);
-    bcopy(servHost->h_addr, (char *)&server.sin_addr, servHost->h_length);
+    server.sin_addr.s_addr = htonl(INADDR_ANY);
 
     /* ソケットを作成する */
-    int gSocket;
-    if ((gSocket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    if ((srcSocket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
-        fprintf(stderr, "socket allocation failed\n");
+        fprintf(stderr, "Socket allocation failed\n");
         return false;
     }
-    connector = *new NetConnector(gSocket, server);
+    setsockopt(srcSocket, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
 
+    /* ソケットに名前をつける */
+    if (bind(srcSocket, (struct sockaddr *)&server, sizeof(server)) == -1)
+    {
+        fprintf(stderr, "Cannot bind\n");
+        close(srcSocket);
+        return false;
+    }
+    fprintf(stderr, "Successfully bind!\n");
+
+    /* クライアントからの接続要求を待つ */
+    if (listen(srcSocket, 1) == -1)
+    {
+        fprintf(stderr, "Cannot listen\n");
+        close(srcSocket);
+        return false;
+    }
+    fprintf(stderr, "Listen OK\n");
+
+    if ((dstSocket = accept(srcSocket, NULL, NULL)) == -1)
+    {
+        fprintf(stderr, "Accept error\n");
+        close(srcSocket);
+        return false;
+    }
+    close(srcSocket);
+    fprintf(stderr, "Accept client\n");
+    close(dstSocket);
     return true;
 }
 
 bool NetworkManager::connect()
 {
-    if (!connector.connectServer())
-    {
-        fprintf(stderr, "ERROR --> connectServer()\n");
-        return false;
-    }
-    return true;
-}
-void NetworkManager::disconnect()
-{
-    connector.disconnectServer();
 }

@@ -74,9 +74,9 @@ private:
 public:
   static NetSender getSender();
   static NetReciever getReciever();
-  static bool init(char *hostName);
+  static bool init();
   static bool connect();
-  static void disconnect();
+  static bool disconnect();
   static void send(void *data, int dataSize);
   static void recieve(void *data, int dataSize);
 };

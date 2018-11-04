@@ -81,7 +81,6 @@ NetConnector NetworkManager::connector;
 bool NetworkManager::init()
 {
     struct sockaddr_in server;
-    int srcSocket;
     int dstSocket;
     int val = 1;
 

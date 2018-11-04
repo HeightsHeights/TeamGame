@@ -1,9 +1,12 @@
 #pragma once
 
+#define PORT (u_short)8888 /* ポート番号 */
 /******************************************************************************
  * ネットワーク関係に必要なヘッダーの読み込み
 ******************************************************************************/
-
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netdb.h>
 /******************************************************************************
  * class DataBlockGenerator
  * 機能1：
@@ -21,7 +24,10 @@ public:
 class NetSender
 {
 private:
+  int gSocket;
+
 public:
+  NetSender(int gSocket);
   void sendData(void *data, int dataSize);
 };
 /******************************************************************************
@@ -31,7 +37,10 @@ public:
 class NetReciever
 {
 private:
+  int gSocket;
+
 public:
+  NetReciever(int gSocket);
   void recieveData(void *data, int dataSize);
 };
 /******************************************************************************
@@ -41,12 +50,14 @@ public:
 class NetConnector
 {
 private:
-  NetSender sender;
-  NetReciever reciever;
+  int gSocket;
+  sockaddr_in server;
 
 public:
-  NetConnector(NetSender sender, NetReciever reciever);
-  bool connectServer(); //引数にサーバー情報
+  NetConnector();
+  NetConnector(int gSocket, sockaddr_in server);
+  bool connectServer();
+  void disconnectServer();
 };
 
 /******************************************************************************
@@ -59,10 +70,14 @@ private:
   static DataBlockGenerator dataBlockGenerator;
   static NetSender sender;
   static NetReciever reciever;
+  static NetConnector connector;
 
 public:
-  static bool init();
+  static NetSender getSender();
+  static NetReciever getReciever();
+  static bool init(char *hostName);
   static bool connect();
+  static bool disconnect();
   static void send(void *data, int dataSize);
   static void recieve(void *data, int dataSize);
 };

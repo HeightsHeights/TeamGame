@@ -14,21 +14,5 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    WindowManager window(argc, argv);
-    
-    window.clearWindow();
-    ShaderManager::startShader();
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_POLYGON);
-    glVertex2d(-0.9, -0.9);
-    glVertex2d(0.9, -0.9);
-    glVertex2d(0.9, 0.9);
-    glVertex2d(-0.9, 0.9);
-    glEnd();
-    ShaderManager::stopShader();
-
-    window.swapWindow();
-    SDL_Delay(1000);
-
     return 0;
 }

@@ -60,7 +60,7 @@ GLuint BaseShaderLoader::loadShader(const char *file, int type)
     glGetShaderiv(ShaderID, GL_COMPILE_STATUS, &compiled);
     if (compiled == GL_FALSE)
     {
-        printf("error compile shader\n");
+        fprintf(stderr, "Error --> glCompileShader()\n");
     }
 
     return ShaderID;

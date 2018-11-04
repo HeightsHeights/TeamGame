@@ -20,7 +20,7 @@ Joystick::Joystick(const unsigned int controllerID)
 void Joystick::scanAnalogStick(ControllerParam *param)
 {
     //アナログスティックからの値を-1~1にする←
-    param->axisL.x = SDL_JoystickGetAxis(joy, 0) / (float)32767;
+    param->axisL.x = SDL_JoystickGetAxis(joy, 0) / MAX_ANALOG_STICK_AXIS;
 
     if (param->axisL.x > 1)
     {
@@ -31,7 +31,7 @@ void Joystick::scanAnalogStick(ControllerParam *param)
         param->axisL.x = -1;
     }
 
-    param->axisL.y = SDL_JoystickGetAxis(joy, 1) / (float)32767;
+    param->axisL.y = SDL_JoystickGetAxis(joy, 1) / MAX_ANALOG_STICK_AXIS;
 
     if (param->axisL.y > 1)
     {
@@ -42,7 +42,7 @@ void Joystick::scanAnalogStick(ControllerParam *param)
         param->axisL.y = -1;
     }
 
-    param->axisR.x = SDL_JoystickGetAxis(joy, 2) / (float)32767;
+    param->axisR.x = SDL_JoystickGetAxis(joy, 2) / MAX_ANALOG_STICK_AXIS;
 
     if (param->axisR.x > 1)
     {
@@ -53,7 +53,7 @@ void Joystick::scanAnalogStick(ControllerParam *param)
         param->axisR.x = -1;
     }
 
-    param->axisR.y = SDL_JoystickGetAxis(joy, 3) / (float)32767;
+    param->axisR.y = SDL_JoystickGetAxis(joy, 3) / MAX_ANALOG_STICK_AXIS;
 
     if (param->axisR.y > 1)
     {
@@ -114,12 +114,11 @@ bool ControllerManager::init()
     //接続があるか確認←
     if (SDL_NumJoysticks() > 0)
     {
-        //成功すればコントローラーの初期化にこれを使ってください 0のところにコントローラーのIDが来ます←
         joystick = *new Joystick(0);
     }
     else
     {
-        printf("error connect joystick\n");
+        fprintf(stderr, "Error --> connot connect joystick\n");
         return false;
     }
     return true;

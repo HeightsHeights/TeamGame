@@ -16,14 +16,14 @@ bool WindowManager::initSDLWindow()
     window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (window == NULL)
     {
-        printf("Dont creat window\n");
+        fprintf(stderr, "Error --> SDL_CreateWindow()\n");
         return false;
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL)
     {
-        printf("Dont creat renderer\n");
+        fprintf(stderr, "Error --> SDL_CreateRenderer()\n");
         return false;
     }
     return true;
@@ -32,18 +32,14 @@ bool WindowManager::initSDLWindow()
 bool WindowManager::initOpenGL(int argc, char *argv[])
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glLoadIdentity();
+    glutInitDisplayMode(GLUT_RGBA);
+
     glClearColor(1.0, 1.0, 1.0, 0.0);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
 }
 
 void WindowManager::clearWindow()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void WindowManager::swapWindow()

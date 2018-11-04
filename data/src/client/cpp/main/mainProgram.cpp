@@ -10,18 +10,23 @@ int main(int argc, char *argv[])
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK))
     {
-        printf("error sdlinit\n");
-        return false;
+        fprintf(stderr, "Error --> SDL_Init()\n");
+        return -1;
     }
 
     WindowManager window(argc, argv);
-    ShaderManager::initShader();
-    RawModel model = ModelLoader().loadFile("./data/res/gui/obj/mononoke.obj");
-
+    
     window.clearWindow();
     ShaderManager::startShader();
-    model.drawModel();
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2d(-0.9, -0.9);
+    glVertex2d(0.9, -0.9);
+    glVertex2d(0.9, 0.9);
+    glVertex2d(-0.9, 0.9);
+    glEnd();
     ShaderManager::stopShader();
+
     window.swapWindow();
     SDL_Delay(1000);
 

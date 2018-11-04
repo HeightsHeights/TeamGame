@@ -35,16 +35,16 @@ bool ModelLoader::loadOBJFile(const char *filename)
     std::vector<Vector3f> vertices;
     std::vector<Vector2f> textures;
     std::vector<Vector3f> normals;
+
     std::vector<unsigned int> indices;
 
     std::vector<unsigned int> normalIndex;
-    std::vector<Vector3f> normalArray;
 
     //ファイルを開ける
     file.open(filename, std::fstream::in);
     if (!file.is_open())
     {
-        printf("error file_open\n");
+        fprintf(stderr, "Error --> objFile is not found\n");
         return false;
     }
 
@@ -123,14 +123,17 @@ bool ModelLoader::loadOBJFile(const char *filename)
         }
     }
     Vector3f normalsArraySum[vertices.size()];
-    for (unsigned int i = 0 ; i < vertices.size(); i++){
+    for (unsigned int i = 0; i < vertices.size(); i++)
+    {
         normalsArraySum[i] = Vector3f_ZERO;
     }
-    for (unsigned int i = 0 ; i < indices.size(); i++){
-        normalsArraySum[indices[i] ]= normalsArraySum[indices[i]] + normals[normalIndex[i]];
+    for (unsigned int i = 0; i < indices.size(); i++)
+    {
+        normalsArraySum[indices[i]] += normals[normalIndex[i]];
     }
-    for (unsigned int i = 0 ; i < vertices.size(); i++){
-        normalsArraySum[i] = normalsArraySum[i ].normalize();
+    for (unsigned int i = 0; i < vertices.size(); i++)
+    {
+        normalsArraySum[i] = normalsArraySum[i].normalize();
     }
 
     glGenVertexArrays(1, &vao);
@@ -152,7 +155,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
     GLuint normalBufferObject;
     glGenBuffers(1, &normalBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, normalBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()* sizeof(Vector3f), &normalsArraySum[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3f), &normalsArraySum[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -171,7 +174,7 @@ RawModel ModelLoader::loadFile(const char *filename)
 {
     if (!loadOBJFile(filename))
     {
-        printf("error read file\n");
+        fprintf(stderr, "Error --> loadOBJFile()\n");
         return *new RawModel(0, 0);
     }
 

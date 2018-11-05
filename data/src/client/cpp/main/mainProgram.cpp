@@ -35,26 +35,29 @@ int main(int argc, char *argv[])
     }
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    RawModel model = ModelLoader().loadFile("data/res/gui/obj/mononoke.obj");
+    RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
 
     GLfloat light0pos[] = {0.0, 5.0, 4.0, 1.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
-    window.clearWindow();
-    glLoadIdentity();
-    gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(0.0, 5.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
-    glPushMatrix();
-    ShaderManager::startShader();
-    
-    model.drawModel();
-    ShaderManager::stopShader();
-    glPopMatrix();
-    glFlush();
-    window.swapWindow();
-    SDL_Delay(5000);
+    for (int i = 0; i < 500; i++)
+    {
 
+        window.clearWindow();
+        glLoadIdentity();
+        gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
+        gluLookAt(0.0, 5.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
+        glPushMatrix();
+        ShaderManager::startShader();
+        glRotated(i, 0, 1, 0);
+        model.drawModel();
+        ShaderManager::stopShader();
+        glPopMatrix();
+        glFlush();
+        window.swapWindow();
+        SDL_Delay(1);
+    }
     return 0;
 }

@@ -81,7 +81,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
         }
         else if (0 == strcmp(buf, "vn"))
         {
-            //法線ベクトル
+            //法線ベクトル2c	q
             float x, y, z;
             file >> x >> y >> z;
             normals.push_back(Vector3f(x, y, z));
@@ -123,10 +123,6 @@ bool ModelLoader::loadOBJFile(const char *filename)
         }
     }
     Vector3f normalsArraySum[vertices.size()];
-    for (unsigned int i = 0; i < vertices.size(); i++)
-    {
-        normalsArraySum[i] = Vector3f_ZERO;
-    }
     for (unsigned int i = 0; i < indices.size(); i++)
     {
         normalsArraySum[indices[i]] += normals[normalIndex[i]];
@@ -135,7 +131,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
     {
         normalsArraySum[i] = normalsArraySum[i].normalize();
     }
-
+    printf("%f%f%f\n", vertices[1000].x, vertices[1000].y, vertices[1000].z);
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 

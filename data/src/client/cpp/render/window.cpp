@@ -33,6 +33,7 @@ bool WindowManager::initOpenGL(int argc, char *argv[])
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glEnable(GL_DEPTH_TEST);
@@ -42,7 +43,7 @@ bool WindowManager::initOpenGL(int argc, char *argv[])
 
 void WindowManager::clearWindow()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void WindowManager::swapWindow()

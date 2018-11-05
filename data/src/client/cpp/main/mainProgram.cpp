@@ -3,7 +3,8 @@
 #include "../../header/render/window.h"
 #include "../../header/render/shader.h"
 #include "../../header/render/rawmodel.h"
-
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 /******************************************************************************
  * メイン関数
 ******************************************************************************/
@@ -32,24 +33,26 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error --> SDL_Init()\n");
         return -1;
     }
-
-    WindowManager window = *new WindowManager(argc,argv);
+    WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
     RawModel model = ModelLoader().loadFile("data/res/gui/obj/mononoke.obj");
-    
-    
+
+    GLfloat light0pos[] = {0.0, 3.0, 5.0, 1.0};
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
     window.clearWindow();
     glLoadIdentity();
-    gluLookAt(0.0, 10.0,30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
+    gluLookAt(30.0, 40.0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     glPushMatrix();
     ShaderManager::startShader();
     model.drawModel();
     ShaderManager::stopShader();
     glPopMatrix();
+    glFlush();
     window.swapWindow();
     SDL_Delay(1000);
-
-
 
     return 0;
 }

@@ -62,6 +62,7 @@ void NetConnector::disconnectServer()
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
+SendRecvManager NetworkManager::sendRecvManager;
 NetConnector NetworkManager::connector;
 
 bool NetworkManager::init(char *hostName)

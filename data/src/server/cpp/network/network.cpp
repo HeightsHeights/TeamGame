@@ -75,6 +75,9 @@ void NetConnector::disconnectClient()
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
+int NetworkManager::srcSocket;
+fd_set NetworkManager::gMask;
+int NetworkManager::gWidth;
 SendRecvManager NetworkManager::sendRecvManager;
 NetConnector NetworkManager::connector;
 

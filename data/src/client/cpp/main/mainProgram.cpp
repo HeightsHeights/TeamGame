@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     /* コマンド引数確認 */
     if (argc == 1)
     {
-        serverName == localHostName;
+        serverName = localHostName;
     }
     else if (argc == 2)
     {
@@ -32,10 +32,20 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error --> SDL_Init()\n");
         return -1;
     }
-    serverName = localHostName;
-    NetworkManager::init(serverName);
-    NetworkManager::connect();
-    NetworkManager::disconnect();
+
+    WindowManager window = *new WindowManager(argc,argv);
+    ShaderManager::initShader();
+    RawModel model = ModelLoader().loadFile("../data/res/gui/obj/mononoke.obj");
+    
+    while(1){
+        window.clearWindow();
+        ShaderManager::startShader();
+        model.drawModel();
+        ShaderManager::stopShader();
+        window.swapWindow();
+    }
+
+
 
     return 0;
 }

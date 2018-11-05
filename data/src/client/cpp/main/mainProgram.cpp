@@ -35,15 +35,19 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc,argv);
     ShaderManager::initShader();
-    RawModel model = ModelLoader().loadFile("../data/res/gui/obj/mononoke.obj");
+    RawModel model = ModelLoader().loadFile("data/res/gui/obj/mononoke.obj");
     
-    while(1){
-        window.clearWindow();
-        ShaderManager::startShader();
-        model.drawModel();
-        ShaderManager::stopShader();
-        window.swapWindow();
-    }
+    
+    window.clearWindow();
+    glLoadIdentity();
+    gluLookAt(0.0, 10.0,30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    glPushMatrix();
+    ShaderManager::startShader();
+    model.drawModel();
+    ShaderManager::stopShader();
+    glPopMatrix();
+    window.swapWindow();
+    SDL_Delay(1000);
 
 
 

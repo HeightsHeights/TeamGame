@@ -162,7 +162,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
 
     glBindVertexArray(0);
 
-    vertexCount = vertices.size();
+    vertexCount = indices.size();
 
     return true;
 }

@@ -183,6 +183,6 @@ RawModel ModelLoader::loadFile(const char *filename)
 void RawModel::drawModel()
 {
     glBindVertexArray(vertexArrayObject);
-    glDrawElements(GL_TRIANGLE_STRIP, vertexCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }

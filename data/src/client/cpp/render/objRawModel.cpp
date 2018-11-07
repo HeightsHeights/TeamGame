@@ -98,15 +98,14 @@ ObjModelLoader::ObjModelLoader()
 }
 ObjRawModel *ObjModelLoader::load(const char *objFilename, const char *mtlFilename)
 {
-
-    if (!loadObjFile(objFilename))
-    {
-        fprintf(stderr, "Error --> loadObjFile(%s)\n", objFilename);
-        return NULL;
-    }
     if (!loadMtlFile(mtlFilename))
     {
         fprintf(stderr, "Error --> loadMtlFile(%s)\n", mtlFilename);
+        return NULL;
+    }
+    if (!loadObjFile(objFilename))
+    {
+        fprintf(stderr, "Error --> loadObjFile(%s)\n", objFilename);
         return NULL;
     }
 

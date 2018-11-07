@@ -17,16 +17,16 @@
 ******************************************************************************/
 class ShaderProgram
 {
-  private:
-    GLuint programID;
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
+private:
+  GLuint programID;
+  GLuint vertexShaderID;
+  GLuint fragmentShaderID;
 
-  public:
-    ShaderProgram();
-    ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fragmentShaderID);
-    void startShader();
-    void stopShader();
+public:
+  ShaderProgram();
+  ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fragmentShaderID);
+  void startShader();
+  void stopShader();
 };
 
 /******************************************************************************
@@ -36,19 +36,19 @@ class ShaderProgram
 ******************************************************************************/
 class BaseShaderLoader
 {
-  private:
-    GLuint programID;
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
+private:
+  GLuint programID;
+  GLuint vertexShaderID;
+  GLuint fragmentShaderID;
 
-    GLuint loadShader(const char *file, int type);
-    virtual void bindAttributes() = 0;
+  GLuint loadShader(const char *file, int type);
+  virtual void bindAttributes() = 0;
 
-  public:
-    ShaderProgram generateShader(const char *vertex_filename, const char *fragment_filename);
+public:
+  ShaderProgram *generateShader(const char *vertex_filename, const char *fragment_filename);
 
-  protected:
-    void bindAttribute(int attribute, const char *variableName);
+protected:
+  void bindAttribute(int attribute, const char *variableName);
 };
 
 /******************************************************************************
@@ -57,10 +57,10 @@ class BaseShaderLoader
 ******************************************************************************/
 class StaticShaderLoader : public BaseShaderLoader
 {
-  private:
-    void bindAttributes();
+private:
+  void bindAttributes();
 
-  public:
+public:
 };
 
 /******************************************************************************
@@ -70,11 +70,11 @@ class StaticShaderLoader : public BaseShaderLoader
 ******************************************************************************/
 class ShaderManager
 {
-  private:
-    static ShaderProgram shaders;
+private:
+  static ShaderProgram *shaders;
 
-  public:
-    static bool initShader();
-    static void startShader();
-    static void stopShader();
+public:
+  static bool initShader();
+  static void startShader();
+  static void stopShader();
 };

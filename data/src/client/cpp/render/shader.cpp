@@ -5,7 +5,7 @@
 const char *VERTEX_FILE = "./data/src/client/shader/staticVertexShader.vert";
 const char *FRAGMENT_FILE = "./data/src/client/shader/staticFragmentShader.frag";
 
-ShaderProgram ShaderManager::shaders;
+ShaderProgram *ShaderManager::shaders;
 
 /******************************************************************************
  * コンストラクタ
@@ -23,18 +23,18 @@ bool ShaderManager::initShader()
 //シェーダを始める
 void ShaderManager::startShader()
 {
-    shaders.startShader();
+    (*shaders).startShader();
 }
 //シェーダを終わらせる
 void ShaderManager::stopShader()
 {
-    shaders.stopShader();
+    (*shaders).stopShader();
 }
 /******************************************************************************
  * BaseShaderLoader
 ******************************************************************************/
 //シェーダを作成
-ShaderProgram BaseShaderLoader::generateShader(const char *vertexFilename, const char *fragmentFilename)
+ShaderProgram *BaseShaderLoader::generateShader(const char *vertexFilename, const char *fragmentFilename)
 {
     vertexShaderID = loadShader(vertexFilename, GL_VERTEX_SHADER);
     fragmentShaderID = loadShader(fragmentFilename, GL_FRAGMENT_SHADER);
@@ -44,7 +44,7 @@ ShaderProgram BaseShaderLoader::generateShader(const char *vertexFilename, const
     bindAttributes();
     glLinkProgram(programID);
     glValidateProgram(programID);
-    return *new ShaderProgram(programID, vertexShaderID, fragmentShaderID);
+    return new ShaderProgram(programID, vertexShaderID, fragmentShaderID);
 }
 //シェーダを読み込む
 GLuint BaseShaderLoader::loadShader(const char *file, int type)

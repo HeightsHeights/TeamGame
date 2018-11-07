@@ -14,17 +14,18 @@ ShaderProgram ShaderManager::shaders;
 /******************************************************************************
  * ShaderManager
 ******************************************************************************/
+//シェーダ初期化
 bool ShaderManager::initShader()
 {
     shaders = StaticShaderLoader().generateShader(VERTEX_FILE, FRAGMENT_FILE);
     return true;
 }
-
+//シェーダを始める
 void ShaderManager::startShader()
 {
     shaders.startShader();
 }
-
+//シェーダを終わらせる
 void ShaderManager::stopShader()
 {
     shaders.stopShader();
@@ -32,6 +33,7 @@ void ShaderManager::stopShader()
 /******************************************************************************
  * BaseShaderLoader
 ******************************************************************************/
+//シェーダを作成
 ShaderProgram BaseShaderLoader::generateShader(const char *vertexFilename, const char *fragmentFilename)
 {
     vertexShaderID = loadShader(vertexFilename, GL_VERTEX_SHADER);
@@ -44,7 +46,7 @@ ShaderProgram BaseShaderLoader::generateShader(const char *vertexFilename, const
     glValidateProgram(programID);
     return *new ShaderProgram(programID, vertexShaderID, fragmentShaderID);
 }
-
+//シェーダを読み込む
 GLuint BaseShaderLoader::loadShader(const char *file, int type)
 {
     GLuint ShaderID = glCreateShader(type);

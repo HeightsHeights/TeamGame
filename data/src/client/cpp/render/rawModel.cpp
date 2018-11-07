@@ -127,10 +127,8 @@ bool ModelLoader::loadOBJFile(const char *filename)
     {
         normalsArraySum[indices[i]] += normals[normalIndex[i]];
     }
-    for (unsigned int i = 0; i < vertices.size(); i++)
-    {
-        normalsArraySum[i] = normalsArraySum[i].normalize();
-    }
+
+
     printf("%f%f%f\n", vertices[1000].x, vertices[1000].y, vertices[1000].z);
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -145,7 +143,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3f), &vertices[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 0, (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     GLuint normalBufferObject;

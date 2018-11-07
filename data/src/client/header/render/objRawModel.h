@@ -16,53 +16,54 @@
 
 class ObjSubset
 {
-  private:
-    GLuint vao;
-    unsigned int vertexCount;
-    unsigned int materialId;
+private:
+  GLuint vao;
+  unsigned int vertexCount;
+  unsigned int materialId;
 
-  public:
-    ObjSubset();
-    ObjSubset(GLuint vao, unsigned int vertexCount, unsigned int materialId);
-    GLint getVao() { return this->vao; }
-    unsigned int getVertexCount() { return this->vertexCount; }
-    int getMaterialId() { return this->materialId; }
+public:
+  ObjSubset();
+  ObjSubset(GLuint vao, unsigned int vertexCount, unsigned int materialId);
+  GLint getVao() { return this->vao; }
+  unsigned int getVertexCount() { return this->vertexCount; }
+  int getMaterialId() { return this->materialId; }
 };
 class ObjMaterial
 {
-  private:
-    char name[MAX_MATERIAL_NAME];
-    Touple4f ambient;
-    Touple4f diffuse;
-    Touple4f specular;
-    Touple4f emissive;
-    float power;
+private:
+  char name[MAX_MATERIAL_NAME];
+  Touple4f ambient;
+  Touple4f diffuse;
+  Touple4f specular;
+  Touple4f emissive;
+  float power;
 
-  public:
-    ObjMaterial();
-    ObjMaterial(char *name, Touple4f ambient, Touple4f diffuse, Touple4f specular, Touple4f emissive, float power);
-    bool isEqualName(const char *name);
-    void applyMaterial();
+public:
+  ObjMaterial();
+  ObjMaterial(char *name, Touple4f ambient, Touple4f diffuse, Touple4f specular, Touple4f emissive, float power);
+  bool isEqualName(const char *name);
+  void applyMaterial();
 };
 class ObjRawModel
 {
-  private:
-    std::vector<ObjSubset> subsets;
-    std::vector<ObjMaterial> materials;
+private:
+  std::vector<ObjSubset> subsets;
+  std::vector<ObjMaterial> materials;
 
-  public:
-    ObjRawModel();
-    void pushMesh(const ObjSubset subset);
-    void pushMaterial(const ObjMaterial material);
-    void draw();
+public:
+  ObjRawModel();
+  void pushMesh(const ObjSubset subset);
+  void pushMaterial(const ObjMaterial material);
+  void draw();
 };
 class ObjModelLoader
 {
-  private:
-    bool loadObjFile();
-    bool loadMtlFile();
+private:
+  ObjRawModel ret;
+  bool loadObjFile(const char *Filename);
+  bool loadMtlFile(const char *Filename);
 
-  public:
-    ObjModelLoader();
-    ObjRawModel load(const char *objFilename, const char *mtlFilename);
+public:
+  ObjModelLoader();
+  ObjRawModel *load(const char *objFilename, const char *mtlFilename);
 };

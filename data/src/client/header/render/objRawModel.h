@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_MATERIAL_NAME 256
+#define MAX_MATERIAL_NAME 128
 /******************************************************************************
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
@@ -19,11 +19,11 @@ class ObjSubset
   private:
     GLuint vao;
     unsigned int vertexCount;
-    int materialId;
+    unsigned int materialId;
 
   public:
     ObjSubset();
-    ObjSubset(GLuint vao, unsigned int vertexCoun, int materialId);
+    ObjSubset(GLuint vao, unsigned int vertexCount, unsigned int materialId);
     GLint getVao() { return this->vao; }
     unsigned int getVertexCount() { return this->vertexCount; }
     int getMaterialId() { return this->materialId; }
@@ -51,6 +51,7 @@ class ObjRawModel
     std::vector<ObjMaterial> materials;
 
   public:
+    ObjRawModel();
     void pushMesh(const ObjSubset subset);
     void pushMaterial(const ObjMaterial material);
     void draw();

@@ -52,14 +52,15 @@ private:
 
 public:
   ObjRawModel();
-  void pushMesh(const ObjSubset subset);
+  void pushSubset(const ObjSubset subset);
   void pushMaterial(const ObjMaterial material);
+  unsigned int getMtlId(const char *mName);
   void draw();
 };
 class ObjModelLoader
 {
 private:
-  ObjRawModel ret;
+  ObjRawModel *ret;
   bool loadObjFile(const char *Filename);
   bool loadMtlFile(const char *Filename);
 

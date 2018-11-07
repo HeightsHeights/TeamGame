@@ -57,13 +57,25 @@ ObjRawModel::ObjRawModel()
 {
     /*nothing*/
 }
-void ObjRawModel::pushMesh(const ObjSubset subset)
+void ObjRawModel::pushSubset(const ObjSubset subset)
 {
     subsets.push_back(subset);
 }
 void ObjRawModel::pushMaterial(const ObjMaterial material)
 {
     materials.push_back(material);
+}
+unsigned int ObjRawModel::getMtlId(const char *mName)
+{
+    unsigned int mNum = materials.size();
+    for (unsigned int i = 0; i < mNum; i++)
+    {
+        if (materials[i].isEqualName(mName))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 void ObjRawModel::draw()
 {
@@ -88,16 +100,22 @@ void ObjRawModel::draw()
 ******************************************************************************/
 bool ObjModelLoader::loadObjFile(const char *Filename)
 {
+    /*ファイルを読み込んでObjSubsetに変換しプッシュ*/
 }
 bool ObjModelLoader::loadMtlFile(const char *Filename)
 {
+    /*ファイルを読み込んでObjMaterialに変換しプッシュ*/
 }
+
 ObjModelLoader::ObjModelLoader()
 {
     /*nothing*/
 }
 ObjRawModel *ObjModelLoader::load(const char *objFilename, const char *mtlFilename)
 {
+
+    ret = new ObjRawModel();
+
     if (!loadMtlFile(mtlFilename))
     {
         fprintf(stderr, "Error --> loadMtlFile(%s)\n", mtlFilename);
@@ -109,5 +127,5 @@ ObjRawModel *ObjModelLoader::load(const char *objFilename, const char *mtlFilena
         return NULL;
     }
 
-    return &ret;
+    return ret;
 }

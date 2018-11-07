@@ -129,7 +129,7 @@ bool ModelLoader::loadOBJFile(const char *filename)
     }
     for (unsigned int i = 0; i < vertices.size(); i++)
     {
-        normalsArraySum[i] = -normalsArraySum[i].normalize();
+        normalsArraySum[i] = normalsArraySum[i].normalize();
     }
     printf("%f%f%f\n", vertices[1000].x, vertices[1000].y, vertices[1000].z);
     glGenVertexArrays(1, &vao);

@@ -37,10 +37,11 @@ int main(int argc, char *argv[])
     ShaderManager::initShader();
     RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
 
-    GLfloat light0pos[] = {-5.0, 5.0, -4.0, 1.0};
+    GLfloat light0pos[] = {5.0, 10.0, 4.0, 1.0};
+    GLfloat green[] = { 1.0,1.0,1.0,0.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-
+    glLightfv(GL_LIGHT0, GL_AMBIENT, green);
 
 	GLfloat gold_amb[] = { 0.24725f, 0.1995f, 0.0745f, 1.f };
 	GLfloat gold_diff[] = { 0.75164f, 0.60648f , 0.22648f, 1.f };
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
         window.clearWindow();
         glLoadIdentity();
         gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-        gluLookAt(0.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        gluLookAt(0.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
         ShaderManager::startShader();

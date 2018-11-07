@@ -93,7 +93,7 @@ void Joystick::scanButton(ControllerParam *param)
 
 ControllerParam Joystick::readStateController()
 {
-    ControllerParam param = *new ControllerParam();
+    ControllerParam param = ControllerParam();
 
     //アナログスティックの値をVector2fに代入する
     scanAnalogStick(&param);
@@ -114,7 +114,7 @@ bool ControllerManager::init()
     //接続があるか確認←
     if (SDL_NumJoysticks() > 0)
     {
-        joystick = *new Joystick(0);
+        joystick = Joystick(0);
     }
     else
     {

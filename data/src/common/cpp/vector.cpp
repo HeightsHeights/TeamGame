@@ -41,7 +41,7 @@ Vector3f::Vector3f(float x, float y, float z)
 ************************************/
 Vector3f Vector3f::operator+(Vector3f obj)
 {
-    return *new Vector3f(this->x + obj.x, this->y + obj.y, this->z + obj.z);
+    return Vector3f(this->x + obj.x, this->y + obj.y, this->z + obj.z);
 }
 /***********************************
  * -演算子のオーバーロード
@@ -50,7 +50,7 @@ Vector3f Vector3f::operator+(Vector3f obj)
 ************************************/
 Vector3f Vector3f::operator-(Vector3f obj)
 {
-    return *new Vector3f(this->x - obj.x, this->y - obj.y, this->z - obj.z);
+    return Vector3f(this->x - obj.x, this->y - obj.y, this->z - obj.z);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -59,7 +59,7 @@ Vector3f Vector3f::operator-(Vector3f obj)
 ************************************/
 Vector3f Vector3f::operator*(float scalar)
 {
-    return *new Vector3f(this->x * scalar, this->y * scalar, this->z * scalar);
+    return Vector3f(this->x * scalar, this->y * scalar, this->z * scalar);
 }
 /***********************************
  * /演算子のオーバーロード
@@ -165,7 +165,7 @@ float Vector3f::dot(Vector3f a, Vector3f b)
 ************************************/
 Vector3f Vector3f::cross(Vector3f a, Vector3f b)
 {
-    return *new Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+    return Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
 /***********************************
  * 引数：行列
@@ -185,7 +185,7 @@ Vector3f Vector3f::matrixMultiplication(float matrix[3][3])
 ************************************/
 Vector3f Vector3f::scaling(Vector3f scaleVector)
 {
-    return *new Vector3f(x * scaleVector.x, y * scaleVector.y, z * scaleVector.z);
+    return Vector3f(x * scaleVector.x, y * scaleVector.y, z * scaleVector.z);
 }
 
 /***********************************
@@ -223,7 +223,7 @@ Vector3f Vector3f::rotate(Vector3f v, float angle)
 ************************************/
 float Vector3f::betweenAngleRdian(Vector3f v)
 {
-    Vector3f THIS = *new Vector3f(x, y, z);
+    Vector3f THIS = Vector3f(x, y, z);
     return acosf(dot(THIS, v) / (THIS.magnitude() * v.magnitude()));
 }
 /***********************************
@@ -283,7 +283,7 @@ Vector2f::Vector2f(float x, float y)
 ************************************/
 Vector2f Vector2f::operator+(Vector2f obj)
 {
-    return *new Vector2f(this->x + obj.x, this->y + obj.y);
+    return Vector2f(this->x + obj.x, this->y + obj.y);
 }
 /***********************************
  * -演算子のオーバーロード
@@ -292,7 +292,7 @@ Vector2f Vector2f::operator+(Vector2f obj)
 ************************************/
 Vector2f Vector2f::operator-(Vector2f obj)
 {
-    return *new Vector2f(this->x - obj.x, this->y - obj.y);
+    return Vector2f(this->x - obj.x, this->y - obj.y);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -408,5 +408,5 @@ float Vector2f::dot(Vector2f a, Vector2f b)
 ************************************/
 Vector3f Vector2f::cross(Vector2f a, Vector2f b)
 {
-    return *new Vector3f(0, 0, a.x * b.y - a.y * b.x);
+    return Vector3f(0, 0, a.x * b.y - a.y * b.x);
 }

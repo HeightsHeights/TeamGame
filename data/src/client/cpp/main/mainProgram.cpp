@@ -3,6 +3,7 @@
 #include "../../header/render/window.h"
 #include "../../header/render/shader.h"
 #include "../../header/render/rawmodel.h"
+#include "../../header/render/objRawModel.h"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 /******************************************************************************
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
     RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/monkey.obj", "data/res/gui/obj/monkey.mtl");
 
     GLfloat light0pos[] = {5.0, 10.0, 4.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 0.0};
@@ -54,16 +56,17 @@ int main(int argc, char *argv[])
         window.clearWindow();
         glLoadIdentity();
         gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-        gluLookAt(0.0, 10.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        gluLookAt(0.0, 10.0, -20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
         ShaderManager::startShader();
         glRotated(i, 0, 1, 0);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, gold_amb);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, gold_diff);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, gold_spe);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, gold_shin);
-        model.drawModel();
+        // glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, gold_amb);
+        // glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, gold_diff);
+        // glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, gold_spe);
+        // glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, gold_shin);
+        //model.drawModel();
+        obj.draw();
         ShaderManager::stopShader();
         glPopMatrix();
         glFlush();

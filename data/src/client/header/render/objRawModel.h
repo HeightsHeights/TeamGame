@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <fstream>
 
 #define GL_GLEXT_PROTOTYPES 1
 #include <GL/gl.h>
@@ -61,8 +62,16 @@ class ObjModelLoader
 {
 private:
   ObjRawModel *ret;
-  bool loadObjFile(const char *Filename);
-  bool loadMtlFile(const char *Filename);
+  unsigned int totalNumVertex;
+  unsigned int totalNumNoemal;
+  bool loadObjFile(const char *filename);
+  void createSubset(std::ifstream *file);
+  GLuint createVao();
+  void storeAttributeData(const int attributeNumber, const GLsizeiptr size, const float *data, GLboolean normalize);
+  void bindIndicesBuffer(const GLsizeiptr size, const unsigned int *indices);
+  void unbindVao();
+  bool loadMtlFile(const char *filename);
+  void createMaterial(std::ifstream *file);
 
 public:
   ObjModelLoader();

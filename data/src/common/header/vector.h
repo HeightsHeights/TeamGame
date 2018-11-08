@@ -27,6 +27,9 @@ public:
   Vector3f operator+();
   Vector3f operator-();
 
+  operator float *() { return (float *)&x; }
+  operator const float *() const { return (const float *)&x; }
+
   //コンストラクタ
   Vector3f();
   Vector3f(float x, float y, float z);
@@ -69,6 +72,9 @@ public:
   Vector2f operator/=(float scalar);
   Vector2f operator+();
   Vector2f operator-();
+
+  operator float *() { return (float *)&x; }
+  operator const float *() const { return (const float *)&x; }
 
   float magnitudeSquared();
   float magnitude();

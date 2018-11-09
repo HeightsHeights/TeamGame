@@ -33,3 +33,4 @@
 gdb.txt
 core
 *.json
+.nfs*

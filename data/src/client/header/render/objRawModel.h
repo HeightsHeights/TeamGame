@@ -25,8 +25,7 @@ private:
 
 public:
   ObjSubset();
-  ObjSubset(unsigned int vertexCount, unsigned int beginIndex, unsigned int materialId);
-  GLint getBeginIndix() { return this->beginIndex; }
+  ObjSubset(unsigned int vertexCount, unsigned int materialId);
   unsigned int getVertexCount() { return this->vertexCount; }
   int getMaterialId() { return this->materialId; }
 };

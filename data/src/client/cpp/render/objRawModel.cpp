@@ -10,10 +10,9 @@ ObjSubset::ObjSubset()
 {
     /*nothing*/
 }
-ObjSubset::ObjSubset(unsigned int vertexCount, unsigned int beginIndex, unsigned int materialId)
+ObjSubset::ObjSubset(unsigned int vertexCount, unsigned int materialId)
 {
     this->vertexCount = vertexCount;
-    this->beginIndex = beginIndex;
     this->materialId = materialId;
 }
 /******************************************************************************
@@ -241,7 +240,7 @@ void ObjModelLoader::createSubset(std::ifstream *file)
         }
     }
 
-    (*ret).pushSubset(ObjSubset(1, numVertex, materialId));
+    (*ret).pushSubset(ObjSubset(numVertex,  materialId));
 }
 GLuint ObjModelLoader::createVao()
 {

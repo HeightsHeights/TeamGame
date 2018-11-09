@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/bambooshootchara.obj", "data/res/gui/obj/bambooshootchara.mtl");
 
     GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         window.clearWindow();
         glLoadIdentity();
         gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-        gluLookAt(5.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        gluLookAt(3.0, 5.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
         ShaderManager::startShader();

@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
     RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/hammer.obj", "data/res/gui/obj/hammer.mtl");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
 
     GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};

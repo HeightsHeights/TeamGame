@@ -95,7 +95,7 @@ void ObjRawModel::draw()
 
         /*サブセットの描画*/
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, BUFFER_OFFSET(bIndex));
+        glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, BUFFER_OFFSET(bIndex * sizeof(unsigned int)));
         bIndex += vCount;
         glBindVertexArray(0);
     }
@@ -126,6 +126,11 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         }
         if (0 == strcmp(buf, "o"))
         {
+            createSubset(&file);
+        }
+        else if (0 == strcmp(buf, "usemtl"))
+        {
+            file.seekg(-6, std::ios_base::cur);
             createSubset(&file);
         }
     }
@@ -240,7 +245,7 @@ void ObjModelLoader::createSubset(std::ifstream *file)
         }
     }
 
-    (*ret).pushSubset(ObjSubset(numVertex,  materialId));
+    (*ret).pushSubset(ObjSubset(numVertex, materialId));
 }
 GLuint ObjModelLoader::createVao()
 {

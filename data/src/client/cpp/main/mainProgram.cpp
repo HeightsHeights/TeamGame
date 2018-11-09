@@ -37,18 +37,18 @@ int main(int argc, char *argv[])
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
     RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/monkey.obj", "data/res/gui/obj/monkey.mtl");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
 
-    GLfloat light0pos[] = {5.0, 10.0, 4.0, 1.0};
-    GLfloat green[] = {1.0, 1.0, 1.0, 0.0};
+    GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};
+    GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, green);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
 
     GLfloat gold_amb[] = {0.24725f, 0.1995f, 0.0745f, 1.f};
     GLfloat gold_diff[] = {0.75164f, 0.60648f, 0.22648f, 1.f};
     GLfloat gold_spe[] = {0.628281f, 0.555802f, 0.366065f, 1.f};
-    GLfloat gold_shin[] = {51.2f};
+    //GLfloat gold_shin[] = {51.2f};
 
     for (int i = 0; i < 500; i++)
     {
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         window.clearWindow();
         glLoadIdentity();
         gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-        gluLookAt(0.0, 10.0, -20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        gluLookAt(5.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
         ShaderManager::startShader();

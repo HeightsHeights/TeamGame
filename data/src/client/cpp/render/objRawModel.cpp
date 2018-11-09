@@ -10,10 +10,10 @@ ObjSubset::ObjSubset()
 {
     /*nothing*/
 }
-ObjSubset::ObjSubset(GLuint vao, unsigned int vertexCount, unsigned int materialId)
+ObjSubset::ObjSubset(unsigned int vertexCount, unsigned int beginIndex, unsigned int materialId)
 {
-    this->vao = vao;
     this->vertexCount = vertexCount;
+    this->beginIndex = beginIndex;
     this->materialId = materialId;
 }
 /******************************************************************************
@@ -56,6 +56,10 @@ ObjRawModel::ObjRawModel()
 {
     /*nothing*/
 }
+void ObjRawModel::setVao(GLuint vao)
+{
+    this->vao = vao;
+}
 void ObjRawModel::pushSubset(const ObjSubset subset)
 {
     subsets.push_back(subset);
@@ -78,10 +82,12 @@ unsigned int ObjRawModel::getMtlId(const char *mName)
 }
 void ObjRawModel::draw()
 {
+
+    unsigned int bIndex = 0;
     for (int i = 0; i < subsets.size(); i++)
     {
         /*サブセットからデータ読み込み*/
-        GLuint vao = subsets[i].getVao();
+        //unsigned int bIndex = subsets[i].getBeginIndix();
         unsigned int vCount = subsets[i].getVertexCount();
         unsigned int mId = subsets[i].getMaterialId();
 
@@ -90,7 +96,8 @@ void ObjRawModel::draw()
 
         /*サブセットの描画*/
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, vCount, GL_UNSIGNED_INT, BUFFER_OFFSET(bIndex));
+        bIndex += vCount;
         glBindVertexArray(0);
     }
 }
@@ -111,8 +118,6 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         return false;
     }
 
-    totalNumVertex = totalNumNoemal = 0;
-
     while (1)
     {
         file >> buf;
@@ -126,6 +131,20 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         }
     }
 
+    Vector3f normalArraySum[vertices.size()];
+    for (unsigned int i = 0; i < indices.size(); i++)
+    {
+        normalArraySum[indices[i]] += normals[normalIndices[i]];
+    }
+
+    GLuint vao = createVao();
+    bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
+    storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
+    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
+    unbindVao();
+
+    (*ret).setVao(vao);
+
     file.close();
     return true;
 }
@@ -133,13 +152,7 @@ void ObjModelLoader::createSubset(std::ifstream *file)
 {
     char buf[OBJ_BUFFER_LENGTH] = {0};
 
-    std::vector<Vector3f> vertices;
-    std::vector<Vector2f> textures;
-    std::vector<Vector3f> normals;
-
-    std::vector<unsigned int> indices;
-    std::vector<unsigned int> textureIndices;
-    std::vector<unsigned int> normalIndices;
+    unsigned int numVertex = 0;
 
     int materialId;
 
@@ -168,15 +181,11 @@ void ObjModelLoader::createSubset(std::ifstream *file)
             *file >> x >> y >> z;
             normals.push_back(Vector3f(x, y, z));
         }
-        else if (0 == strcmp(buf, "f"))
-        {
-            (*file).seekg(-1, std::ios_base::cur);
-            break;
-        }
         else if (0 == strcmp(buf, "usemtl"))
         {
             *file >> buf;
             materialId = (*ret).getMtlId(buf);
+            break;
         }
     }
     while (1)
@@ -186,56 +195,53 @@ void ObjModelLoader::createSubset(std::ifstream *file)
         {
             break;
         }
+
         if (0 == strcmp(buf, "o"))
         {
             (*file).seekg(-1, std::ios_base::cur);
             break;
         }
-        unsigned int iVertex, iTexCoord, iNormal;
-        for (int iFace = 0; iFace < 3; iFace++)
+        else if (0 == strcmp(buf, "usemtl"))
         {
-            *file >> iVertex;
-            indices.push_back(iVertex - 1 - totalNumVertex);
-
-            if ('/' == (*file).peek())
+            (*file).seekg(-6, std::ios_base::cur);
+            break;
+        }
+        else if (0 == strcmp(buf, "f"))
+        {
+            unsigned int iVertex, iTexCoord, iNormal;
+            for (int iFace = 0; iFace < 3; iFace++)
             {
-                (*file).ignore();
-
-                if ('/' != (*file).peek())
-                {
-                    *file >> iTexCoord;
-                    //T_INDICES.push_back(iTexCoord - 1);
-                }
+                numVertex++;
+                *file >> iVertex;
+                indices.push_back(iVertex - 1);
 
                 if ('/' == (*file).peek())
                 {
                     (*file).ignore();
-                    *file >> iNormal;
-                    normalIndices.push_back(iNormal - 1 - totalNumNoemal);
+
+                    if ('/' != (*file).peek())
+                    {
+                        *file >> iTexCoord;
+                        //T_INDICES.push_back(iTexCoord - 1);
+                    }
+
+                    if ('/' == (*file).peek())
+                    {
+                        (*file).ignore();
+                        *file >> iNormal;
+                        normalIndices.push_back(iNormal - 1);
+                    }
                 }
-            }
-            //改行
-            if ('\n' == (*file).peek())
-            {
-                break;
+                //改行
+                if ('\n' == (*file).peek())
+                {
+                    break;
+                }
             }
         }
     }
 
-    Vector3f normalArraySum[vertices.size()];
-    for (unsigned int i = 0; i < indices.size(); i++)
-    {
-        normalArraySum[indices[i]] += normals[normalIndices[i]];
-    }
-    GLuint vao = createVao();
-    bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
-    storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
-    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
-    unbindVao();
-
-    (*ret).pushSubset(ObjSubset(vao, indices.size(), materialId));
-    totalNumVertex += vertices.size();
-    totalNumNoemal += normals.size();
+    (*ret).pushSubset(ObjSubset(1, numVertex, materialId));
 }
 GLuint ObjModelLoader::createVao()
 {

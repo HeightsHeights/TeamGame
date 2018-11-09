@@ -1,6 +1,7 @@
 #pragma once
 
 #define MAX_MATERIAL_NAME 128
+#define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 /******************************************************************************
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
@@ -18,14 +19,14 @@
 class ObjSubset
 {
 private:
-  GLuint vao;
   unsigned int vertexCount;
+  unsigned int beginIndex;
   unsigned int materialId;
 
 public:
   ObjSubset();
-  ObjSubset(GLuint vao, unsigned int vertexCount, unsigned int materialId);
-  GLint getVao() { return this->vao; }
+  ObjSubset(unsigned int vertexCount, unsigned int beginIndex, unsigned int materialId);
+  GLint getBeginIndix() { return this->beginIndex; }
   unsigned int getVertexCount() { return this->vertexCount; }
   int getMaterialId() { return this->materialId; }
 };
@@ -48,11 +49,13 @@ public:
 class ObjRawModel
 {
 private:
+  GLuint vao;
   std::vector<ObjSubset> subsets;
   std::vector<ObjMaterial> materials;
 
 public:
   ObjRawModel();
+  void setVao(GLuint vao);
   void pushSubset(const ObjSubset subset);
   void pushMaterial(const ObjMaterial material);
   unsigned int getMtlId(const char *mName);
@@ -61,9 +64,15 @@ public:
 class ObjModelLoader
 {
 private:
+  std::vector<Vector3f> vertices;
+  std::vector<Vector2f> textures;
+  std::vector<Vector3f> normals;
+
+  std::vector<unsigned int> indices;
+  std::vector<unsigned int> textureIndices;
+  std::vector<unsigned int> normalIndices;
   ObjRawModel *ret;
-  unsigned int totalNumVertex;
-  unsigned int totalNumNoemal;
+
   bool loadObjFile(const char *filename);
   void createSubset(std::ifstream *file);
   GLuint createVao();

@@ -315,48 +315,63 @@ void ObjModelLoader::createMaterial(std::ifstream *file)
     Touple4f diffuse;
     Touple4f specular;
     Touple4f emissive;
-    float power;
+    float power = 1.0f;
 
     *file >> buf;
     strcpy(name, buf);
-
-    *file >> buf;
-    float ns;
-    *file >> ns;
-
-    for (int i = 0; i < 4; i++)
+    while (1)
     {
         *file >> buf;
-        float r, g, b;
-        *file >> r >> g >> b;
-        switch (i)
+        if (!file)
         {
-        case 0:
+            break;
+        }
+        if (0 == strcmp(buf, "Ns"))
+        {
+            float ns;
+            *file >> ns;
+            power = ns;
+        }
+        else if (0 == strcmp(buf, "Ka"))
+        {
+            float r, g, b;
+            *file >> r >> g >> b;
             ambient = Touple4f(r, g, b, 1.0f);
-            break;
-
-        case 1:
+        }
+        else if (0 == strcmp(buf, "Kd"))
+        {
+            float r, g, b;
+            *file >> r >> g >> b;
             diffuse = Touple4f(r, g, b, 1.0f);
-            break;
-
-        case 2:
+        }
+        else if (0 == strcmp(buf, "Ks"))
+        {
+            float r, g, b;
+            *file >> r >> g >> b;
             specular = Touple4f(r, g, b, 1.0f);
-            break;
-        case 3:
-
+        }
+        else if (0 == strcmp(buf, "Ke"))
+        {
+            float r, g, b;
+            *file >> r >> g >> b;
             emissive = Touple4f(r, g, b, 1.0f);
+        }
+        else if (0 == strcmp(buf, "Ni"))
+        {
+            float ni;
+            *file >> ni;
+        }
+        else if (0 == strcmp(buf, "d"))
+        {
+            float d;
+            *file >> d;
+        }
+        else if (0 == strcmp(buf, "illum"))
+        {
             break;
         }
     }
-    *file >> buf;
-    float ni;
-    *file >> ni;
-
-    *file >> buf;
-    float d;
-    *file >> d;
-
-    (*ret).pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, ns));
+    (*ret).pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));
 }
 
 ObjModelLoader::ObjModelLoader()

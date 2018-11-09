@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error --> SDL_Init()\n");
         return -1;
     }
+
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    RawModel model = ModelLoader().loadFile("data/res/gui/obj/monkey.obj");
     ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
 
     GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};
@@ -44,11 +44,6 @@ int main(int argc, char *argv[])
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
-
-    GLfloat gold_amb[] = {0.24725f, 0.1995f, 0.0745f, 1.f};
-    GLfloat gold_diff[] = {0.75164f, 0.60648f, 0.22648f, 1.f};
-    GLfloat gold_spe[] = {0.628281f, 0.555802f, 0.366065f, 1.f};
-    //GLfloat gold_shin[] = {51.2f};
 
     for (int i = 0; i < 500; i++)
     {
@@ -61,11 +56,7 @@ int main(int argc, char *argv[])
         glPushMatrix();
         ShaderManager::startShader();
         glRotated(i, 0, 1, 0);
-        // glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, gold_amb);
-        // glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, gold_diff);
-        // glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, gold_spe);
-        // glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, gold_shin);
-        //model.drawModel();
+
         obj.draw();
         ShaderManager::stopShader();
         glPopMatrix();

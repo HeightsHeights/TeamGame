@@ -5,8 +5,6 @@
 #include "../../header/render/rawmodel.h"
 #include "../../header/render/objRawModel.h"
 #include "../../header/render/xRawModel.h"
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
 /******************************************************************************
  * メイン関数
 ******************************************************************************/
@@ -38,8 +36,8 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    //ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
-    XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
+    //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
     GLfloat light0pos[] = {0.0, 10.0, 3.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};

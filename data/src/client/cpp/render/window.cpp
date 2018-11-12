@@ -1,8 +1,6 @@
 #include "../../header/render/window.h"
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
-GLfloat light0pos[] = { 0.0, 3.0, 5.0, 1.0 };
+GLfloat light0pos[] = {0.0, 3.0, 5.0, 1.0};
 
 /******************************************************************************
  * WindowManager

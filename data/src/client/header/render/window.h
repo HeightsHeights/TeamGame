@@ -1,11 +1,12 @@
 #pragma once
 
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+/******************************************************************************
+ * ウィンドウ関係に必要なヘッダーの読み込み
+******************************************************************************/
 #include <GL/glut.h>
 #include <SDL2/SDL.h>
-/******************************************************************************
- * シェーダ関係に必要なヘッダーの読み込み
-******************************************************************************/
-
 /******************************************************************************
  * class WindowManager
  * 機能1：SDL_WindowやSDL_Rendererを保持する
@@ -15,14 +16,14 @@
 ******************************************************************************/
 class WindowManager
 {
-  private:
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    bool initSDLWindow();
-    bool initOpenGL(int argc, char *argv[]);
+private:
+  SDL_Window *window;
+  SDL_Renderer *renderer;
+  bool initSDLWindow();
+  bool initOpenGL(int argc, char *argv[]);
 
-  public:
-    WindowManager(int argc, char *argv[]);
-    void clearWindow();
-    void swapWindow();
+public:
+  WindowManager(int argc, char *argv[]);
+  void clearWindow();
+  void swapWindow();
 };

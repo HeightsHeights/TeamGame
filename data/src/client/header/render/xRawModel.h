@@ -18,36 +18,39 @@
 
 class XRawModel
 {
-  private:
-  public:
-    XRawModel();
-    void draw();
+private:
+  GLuint vao;
+  unsigned int vertexCount;
+
+public:
+  XRawModel();
+  void draw();
 };
 
 class XModelLoader
 {
-  private:
-    std::vector<Vector3f> vertices;
-    std::vector<Vector2f> textures;
-    std::vector<Vector3f> normals;
+private:
+  std::vector<Vector3f> vertices;
+  std::vector<Vector2f> textures;
+  std::vector<Vector3f> normals;
 
-    std::vector<unsigned int> indices;
-    std::vector<unsigned int> textureIndices;
-    std::vector<unsigned int> normalIndices;
+  std::vector<unsigned int> indices;
+  std::vector<unsigned int> textureIndices;
+  std::vector<unsigned int> normalIndices;
 
-    XRawModel *ret;
+  XRawModel *ret;
 
-    std::ifstream file;
-    unsigned int maxFile;
+  std::ifstream file;
+  unsigned int maxFile;
 
-    bool skipLine();
-    bool loadXFile();
-    GLuint createVao();
-    void storeAttributeData(const int attributeNumber, const GLsizeiptr size, const float *data, GLboolean normalize);
-    void bindIndicesBuffer(const GLsizeiptr size, const unsigned int *indices);
-    void unbindVao();
+  bool skipLine();
+  bool loadXFile();
+  GLuint createVao();
+  void storeAttributeData(const int attributeNumber, const GLsizeiptr size, const float *data, GLboolean normalize);
+  void bindIndicesBuffer(const GLsizeiptr size, const unsigned int *indices);
+  void unbindVao();
 
-  public:
-    XModelLoader();
-    XRawModel *load(const char *fileName);
+public:
+  XModelLoader();
+  XRawModel *load(const char *fileName);
 };

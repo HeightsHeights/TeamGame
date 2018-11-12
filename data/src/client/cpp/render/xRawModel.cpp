@@ -10,6 +10,9 @@ XRawModel::XRawModel()
 }
 void XRawModel::draw()
 {
+    glBindVertexArray(vao);
+    glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 /******************************************************************************
  * XModelLoader
@@ -50,7 +53,49 @@ bool XModelLoader::loadXFile()
                 getline(file, str);
                 float x, y, z;
                 sscanf(str.data(), "%f;%f;%f;,", &x, &y, &z);
+                vertices.push_back(Vector3f(x, y, z));
+            }
+            unsigned int numIndex;
+            getline(file, str);
+            sscanf(str.data(), "%u;,", &numIndex);
+            for (int i = 0; i < numIndex; i++)
+            {
+                getline(file, str);
+                unsigned int numPolygon, index1, index2, index3;
+                sscanf(str.data(), "%u:%u,%u,%u,,", &numPolygon, &index1, &index2, &index3);
+                indices.push_back(index1);
+                indices.push_back(index2);
+                indices.push_back(index3);
+            }
+        }
+        else if (0 == strcmp(buf, "MeshNormals"))
+        {
+            skipLine();
+
+            unsigned int numMeshNomals;
+            getline(file, str);
+            sscanf(str.data(), "%u;,", &numMeshNomals);
+
+            for (unsigned int i = 0; i < numMeshNomals; i++)
+            {
+                getline(file, str);
+                float x, y, z;
+                sscanf(str.data(), "%f;%f;%f;,", &x, &y, &z);
+                normals.push_back(Vector3f(x, y, z));
                 printf("%f%f%f\n", x, y, z);
+            }
+            unsigned int numNormalIndex;
+            getline(file, str);
+            sscanf(str.data(), "%u;,", &numNormalIndex);
+            for (int i = 0; i < numNormalIndex; i++)
+            {
+                getline(file, str);
+                unsigned int index1, index2, index3;
+                sscanf(str.data(), "%u;%u;%u;,", &index1, &index2, &index3);
+                indices.push_back(index1);
+                indices.push_back(index2);
+                indices.push_back(index3);
+                printf("%u%u%u\n", index1, index2, index3);
             }
         }
 
@@ -105,16 +150,17 @@ XRawModel *XModelLoader::load(const char *fileName)
     }
     file.close();
 
-    Vector3f normalArraySum[vertices.size()];
-    for (unsigned int i = 0; i < indices.size(); i++)
-    {
-        normalArraySum[indices[i]] += normals[normalIndices[i]];
-    }
+    // Vector3f normalArraySum[vertices.size()];
+    // for (unsigned int i = 0; i < indices.size(); i++)
+    // {
+    //     normalArraySum[indices[i]] += normals[normalIndices[i]];
+    // }
 
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
-    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
+
+    //storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
     unbindVao();
 
     return ret;

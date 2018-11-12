@@ -9,6 +9,12 @@
 #include <GL/glut.h>
 #include <fstream>
 
+typedef enum {
+  SID_STATIC = 0,
+  SID_TEST = 1,
+  SID_NUM = 2,
+} SHADER_ID;
+
 /******************************************************************************
  * class ShaderProgram
  * 機能1：シェーダIDなどを保持
@@ -71,10 +77,10 @@ public:
 class ShaderManager
 {
 private:
-  static ShaderProgram *shaders;
+  static ShaderProgram *shaders[SID_NUM];
 
 public:
   static bool initShader();
-  static void startShader();
-  static void stopShader();
+  static void startShader(SHADER_ID sid);
+  static void stopShader(SHADER_ID sid);
 };

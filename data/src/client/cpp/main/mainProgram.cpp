@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    //ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
-    XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
+    //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
     GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
@@ -56,11 +56,11 @@ int main(int argc, char *argv[])
         gluLookAt(15.0, 25.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
-        ShaderManager::startShader();
+        ShaderManager::startShader(SID_STATIC);
         glRotated(i, 0, 1, 0);
 
         obj.draw();
-        ShaderManager::stopShader();
+        ShaderManager::stopShader(SID_STATIC);
         glPopMatrix();
         glFlush();
         window.swapWindow();

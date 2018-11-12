@@ -2,10 +2,15 @@
 #include "../../header/render/glsl.h"
 #include <stdio.h>
 
-const char *VERTEX_FILE = "./data/src/client/shader/staticVertexShader.vert";
-const char *FRAGMENT_FILE = "./data/src/client/shader/staticFragmentShader.frag";
+const char *VERTEX_FILE[SID_NUM] = {
+    "./data/src/client/shader/staticVertexShader.vert",
+    "./data/src/client/shader/testVertexShader.vert"};
 
-ShaderProgram *ShaderManager::shaders;
+const char *FRAGMENT_FILE[SID_NUM] = {
+    "./data/src/client/shader/staticFragmentShader.frag",
+    "./data/src/client/shader/testFragmentShader.frag"};
+
+ShaderProgram *ShaderManager::shaders[SID_NUM];
 
 /******************************************************************************
  * コンストラクタ
@@ -17,18 +22,26 @@ ShaderProgram *ShaderManager::shaders;
 //シェーダ初期化
 bool ShaderManager::initShader()
 {
-    shaders = StaticShaderLoader().generateShader(VERTEX_FILE, FRAGMENT_FILE);
+    for (int i = 0; i < SID_NUM; i++)
+    {
+        shaders[i] = StaticShaderLoader().generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
+        if (shaders[i] == NULL)
+        {
+            fprintf(stderr, "Error --> shader[%d] is NULL\n", i);
+            return false;
+        }
+        }
     return true;
 }
 //シェーダを始める
-void ShaderManager::startShader()
+void ShaderManager::startShader(SHADER_ID sid)
 {
-    (*shaders).startShader();
+    (*shaders[sid]).startShader();
 }
 //シェーダを終わらせる
-void ShaderManager::stopShader()
+void ShaderManager::stopShader(SHADER_ID sid)
 {
-    (*shaders).stopShader();
+    (*shaders[sid]).stopShader();
 }
 /******************************************************************************
  * BaseShaderLoader

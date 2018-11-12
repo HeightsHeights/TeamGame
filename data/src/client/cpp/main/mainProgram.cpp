@@ -58,11 +58,11 @@ int main(int argc, char *argv[])
         gluLookAt(0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
-        ShaderManager::startShader(SID_STATIC);
+        ShaderManager::startShader(SID_TEST);
         glRotated(i, 0, 1, 0);
 
         obj.draw();
-        ShaderManager::stopShader(SID_STATIC);
+        ShaderManager::stopShader(SID_TEST);
         glPopMatrix();
         glFlush();
         window.swapWindow();

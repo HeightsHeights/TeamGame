@@ -8,6 +8,14 @@ XRawModel::XRawModel()
 {
     /* nothing */
 }
+void XRawModel::setVao(GLuint vao)
+{
+    this->vao = vao;
+}
+void XRawModel::setVertexCount(unsigned int vertexCount)
+{
+    this->vertexCount = vertexCount;
+}
 void XRawModel::draw()
 {
     glBindVertexArray(vao);
@@ -33,13 +41,13 @@ bool XModelLoader::loadXFile()
     std::string str;
     while (1)
     {
-        /* Mesh まで飛ぶ　→　数の分メッシュを読み込む　→　数の分面番号を読み込む */
         file >> buf;
 
         if (!(file))
         {
             break;
         }
+        /* Mesh まで飛ぶ　→　数の分メッシュを読み込む　→　数の分面番号を読み込む */
         if (0 == strcmp(buf, "Mesh"))
         {
             skipLine();
@@ -52,7 +60,7 @@ bool XModelLoader::loadXFile()
             {
                 getline(file, str);
                 float x, y, z;
-                sscanf(str.data(), "%f;%f;%f;,", &x, &y, &z);
+                sscanf(str.data(), "%f;%f;%f;", &x, &y, &z);
                 vertices.push_back(Vector3f(x, y, z));
             }
             unsigned int numIndex;
@@ -62,12 +70,13 @@ bool XModelLoader::loadXFile()
             {
                 getline(file, str);
                 unsigned int numPolygon, index1, index2, index3;
-                sscanf(str.data(), "%u:%u,%u,%u,,", &numPolygon, &index1, &index2, &index3);
+                sscanf(str.data(), "%u;%u,%u,%u;", &numPolygon, &index1, &index2, &index3);
                 indices.push_back(index1);
                 indices.push_back(index2);
                 indices.push_back(index3);
             }
         }
+        /* MeshNormal まで飛ぶ　→　数の分法線を読み込む →　数の分法線番号を読み込む*/
         else if (0 == strcmp(buf, "MeshNormals"))
         {
             skipLine();
@@ -80,9 +89,9 @@ bool XModelLoader::loadXFile()
             {
                 getline(file, str);
                 float x, y, z;
-                sscanf(str.data(), "%f;%f;%f;,", &x, &y, &z);
+                sscanf(str.data(), "%f;%f;%f;", &x, &y, &z);
                 normals.push_back(Vector3f(x, y, z));
-                printf("%f%f%f\n", x, y, z);
+                //printf("%5f%5f%5f\n", x, y, z);
             }
             unsigned int numNormalIndex;
             getline(file, str);
@@ -90,16 +99,15 @@ bool XModelLoader::loadXFile()
             for (int i = 0; i < numNormalIndex; i++)
             {
                 getline(file, str);
-                unsigned int index1, index2, index3;
-                sscanf(str.data(), "%u;%u;%u;,", &index1, &index2, &index3);
-                indices.push_back(index1);
-                indices.push_back(index2);
-                indices.push_back(index3);
-                printf("%u%u%u\n", index1, index2, index3);
+                unsigned int numPolygon, index1, index2, index3;
+                sscanf(str.data(), "%u;%u,%u,%u;", &numPolygon, &index3, &index2, &index1);
+                normalIndices.push_back(index1);
+                normalIndices.push_back(index2);
+                normalIndices.push_back(index3);
+                //printf("%5u%5u%5u\n", index1, index2, index3);
             }
+            break;
         }
-
-        /* MeshNormal まで飛ぶ　→　数の分法線を読み込む →　数の分法線番号を読み込む*/
     }
     return true;
 }
@@ -150,18 +158,20 @@ XRawModel *XModelLoader::load(const char *fileName)
     }
     file.close();
 
-    // Vector3f normalArraySum[vertices.size()];
-    // for (unsigned int i = 0; i < indices.size(); i++)
-    // {
-    //     normalArraySum[indices[i]] += normals[normalIndices[i]];
-    // }
+    Vector3f normalArraySum[vertices.size()];
+    for (unsigned int i = 0; i < indices.size(); i++)
+    {
+        normalArraySum[indices[i]] += normals[normalIndices[i]];
+    }
 
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
-
-    //storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
+    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normals[0], GL_TRUE);
     unbindVao();
+
+    (*ret).setVao(vao);
+    (*ret).setVertexCount(indices.size());
 
     return ret;
 }

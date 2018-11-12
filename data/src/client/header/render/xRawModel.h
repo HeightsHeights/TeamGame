@@ -16,6 +16,28 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
+class VertexData
+{
+
+private:
+  Vector3f pos;
+  Vector2f uv;
+  Vector3f normal;
+
+public:
+  VertexData(Vector3f pos, Vector2f uv, Vector3f normal)
+  {
+    this->pos = pos;
+    this->uv = uv;
+    this->normal = normal;
+  }
+  VertexData(Vector3f pos, Vector3f normal)
+  {
+    this->pos = pos;
+    this->normal = normal;
+  }
+};
+
 class XRawModel
 {
 private:
@@ -24,6 +46,8 @@ private:
 
 public:
   XRawModel();
+  void setVao(GLuint vao);
+  void setVertexCount(unsigned int vertexCount);
   void draw();
 };
 

@@ -42,12 +42,12 @@ class XRawModel
 {
 private:
   GLuint vao;
-  unsigned int vertexCount;
+  std::vector<unsigned int> vertexCount;
 
 public:
   XRawModel();
   void setVao(GLuint vao);
-  void setVertexCount(unsigned int vertexCount);
+  void pushVertexCount(unsigned int vertexCount);
   void draw();
 };
 
@@ -66,6 +66,9 @@ private:
 
   std::ifstream file;
   unsigned int maxFile;
+
+  unsigned int numVertex;
+  unsigned int numNormal;
 
   bool skipLine();
   bool loadXFile();

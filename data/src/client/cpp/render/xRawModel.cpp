@@ -1,6 +1,8 @@
 #include "../../header/render/xRawModel.h"
 #include <string.h>
 #include <limits>
+
+#define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 /******************************************************************************
  * XRawModel
 ******************************************************************************/
@@ -12,15 +14,22 @@ void XRawModel::setVao(GLuint vao)
 {
     this->vao = vao;
 }
-void XRawModel::setVertexCount(unsigned int vertexCount)
+void XRawModel::pushVertexCount(unsigned int vertexCount)
 {
-    this->vertexCount = vertexCount;
+    this->vertexCount.push_back(vertexCount);
 }
 void XRawModel::draw()
 {
-    glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    unsigned int beginIndex = 0;
+    for (unsigned int i = 0; i < vertexCount.size(); i++)
+    {
+
+        glBindVertexArray(vao);
+        glDrawElements(GL_TRIANGLES, vertexCount[i], GL_UNSIGNED_INT, BUFFER_OFFSET(beginIndex * sizeof(unsigned int)));
+        glBindVertexArray(0);
+
+        beginIndex += vertexCount[i];
+    }
 }
 /******************************************************************************
  * XModelLoader
@@ -36,7 +45,7 @@ bool XModelLoader::skipLine()
 }
 bool XModelLoader::loadXFile()
 {
-
+    numVertex = numNormal = 0;
     char buf[OBJ_BUFFER_LENGTH] = {0};
     std::string str;
     while (1)
@@ -66,14 +75,15 @@ bool XModelLoader::loadXFile()
             unsigned int numIndex;
             getline(file, str);
             sscanf(str.data(), "%u;,", &numIndex);
+            (*ret).pushVertexCount(numIndex * 3);
             for (int i = 0; i < numIndex; i++)
             {
                 getline(file, str);
                 unsigned int numPolygon, index1, index2, index3;
                 sscanf(str.data(), "%u;%u,%u,%u;", &numPolygon, &index1, &index2, &index3);
-                indices.push_back(index1);
-                indices.push_back(index2);
-                indices.push_back(index3);
+                indices.push_back(index1 + numVertex);
+                indices.push_back(index2 + numVertex);
+                indices.push_back(index3 + numVertex);
             }
         }
         /* MeshNormal まで飛ぶ　→　数の分法線を読み込む →　数の分法線番号を読み込む*/
@@ -101,12 +111,13 @@ bool XModelLoader::loadXFile()
                 getline(file, str);
                 unsigned int numPolygon, index1, index2, index3;
                 sscanf(str.data(), "%u;%u,%u,%u;", &numPolygon, &index3, &index2, &index1);
-                normalIndices.push_back(index1);
-                normalIndices.push_back(index2);
-                normalIndices.push_back(index3);
+                normalIndices.push_back(index1 + numNormal);
+                normalIndices.push_back(index2 + numNormal);
+                normalIndices.push_back(index3 + numNormal);
                 //printf("%5u%5u%5u\n", index1, index2, index3);
             }
-            break;
+            numVertex = vertices.size();
+            numNormal = normals.size();
         }
     }
     return true;
@@ -167,11 +178,10 @@ XRawModel *XModelLoader::load(const char *fileName)
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
-    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normals[0], GL_TRUE);
+    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
     unbindVao();
 
     (*ret).setVao(vao);
-    (*ret).setVertexCount(indices.size());
 
     return ret;
 }

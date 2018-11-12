@@ -4,11 +4,13 @@
 
 const char *VERTEX_FILE[SID_NUM] = {
     "./data/src/client/shader/staticVertexShader.vert",
-    "./data/src/client/shader/testVertexShader.vert"};
+    "./data/src/client/shader/testVertexShader.vert",
+};
 
 const char *FRAGMENT_FILE[SID_NUM] = {
     "./data/src/client/shader/staticFragmentShader.frag",
-    "./data/src/client/shader/testFragmentShader.frag"};
+    "./data/src/client/shader/testFragmentShader.frag",
+};
 
 ShaderProgram *ShaderManager::shaders[SID_NUM];
 
@@ -22,15 +24,23 @@ ShaderProgram *ShaderManager::shaders[SID_NUM];
 //シェーダ初期化
 bool ShaderManager::initShader()
 {
+
+    BaseShaderLoader *loaders[SID_NUM] = {
+        new StaticShaderLoader(),
+        new TestShaderLoader(),
+    };
+
     for (int i = 0; i < SID_NUM; i++)
     {
-        shaders[i] = StaticShaderLoader().generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
+        shaders[i] = (*loaders[i]).generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
         if (shaders[i] == NULL)
         {
             fprintf(stderr, "Error --> shader[%d] is NULL\n", i);
             return false;
         }
+        delete loaders[i];
     }
+
     return true;
 }
 //シェーダを始める
@@ -85,6 +95,11 @@ void BaseShaderLoader::bindAttribute(int attribute, const char *variableName)
 {
     glBindAttribLocation(programID, attribute, variableName);
 }
+
+void BaseShaderLoader::bindAttributes()
+{
+}
+
 /******************************************************************************
  * class StaticShaderLoader
 ******************************************************************************/

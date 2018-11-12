@@ -48,10 +48,11 @@ private:
   GLuint fragmentShaderID;
 
   GLuint loadShader(const char *file, int type);
-  virtual void bindAttributes() = 0;
+  virtual void bindAttributes();
 
 public:
   ShaderProgram *generateShader(const char *vertex_filename, const char *fragment_filename);
+  virtual ~BaseShaderLoader() {}
 
 protected:
   void bindAttribute(int attribute, const char *variableName);
@@ -64,7 +65,7 @@ protected:
 class StaticShaderLoader : public BaseShaderLoader
 {
 private:
-  void bindAttributes();
+  virtual void bindAttributes();
 
 public:
 };
@@ -75,7 +76,7 @@ public:
 class TestShaderLoader : public BaseShaderLoader
 {
 private:
-  void bindAttributes();
+  virtual void bindAttributes();
 
 public:
 };

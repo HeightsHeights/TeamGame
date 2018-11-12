@@ -106,15 +106,15 @@ void BaseShaderLoader::bindAttributes()
 void StaticShaderLoader::bindAttributes()
 {
     bindAttribute(0, "position");
-    bindAttribute(2, "normal");
+    //bindAttribute(2, "normal");
 }
 /******************************************************************************
  * class TestShaderLoader
 ******************************************************************************/
 void TestShaderLoader::bindAttributes()
 {
-    bindAttribute(0, "position");
-    bindAttribute(2, "normal");
+    //bindAttribute(0, "position");
+    //bindAttribute(2, "normal");
 }
 /******************************************************************************
  * ShaderProgram

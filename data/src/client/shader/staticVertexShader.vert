@@ -3,7 +3,7 @@ void main(void)
 {
 	//投影変換 (モデルビュー * プロジェクション) * 頂点座標
 	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-
+	
 	//ambient計算
 	float4 ambient = gl_LightSource[0].ambient * gl_FrontMaterial.ambient;//ambientの計算
 

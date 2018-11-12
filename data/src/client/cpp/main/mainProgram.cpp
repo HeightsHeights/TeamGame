@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/bat.obj", "data/res/gui/obj/bat.mtl");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
     GLfloat light0pos[] = {6.0, 10.0, 0.0, 1.0};

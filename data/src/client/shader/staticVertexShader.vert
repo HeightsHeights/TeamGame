@@ -9,7 +9,7 @@ void main(void)
 
 	//各種基本的なベクトルを計算
 	vec3 N = normalize(gl_NormalMatrix * gl_Normal);//視点座標の法線＋正規化
-	vec4 V = gl_ModelViewMatrix * gl_Vertex;//視点座標系の頂点位置
+	vec4 V =normalize(-gl_ModelViewMatrix * gl_Vertex);//視点座標系の頂点位置
 	vec3 L = normalize(gl_LightSource[0].position.xyz - V.xyz);//頂点→光源へのベクトル
 
 	//diffuse計算

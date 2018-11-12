@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "../../header/main/mainProgram.h"
 #include "../../header/network/network.h"
 /******************************************************************************

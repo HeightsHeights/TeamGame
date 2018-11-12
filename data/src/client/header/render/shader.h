@@ -68,6 +68,17 @@ private:
 
 public:
 };
+/******************************************************************************
+ * class TestShaderLoader
+ * 機能1：TestShader用のAttribute変数設定をする
+******************************************************************************/
+class TestShaderLoader : public BaseShaderLoader
+{
+private:
+  void bindAttributes();
+
+public:
+};
 
 /******************************************************************************
  * class ShaderManager

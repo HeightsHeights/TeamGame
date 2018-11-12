@@ -30,7 +30,7 @@ bool ShaderManager::initShader()
             fprintf(stderr, "Error --> shader[%d] is NULL\n", i);
             return false;
         }
-        }
+    }
     return true;
 }
 //シェーダを始める
@@ -90,6 +90,16 @@ void BaseShaderLoader::bindAttribute(int attribute, const char *variableName)
 ******************************************************************************/
 void StaticShaderLoader::bindAttributes()
 {
+    bindAttribute(0, "position");
+    bindAttribute(2, "normal");
+}
+/******************************************************************************
+ * class TestShaderLoader
+******************************************************************************/
+void TestShaderLoader::bindAttributes()
+{
+    bindAttribute(0, "position");
+    bindAttribute(2, "normal");
 }
 /******************************************************************************
  * ShaderProgram

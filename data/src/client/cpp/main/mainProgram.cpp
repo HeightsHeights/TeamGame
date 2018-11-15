@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/droid.obj", "data/res/gui/obj/droid.mtl");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
-    GLfloat light0pos[] = {0.0, 10.0, 3.0, 1.0};
+    GLfloat light0pos[] = {0.0, 5.0, 0.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         window.clearWindow();
         glLoadIdentity();
         gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-        gluLookAt(3.0, 3.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+        gluLookAt(0.0, 19.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
         ShaderManager::startShader(SID_TEST);

@@ -1,8 +1,8 @@
 #include "../../header/render/objRawModel.h"
 
 #include <string.h>
-#define OBJ_NAME_LENGTH 128
-#define OBJ_BUFFER_LENGTH 128
+#define OBJ_NAME_LENGTH 256
+#define OBJ_BUFFER_LENGTH 256
 /******************************************************************************
  * ObjSubset
 ******************************************************************************/

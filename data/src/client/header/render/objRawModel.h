@@ -20,7 +20,6 @@ class ObjSubset
 {
 private:
   unsigned int vertexCount;
-  unsigned int beginIndex;
   unsigned int materialId;
 
 public:

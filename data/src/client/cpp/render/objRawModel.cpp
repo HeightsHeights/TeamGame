@@ -1,6 +1,8 @@
 #include "../../header/render/objRawModel.h"
 
 #include <string.h>
+#include <limits>
+
 #define OBJ_NAME_LENGTH 256
 #define OBJ_BUFFER_LENGTH 256
 /******************************************************************************
@@ -226,7 +228,7 @@ void ObjModelLoader::createSubset(std::ifstream *file)
                     if ('/' != (*file).peek())
                     {
                         *file >> iTexCoord;
-                        //T_INDICES.push_back(iTexCoord - 1);
+                        textureIndices.push_back(iTexCoord - 1);
                     }
 
                     if ('/' == (*file).peek())
@@ -368,7 +370,18 @@ void ObjModelLoader::createMaterial(std::ifstream *file)
         }
         else if (0 == strcmp(buf, "illum"))
         {
-            break;
+            (*file).ignore(std::numeric_limits<std::streamsize>::max(), (*file).widen('\n'));
+            *file >> buf;
+            if (!file)
+            {
+                break;
+            }
+            if (0 == strcmp(buf, "map_Kd"))
+            {
+                char str[256];
+                        }
+            else
+                break;
         }
     }
     (*ret).pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));

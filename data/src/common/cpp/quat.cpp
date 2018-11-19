@@ -31,3 +31,16 @@ Touple4f Touple4f::operator=(Touple4f obj)
     this->z = obj.z;
     this->w = obj.w;
 }
+
+void Touple4f::callMe()
+{
+    printf("%4f\t%4f\t%4f\t%4f\n", this->x, this->y, this->z, this->w);
+    printf("\n\n\n");
+}
+
+Vector4f::Vector4f() : Touple4f()
+{
+}
+Vector4f::Vector4f(float x, float y, float z, float w) : Touple4f(x, y, z, w)
+{
+}

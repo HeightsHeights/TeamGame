@@ -1,7 +1,10 @@
 #pragma once
 
-#define Vector3f_ZERO *new Vector3f(0, 0, 0)
-#define Vector2f_ZERO *new Vector2f(0, 0)
+#define Vector3f_MAX_SIZE 3
+#define Vector2f_MAX_SIZE 2
+
+#define Vector3f_ZERO Vector3f(0, 0, 0)
+#define Vector2f_ZERO Vector2f(0, 0)
 
 /******************************************************************************
  * class Vector3f

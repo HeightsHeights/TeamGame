@@ -114,12 +114,7 @@ Matrix4x4f Matrix4x4f::operator+()
 }
 Matrix4x4f Matrix4x4f::operator-()
 {
-    Matrix4x4f ret;
-    for (int i = 0; i < Matrix4x4f_MAX_SIZE; i++)
-    {
-        ret.matrix[i] = -this->matrix[i];
-    }
-    return ret;
+    return *this * -1;
 }
 float Matrix4x4f::getElement(unsigned int i, unsigned int j)
 {

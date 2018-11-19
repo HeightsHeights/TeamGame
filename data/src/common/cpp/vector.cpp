@@ -1,3 +1,4 @@
+#include "../header/matrixf.h"
 /******************************************************************************
  * ベクトル関係に必要なヘッダーの読み込み
 ******************************************************************************/
@@ -167,18 +168,7 @@ Vector3f Vector3f::cross(Vector3f a, Vector3f b)
 {
     return Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
-/***********************************
- * 引数：行列
- * 戻り値：行列をかけて生じるベクトル
-************************************/
-Vector3f Vector3f::matrixMultiplication(float matrix[3][3])
-{
-    Vector3f ret;
-    ret.x = matrix[0][0] * x + matrix[0][1] * y + matrix[0][2] * z;
-    ret.y = matrix[1][0] * x + matrix[1][1] * y + matrix[1][2] * z;
-    ret.z = matrix[2][0] * x + matrix[2][1] * y + matrix[2][2] * z;
-    return ret;
-}
+
 /***********************************
  * 引数：スケール用のベクトル
  * 戻り値：スケーリングされたベクトル
@@ -195,25 +185,25 @@ Vector3f Vector3f::scaling(Vector3f scaleVector)
 Vector3f Vector3f::rotate(Vector3f v, float angle)
 {
     v = v.normalize();
-    float rotation_matrix[3][3];
+    Matrix3x3f rotationMatrix;
     float Radian_angle = angle * M_PI / 180.0f;
 
     float COSINE = (float)std::cos(Radian_angle);
     float SINE = (float)std::sin(Radian_angle);
 
-    rotation_matrix[0][0] = COSINE + (float)std::pow(v.x, 2.0) * (1.0f - COSINE);
-    rotation_matrix[0][1] = v.x * v.y * (1.0f - COSINE) - v.z * SINE;
-    rotation_matrix[0][2] = v.x * v.z * (1.0f - COSINE) + v.y * SINE;
+    rotationMatrix[0] = COSINE + (float)std::pow(v.x, 2.0) * (1.0f - COSINE);
+    rotationMatrix[1] = v.x * v.y * (1.0f - COSINE) - v.z * SINE;
+    rotationMatrix[2] = v.x * v.z * (1.0f - COSINE) + v.y * SINE;
 
-    rotation_matrix[1][0] = v.y * v.x * (1.0f - COSINE) + v.z * SINE;
-    rotation_matrix[1][1] = COSINE + (float)std::pow(v.y, 2.0) * (1.0f - COSINE);
-    rotation_matrix[1][2] = v.y * v.z * (1.0f - COSINE) - v.x * SINE;
+    rotationMatrix[3] = v.y * v.x * (1.0f - COSINE) + v.z * SINE;
+    rotationMatrix[4] = COSINE + (float)std::pow(v.y, 2.0) * (1.0f - COSINE);
+    rotationMatrix[5] = v.y * v.z * (1.0f - COSINE) - v.x * SINE;
 
-    rotation_matrix[2][0] = v.z * v.x * (1.0f - COSINE) - v.y * SINE;
-    rotation_matrix[2][1] = v.z * v.y * (1.0f - COSINE) + v.x * SINE;
-    rotation_matrix[2][2] = COSINE + (float)std::pow(v.z, 2.0) * (1.0f - COSINE);
+    rotationMatrix[6] = v.z * v.x * (1.0f - COSINE) - v.y * SINE;
+    rotationMatrix[7] = v.z * v.y * (1.0f - COSINE) + v.x * SINE;
+    rotationMatrix[8] = COSINE + (float)std::pow(v.z, 2.0) * (1.0f - COSINE);
 
-    Vector3f ret = matrixMultiplication(rotation_matrix);
+    Vector3f ret = rotationMatrix * *this;
     return ret;
 }
 
@@ -223,8 +213,7 @@ Vector3f Vector3f::rotate(Vector3f v, float angle)
 ************************************/
 float Vector3f::betweenAngleRdian(Vector3f v)
 {
-    Vector3f THIS = Vector3f(x, y, z);
-    return acosf(dot(THIS, v) / (THIS.magnitude() * v.magnitude()));
+    return acosf(dot(*this, v) / ((*this).magnitude() * v.magnitude()));
 }
 /***********************************
  * 引数：角度を取るベクトル

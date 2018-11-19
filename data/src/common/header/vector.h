@@ -43,7 +43,6 @@ public:
   Vector3f normalize();
   static float dot(Vector3f a, Vector3f b);
   static Vector3f cross(Vector3f a, Vector3f b);
-  Vector3f matrixMultiplication(float matrix[3][3]);
   Vector3f scaling(Vector3f scaleVector);
   Vector3f rotate(Vector3f v, float angle);
   float betweenAngleRdian(Vector3f v);

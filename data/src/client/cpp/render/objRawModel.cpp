@@ -1,8 +1,13 @@
 #include "../../header/render/objRawModel.h"
 
+#include <stdio.h>
 #include <string.h>
+#include <limits>
+
 #define OBJ_NAME_LENGTH 256
 #define OBJ_BUFFER_LENGTH 256
+
+#define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 /******************************************************************************
  * ObjSubset
 ******************************************************************************/
@@ -106,7 +111,6 @@ void ObjRawModel::draw()
 bool ObjModelLoader::loadObjFile(const char *filename)
 {
     /*ファイルを読み込んでObjSubsetに変換しプッシュ*/
-    std::ifstream file;
     char buf[OBJ_BUFFER_LENGTH] = {0};
 
     //ファイルを開ける
@@ -126,12 +130,12 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         }
         if (0 == strcmp(buf, "o"))
         {
-            createSubset(&file);
+            createSubset();
         }
         else if (0 == strcmp(buf, "usemtl"))
         {
             file.seekg(-6, std::ios_base::cur);
-            createSubset(&file);
+            createSubset();
         }
     }
 
@@ -152,7 +156,7 @@ bool ObjModelLoader::loadObjFile(const char *filename)
     file.close();
     return true;
 }
-void ObjModelLoader::createSubset(std::ifstream *file)
+void ObjModelLoader::createSubset()
 {
     char buf[OBJ_BUFFER_LENGTH] = {0};
 
@@ -162,52 +166,52 @@ void ObjModelLoader::createSubset(std::ifstream *file)
 
     while (1)
     {
-        *file >> buf;
-        if (!(*file))
+        file >> buf;
+        if (!(file))
         {
             break;
         }
         if (0 == strcmp(buf, "v"))
         {
             float x, y, z;
-            *file >> x >> y >> z;
+            file >> x >> y >> z;
             vertices.push_back(Vector3f(x, y, z));
         }
         else if (0 == strcmp(buf, "vt"))
         {
             float u, v;
-            *file >> u >> v;
+            file >> u >> v;
             textures.push_back(Vector2f(u, v));
         }
         else if (0 == strcmp(buf, "vn"))
         {
             float x, y, z;
-            *file >> x >> y >> z;
+            file >> x >> y >> z;
             normals.push_back(Vector3f(x, y, z));
         }
         else if (0 == strcmp(buf, "usemtl"))
         {
-            *file >> buf;
+            file >> buf;
             materialId = (*ret).getMtlId(buf);
             break;
         }
     }
     while (1)
     {
-        *file >> buf;
-        if (!(*file))
+        file >> buf;
+        if (!file)
         {
             break;
         }
 
         if (0 == strcmp(buf, "o"))
         {
-            (*file).seekg(-1, std::ios_base::cur);
+            file.seekg(-1, std::ios_base::cur);
             break;
         }
         else if (0 == strcmp(buf, "usemtl"))
         {
-            (*file).seekg(-6, std::ios_base::cur);
+            file.seekg(-6, std::ios_base::cur);
             break;
         }
         else if (0 == strcmp(buf, "f"))
@@ -216,28 +220,28 @@ void ObjModelLoader::createSubset(std::ifstream *file)
             for (int iFace = 0; iFace < 3; iFace++)
             {
                 numVertex++;
-                *file >> iVertex;
+                file >> iVertex;
                 indices.push_back(iVertex - 1);
 
-                if ('/' == (*file).peek())
+                if ('/' == file.peek())
                 {
-                    (*file).ignore();
+                    file.ignore();
 
-                    if ('/' != (*file).peek())
+                    if ('/' != file.peek())
                     {
-                        *file >> iTexCoord;
-                        //T_INDICES.push_back(iTexCoord - 1);
+                        file >> iTexCoord;
+                        textureIndices.push_back(iTexCoord - 1);
                     }
 
-                    if ('/' == (*file).peek())
+                    if ('/' == file.peek())
                     {
-                        (*file).ignore();
-                        *file >> iNormal;
+                        file.ignore();
+                        file >> iNormal;
                         normalIndices.push_back(iNormal - 1);
                     }
                 }
                 //改行
-                if ('\n' == (*file).peek())
+                if ('\n' == file.peek())
                 {
                     break;
                 }
@@ -279,7 +283,6 @@ void ObjModelLoader::unbindVao()
 bool ObjModelLoader::loadMtlFile(const char *filename)
 {
     /*ファイルを読み込んでObjMaterialに変換しプッシュ*/
-    std::ifstream file;
     char buf[OBJ_BUFFER_LENGTH] = {0};
 
     //ファイルを開ける
@@ -299,14 +302,14 @@ bool ObjModelLoader::loadMtlFile(const char *filename)
         }
         if (0 == strcmp(buf, "newmtl"))
         {
-            createMaterial(&file);
+            createMaterial();
         }
     }
 
     file.close();
     return true;
 }
-void ObjModelLoader::createMaterial(std::ifstream *file)
+void ObjModelLoader::createMaterial()
 {
     char buf[OBJ_BUFFER_LENGTH] = {0};
 
@@ -317,11 +320,11 @@ void ObjModelLoader::createMaterial(std::ifstream *file)
     Touple4f emissive;
     float power = 1.0f;
 
-    *file >> buf;
+    file >> buf;
     strcpy(name, buf);
     while (1)
     {
-        *file >> buf;
+        file >> buf;
         if (!file)
         {
             break;
@@ -329,42 +332,42 @@ void ObjModelLoader::createMaterial(std::ifstream *file)
         if (0 == strcmp(buf, "Ns"))
         {
             float ns;
-            *file >> ns;
+            file >> ns;
             power = ns;
         }
         else if (0 == strcmp(buf, "Ka"))
         {
             float r, g, b;
-            *file >> r >> g >> b;
+            file >> r >> g >> b;
             ambient = Touple4f(r, g, b, 1.0f);
         }
         else if (0 == strcmp(buf, "Kd"))
         {
             float r, g, b;
-            *file >> r >> g >> b;
+            file >> r >> g >> b;
             diffuse = Touple4f(r, g, b, 1.0f);
         }
         else if (0 == strcmp(buf, "Ks"))
         {
             float r, g, b;
-            *file >> r >> g >> b;
+            file >> r >> g >> b;
             specular = Touple4f(r, g, b, 1.0f);
         }
         else if (0 == strcmp(buf, "Ke"))
         {
             float r, g, b;
-            *file >> r >> g >> b;
+            file >> r >> g >> b;
             emissive = Touple4f(r, g, b, 1.0f);
         }
         else if (0 == strcmp(buf, "Ni"))
         {
             float ni;
-            *file >> ni;
+            file >> ni;
         }
         else if (0 == strcmp(buf, "d"))
         {
             float d;
-            *file >> d;
+            file >> d;
         }
         else if (0 == strcmp(buf, "illum"))
         {
@@ -378,19 +381,23 @@ ObjModelLoader::ObjModelLoader()
 {
     /*nothing*/
 }
-ObjRawModel *ObjModelLoader::load(const char *objFilename, const char *mtlFilename)
+ObjRawModel *ObjModelLoader::load(const std::string dirPath, const std::string fileName)
 {
 
     ret = new ObjRawModel();
 
-    if (!loadMtlFile(mtlFilename))
+    this->dirPath = dirPath;
+    std::string objFileName = this->dirPath + fileName + ".obj";
+    std::string mtlFileName = this->dirPath + fileName + ".mtl";
+
+    if (!loadMtlFile(mtlFileName.c_str()))
     {
-        fprintf(stderr, "Error --> loadMtlFile(%s)\n", mtlFilename);
+        fprintf(stderr, "Error --> loadMtlFile(%s)\n", mtlFileName.c_str());
         return NULL;
     }
-    if (!loadObjFile(objFilename))
+    if (!loadObjFile(objFileName.c_str()))
     {
-        fprintf(stderr, "Error --> loadObjFile(%s)\n", objFilename);
+        fprintf(stderr, "Error --> loadObjFile(%s)\n", objFileName.c_str());
         return NULL;
     }
 

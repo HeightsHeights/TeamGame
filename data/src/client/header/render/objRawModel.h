@@ -1,14 +1,12 @@
 #pragma once
 
 #define MAX_MATERIAL_NAME 128
-#define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 /******************************************************************************
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "../../../common/header/vector.h"
 #include "../../../common/header/quat.h"
 
-#include <stdio.h>
 #include <vector>
 #include <fstream>
 
@@ -62,6 +60,8 @@ public:
 class ObjModelLoader
 {
 private:
+  std::ifstream file;
+  std::string dirPath;
   std::vector<Vector3f> vertices;
   std::vector<Vector2f> textures;
   std::vector<Vector3f> normals;
@@ -69,18 +69,20 @@ private:
   std::vector<unsigned int> indices;
   std::vector<unsigned int> textureIndices;
   std::vector<unsigned int> normalIndices;
+
   ObjRawModel *ret;
 
-  bool loadObjFile(const char *filename);
-  void createSubset(std::ifstream *file);
+  bool loadObjFile(const char *fileName);
+  void createSubset();
   GLuint createVao();
   void storeAttributeData(const int attributeNumber, const GLsizeiptr size, const float *data, GLboolean normalize);
   void bindIndicesBuffer(const GLsizeiptr size, const unsigned int *indices);
   void unbindVao();
-  bool loadMtlFile(const char *filename);
-  void createMaterial(std::ifstream *file);
+
+  bool loadMtlFile(const char *fileName);
+  void createMaterial();
 
 public:
   ObjModelLoader();
-  ObjRawModel *load(const char *objFilename, const char *mtlFilename);
+  ObjRawModel *load(const std::string dirPath, const std::string fileName);
 };

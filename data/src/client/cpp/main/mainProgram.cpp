@@ -2,7 +2,6 @@
 #include "../../header/network/network.h"
 #include "../../header/render/window.h"
 #include "../../header/render/shader.h"
-#include "../../header/render/rawmodel.h"
 #include "../../header/render/objRawModel.h"
 #include "../../header/render/xRawModel.h"
 
@@ -37,7 +36,7 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/kinokochara.obj", "data/res/gui/obj/kinokochara.mtl");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "bat");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
     GLfloat light0pos[] = {5.0, 8.0, 3.0, 1.0};

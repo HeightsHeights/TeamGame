@@ -1,5 +1,7 @@
 #include "../../header/render/objRawModel.h"
-
+#include <limits>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits>
@@ -8,6 +10,7 @@
 #define OBJ_BUFFER_LENGTH 256
 
 #define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
+int a = 0;
 /******************************************************************************
  * ObjSubset
 ******************************************************************************/
@@ -52,6 +55,26 @@ void ObjMaterial::applyMaterial()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emissive);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &power);
+}
+
+void creattexture(char s[])
+{
+    GLuint TextureID = 0;
+    SDL_Surface *Surface = IMG_Load("data/res/gui/obj/test_a.png");
+    if (!Surface)
+    {
+        return;
+    }
+    glGenTextures(1, &TextureID);
+    glBindTexture(GL_TEXTURE_2D, TextureID);
+    int Mode = GL_RGB;
+    if (Surface->format->BytesPerPixel == 4)
+    {
+        Mode = GL_RGBA;
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 /******************************************************************************
  * ObjRawModel
@@ -371,7 +394,18 @@ void ObjModelLoader::createMaterial()
         }
         else if (0 == strcmp(buf, "illum"))
         {
-            break;
+            file.ignore(std::numeric_limits<std::streamsize>::max(), file.widen('\n'));
+            file >> buf;
+            if (0 == strcmp(buf, "map_Kd"))
+            {
+                char x[256];
+                file >> x;
+                printf("%s\n", x);
+                creattexture(x);
+                break;
+            }
+            else
+                break;
         }
     }
     (*ret).pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));

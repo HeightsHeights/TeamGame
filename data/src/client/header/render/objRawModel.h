@@ -41,6 +41,7 @@ public:
   ObjMaterial(char *name, Touple4f ambient, Touple4f diffuse, Touple4f specular, Touple4f emissive, float power);
   bool isEqualName(const char *name);
   void applyMaterial();
+  void creattexture();
 };
 class ObjRawModel
 {

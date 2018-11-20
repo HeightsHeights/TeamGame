@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "bat");
+    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "test");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
 
     GLfloat light0pos[] = {5.0, 8.0, 3.0, 1.0};
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
-
+    glEnable(GL_TEXTURE_2D);
     SDL_Event event;
 
     for (int i = 0; event.type != SDL_QUIT; i++)
@@ -56,13 +56,13 @@ int main(int argc, char *argv[])
         gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
         glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
         glPushMatrix();
-        ShaderManager::startShader(SID_TEST);
-        //ShaderManager::startShader(SID_STATIC);
+        //ShaderManager::startShader(SID_TEST);
+        ShaderManager::startShader(SID_STATIC);
         glRotated(i, 0, 1, 0);
 
         obj.draw();
-        //ShaderManager::stopShader(SID_STATIC);
-        ShaderManager::stopShader(SID_TEST);
+        ShaderManager::stopShader(SID_STATIC);
+        //ShaderManager::stopShader(SID_TEST);
         glPopMatrix();
         glFlush();
         window.swapWindow();

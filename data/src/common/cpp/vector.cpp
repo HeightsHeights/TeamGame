@@ -186,10 +186,10 @@ Vector3f Vector3f::rotate(Vector3f v, float angle)
 {
     v = v.normalize();
     Matrix3x3f rotationMatrix;
-    float Radian_angle = angle * M_PI / 180.0f;
+    float radianAngle = angle * M_PI / 180.0f;
 
-    float COSINE = (float)std::cos(Radian_angle);
-    float SINE = (float)std::sin(Radian_angle);
+    float COSINE = (float)std::cos(radianAngle);
+    float SINE = (float)std::sin(radianAngle);
 
     rotationMatrix[0] = COSINE + (float)std::pow(v.x, 2.0) * (1.0f - COSINE);
     rotationMatrix[1] = v.x * v.y * (1.0f - COSINE) - v.z * SINE;

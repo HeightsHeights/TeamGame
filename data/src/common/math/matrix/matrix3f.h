@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../touple/quat.h"
 #include "../vector/vector3f.h"
 
 /******************************************************************************

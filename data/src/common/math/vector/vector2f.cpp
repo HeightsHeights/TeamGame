@@ -45,7 +45,7 @@ Vector2f Vector2f::operator+(Vector2f obj)
 ************************************/
 Vector2f Vector2f::operator-(Vector2f obj)
 {
-    return Vector2f(this->x - obj.x, this->y - obj.y);
+    return *this + (-obj);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -54,9 +54,7 @@ Vector2f Vector2f::operator-(Vector2f obj)
 ************************************/
 Vector2f Vector2f::operator*(float scalar)
 {
-    this->x *= scalar;
-    this->y *= scalar;
-
+    return Vector2f(this->x * scalar, this->y * scalar);
     return *this;
 }
 /***********************************

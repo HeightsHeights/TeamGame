@@ -37,7 +37,7 @@ Touple2f Touple2f::operator+(Touple2f obj)
 ************************************/
 Touple2f Touple2f::operator-(Touple2f obj)
 {
-    return Touple2f(this->x - obj.x, this->y - obj.y);
+    return *this + (-obj);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -46,10 +46,7 @@ Touple2f Touple2f::operator-(Touple2f obj)
 ************************************/
 Touple2f Touple2f::operator*(float scalar)
 {
-    this->x *= scalar;
-    this->y *= scalar;
-
-    return *this;
+    return Touple2f(this->x * scalar, this->y * scalar);
 }
 /***********************************
  * /演算子のオーバーロード

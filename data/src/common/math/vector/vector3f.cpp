@@ -1,10 +1,10 @@
-#include "../matrix/matrix3f.h"
 /******************************************************************************
  * ベクトル関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./vector3f.h"
 #include <cmath>
 #include <stdio.h>
+#include "../matrix/matrix3f.h"
 
 /******************************************************************************
  * class Vector3f
@@ -45,7 +45,7 @@ Vector3f Vector3f::operator+(Vector3f obj)
 ************************************/
 Vector3f Vector3f::operator-(Vector3f obj)
 {
-    return Vector3f(this->x - obj.x, this->y - obj.y, this->z - obj.z);
+    return *this + (-obj);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -63,7 +63,6 @@ Vector3f Vector3f::operator*(float scalar)
 ************************************/
 Vector3f Vector3f::operator/(float scalar)
 {
-
     return *this * (1 / scalar);
 }
 /***********************************

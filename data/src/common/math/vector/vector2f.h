@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../touple/touple2f.h"
 #include "./vector3f.h"
 
 #define Vector2f_MAX_SIZE 2
@@ -9,13 +10,9 @@
 /******************************************************************************
  * class Vector2f
 ******************************************************************************/
-class Vector2f
+class Vector2f : public Touple2f
 {
 public:
-  //フィールド
-  float x;
-  float y;
-
   //コンストラクタ
   Vector2f();
   Vector2f(float x, float y);
@@ -33,9 +30,7 @@ public:
   Vector2f operator+();
   Vector2f operator-();
 
-  operator float *() { return (float *)&x; }
-  operator const float *() const { return (const float *)&x; }
-
+  //メソッド
   float magnitudeSquared();
   float magnitude();
   Vector2f normalize();

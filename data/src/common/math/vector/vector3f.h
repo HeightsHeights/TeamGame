@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../touple/touple3f.h"
+
 #define Vector3f_MAX_SIZE 3
 
 #define Vector3f_ZERO Vector3f(0, 0, 0)
@@ -7,13 +9,12 @@
 /******************************************************************************
  * class Vector3f
 ******************************************************************************/
-class Vector3f
+class Vector3f : public Touple3f
 {
 public:
-  //フィールド
-  float x;
-  float y;
-  float z;
+  //コンストラクタ
+  Vector3f();
+  Vector3f(float x, float y, float z);
 
   //演算子のオーバーロード
   Vector3f operator+(Vector3f obj);
@@ -27,13 +28,6 @@ public:
   Vector3f operator/=(float scalar);
   Vector3f operator+();
   Vector3f operator-();
-
-  operator float *() { return (float *)&x; }
-  operator const float *() const { return (const float *)&x; }
-
-  //コンストラクタ
-  Vector3f();
-  Vector3f(float x, float y, float z);
 
   //メソッド
   float magnitudeSquared();

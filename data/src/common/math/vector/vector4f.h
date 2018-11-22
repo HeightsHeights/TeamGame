@@ -12,6 +12,17 @@ private:
 public:
   Vector4f();
   Vector4f(float x, float y, float z, float w);
-  operator float *() { return (float *)&x; }
-  operator const float *() const { return (const float *)&x; }
+
+  //演算子のオーバーロード
+  Vector4f operator+(Vector4f obj);
+  Vector4f operator-(Vector4f obj);
+  Vector4f operator*(float scalar);
+  Vector4f operator/(float scalar);
+  Vector4f operator=(Vector4f obj);
+  Vector4f operator+=(Vector4f obj);
+  Vector4f operator-=(Vector4f obj);
+  Vector4f operator*=(float scalar);
+  Vector4f operator/=(float scalar);
+  Vector4f operator+();
+  Vector4f operator-();
 };

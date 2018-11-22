@@ -57,10 +57,10 @@ void ObjMaterial::applyMaterial()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &power);
 }
 
-void creattexture(char s[])
+void ObjModelLoader::creattexture(std::string s)
 {
     GLuint TextureID = 0;
-    SDL_Surface *Surface = IMG_Load("data/res/gui/obj/test_a.png");
+    SDL_Surface *Surface = IMG_Load((this->dirPath + s).c_str());
     if (!Surface)
     {
         return;
@@ -398,9 +398,8 @@ void ObjModelLoader::createMaterial()
             file >> buf;
             if (0 == strcmp(buf, "map_Kd"))
             {
-                char x[256];
+                std::string x;
                 file >> x;
-                printf("%s\n", x);
                 creattexture(x);
                 break;
             }

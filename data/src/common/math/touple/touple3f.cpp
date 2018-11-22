@@ -93,6 +93,24 @@ Touple3f Touple3f::operator/=(float scalar)
     *this = *this / scalar;
     return *this;
 }
+/***********************************
+ * +演算子のオーバーロード
+ * 引数：なし
+ * 機能：特に意味離し
+************************************/
+Touple3f Touple3f::operator+()
+{
+    return *this;
+}
+/***********************************
+ * -演算子のオーバーロード
+ * 引数：なし
+ * 機能：逆ベクトル
+************************************/
+Touple3f Touple3f::operator-()
+{
+    return *this * -1;
+}
 
 void Touple3f::callMe()
 {

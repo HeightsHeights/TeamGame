@@ -5,7 +5,6 @@
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "../../common/math/vector/vectorSet.h"
-#include "../../common/math/touple/quat.h"
 
 #include <vector>
 #include <fstream>

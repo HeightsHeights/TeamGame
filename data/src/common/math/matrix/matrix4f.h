@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../touple/quat.h"
-#include "../vector/vector.h"
+#include "../vector/vector4f.h"
 
 /******************************************************************************
  * Matrix4x4f

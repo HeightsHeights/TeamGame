@@ -1,6 +1,10 @@
 #pragma once
 
-#include "../touple/vector4f.h"
+#include "../touple/touple4f.h"
+
+#define Vector4f_MAX_SIZE 4
+
+#define Vector4f_ZERO Vector4f(0, 0, 0, 0)
 
 class Vector4f : public Touple4f
 {

@@ -168,10 +168,17 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         normalArraySum[indices[i]] += normals[normalIndices[i]];
     }
 
+    Vector2f textureArray[indices.size()];
+    for (unsigned int i = 0; i < indices.size(); i++)
+    {
+        textureArray[i] = textures[textureIndices[i]];
+    }
+
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
     storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
+    storeAttributeData(3, indices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
     unbindVao();
 
     (*ret).setVao(vao);

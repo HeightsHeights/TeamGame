@@ -4,7 +4,7 @@
 /******************************************************************************
  * コントローラーパラメーター関係に必要なヘッダーの読み込み
 ******************************************************************************/
-#include "../math/vector/vector.h"
+#include "../math/vector/vector2f.h"
 
 /******************************************************************************
  * class ControllerParam
@@ -14,11 +14,11 @@
 ******************************************************************************/
 class ControllerParam
 {
-  private:
-  public:
-    Vector2f axisR;
-    Vector2f axisL;
-    bool buttonUp[MAX_BUTTON];
-    bool buttonDown[MAX_BUTTON];
-    bool buttonState[MAX_BUTTON];
+private:
+public:
+  Vector2f axisR;
+  Vector2f axisL;
+  bool buttonUp[MAX_BUTTON];
+  bool buttonDown[MAX_BUTTON];
+  bool buttonState[MAX_BUTTON];
 };

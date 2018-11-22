@@ -4,7 +4,8 @@
 /******************************************************************************
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
-#include "../../common/math/vector/vector.h"
+#include "../../common/math/vector/vector2f.h"
+#include "../../common/math/vector/vector3f.h"
 #include "../../common/math/touple/quat.h"
 
 #include <vector>

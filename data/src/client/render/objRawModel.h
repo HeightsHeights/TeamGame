@@ -81,7 +81,7 @@ private:
 
   bool loadMtlFile(const char *fileName);
   void createMaterial();
-  void creattexture(std::string s);
+  void createTexture(std::string fileName);
 
 public:
   ObjModelLoader();

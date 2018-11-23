@@ -114,12 +114,7 @@ Matrix3x3f Matrix3x3f::operator+()
 }
 Matrix3x3f Matrix3x3f::operator-()
 {
-    Matrix3x3f ret;
-    for (int i = 0; i < Matrix3x3f_MAX_SIZE; i++)
-    {
-        ret.matrix[i] = -this->matrix[i];
-    }
-    return ret;
+    return *this * -1;
 }
 float Matrix3x3f::getElement(unsigned int i, unsigned int j)
 {

@@ -1,100 +1,71 @@
 #include "quat.h"
+#include <cmath>
+#include <stdio.h>
 
-Quaternion4f::Quaternion4f() : Touple4f()
+Quaternion4f::Quaternion4f()
 {
+    this->w = 0;
+    this->v = Vector3f_ZERO;
 }
-Quaternion4f::Quaternion4f(float x, float y, float z, float w) : Touple4f(x, y, z, w)
+Quaternion4f::Quaternion4f(float w, Vector3f v)
 {
+    this->w = w;
+    this->v = v;
 }
-//演算子のオーバーロード///////////////////////////////////////////////////////
+Quaternion4f::Quaternion4f(Vector3f position)
+{
+    w = 0;
+    v = position;
+}
+Quaternion4f::Quaternion4f(float w, float x, float y, float z)
+{
+    this->w = w;
+    this->v = Vector3f(x, y, z);
+}
+Quaternion4f::Quaternion4f(Vector3f axis, float theta)
+{
+    float halfTheta = theta / 2;
+    float cosine = cosf(halfTheta);
+    float sine = sinf(halfTheta);
 
-/***********************************
- * +演算子のオーバーロード
- * 引数：右辺のベクトル
- * 機能：ベクトルの足し算
-************************************/
-Quaternion4f Quaternion4f::operator+(Quaternion4f obj)
-{
-    return Quaternion4f(this->x + obj.x, this->y + obj.y, this->z + obj.z, this->w + obj.w);
+    w = cosine;
+    v = axis * sine;
 }
-/***********************************
- * -演算子のオーバーロード
- * 引数：右辺のベクトル
- * 機能：ベクトルの減算
-************************************/
-Quaternion4f Quaternion4f::operator-(Quaternion4f obj)
+
+Quaternion4f Quaternion4f::operator*(Quaternion4f obj)
 {
-    return *this + (-obj);
+    Quaternion4f ret;
+    ret.w = this->w * obj.w - Vector3f::dot(this->v, obj.v);
+    ret.v = obj.v * this->w + this->v * obj.w + Vector3f::cross(this->v, obj.v);
+    return ret;
 }
-/***********************************
- * *演算子のオーバーロード
- * 引数：右辺のスカラー
- * 機能：ベクトルのスカラー倍
-************************************/
-Quaternion4f Quaternion4f::operator*(float scalar)
-{
-    return Quaternion4f(this->x * scalar, this->y * scalar, this->z * scalar, this->w * scalar);
-}
-/***********************************
- * /演算子のオーバーロード
- * 引数：右辺のスカラー
- * 機能：ベクトルのスカラーの逆数倍
-************************************/
-Quaternion4f Quaternion4f::operator/(float scalar)
-{
-    return *this * (1 / scalar);
-}
-/***********************************
- * =演算子のオーバーロード
- * 引数：右辺のベクトル
- * 機能：ベクトル同士の代入
-************************************/
 Quaternion4f Quaternion4f::operator=(Quaternion4f obj)
 {
-    this->x = obj.x;
-    this->y = obj.y;
-    this->z = obj.z;
     this->w = obj.w;
+    this->v = obj.v;
+}
+Quaternion4f Quaternion4f::operator*=(Quaternion4f obj)
+{
+    *this = *this * obj;
     return *this;
 }
-/***********************************
- * その他代入演算子
-************************************/
-Quaternion4f Quaternion4f::operator+=(Quaternion4f obj)
+
+Quaternion4f Quaternion4f::getConjugate()
 {
-    *this = *this + obj;
-    return *this;
+    Quaternion4f ret;
+    ret.w = this->w;
+    ret.v = -(this->v);
+    return ret;
 }
-Quaternion4f Quaternion4f::operator-=(Quaternion4f obj)
+
+Vector3f rotate(Vector3f p, Vector3f v, float angle)
 {
-    *this = *this - obj;
-    return *this;
+    Quaternion4f qP = Quaternion4f(p);
+    Quaternion4f qR = Quaternion4f(v, angle);
+    return (qR.getConjugate() * qP * qR).v;
 }
-Quaternion4f Quaternion4f::operator*=(float scalar)
+
+void Quaternion4f::callMe()
 {
-    *this = *this * scalar;
-    return *this;
-}
-Quaternion4f Quaternion4f::operator/=(float scalar)
-{
-    *this = *this / scalar;
-    return *this;
-}
-/***********************************
- * +演算子のオーバーロード
- * 引数：なし
- * 機能：特に意味離し
-************************************/
-Quaternion4f Quaternion4f::operator+()
-{
-    return *this;
-}
-/***********************************
- * -演算子のオーバーロード
- * 引数：なし
- * 機能：逆ベクトル
-************************************/
-Quaternion4f Quaternion4f::operator-()
-{
-    return *this * -1;
+    printf("%4f\t%4f\t%4f\t%4f\n", this->w, this->v.x, this->v.y, this->v.z);
 }

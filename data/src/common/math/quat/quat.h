@@ -1,25 +1,32 @@
 #pragma once
 
-#include "../touple/touple4f.h"
+#include "../vector/vector3f.h"
 
 #define Quaternion4f_ZERO Quaternion4f()
 
-class Quaternion4f : public Touple4f
+class Quaternion4f
 {
 private:
 public:
-  Quaternion4f();
-  Quaternion4f(float x, float y, float z, float w);
+  float w;
+  Vector3f v;
 
-  Quaternion4f operator+(Quaternion4f obj);
-  Quaternion4f operator-(Quaternion4f obj);
-  Quaternion4f operator*(float scalar);
-  Quaternion4f operator/(float scalar);
+  Quaternion4f();
+  Quaternion4f(float w, Vector3f v);
+  Quaternion4f(Vector3f position);
+  Quaternion4f(float w, float x, float y, float z);
+  Quaternion4f(Vector3f axis, float theta);
+
+  Quaternion4f operator*(Quaternion4f obj);
   Quaternion4f operator=(Quaternion4f obj);
-  Quaternion4f operator+=(Quaternion4f obj);
-  Quaternion4f operator-=(Quaternion4f obj);
-  Quaternion4f operator*=(float scalar);
-  Quaternion4f operator/=(float scalar);
-  Quaternion4f operator+();
-  Quaternion4f operator-();
+  Quaternion4f operator*=(Quaternion4f obj);
+
+  operator float *() { return (float *)&w; }
+  operator const float *() const { return (const float *)&w; }
+
+  Quaternion4f getConjugate();
+
+  static Vector3f rotate(Vector3f p, Vector3f v, float angle);
+
+  void callMe();
 };

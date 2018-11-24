@@ -38,7 +38,7 @@ Touple3f Touple3f::operator+(Touple3f obj)
 ************************************/
 Touple3f Touple3f::operator-(Touple3f obj)
 {
-    return Touple3f(this->x - obj.x, this->y - obj.y, this->z - obj.z);
+    return *this + (-obj);
 }
 /***********************************
  * *演算子のオーバーロード
@@ -56,7 +56,6 @@ Touple3f Touple3f::operator*(float scalar)
 ************************************/
 Touple3f Touple3f::operator/(float scalar)
 {
-
     return *this * (1 / scalar);
 }
 /***********************************
@@ -93,6 +92,24 @@ Touple3f Touple3f::operator/=(float scalar)
 {
     *this = *this / scalar;
     return *this;
+}
+/***********************************
+ * +演算子のオーバーロード
+ * 引数：なし
+ * 機能：特に意味離し
+************************************/
+Touple3f Touple3f::operator+()
+{
+    return *this;
+}
+/***********************************
+ * -演算子のオーバーロード
+ * 引数：なし
+ * 機能：逆ベクトル
+************************************/
+Touple3f Touple3f::operator-()
+{
+    return *this * -1;
 }
 
 void Touple3f::callMe()

@@ -13,6 +13,7 @@ public:
   float x;
   float y;
   float z;
+
   Touple3f();
   Touple3f(float x, float y, float z);
 

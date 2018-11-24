@@ -25,4 +25,9 @@ public:
   Vector4f operator/=(float scalar);
   Vector4f operator+();
   Vector4f operator-();
+
+  float magnitudeSquared();
+  float magnitude();
+  Vector4f normalize();
+  static float dot(Vector4f a, Vector4f b);
 };

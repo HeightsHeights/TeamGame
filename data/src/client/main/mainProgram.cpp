@@ -1,9 +1,9 @@
 #include "./mainProgram.h"
 #include "../network/network.h"
-#include "../render/window.h"
-#include "../render/shader.h"
-#include "../render/objRawModel.h"
-#include "../render/xRawModel.h"
+#include "../render/window/window.h"
+#include "../render/shader/shaderManager.h"
+#include "../render/objRawModel/objRawModel.h"
+#include "../render/xRawModel/xRawModel.h"
 
 /******************************************************************************
  * メイン関数

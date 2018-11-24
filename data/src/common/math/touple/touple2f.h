@@ -12,6 +12,7 @@ private:
 public:
   float x;
   float y;
+
   Touple2f();
   Touple2f(float x, float y);
 

@@ -1,5 +1,4 @@
 #include "./objRawModel.h"
-#include <limits>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
@@ -57,10 +56,10 @@ void ObjMaterial::applyMaterial()
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &power);
 }
 
-void ObjModelLoader::creattexture(std::string s)
+void ObjModelLoader::createTexture(std::string fileName)
 {
     GLuint TextureID = 0;
-    SDL_Surface *Surface = IMG_Load((this->dirPath + s).c_str());
+    SDL_Surface *Surface = IMG_Load((this->dirPath + fileName).c_str());
     if (!Surface)
     {
         return;
@@ -181,7 +180,7 @@ bool ObjModelLoader::loadObjFile(const char *filename)
     storeAttributeData(3, indices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
     unbindVao();
 
-    (*ret).setVao(vao);
+    ret->setVao(vao);
 
     file.close();
     return true;
@@ -222,7 +221,7 @@ void ObjModelLoader::createSubset()
         else if (0 == strcmp(buf, "usemtl"))
         {
             file >> buf;
-            materialId = (*ret).getMtlId(buf);
+            materialId = ret->getMtlId(buf);
             break;
         }
     }
@@ -279,7 +278,7 @@ void ObjModelLoader::createSubset()
         }
     }
 
-    (*ret).pushSubset(ObjSubset(numVertex, materialId));
+    ret->pushSubset(ObjSubset(numVertex, materialId));
 }
 GLuint ObjModelLoader::createVao()
 {
@@ -405,16 +404,16 @@ void ObjModelLoader::createMaterial()
             file >> buf;
             if (0 == strcmp(buf, "map_Kd"))
             {
-                std::string x;
-                file >> x;
-                creattexture(x);
+                std::string textureName;
+                file >> textureName;
+                createTexture(textureName);
                 break;
             }
             else
                 break;
         }
     }
-    (*ret).pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));
+    ret->pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));
 }
 
 ObjModelLoader::ObjModelLoader()

@@ -14,6 +14,7 @@ public:
   float y;
   float z;
   float w;
+
   Touple4f();
   Touple4f(float x, float y, float z, float w);
 

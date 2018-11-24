@@ -40,7 +40,7 @@ Matrix4x4f Matrix4x4f::operator*(Matrix4x4f obj)
     {
         for (unsigned int j = 0; j < Matrix4x4f_MAX_LINE; j++)
         {
-            ret.matrix[i] += this->matrix[(i / 4) * 4 + j] * obj.matrix[i % 4 + 4 * j];
+            ret.matrix[i] += this->matrix[(i / Matrix4x4f_MAX_LINE) * Matrix4x4f_MAX_LINE + j] * obj.matrix[i % Matrix4x4f_MAX_LINE + Matrix4x4f_MAX_LINE * j];
         }
     }
     return ret;
@@ -55,7 +55,7 @@ Vector4f Matrix4x4f::operator*(Vector4f obj)
     {
         for (unsigned int j = 0; j < Vector4f_MAX_SIZE; j++)
         {
-            retPointer[i] += this->matrix[i * 4 + j] * objPointer[j];
+            retPointer[i] += this->matrix[i * Matrix4x4f_MAX_LINE + j] * objPointer[j];
         }
     }
     return ret;
@@ -121,7 +121,7 @@ float Matrix4x4f::getElement(unsigned int i, unsigned int j)
     i--;
     j--;
 
-    int index = 4 * i + j;
+    int index = Matrix4x4f_MAX_LINE * i + j;
 
     return this->matrix[index];
 }
@@ -130,7 +130,8 @@ void Matrix4x4f::callMe()
 {
     for (int i = 0; i < Matrix4x4f_MAX_ROW; i++)
     {
-        printf("%4f\t%4f\t%4f\t%4f\n", this->matrix[4 * i], this->matrix[4 * i + 1], this->matrix[4 * i + 2], this->matrix[4 * i + 3]);
+        int lineIndex = Matrix4x4f_MAX_LINE * i;
+        printf("%4f\t%4f\t%4f\t%4f\n", this->matrix[lineIndex], this->matrix[lineIndex + 1], this->matrix[lineIndex + 2], this->matrix[lineIndex + 3]);
     }
     printf("\n\n\n");
 }

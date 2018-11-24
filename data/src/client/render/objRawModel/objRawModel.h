@@ -4,8 +4,7 @@
 /******************************************************************************
  * OBJモデル関係に必要なヘッダーの読み込み
 ******************************************************************************/
-#include "../../common/math/vector/vectorSet.h"
-#include "../../common/math/touple/quat.h"
+#include "../../../common/math/vector/vectorSet.h"
 
 #include <vector>
 #include <fstream>
@@ -82,7 +81,7 @@ private:
 
   bool loadMtlFile(const char *fileName);
   void createMaterial();
-  void creattexture(std::string s);
+  void createTexture(std::string fileName);
 
 public:
   ObjModelLoader();

@@ -10,6 +10,7 @@
 
 #define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 int a = 0;
+GLuint TextureID = 0;
 /******************************************************************************
  * ObjSubset
 ******************************************************************************/
@@ -58,7 +59,6 @@ void ObjMaterial::applyMaterial()
 
 void ObjModelLoader::createTexture(std::string fileName)
 {
-    GLuint TextureID = 0;
     SDL_Surface *Surface = IMG_Load((this->dirPath + fileName).c_str());
     if (!Surface)
     {
@@ -74,6 +74,8 @@ void ObjModelLoader::createTexture(std::string fileName)
     glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    TextureID++;
 }
 /******************************************************************************
  * ObjRawModel
@@ -177,7 +179,7 @@ bool ObjModelLoader::loadObjFile(const char *filename)
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
     storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
-    storeAttributeData(3, indices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
+    storeAttributeData(3, textureIndices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
     unbindVao();
 
     ret->setVao(vao);

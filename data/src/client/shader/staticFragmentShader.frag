@@ -1,11 +1,14 @@
 #version 120
  
+ uniform sampler2D texture;
+
 // バーテックスシェーダから受け取る変数
 varying vec3 vPos;
 varying vec3 vNrm;
  
 void main(void)
 {
+    //vec3 color = texture2DProj(texture,gl_TexCoord[0]);
     // 光源
     vec3 La = gl_LightSource[0].ambient.xyz;    // ライト環境光
     vec3 Ld = gl_LightSource[0].diffuse.xyz;    // ライト拡散反射光
@@ -47,7 +50,7 @@ void main(void)
  
         specular = Ks*Ls*specularLight;
     }
- 
-    gl_FragColor.xyz = emissive+ambient+diffuse+specular;
+
+    gl_FragColor.xyz =/* color */ (emissive+ambient+diffuse)+specular;
     gl_FragColor.w = 1.0;
 }

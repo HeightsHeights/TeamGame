@@ -21,4 +21,5 @@ private:
 public:
   Keybord() {}
   virtual void updateEvent();
+  const Uint8 *keys = SDL_GetKeyboardState(NULL);
 };

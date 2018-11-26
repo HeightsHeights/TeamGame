@@ -4,7 +4,6 @@
 /******************************************************************************
  * コントローラー関係に必要なヘッダーの読み込み
 ******************************************************************************/
-#include <SDL2/SDL.h>
 #include "../../common/controllerParam/controllerParam.h"
 #include "./baseController.h"
 /******************************************************************************
@@ -13,16 +12,14 @@
  * 機能2：コンストラクタでSDL_Joystickを初期化
  * 機能3：SDL_Joystickを読み込んでControllerParamに変換して返す関数readStateControllerを持つ
 ******************************************************************************/
-class Joystick : public BaseController
+class Keybord : public BaseController
 {
 private:
-  SDL_Joystick *joy;
-  void scanAnalogStick(ControllerParam *param);
-  void scanButton(ControllerParam *param);
+  void scanCrossButton(ControllerParam *param);
+  void scanOtherButton(ControllerParam *param);
 
 public:
-  Joystick();
-  Joystick(const unsigned int controllerID);
+  Keybord();
   virtual ControllerParam readStateController();
   virtual void updateEvent();
 };

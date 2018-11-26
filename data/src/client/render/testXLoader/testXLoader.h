@@ -2,7 +2,12 @@
 
 class TestXLoader
 {
-  private:
-  public:
-    TestXModel load();
+private:
+  TestXModel *ret;
+  std::ifstream file;
+
+  bool loadXFile(const char *filePath);
+
+public:
+  TestXModel *load(const std::string dirPath, const std::string fileName);
 };

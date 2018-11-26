@@ -104,3 +104,10 @@ ControllerParam Joystick::readStateController()
 
     return param;
 }
+
+void Joystick::updateEvent()
+{
+    SDL_PollEvent(&event);
+    //コントローラーの更新←
+    SDL_JoystickUpdate();
+}

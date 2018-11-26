@@ -3,7 +3,7 @@
 /******************************************************************************
  * コントローラー関係に必要なヘッダーの読み込み
 ******************************************************************************/
-#include "./joystick.h"
+#include "./baseController.h"
 /******************************************************************************
  * class Joystick
  * 機能1：Joystickクラスを持つ
@@ -13,7 +13,7 @@
 class ControllerManager
 {
 private:
-  static Joystick joystick;
+  static BaseController controller;
 
 public:
   static bool init();

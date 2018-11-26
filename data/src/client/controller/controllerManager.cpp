@@ -3,33 +3,34 @@
 ******************************************************************************/
 
 #include "./controllerManager.h"
+#include "./joystick.h"
+#include "./keybord.h"
 
 /******************************************************************************
  * class ControllerManager
 ******************************************************************************/
-Joystick ControllerManager::joystick;
+BaseController ControllerManagercontroller;
 
 bool ControllerManager::init()
 {
     //接続があるか確認←
     if (SDL_NumJoysticks() > 0)
     {
-        joystick = Joystick(0);
+        controller = Joystick(0);
     }
     else
     {
         fprintf(stderr, "Error --> connot connect joystick\n");
-        return false;
+        controller = Keybord();
     }
     return true;
 }
 int ControllerManager::updateController()
 {
     //SDLの更新←
+    controller.updateEvent();
 
-    //コントローラーの更新←
-    SDL_JoystickUpdate();
-    ControllerParam param = joystick.readStateController();
+    ControllerParam param = controller.readStateController();
 
     requestReaction(param);
 }

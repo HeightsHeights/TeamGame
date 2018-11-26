@@ -17,12 +17,11 @@ class Joystick : public BaseController
 {
 private:
   SDL_Joystick *joy;
-  void scanAnalogStick(ControllerParam *param);
-  void scanButton(ControllerParam *param);
+  virtual void scanDirection(ControllerParam *param);
+  virtual void scanButton(ControllerParam *param);
 
 public:
   Joystick();
   Joystick(const unsigned int controllerID);
-  virtual ControllerParam readStateController();
   virtual void updateEvent();
 };

@@ -9,28 +9,27 @@
 /******************************************************************************
  * class ControllerManager
 ******************************************************************************/
-BaseController ControllerManagercontroller;
+BaseController *ControllerManager::controller;
 
 bool ControllerManager::init()
 {
     //接続があるか確認←
     if (SDL_NumJoysticks() > 0)
     {
-        controller = Joystick(0);
+        controller = new Joystick(0);
     }
     else
     {
         fprintf(stderr, "Error --> connot connect joystick\n");
-        controller = Keybord();
+        controller = new Keybord();
     }
     return true;
 }
 int ControllerManager::updateController()
 {
-    //SDLの更新←
-    controller.updateEvent();
+    controller->updateEvent();
 
-    ControllerParam param = controller.readStateController();
+    ControllerParam param = controller->readStateController();
 
     requestReaction(param);
 }

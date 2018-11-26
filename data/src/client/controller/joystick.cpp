@@ -18,7 +18,7 @@ Joystick::Joystick(const unsigned int controllerID)
     joy = SDL_JoystickOpen(controllerID);
 }
 
-void Joystick::scanAnalogStick(ControllerParam *param)
+void Joystick::scanDirection(ControllerParam *param)
 {
     //アナログスティックからの値を-1~1にする←
     param->axisL.x = SDL_JoystickGetAxis(joy, 0) / MAX_ANALOG_STICK_AXIS;
@@ -92,22 +92,9 @@ void Joystick::scanButton(ControllerParam *param)
     }
 }
 
-ControllerParam Joystick::readStateController()
-{
-    ControllerParam param = ControllerParam();
-
-    //アナログスティックの値をVector2fに代入する
-    scanAnalogStick(&param);
-
-    //ボタンの状態を入力する
-    scanButton(&param);
-
-    return param;
-}
-
 void Joystick::updateEvent()
 {
-    SDL_PollEvent(&event);
+    BaseController::updateEvent();
     //コントローラーの更新←
     SDL_JoystickUpdate();
 }

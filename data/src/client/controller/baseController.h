@@ -6,12 +6,13 @@
 class BaseController
 {
 private:
+  virtual void scanDirection(ControllerParam *param);
+  virtual void scanButton(ControllerParam *param);
 
 public:
-  BaseController();
   virtual void updateEvent();
-  virtual ControllerParam readStateController();
+  ControllerParam readStateController();
 
-  protected:
-    SDL_Event event;
+protected:
+  SDL_Event event;
 };

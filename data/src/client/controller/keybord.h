@@ -15,11 +15,10 @@
 class Keybord : public BaseController
 {
 private:
-  void scanCrossButton(ControllerParam *param);
-  void scanOtherButton(ControllerParam *param);
+  virtual void scanDirection(ControllerParam *param);
+  virtual void scanButton(ControllerParam *param);
 
 public:
-  Keybord();
-  virtual ControllerParam readStateController();
+  Keybord() {}
   virtual void updateEvent();
 };

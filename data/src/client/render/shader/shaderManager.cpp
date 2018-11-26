@@ -28,7 +28,7 @@ bool ShaderManager::initShader()
 
     for (int i = 0; i < SID_NUM; i++)
     {
-        shaders[i] = (*loaders[i]).generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
+        shaders[i] = loaders[i]->generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
         if (shaders[i] == NULL)
         {
             fprintf(stderr, "Error --> shader[%d] is NULL\n", i);
@@ -42,10 +42,10 @@ bool ShaderManager::initShader()
 //シェーダを始める
 void ShaderManager::startShader(SHADER_ID sid)
 {
-    (*shaders[sid]).startShader();
+    shaders[sid]->startShader();
 }
 //シェーダを終わらせる
 void ShaderManager::stopShader(SHADER_ID sid)
 {
-    (*shaders[sid]).stopShader();
+    shaders[sid]->stopShader();
 }

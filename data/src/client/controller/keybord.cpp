@@ -7,7 +7,14 @@
 /******************************************************************************
  * class Keybord
 ******************************************************************************/
+void Keybord::scanDirection(ControllerParam *param)
+{
+}
+void Keybord::scanButton(ControllerParam *param)
+{
+}
+
 void Keybord::updateEvent()
 {
-    SDL_PollEvent(&event);
+    BaseController::updateEvent();
 }

@@ -13,7 +13,7 @@
 class ControllerManager
 {
 private:
-  static BaseController controller;
+  static BaseController *controller;
 
 public:
   static bool init();

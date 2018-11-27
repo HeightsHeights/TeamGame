@@ -20,7 +20,7 @@ ControllerParam BaseController::readStateController()
     return param;
 }
 
-void BaseController::updateEvent()
+bool BaseController::updateEvent()
 {
-    SDL_PollEvent(&event);
+    return SDL_PollEvent(&event);
 }

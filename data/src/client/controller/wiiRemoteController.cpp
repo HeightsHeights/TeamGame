@@ -1,20 +1,28 @@
+#ifdef USE_WII
+
 /******************************************************************************
  * コントローラー関係に必要なヘッダーの読み込み
 ******************************************************************************/
 
-#include "./keybord.h"
+#include "./wiiRemoteController.h"
 
 /******************************************************************************
  * class Keybord
 ******************************************************************************/
-void Keybord::scanDirection(ControllerParam *param)
+void WiiRemoteController::scanDirection(ControllerParam *param)
 {
 }
-void Keybord::scanButton(ControllerParam *param)
+void WiiRemoteController::scanButton(ControllerParam *param)
 {
 }
 
-bool Keybord::updateEvent()
+bool WiiRemoteController::updateEvent()
 {
-    return BaseController::updateEvent();
+    bool isSdlUpdate = BaseController::updateEvent();
+
+    bool isWiiUpdate = wiimote_update(&wiimote);
+
+    return isSdlUpdate || isWiiUpdate;
 }
+
+#endif

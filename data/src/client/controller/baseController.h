@@ -10,7 +10,7 @@ private:
   virtual void scanButton(ControllerParam *param);
 
 public:
-  virtual void updateEvent();
+  virtual bool updateEvent();
   ControllerParam readStateController();
 
 protected:

@@ -92,9 +92,12 @@ void Joystick::scanButton(ControllerParam *param)
     }
 }
 
-void Joystick::updateEvent()
+bool Joystick::updateEvent()
 {
-    BaseController::updateEvent();
+
+    bool isSdlUpdate = BaseController::updateEvent();
     //コントローラーの更新←
     SDL_JoystickUpdate();
+
+    return isSdlUpdate;
 }

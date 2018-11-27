@@ -16,7 +16,7 @@ private:
   virtual void scanButton(ControllerParam *param);
 
 public:
-  Keybord() {}
+  Keybord() { this->keys =  SDL_GetKeyboardState(NULL);}
   virtual bool updateEvent();
-  const Uint8 *keys = SDL_GetKeyboardState(NULL);
+  const Uint8 *keys;
 };

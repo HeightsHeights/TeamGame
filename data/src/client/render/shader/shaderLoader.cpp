@@ -83,11 +83,3 @@ ShaderProgram::ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fra
     this->vertexShaderID = vertexShaderID;
     this->fragmentShaderID = fragmentShaderID;
 }
-void ShaderProgram::startShader()
-{
-    glUseProgram(programID);
-}
-void ShaderProgram::stopShader()
-{
-    glUseProgram(0);
-}

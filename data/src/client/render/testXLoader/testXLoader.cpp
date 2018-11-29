@@ -126,14 +126,14 @@ void TestXLoader::readFrame(TestXNode *node)
             file >> frameName;
             unsigned int posFile = file.tellg();
 
-            if (hierarchy > currentHierarchy)
-            {
-                node->node = new TestXNode(frameName);
-            }
-            else if (1)
-            {
-                node->next = new TestXNode(frameName);
-            }
+            // if (hierarchy > currentHierarchy)
+            // {
+            //     node->node = new TestXNode(frameName);
+            // }
+            // else if (1)
+            // {
+            //     node->next = new TestXNode(frameName);
+            // }
 
             for (int i = 0; i < hierarchy; i++)
             {
@@ -144,7 +144,7 @@ void TestXLoader::readFrame(TestXNode *node)
             //readMesh(node->node);
 
             file.seekg(posFile, std::ios_base::beg);
-            readFrame(node->node);
+            //readFrame(node->node);
         }
     }
 }

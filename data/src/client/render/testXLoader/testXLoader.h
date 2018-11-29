@@ -5,6 +5,7 @@
 class TestXLoader
 {
 private:
+  unsigned int hierarchy;
   TestXModel *ret;
   std::ifstream file;
 
@@ -19,7 +20,7 @@ private:
   void skipLine();
   void skip2Key(const char key);
 
-  void readMesh();
+  void readMesh(TestXNode *node);
   void readFrame(TestXNode *node);
   void readXFile();
 

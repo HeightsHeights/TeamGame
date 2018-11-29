@@ -6,6 +6,13 @@
 ******************************************************************************/
 #include "../math/vector/vector2f.h"
 
+//ジョイコンの番号にあった番号を割り振ってください
+typedef enum {
+  CT_DECITION_OR_ATTACK = 1,
+  CT_CANCEL = 4,
+}ControllerTable;
+
+
 /******************************************************************************
  * class ControllerParam
  * Vector2f axisR/l：アナログスティックの軸を-1~1で保持する

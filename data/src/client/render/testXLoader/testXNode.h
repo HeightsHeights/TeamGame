@@ -3,10 +3,12 @@
 
 class TestXNode
 {
-  private:
-  public:
-    TestXNode *node;
-    TestXNode *next;
-    std::string frameName;
-    TestXMesh mesh;
+private:
+public:
+  TestXNode();
+
+  TestXNode *node;
+  TestXNode *next;
+  std::string frameName;
+  TestXMesh mesh;
 };

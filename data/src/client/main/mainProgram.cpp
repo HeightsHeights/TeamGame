@@ -4,6 +4,7 @@
 #include "../render/shader/shaderManager.h"
 #include "../render/objRawModel/objRawModel.h"
 #include "../render/xRawModel/xRawModel.h"
+#include "../render/testXLoader/testXLoader.h"
 
 /******************************************************************************
  * メイン関数
@@ -36,8 +37,9 @@ int main(int argc, char *argv[])
 
     WindowManager window = *new WindowManager(argc, argv);
     ShaderManager::initShader();
-    ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "test");
+    //ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "test");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
+    TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
 
     GLfloat light0pos[] = {5.0, 8.0, 3.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
@@ -60,7 +62,7 @@ int main(int argc, char *argv[])
         ShaderManager::startShader(SID_STATIC);
         glRotated(i, 0, 1, 0);
 
-        obj.draw();
+        obj->draw();
         ShaderManager::stopShader(SID_STATIC);
         //ShaderManager::stopShader(SID_TEST);
         glPopMatrix();

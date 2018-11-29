@@ -5,9 +5,10 @@
 class TestXLoader
 {
 private:
-  unsigned int hierarchy;
+  int hierarchy;
   TestXModel *ret;
   std::ifstream file;
+  int back;
 
   std::vector<Vector3f> vertices;
   std::vector<Vector2f> textures;

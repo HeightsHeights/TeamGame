@@ -125,14 +125,24 @@ void TestXLoader::readFrame(TestXNode *node)
             std::string frameName;
             file >> frameName;
             unsigned int posFile = file.tellg();
-            node->node = new TestXNode();
-            node->node->frameName = frameName;
+
+            if (hierarchy > currentHierarchy)
+            {
+                node->node = new TestXNode(frameName);
+            }
+            else if (1)
+            {
+                node->next = new TestXNode(frameName);
+            }
+
             for (int i = 0; i < hierarchy; i++)
             {
                 printf("\t");
             }
             printf("Frame:%s\n", frameName.c_str());
+
             //readMesh(node->node);
+
             file.seekg(posFile, std::ios_base::beg);
             readFrame(node->node);
         }

@@ -6,6 +6,7 @@ class TestXNode
 private:
 public:
   TestXNode();
+  TestXNode(std::string frameName);
 
   TestXNode *node;
   TestXNode *next;

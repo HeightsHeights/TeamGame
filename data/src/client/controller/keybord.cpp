@@ -10,19 +10,36 @@
 
 void Keybord::scanDirection(ControllerParam *param)
 {
-    if (keys[SDLK_UP])
+    if (keys[SDLK_w])
+    {
+        param->axisL.y = -1;
+    }
+    else if (keys[SDLK_s])
+    {
+        param->axisL.y = 1;
+    }
+    else if (keys[SDLK_a])
+    {
+        param->axisL.x = -1;
+    }
+    else if (keys[SDLK_d])
+    {
+        param->axisL.x = 1;
+    }
+
+    if (keys[SDLK_8])
     {
         param->axisR.y = -1;
     }
-    else if (keys[SDLK_DOWN])
+    else if (keys[SDLK_2])
     {
         param->axisR.y = 1;
     }
-    else if (keys[SDLK_LEFT])
+    else if (keys[SDLK_4])
     {
         param->axisR.x = -1;
     }
-    else if (keys[SDLK_LEFT])
+    else if (keys[SDLK_6])
     {
         param->axisR.x = 1;
     }
@@ -30,137 +47,84 @@ void Keybord::scanDirection(ControllerParam *param)
 
 void Keybord::scanButton(ControllerParam *param)
 {
-    if (keys[SDLK_q])
+    if (keys[SDLK_p])
     {
-        param->buttonDown[0] = true;
-        param->buttonUp[0] = false;
+        param->buttonDown[CT_DECITION_OR_ATTACK] = true;
+        param->buttonUp[CT_DECITION_OR_ATTACK] = false;
     }
     else
     {
-        param->buttonDown[0] = false;
-        param->buttonUp[0] = true;
+        param->buttonDown[CT_DECITION_OR_ATTACK] = false;
+        param->buttonUp[CT_DECITION_OR_ATTACK] = true;
     }
 
-    if (keys[SDLK_w])
+    if (keys[SDLK_i])
     {
-        param->buttonDown[1] = true;
-        param->buttonUp[1] = false;
+        param->buttonDown[CT_GUARD] = true;
+        param->buttonUp[CT_GUARD] = false;
     }
     else
     {
-        param->buttonDown[1] = false;
-        param->buttonUp[1] = true;
+        param->buttonDown[CT_GUARD] = false;
+        param->buttonUp[CT_GUARD] = true;
     }
 
-    if (keys[SDLK_e])
+    if (keys[SDLK_u])
     {
-        param->buttonDown[2] = true;
-        param->buttonUp[2] = false;
+        param->buttonDown[CT_GRUB] = true;
+        param->buttonUp[CT_GRUB] = false;
     }
     else
     {
-        param->buttonDown[2] = false;
-        param->buttonUp[2] = true;
+        param->buttonDown[CT_GRUB] = false;
+        param->buttonUp[CT_GRUB] = true;
     }
 
-    if (keys[SDLK_r])
+    if (keys[SDLK_5])
     {
-        param->buttonDown[3] = true;
-        param->buttonUp[3] = false;
+        param->buttonDown[CT_PRDGDIRECTION] = true;
+        param->buttonUp[CT_PRDGDIRECTION] = false;
     }
     else
     {
-        param->buttonDown[3] = false;
-        param->buttonUp[3] = true;
+        param->buttonDown[CT_PRDGDIRECTION] = false;
+        param->buttonUp[CT_PRDGDIRECTION] = true;
     }
 
-    if (keys[SDLK_a])
+    if (keys[SDLK_SPACE])
     {
-        param->buttonDown[4] = true;
-        param->buttonUp[4] = false;
+        param->buttonDown[CT_PAUSE] = true;
+        param->buttonUp[CT_PAUSE] = false;
     }
     else
     {
-        param->buttonDown[4] = false;
-        param->buttonUp[4] = true;
+        param->buttonDown[CT_PAUSE] = false;
+        param->buttonUp[CT_PAUSE] = true;
     }
 
-    if (keys[SDLK_s])
+    if (keys[SDLK_BACKSPACE])
     {
-        param->buttonDown[5] = true;
-        param->buttonUp[5] = false;
+        param->buttonDown[CT_CANCEL] = true;
+        param->buttonUp[CT_CANCEL] = false;
     }
     else
     {
-        param->buttonDown[5] = false;
-        param->buttonUp[5] = true;
+        param->buttonDown[CT_CANCEL] = false;
+        param->buttonUp[CT_CANCEL] = true;
     }
 
-    if (keys[SDLK_d])
+    if (keys[SDLK_q] || keys[SDLK_e])
     {
-        param->buttonDown[6] = true;
-        param->buttonUp[6] = false;
+        param->buttonDown[CT_JUMP] = true;
+        param->buttonUp[CT_JUMP] = false;
     }
     else
     {
-        param->buttonDown[6] = false;
-        param->buttonUp[6] = true;
+        param->buttonDown[CT_JUMP] = false;
+        param->buttonUp[CT_JUMP] = true;
     }
 
-    if (keys[SDLK_f])
-    {
-        param->buttonDown[7] = true;
-        param->buttonUp[7] = false;
-    }
-    else
-    {
-        param->buttonDown[7] = false;
-        param->buttonUp[7] = true;
-    }
-
-    if (keys[SDLK_z])
-    {
-        param->buttonDown[8] = true;
-        param->buttonUp[8] = false;
-    }
-    else
-    {
-        param->buttonDown[8] = false;
-        param->buttonUp[8] = true;
-    }
-
-    if (keys[SDLK_x])
-    {
-        param->buttonDown[9] = true;
-        param->buttonUp[9] = false;
-    }
-    else
-    {
-        param->buttonDown[9] = false;
-        param->buttonUp[9] = true;
-    }
-
-    if (keys[SDLK_c])
-    {
-        param->buttonDown[10] = true;
-        param->buttonUp[10] = false;
-    }
-    else
-    {
-        param->buttonDown[10] = false;
-        param->buttonUp[10] = true;
-    }
-
-    if (keys[SDLK_v])
-    {
-        param->buttonDown[11] = true;
-        param->buttonUp[11] = false;
-    }
-    else
-    {
-        param->buttonDown[11] = false;
-        param->buttonUp[11] = true;
-    }
+   
 
     for (int i = 0; i > 12; i++)
     {

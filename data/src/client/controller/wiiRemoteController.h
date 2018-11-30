@@ -1,4 +1,4 @@
-#ifdef USE_WII
+#ifdef _ENABLE_WII
 
 #pragma once
 
@@ -22,6 +22,7 @@ private:
 public:
   WiiRemoteController() { this->wiimote = WIIMOTE_INIT; }
   virtual bool updateEvent();
+  WiiRemoteController *connect(const char *id);
 };
 
 #endif

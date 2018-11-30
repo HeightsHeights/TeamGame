@@ -5,6 +5,7 @@
 #include "./controllerManager.h"
 #include "./joystick.h"
 #include "./keybord.h"
+#include "./wiiRemoteController.h"
 
 /******************************************************************************
  * class ControllerManager
@@ -23,6 +24,14 @@ bool ControllerManager::init()
         fprintf(stderr, "Error --> connot connect joystick\n");
         controller = new Keybord();
     }
+#ifdef _ENABLE_WII
+    controller = WiiRemoteController().connect("88");
+    if (controller == NULL)
+    {
+        fprintf(stderr, "Error --> connot connect wii\n");
+        controller = new Keybord();
+    }
+#endif
     return true;
 }
 int ControllerManager::updateController()

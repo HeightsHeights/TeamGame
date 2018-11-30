@@ -11,9 +11,80 @@
 ******************************************************************************/
 void WiiRemoteController::scanDirection(ControllerParam *param)
 {
+
+    if (wiimote.keys.up)
+    {
+        param->axisR.y = -1;
+    }
+    else if (wiimote.keys.down)
+    {
+        param->axisR.y = 1;
+    }
+    else if (wiimote.keys.left)
+    {
+        param->axisR.x = -1;
+    }
+    else if (wiimote.keys.right)
+    {
+        param->axisR.x = 1;
+    }
 }
 void WiiRemoteController::scanButton(ControllerParam *param)
 {
+    if (wiimote.keys.a)
+    {
+        param->buttonDown[CT_DECITION_OR_ATTACK] = true;
+        param->buttonUp[CT_DECITION_OR_ATTACK] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_DECITION_OR_ATTACK] = false;
+        param->buttonUp[CT_DECITION_OR_ATTACK] = true;
+    }
+
+    if (wiimote.keys.b)
+    {
+        param->buttonDown[CT_GUARD] = true;
+        param->buttonUp[CT_GUARD] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_GUARD] = false;
+        param->buttonUp[CT_GUARD] = true;
+    }
+
+    if (wiimote.keys.plus)
+    {
+        param->buttonDown[CT_GRUB] = true;
+        param->buttonUp[CT_GRUB] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_GRUB] = false;
+        param->buttonUp[CT_GRUB] = true;
+    }
+
+    if (wiimote.keys.home)
+    {
+        param->buttonDown[CT_PAUSE] = true;
+        param->buttonUp[CT_PAUSE] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_PAUSE] = false;
+        param->buttonUp[CT_PAUSE] = true;
+    }
+
+    if (wiimote.keys.one)
+    {
+        param->buttonDown[CT_CANCEL] = true;
+        param->buttonUp[CT_CANCEL] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_CANCEL] = false;
+        param->buttonUp[CT_CANCEL] = true;
+    }
 }
 
 bool WiiRemoteController::updateEvent()

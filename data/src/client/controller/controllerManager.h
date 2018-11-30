@@ -21,6 +21,6 @@ public:
   static void requestReaction(ControllerParam param);
   static void cleanUp();
 #ifdef _ENABLE_WII
-  static bool connectWiiRemoteController(char *id);
+  static bool connectWiiRemoteController(const char *id);
 #endif
 };

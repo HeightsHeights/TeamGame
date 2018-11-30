@@ -5,6 +5,7 @@
 #include "../render/objRawModel/objRawModel.h"
 #include "../render/xRawModel/xRawModel.h"
 #include "../render/testXLoader/testXLoader.h"
+#include "../controller/controllerManager.h"
 
 /******************************************************************************
  * メイン関数
@@ -40,7 +41,10 @@ int main(int argc, char *argv[])
     //ObjRawModel obj = *ObjModelLoader().load("data/res/gui/obj/", "test");
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
     TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
-
+#ifdef _ENABLE_WII
+    const char id[] = "aaa";
+    ControllerManager::connectWiiRemoteController(id);
+#endif
     GLfloat light0pos[] = {5.0, 8.0, 3.0, 1.0};
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
     glEnable(GL_LIGHTING);

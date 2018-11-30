@@ -45,7 +45,7 @@ void ControllerManager::cleanUp()
     //SDL_JoystickClose(joystick);
 }
 #ifdef _ENABLE_WII
-bool ControllerManager::connectWiiRemoteController(char *id)
+bool ControllerManager::connectWiiRemoteController(const char *id)
 {
     WiiRemoteController *wiiController = WiiRemoteController().connect("88");
     if (wiiController == NULL)

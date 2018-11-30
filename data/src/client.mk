@@ -18,7 +18,7 @@ CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 ########################################################################################
 ##
 ########################################################################################
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -lcwiimote -Wl,-rpath,/usr/local/lib
 
 $(BUILD_DIR)/$(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)

@@ -89,7 +89,7 @@ void TestXLoader::readMesh(TestXNode *node)
 }
 void TestXLoader::readFrame(TestXNode *node)
 {
-    unsigned int currentHierarchy = hierarchy;
+    int currentHierarchy = hierarchy;
     char key[BUFFER_LENGTH] = {0};
     int begin = 0, end = 0;
 
@@ -108,11 +108,11 @@ void TestXLoader::readFrame(TestXNode *node)
         {
             skip2Key('}');
         }
-        else if (strcmp(key, "{") == 0)
+        else if (0 == strcmp(key, "{"))
         {
             begin++;
         }
-        else if (strcmp(key, "}") == 0)
+        else if (0 == strcmp(key, "}"))
         {
             end++;
         }
@@ -122,52 +122,43 @@ void TestXLoader::readFrame(TestXNode *node)
             file >> frameName;
             unsigned int posFile = file.tellg();
 
+            for (int i = 0; i < currentHierarchy; i++)
+            {
+                printf("\t");
+            }
+            printf("Frame:%s\n", frameName.c_str());
+
             if (begin > end || ((begin == 0) && (end == 0)))
             {
                 node->node = new TestXNode(frameName);
                 readMesh(node->node);
                 file.seekg(posFile, std::fstream::beg);
                 hierarchy++;
-                for (int i = 0; i < hierarchy - 1; i++)
-                {
-                    printf("\t");
-                }
-                printf("Frame:%s\n", frameName.c_str());
                 readFrame(node->node);
             }
-            else if (back == currentHierarchy)
+            if (back == currentHierarchy)
             {
                 back = -1;
                 node->next = new TestXNode(frameName);
                 readMesh(node->next);
                 file.seekg(posFile, std::ios_base::beg);
-                for (int i = 0; i < hierarchy - 1; i++)
-                {
-                    printf("\t");
-                }
-                printf("Frame:%s\n", frameName.c_str());
                 readFrame(node->next);
+            }
+            if (begin < end) // too many "}"
+            {
+                back = currentHierarchy - (end - begin);
+                return;
             }
             if (begin == end && begin != 0 && end != 0)
             {
                 node->next = new TestXNode(frameName);
                 readMesh(node->next);
                 file.seekg(posFile, std::ios_base::beg);
-                for (int i = 0; i < hierarchy - 1; i++)
-                {
-                    printf("\t");
-                }
-                printf("Frame:%s\n", frameName.c_str());
                 readFrame(node->next);
             }
             if ((back != -1) && (back < currentHierarchy))
             {
                 hierarchy--;
-                return;
-            }
-            if (begin < end) // too many "}"
-            {
-                back = currentHierarchy - (end - begin);
                 return;
             }
         }

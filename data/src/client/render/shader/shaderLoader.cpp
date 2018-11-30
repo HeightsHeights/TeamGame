@@ -17,7 +17,10 @@ ShaderProgram *BaseShaderLoader::generateShader(const char *vertexFilename, cons
     glAttachShader(programID, vertexShaderID);
     glAttachShader(programID, fragmentShaderID);
     bindAttributes();
+    GLint linked;
     glLinkProgram(programID);
+    glGetProgramiv(programID, GL_LINK_STATUS, &linked);
+    printProgramInfoLog(programID);
     glValidateProgram(programID);
     return new ShaderProgram(programID, vertexShaderID, fragmentShaderID);
 }
@@ -35,6 +38,7 @@ GLuint BaseShaderLoader::loadShader(const char *file, int type)
     GLint compiled;
     glCompileShader(ShaderID);
     glGetShaderiv(ShaderID, GL_COMPILE_STATUS, &compiled);
+    printShaderInfoLog(ShaderID);
     if (compiled == GL_FALSE)
     {
         fprintf(stderr, "Error --> glCompileShader()\n");

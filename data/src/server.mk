@@ -1,36 +1,36 @@
-TARGET_SERVER ?= server.out
+TARGET ?= server.out
 
-BUILD_DIR_SERVER ?= ../../build
+BUILD_DIR ?= ../../build
 
-SRC_DIRS_SERVER ?= ./server ./common
+SRC_DIRS ?= ./server ./common
 ########################################################################################
 ##
 ########################################################################################
-SRCS_SERVER := $(shell find $(SRC_DIRS_SERVER) -name *.cpp -or -name *.c -or -name *.s)
-OBJS_SERVER := $(SRCS_SERVER:%=$(BUILD_DIR_SERVER)/%.o)
-DEPS_SERVER := $(OBJS_SERVER:.o=.d)
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 ########################################################################################
 ##
 ########################################################################################
-INC_DIRS_SERVER := $(shell find $(SRC_DIRS_SERVER) -type d)
-INC_FLAGS_SERVER := $(addprefix -I,$(INC_DIRS_SERVER))
-CPPFLAGS_SERVER ?= $(INC_FLAGS_SERVER) -MMD -MP
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 ########################################################################################
 ##
 ########################################################################################
-LDFLAGS_SERVER = -lSDL2 -Wl,-rpath,/usr/local/lib
+LDFLAGS = -lSDL2 -Wl,-rpath,/usr/local/lib
 
-$(BUILD_DIR_SERVER)/$(TARGET_SERVER): $(OBJS_SERVER)
-	$(CXX) $(OBJS_SERVER) -o $@ $(LDFLAGS_SERVER)
+$(BUILD_DIR)/$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 ########################################################################################
 ##
 ########################################################################################
 CXXFLAGS = -g
-$(BUILD_DIR_SERVER)/%.cpp.o: %.cpp
+$(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS_SERVER) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 ########################################################################################
 ##
 ########################################################################################
--include $(DEPS_SERVER)
+-include $(DEPS)
 MKDIR_P ?= mkdir -p

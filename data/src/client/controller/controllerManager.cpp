@@ -24,14 +24,6 @@ bool ControllerManager::init()
         fprintf(stderr, "Error --> connot connect joystick\n");
         controller = new Keybord();
     }
-#ifdef _ENABLE_WII
-    controller = WiiRemoteController().connect("88");
-    if (controller == NULL)
-    {
-        fprintf(stderr, "Error --> connot connect wii\n");
-        controller = new Keybord();
-    }
-#endif
     return true;
 }
 int ControllerManager::updateController()
@@ -52,3 +44,16 @@ void ControllerManager::cleanUp()
     //コントローラーの終了処理←
     //SDL_JoystickClose(joystick);
 }
+#ifdef _ENABLE_WII
+bool ControllerManager::connectWiiRemoteController(char *id)
+{
+    WiiRemoteController *wiiController = WiiRemoteController().connect("88");
+    if (wiiController == NULL)
+    {
+        fprintf(stderr, "Error --> connot connect wii\n");
+        return false;
+    }
+    controller = wiiController;
+    return true;
+}
+#endif

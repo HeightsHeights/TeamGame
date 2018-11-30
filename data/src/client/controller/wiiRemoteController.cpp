@@ -11,7 +11,6 @@
 ******************************************************************************/
 void WiiRemoteController::scanDirection(ControllerParam *param)
 {
-
     if (wiimote.keys.up)
     {
         param->axisR.y = -1;
@@ -95,13 +94,14 @@ bool WiiRemoteController::updateEvent()
 
     if (wiimote_is_open(&this->wiimote))
     {
-        isWiiUpdate = wiimote_update(&wiimote);
+        isWiiUpdate = wiimote_update(&this->wiimote);
     }
     return isSdlUpdate || isWiiUpdate;
 }
-WiiRemoteController *connect(const char *id)
+
+WiiRemoteController *WiiRemoteController::connect(const char *id)
 {
-    if (wiimote_connect(&wiimote, id) < 0)
+    if (wiimote_connect(&this->wiimote, id) < 0)
     {
         return NULL;
     }

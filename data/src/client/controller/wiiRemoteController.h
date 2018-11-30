@@ -14,15 +14,15 @@
 ******************************************************************************/
 class WiiRemoteController : public BaseController
 {
-private:
-  wiimote_t wiimote;
-  virtual void scanDirection(ControllerParam *param);
-  virtual void scanButton(ControllerParam *param);
+  private:
+    wiimote_t wiimote = WIIMOTE_INIT;
+    virtual void scanDirection(ControllerParam *param);
+    virtual void scanButton(ControllerParam *param);
 
-public:
-  WiiRemoteController() { this->wiimote = WIIMOTE_INIT; }
-  virtual bool updateEvent();
-  WiiRemoteController *connect(const char *id);
+  public:
+    WiiRemoteController() {}
+    virtual bool updateEvent();
+    WiiRemoteController *connect(const char *id);
 };
 
 #endif

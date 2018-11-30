@@ -141,7 +141,7 @@ void TestXLoader::readFrame(TestXNode *node)
                 back = -1;
                 node->next = new TestXNode(frameName);
                 readMesh(node->next);
-                file.seekg(posFile, std::ios_base::beg);
+                file.seekg(posFile, std::fstream::beg);
                 readFrame(node->next);
             }
             if (begin < end) // too many "}"
@@ -153,7 +153,7 @@ void TestXLoader::readFrame(TestXNode *node)
             {
                 node->next = new TestXNode(frameName);
                 readMesh(node->next);
-                file.seekg(posFile, std::ios_base::beg);
+                file.seekg(posFile, std::fstream::beg);
                 readFrame(node->next);
             }
             if ((back != -1) && (back < currentHierarchy))

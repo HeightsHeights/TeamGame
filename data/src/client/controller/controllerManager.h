@@ -20,4 +20,7 @@ public:
   static int updateController();
   static void requestReaction(ControllerParam param);
   static void cleanUp();
+#ifdef _ENABLE_WII
+  static bool connectWiiRemoteController(char *id);
+#endif
 };

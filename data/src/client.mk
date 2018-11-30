@@ -1,37 +1,36 @@
-TARGET_CLIENT ?= client.out
+TARGET ?= client.out
 
-BUILD_DIR_CLIENT ?= ../../build
+BUILD_DIR ?= ../../build
 
-SRC_DIRS_CLIENT ?= ./client ./common
+SRC_DIRS ?= ./client ./common
 ########################################################################################
 ##
 ########################################################################################
-SRCS_CLIENT := $(shell find $(SRC_DIRS_CLIENT) -name *.cpp -or -name *.c -or -name *.s)
-OBJS_CLIENT := $(SRCS_CLIENT:%=$(BUILD_DIR_CLIENT)/%.o)
-DEPS_CLIENT := $(OBJS_CLIENT:.o=.d)
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 ########################################################################################
 ##
 ########################################################################################
-INC_DIRS_CLIENT := $(shell find $(SRC_DIRS_CLIENT) -type d)
-INC_FLAGS_CLIENT := $(addprefix -I,$(INC_DIRS_CLIENT))
-CPPFLAGS_CLIENT ?= $(INC_FLAGS_CLIENT) -MMD -MP
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 ########################################################################################
 ##
 ########################################################################################
-LDFLAGS_CLIENT = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 
-$(BUILD_DIR_CLIENT)/$(TARGET_CLIENT): $(OBJS_CLIENT)
-	$(CXX) $(OBJS_CLIENT) -o $@ $(LDFLAGS_CLIENT)
+$(BUILD_DIR)/$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 ########################################################################################
 ##
 ########################################################################################
 CXXFLAGS = -g
-$(BUILD_DIR_CLIENT)/%.cpp.o: %.cpp
+$(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS_CLIENT) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 ########################################################################################
 ##
 ########################################################################################
--include $(DEPS_CLIENT)
+-include $(DEPS)
 MKDIR_P ?= mkdir -p
-

@@ -1,5 +1,5 @@
 #include "./mainProgram.h"
-#include "../network/network.h"
+#include "../network/networkManager.h"
 
 /******************************************************************************
  * メイン関数

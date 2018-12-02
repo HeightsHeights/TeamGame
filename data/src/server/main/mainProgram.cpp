@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "./mainProgram.h"
-#include "../network/network.h"
+#include "../network/networkManager.h"
 /******************************************************************************
  * メイン関数
 ******************************************************************************/

@@ -20,7 +20,7 @@ public:
 
   virtual bool init();
   virtual void reactController();
-  virtual void executeCommand();
+  virtual SCENE_ID executeCommand();
   virtual void drawWindow();
 
 protected:

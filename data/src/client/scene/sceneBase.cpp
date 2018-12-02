@@ -10,7 +10,7 @@ bool BaseScene::init()
 void BaseScene::reactController()
 {
 }
-void BaseScene::executeCommand()
+SCENE_ID BaseScene::executeCommand()
 {
 }
 void BaseScene::drawWindow()

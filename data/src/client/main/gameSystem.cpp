@@ -75,6 +75,7 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ControllerManager::init()\n");
         return false;
     }
+    return true;
 }
 
 bool GameSystem::gameLoop()
@@ -101,4 +102,5 @@ bool GameSystem::terminate()
         fprintf(stderr, "Error --> saveConfig()\n");
         return false;
     }
+    return true;
 }

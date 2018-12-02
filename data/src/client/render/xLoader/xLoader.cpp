@@ -2,6 +2,7 @@
 #include <string.h>
 #include <limits>
 
+#define FILE_EXTENSION ".x"
 #define BUFFER_LENGTH 256
 
 void XLoader::readMesh(XNode *node)
@@ -168,7 +169,7 @@ bool XLoader::readFile()
 
 XModel *XLoader::load(const std::string dirPath, const std::string fileName)
 {
-    std::string xFilePath = dirPath + fileName + ".x";
+    std::string xFilePath = dirPath + fileName + FILE_EXTENSION;
 
     ret = new XModel();
 

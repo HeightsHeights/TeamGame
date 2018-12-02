@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     {
         return -1;
     }
-    if (gameSystem->gameLoop())
+    if (!gameSystem->gameLoop())
     {
         return -1;
     }

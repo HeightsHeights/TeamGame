@@ -14,16 +14,6 @@ typedef struct
 #include <sys/socket.h>
 #include <netdb.h>
 /******************************************************************************
- * class DataBlockGenerator
- * 機能1：
-******************************************************************************/
-class DataBlockGenerator
-{
-private:
-public:
-  void setDataBlock(void *dataBlock, void *data, int *dataSize);
-};
-/******************************************************************************
  * class SendRecvManager
  * 機能1：
 ******************************************************************************/
@@ -67,7 +57,6 @@ private:
   static int srcSocket;
   static fd_set gMask;
   static int gWidth;
-  static DataBlockGenerator dataBlockGenerator;
   static SendRecvManager sendRecvManager;
   static NetConnector connector;
   static void setMack(int maxFd);

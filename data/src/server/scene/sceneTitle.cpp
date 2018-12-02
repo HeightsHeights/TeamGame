@@ -4,6 +4,6 @@ bool SceneTitle::init()
 {
     return true;
 }
-void SceneTitle::executeCommand()
+void SceneTitle::executeCommand(char command, int pos)
 {
 }

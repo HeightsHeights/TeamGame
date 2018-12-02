@@ -23,5 +23,5 @@ private:
 
 public:
   static bool init();
-  static void executeCommand();
+  static bool executeCommand(char command, int pos);
 };

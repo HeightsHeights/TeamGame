@@ -33,7 +33,9 @@ public:
   static void disconnect(int id);
   static void closeAll();
   static bool waitRequest(fd_set *readOK);
-  static bool recvEvent();
+
+  static int getGClientNum() { return gClientNum; }
+  static Client *getGClients() { return gClients; }
 
   static void sendData(int pos, void *data, int dataSize);
   static int recvData(int pos, void *data, int dataSize);

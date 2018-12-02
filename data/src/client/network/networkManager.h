@@ -2,7 +2,6 @@
 #pragma once
 
 #include "./netConnector.h"
-#include "./sendRecvManager.h"
 
 /******************************************************************************
  * class NetworkManager

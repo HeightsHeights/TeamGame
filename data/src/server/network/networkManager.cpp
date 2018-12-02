@@ -11,7 +11,20 @@
 int NetworkManager::srcSocket;
 fd_set NetworkManager::gMask;
 int NetworkManager::gWidth;
+int NetworkManager::gClientNum;
+Client NetworkManager::gClients[MAX_CLIENTS];
 NetConnector *NetworkManager::connector;
+
+void NetworkManager::setMask(int maxFd)
+{
+    gWidth = maxFd + 1;
+
+    FD_ZERO(&gMask);
+    for (int i = 0; i < gClientNum; i++)
+    {
+        FD_SET(gClients[i].fd, &gMask);
+    }
+}
 
 bool NetworkManager::init()
 {
@@ -50,30 +63,36 @@ bool NetworkManager::init()
     }
     fprintf(stderr, "Listen OK\n");
 
-    if ((dstSocket = accept(srcSocket, NULL, NULL)) == -1)
+    connector = new NetConnector(srcSocket, server);
+    int maxFd = connect(srcSocket);
+    if (maxFd == -1)
     {
-        fprintf(stderr, "Accept error\n");
-        close(srcSocket);
         return false;
     }
+    setMask(maxFd);
+
     close(srcSocket);
     fprintf(stderr, "Accept client\n");
-    close(dstSocket);
     return true;
 }
 
 bool NetworkManager::connect(int srcSocket)
 {
+    int dstSocket;
     for (int i = 0; i < MAX_CLIENTS; i++)
     {
-        int dstSocket;
         if ((dstSocket = accept(srcSocket, NULL, NULL)) == -1)
         {
             fprintf(stderr, "Accept error\n");
-            return false;
+            for (int j = 0; j < i; j++)
+            {
+                disconnect(i);
+            }
+            return -1;
         }
         gClients[i].fd = dstSocket;
     }
+    return dstSocket;
 }
 void NetworkManager::disconnect(int id)
 {

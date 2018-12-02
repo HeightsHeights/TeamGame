@@ -4,6 +4,6 @@ bool SceneMainGame::init()
 {
     return true;
 }
-void SceneMainGame::executeCommand()
+void SceneMainGame::executeCommand(char command, int pos)
 {
 }

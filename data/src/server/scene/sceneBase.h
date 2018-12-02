@@ -14,10 +14,10 @@ class BaseScene
 {
 private:
 public:
-  BaseScene(){}
+  BaseScene() {}
 
   virtual bool init();
-  virtual void executeCommand();
+  virtual void executeCommand(char command, int pos);
 
 protected:
 };

@@ -3,6 +3,6 @@
 bool BaseScene::init()
 {
 }
-void BaseScene::executeCommand()
+void BaseScene::executeCommand(char command, int pos)
 {
 }

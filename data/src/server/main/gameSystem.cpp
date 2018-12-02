@@ -50,9 +50,26 @@ bool GameSystem::gameLoop()
 {
     while (SDL_AtomicGet(&atm) > 0)
     {
-        if (NetworkManager::recvEvent())
+        fd_set readOK;
+        if (!NetworkManager::waitRequest(&readOK))
         {
-            SDL_AtomicDecRef(&atm);
+            fprintf(stderr, "Error --> NetworkManager::waitRequest()\n");
+            return false;
+        }
+        int gClientNum = NetworkManager::getGClientNum();
+        Client *gClients = NetworkManager::getGClients();
+
+        for (int i = 0; i < gClientNum; i++)
+        {
+            char command;
+            if (FD_ISSET(gClients[i].fd, &readOK))
+            {
+                NetworkManager::recvData(i, &command, sizeof(char));
+                if (SceneManager::executeCommand(command, i))
+                {
+                    SDL_AtomicDecRef(&atm);
+                }
+            }
         }
     }
     return true;
@@ -60,6 +77,6 @@ bool GameSystem::gameLoop()
 
 bool GameSystem::terminate()
 {
-    NetworkManager::disconnect();
+    NetworkManager::closeAll();
     return true;
 }

@@ -41,7 +41,7 @@ void WiiRemoteController::scanButton(ControllerParam *param)
         param->buttonUp[CT_DECITION_OR_ATTACK] = true;
     }
 
-    if (wiimote.ext.nunchuk.z)
+    if (wiimote.ext.nunchuk.keys.z)
     {
         param->buttonDown[CT_GUARD] = true;
         param->buttonUp[CT_GUARD] = false;
@@ -85,7 +85,7 @@ void WiiRemoteController::scanButton(ControllerParam *param)
         param->buttonUp[CT_CANCEL] = true;
     }
 
-    if (wiimote.ext.nunchuk.c)
+    if (wiimote.ext.nunchuk.keys.c)
     {
         param->buttonDown[CT_PRDGDIRECTION] = true;
         param->buttonUp[CT_PRDGDIRECTION] = false;

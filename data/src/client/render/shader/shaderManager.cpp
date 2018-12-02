@@ -18,7 +18,7 @@ ShaderProgram *ShaderManager::shaders[SID_NUM];
  * ShaderManager
 ******************************************************************************/
 //シェーダ初期化
-bool ShaderManager::initShader()
+bool ShaderManager::init()
 {
 
     BaseShaderLoader *loaders[SID_NUM] = {

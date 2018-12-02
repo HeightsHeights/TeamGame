@@ -7,15 +7,15 @@ GLfloat light0pos[] = {0.0, 3.0, 5.0, 1.0};
 /******************************************************************************
  * WindowManager
 ******************************************************************************/
-WindowManager::WindowManager(int argc, char *argv[])
+WindowManager::WindowManager(int argc, char *argv[], const char *windowName)
 {
-    initSDLWindow();
+    initSDLWindow(windowName);
     initOpenGL(argc, argv);
 }
 
-bool WindowManager::initSDLWindow()
+bool WindowManager::initSDLWindow(const char *windowName)
 {
-    window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+    window = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (window == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateWindow()\n");

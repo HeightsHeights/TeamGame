@@ -18,11 +18,11 @@ class WindowManager
 private:
   SDL_Window *window;
   SDL_Renderer *renderer;
-  bool initSDLWindow();
+  bool initSDLWindow(const char *windowName);
   bool initOpenGL(int argc, char *argv[]);
 
 public:
-  WindowManager(int argc, char *argv[]);
+  WindowManager(int argc, char *argv[], const char *windowName);
   void clearWindow();
   void swapWindow();
 };

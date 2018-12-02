@@ -4,9 +4,9 @@
 
 typedef enum
 {
-    SID_STATIC = 0,
-    SID_TEST = 1,
-    SID_NUM = 2,
+  SID_STATIC = 0,
+  SID_TEST = 1,
+  SID_NUM = 2,
 } SHADER_ID;
 
 /******************************************************************************
@@ -16,11 +16,11 @@ typedef enum
 ******************************************************************************/
 class ShaderManager
 {
-  private:
-    static ShaderProgram *shaders[SID_NUM];
+private:
+  static ShaderProgram *shaders[SID_NUM];
 
-  public:
-    static bool initShader();
-    static void startShader(SHADER_ID sid);
-    static void stopShader(SHADER_ID sid);
+public:
+  static bool init();
+  static void startShader(SHADER_ID sid);
+  static void stopShader(SHADER_ID sid);
 };

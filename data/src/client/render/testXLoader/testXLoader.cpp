@@ -2,7 +2,7 @@
 #include <string.h>
 #include <limits>
 
-#define BUFFER_LENGTH 255
+#define BUFFER_LENGTH 256
 
 void TestXLoader::readMesh(TestXNode *node)
 {

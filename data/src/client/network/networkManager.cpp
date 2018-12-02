@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#define PORT (u_short)8888 /* ポート番号 */
+#define PORT (u_short)8885 /* ポート番号 */
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
@@ -12,6 +12,14 @@ int NetworkManager::gSocket;
 fd_set NetworkManager::gMask;
 int NetworkManager::gWidth;
 NetConnector *NetworkManager::connector;
+
+void NetworkManager::setMask()
+{
+    FD_ZERO(&gMask);
+    FD_SET(gSocket, &gMask);
+
+    gWidth = gSocket + 1;
+}
 
 bool NetworkManager::init(const char *hostName)
 {
@@ -43,7 +51,7 @@ bool NetworkManager::init(const char *hostName)
         fprintf(stderr, "connector making failed\n");
         return false;
     }
-
+    setMask();
     return true;
 }
 
@@ -68,7 +76,7 @@ bool NetworkManager::waitRequest(fd_set *readOK)
     timeout.tv_usec = 20;
 
     *readOK = gMask;
-    if (select(gWidth, readOK, NULL, NULL, &timeout))
+    if (select(gWidth, readOK, NULL, NULL, &timeout) < 0)
     {
         return false;
     }

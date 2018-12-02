@@ -41,7 +41,7 @@ bool SceneManager::executeCommand(int command)
 {
     bool endFlag = false;
     sceneId = scenes[sceneId]->executeCommand(command);
-    if (sceneId < 0 || sceneId <= SI_NUMBER)
+    if (sceneId < 0 || SI_NUMBER <= sceneId)
     {
         endFlag = true;
     }

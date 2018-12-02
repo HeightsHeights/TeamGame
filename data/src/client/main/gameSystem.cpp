@@ -78,12 +78,12 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 #ifndef _UNENABLE_NETWORK
-    if (NetworkManager::init(config->serverAddress.c_str()))
+    if (!NetworkManager::init(config->serverAddress.c_str()))
     {
         fprintf(stderr, "Error --> NetworkManager::init()\n");
         return false;
     }
-    if (NetworkManager::connect())
+    if (!NetworkManager::connect())
     {
         fprintf(stderr, "Error --> NetworkManager::connect()\n");
         return false;

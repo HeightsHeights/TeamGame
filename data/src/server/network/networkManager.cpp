@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#define PORT (u_short)8888 /* ポート番号 */
+#define PORT (u_short)8885 /* ポート番号 */
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
@@ -28,6 +28,7 @@ void NetworkManager::setMask(int maxFd)
 
 bool NetworkManager::init()
 {
+    gClientNum = 1;
     struct sockaddr_in server;
     int dstSocket;
     int val = 1;
@@ -64,7 +65,7 @@ bool NetworkManager::init()
     fprintf(stderr, "Listen OK\n");
 
     connector = new NetConnector(srcSocket, server);
-    int maxFd = connect(srcSocket);
+    int maxFd = connect();
     if (maxFd == -1)
     {
         return false;
@@ -76,7 +77,7 @@ bool NetworkManager::init()
     return true;
 }
 
-bool NetworkManager::connect(int srcSocket)
+int NetworkManager::connect()
 {
     int dstSocket;
     for (int i = 0; i < MAX_CLIENTS; i++)
@@ -86,7 +87,7 @@ bool NetworkManager::connect(int srcSocket)
             fprintf(stderr, "Accept error\n");
             for (int j = 0; j < i; j++)
             {
-                disconnect(i);
+                disconnect(j);
             }
             return -1;
         }

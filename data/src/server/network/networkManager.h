@@ -3,7 +3,7 @@
 
 #include "./netConnector.h"
 
-#define MAX_CLIENTS 4
+#define MAX_CLIENTS 1
 #define ALL_CLIENTS -1
 
 typedef struct
@@ -29,7 +29,7 @@ private:
 
 public:
   static bool init();
-  static bool connect(int srcSocket);
+  static int connect();
   static void disconnect(int id);
   static void closeAll();
   static bool waitRequest(fd_set *readOK);

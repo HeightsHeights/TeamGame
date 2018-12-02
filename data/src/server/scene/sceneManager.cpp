@@ -34,5 +34,11 @@ bool SceneManager::init()
 
 bool SceneManager::executeCommand(int command, int pos)
 {
+    bool endFlag = false;
     sceneId = scenes[sceneId]->executeCommand(command, pos);
+    if (sceneId < 0 || sceneId <= SI_NUMBER)
+    {
+        endFlag = true;
+    }
+    return endFlag;
 }

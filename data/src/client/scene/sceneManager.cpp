@@ -39,7 +39,13 @@ void SceneManager::reactController(ControllerParam param)
 
 bool SceneManager::executeCommand(int command)
 {
+    bool endFlag = false;
     sceneId = scenes[sceneId]->executeCommand(command);
+    if (sceneId < 0 || sceneId <= SI_NUMBER)
+    {
+        endFlag = true;
+    }
+    return endFlag;
 }
 
 void SceneManager::drawWindow()

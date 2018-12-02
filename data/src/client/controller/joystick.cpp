@@ -102,9 +102,9 @@ bool Joystick::updateEvent()
     return isSdlUpdate;
 }
 
-bool Joystick::scanEndFrag()
+bool Joystick::scanEndFlag()
 {
-    if (BaseController::scanEndFrag())
+    if (BaseController::scanEndFlag())
     {
         return true;
     }

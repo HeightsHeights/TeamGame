@@ -25,7 +25,7 @@ private:
 public:
   WiiRemoteController() {}
   virtual bool updateEvent();
-  virtual bool scanEndFrag();
+  virtual bool scanEndFlag();
   WiiRemoteController *connect(const char *id);
 };
 

@@ -20,7 +20,7 @@ ControllerParam BaseController::readStateController()
     return param;
 }
 
-bool BaseController::scanEndFrag()
+bool BaseController::scanEndFlag()
 {
     if (event.type != SDL_QUIT)
     {

@@ -11,7 +11,7 @@ private:
 
 public:
   virtual bool updateEvent();
-  virtual bool scanEndFrag();
+  virtual bool scanEndFlag();
   ControllerParam readStateController();
 
 protected:

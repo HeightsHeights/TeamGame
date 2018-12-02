@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <strings.h>
 #include <unistd.h>
+#include <assert.h>
 
 #define PORT (u_short)8888 /* ポート番号 */
 /******************************************************************************
@@ -10,7 +11,6 @@
 int NetworkManager::srcSocket;
 fd_set NetworkManager::gMask;
 int NetworkManager::gWidth;
-SendRecvManager *NetworkManager::sendRecvManager;
 NetConnector *NetworkManager::connector;
 
 bool NetworkManager::init()
@@ -62,11 +62,72 @@ bool NetworkManager::init()
     return true;
 }
 
-SendRecvManager *NetworkManager::getSendRecvManager()
+bool NetworkManager::connect(int srcSocket)
 {
-    return sendRecvManager;
+    for (int i = 0; i < MAX_CLIENTS; i++)
+    {
+        int dstSocket;
+        if ((dstSocket = accept(srcSocket, NULL, NULL)) == -1)
+        {
+            fprintf(stderr, "Accept error\n");
+            return false;
+        }
+        gClients[i].fd = dstSocket;
+    }
+}
+void NetworkManager::disconnect(int id)
+{
+    close(gClients[id].fd);
+}
+void NetworkManager::closeAll()
+{
+    for (int i = 0; i < gClientNum; i++)
+    {
+        disconnect(i);
+    }
 }
 
-bool NetworkManager::connect()
+bool NetworkManager::waitRequest(fd_set *readOK)
 {
+    *readOK = gMask;
+    /* クライアントからデータが届いているか調べる */
+    if (select(gWidth, readOK, NULL, NULL, NULL) < 0)
+    {
+        /* エラーが起こった */
+        return false;
+    }
+    return true;
+}
+
+void NetworkManager::sendData(int pos, void *data, int dataSize)
+{
+    /* 引き数チェック */
+    assert(0 <= pos && pos < gClientNum || pos == ALL_CLIENTS);
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    if (pos == ALL_CLIENTS)
+    {
+        /* 全クライアントにデータを送る */
+        for (int i = 0; i < gClientNum; i++)
+        {
+            write(gClients[i].fd, data, dataSize);
+        }
+    }
+    else
+    {
+        write(gClients[pos].fd, data, dataSize);
+    }
+}
+int NetworkManager::recvData(int pos, void *data, int dataSize)
+{
+    int n;
+
+    assert(0 <= pos && pos < gClientNum);
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    n = read(gClients[pos].fd, data, dataSize);
+
+    return n;
 }

@@ -1,12 +1,14 @@
 #include "./networkManager.h"
 #include <stdio.h>
 #include <strings.h>
+#include <unistd.h>
+#include <assert.h>
 
 #define PORT (u_short)8888 /* ポート番号 */
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
-SendRecvManager *NetworkManager::sendRecvManager;
+int NetworkManager::gSocket;
 NetConnector *NetworkManager::connector;
 
 bool NetworkManager::init(char *hostName)
@@ -27,7 +29,6 @@ bool NetworkManager::init(char *hostName)
     bcopy(servHost->h_addr, (char *)&server.sin_addr, servHost->h_length);
 
     /* ソケットを作成する */
-    int gSocket;
     if ((gSocket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         fprintf(stderr, "socket allocation failed\n");
@@ -40,19 +41,10 @@ bool NetworkManager::init(char *hostName)
         fprintf(stderr, "connector making failed\n");
         return false;
     }
-    sendRecvManager = new SendRecvManager(gSocket);
-    if (sendRecvManager == NULL)
-    {
-        fprintf(stderr, "sendRecvManaer making failed\n");
-        return false;
-    }
 
     return true;
 }
-SendRecvManager *NetworkManager::getSendRecvManager()
-{
-    return sendRecvManager;
-}
+
 bool NetworkManager::connect()
 {
     if (!connector->connectServer())
@@ -65,4 +57,21 @@ bool NetworkManager::connect()
 void NetworkManager::disconnect()
 {
     connector->disconnectServer();
+}
+
+void NetworkManager::sendData(void *data, int dataSize)
+{
+    /* 引き数チェック */
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    write(gSocket, data, dataSize);
+}
+int NetworkManager::recieveData(void *data, int dataSize)
+{
+    /* 引き数チェック */
+    assert(data != NULL);
+    assert(0 < dataSize);
+
+    return read(gSocket, data, dataSize);
 }

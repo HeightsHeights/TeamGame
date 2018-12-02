@@ -144,9 +144,9 @@ bool Keybord::updateEvent()
     return ret;
 }
 
-bool Keybord::scanEndFrag()
+bool Keybord::scanEndFlag()
 {
-    if (BaseController::scanEndFrag())
+    if (BaseController::scanEndFlag())
     {
         return true;
     }

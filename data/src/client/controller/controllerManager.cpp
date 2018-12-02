@@ -34,7 +34,7 @@ bool ControllerManager::updateController()
 
     requestReaction(param);
 
-    return controller->scanEndFrag();
+    return controller->scanEndFlag();
 }
 void ControllerManager::requestReaction(ControllerParam param)
 {

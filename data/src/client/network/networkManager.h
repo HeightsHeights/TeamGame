@@ -10,13 +10,15 @@
 ******************************************************************************/
 class NetworkManager
 {
-  private:
-    static SendRecvManager *sendRecvManager;
-    static NetConnector *connector;
+private:
+  static int gSocket;
+  static NetConnector *connector;
 
-  public:
-    static SendRecvManager *getSendRecvManager();
-    static bool init(char *hostName);
-    static bool connect();
-    static void disconnect();
+public:
+  static bool init(char *hostName);
+  static bool connect();
+  static void disconnect();
+
+  void sendData(void *data, int dataSize);
+  int recieveData(void *data, int dataSize);
 };

@@ -120,9 +120,9 @@ WiiRemoteController *WiiRemoteController::connect(const char *id)
     return this;
 }
 
-bool Joystick::scanEndFrag()
+bool Joystick::scanEndFlag()
 {
-    if (BaseController::scanEndFrag())
+    if (BaseController::scanEndFlag())
     {
         return true;
     }

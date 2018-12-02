@@ -35,8 +35,18 @@ int main(int argc, char *argv[])
     }
 
     WindowManager *window = new WindowManager(argc, argv);
-    ShaderManager::initShader();
-    SceneManager::init(window);
+    if (window == NULL)
+    {
+        return -1;
+    }
+    if (!ShaderManager::initShader())
+    {
+        return -1;
+    }
+    if (!SceneManager::init(window))
+    {
+        return -1;
+    }
 
     SDL_Event event;
 

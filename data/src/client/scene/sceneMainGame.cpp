@@ -5,6 +5,7 @@ SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 }
 bool SceneMainGame::init()
 {
+    return true;
 }
 void SceneMainGame::reactController()
 {

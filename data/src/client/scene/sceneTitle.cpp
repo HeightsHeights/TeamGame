@@ -7,6 +7,10 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 bool SceneTitle::init()
 {
     obj = ObjModelLoader().load("data/res/gui/obj/", "test");
+    if (obj == NULL)
+    {
+        return false;
+    }
     //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
     //TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
 
@@ -15,6 +19,7 @@ bool SceneTitle::init()
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
     glEnable(GL_TEXTURE_2D);
+    return true;
 }
 void SceneTitle::reactController()
 {

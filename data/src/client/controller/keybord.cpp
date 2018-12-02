@@ -139,8 +139,9 @@ void Keybord::scanButton(ControllerParam *param)
 
 bool Keybord::updateEvent()
 {
-    return BaseController::updateEvent();
+    bool ret = BaseController::updateEvent();
     keys = SDL_GetKeyboardState(NULL);
+    return ret;
 }
 
 bool Keybord::scanEndFrag()
@@ -149,7 +150,7 @@ bool Keybord::scanEndFrag()
     {
         return true;
     }
-    if (event.key.keysym.sym == SDLK_ESCAPE)
+    if (keys[SDL_SCANCODE_ESCAPE])
     {
         return true;
     }

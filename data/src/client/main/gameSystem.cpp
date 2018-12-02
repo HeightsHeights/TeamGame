@@ -5,6 +5,7 @@
 #include "../scene/sceneManager.h"
 #include "../config/loader/configLoader.h"
 #include "../config/saver/configSaver.h"
+#include "../../common/console/console.h"
 
 bool GameSystem::loadConfig(std::string fileName)
 {

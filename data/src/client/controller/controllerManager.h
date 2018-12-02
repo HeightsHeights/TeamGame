@@ -17,7 +17,7 @@ private:
 
 public:
   static bool init();
-  static int updateController();
+  static bool updateController();
   static void requestReaction(ControllerParam param);
   static void cleanUp();
 #ifdef _ENABLE_WII

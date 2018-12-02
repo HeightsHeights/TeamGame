@@ -20,6 +20,15 @@ ControllerParam BaseController::readStateController()
     return param;
 }
 
+bool BaseController::scanEndFrag()
+{
+    if (event.type != SDL_QUIT)
+    {
+        return false;
+    }
+    return true;
+}
+
 bool BaseController::updateEvent()
 {
     return SDL_PollEvent(&event);

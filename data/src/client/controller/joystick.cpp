@@ -101,3 +101,16 @@ bool Joystick::updateEvent()
 
     return isSdlUpdate;
 }
+
+bool Joystick::scanEndFrag()
+{
+    if (BaseController::scanEndFrag())
+    {
+        return true;
+    }
+    if (SDL_JoystickGetButton(joy, 10) > 0)
+    {
+        return true;
+    }
+    return false;
+}

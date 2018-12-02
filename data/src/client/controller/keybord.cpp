@@ -124,8 +124,6 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_JUMP] = true;
     }
 
-   
-
     for (int i = 0; i > 12; i++)
     {
         if (param->buttonDown[i] = true)
@@ -142,4 +140,18 @@ void Keybord::scanButton(ControllerParam *param)
 bool Keybord::updateEvent()
 {
     return BaseController::updateEvent();
+    keys = SDL_GetKeyboardState(NULL);
+}
+
+bool Keybord::scanEndFrag()
+{
+    if (BaseController::scanEndFrag())
+    {
+        return true;
+    }
+    if (event.key.keysym.sym == SDLK_ESCAPE)
+    {
+        return true;
+    }
+    return false;
 }

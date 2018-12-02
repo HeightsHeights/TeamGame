@@ -11,7 +11,7 @@ bool SceneTitle::init()
     {
         return false;
     }
-    //XRawModel obj = *XModelLoader().load("data/res/gui/x/test.x");
+
     //TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
 
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};

@@ -26,13 +26,15 @@ bool ControllerManager::init()
     }
     return true;
 }
-int ControllerManager::updateController()
+bool ControllerManager::updateController()
 {
     controller->updateEvent();
 
     ControllerParam param = controller->readStateController();
 
     requestReaction(param);
+
+    return controller->scanEndFrag();
 }
 void ControllerManager::requestReaction(ControllerParam param)
 {

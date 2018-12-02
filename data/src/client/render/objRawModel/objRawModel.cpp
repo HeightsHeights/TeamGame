@@ -9,7 +9,6 @@
 #define OBJ_BUFFER_LENGTH 256
 
 #define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
-int a = 0;
 GLuint TextureID = 0;
 /******************************************************************************
  * ObjSubset

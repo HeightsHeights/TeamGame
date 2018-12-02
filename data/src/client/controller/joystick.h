@@ -24,4 +24,5 @@ public:
   Joystick();
   Joystick(const unsigned int controllerID);
   virtual bool updateEvent();
+  virtual bool scanEndFrag();
 };

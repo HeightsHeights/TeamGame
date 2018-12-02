@@ -4,27 +4,17 @@
 #include "../render/shader/shaderManager.h"
 #include "../controller/controllerManager.h"
 #include "../scene/sceneManager.h"
-
+#include "../configLoader/configLoader.h"
 /******************************************************************************
  * メイン関数
 ******************************************************************************/
 int main(int argc, char *argv[])
 {
-    char localHostName[] = "localhost";
-    char *serverName;
 
-    /* コマンド引数確認 */
-    if (argc == 1)
+    ConfigData *config = ConfigLoader().load("clientConfig");
+    if (config == NULL)
     {
-        serverName = localHostName;
-    }
-    else if (argc == 2)
-    {
-        serverName = argv[1];
-    }
-    else
-    {
-        fprintf(stderr, "Usage: %s, Cannot find a Server Name.\n", argv[0]);
+        fprintf(stderr, "Error --> ConfigLoader().load()\n");
         return -1;
     }
 
@@ -41,18 +31,30 @@ int main(int argc, char *argv[])
     }
     if (!ShaderManager::initShader())
     {
+        fprintf(stderr, "Error --> ShaderManager::initShader()\n");
         return -1;
     }
     if (!SceneManager::init(window))
     {
+        fprintf(stderr, "Error --> SceneManager::init()\n");
         return -1;
     }
-
-    SDL_Event event;
-
-    for (int i = 0; event.type != SDL_QUIT; i++)
+    if (!ControllerManager::init())
     {
-        SDL_PollEvent(&event);
+        fprintf(stderr, "Error --> ControllerManager::init()\n");
+        return -1;
+    }
+    SDL_atomic_t atm;
+    SDL_AtomicSet(&atm, 1);
+
+    while (SDL_AtomicGet(&atm) > 0)
+    {
+
+        if (ControllerManager::updateController())
+        {
+            SDL_AtomicDecRef(&atm);
+        }
+
         SceneManager::drawWindow();
         SDL_Delay(1);
     }

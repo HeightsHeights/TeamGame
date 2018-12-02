@@ -14,9 +14,10 @@ class Keybord : public BaseController
 private:
   virtual void scanDirection(ControllerParam *param);
   virtual void scanButton(ControllerParam *param);
+  const Uint8 *keys;
 
 public:
-  Keybord() { this->keys =  SDL_GetKeyboardState(NULL);}
+  Keybord() { this->keys = SDL_GetKeyboardState(NULL); }
   virtual bool updateEvent();
-  const Uint8 *keys;
+  virtual bool scanEndFrag();
 };

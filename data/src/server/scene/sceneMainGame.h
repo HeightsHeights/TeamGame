@@ -17,5 +17,5 @@ public:
   SceneMainGame() : BaseScene() {}
 
   virtual bool init();
-  virtual void executeCommand(char command, int pos);
+  virtual SCENE_ID executeCommand(int command, int pos);
 };

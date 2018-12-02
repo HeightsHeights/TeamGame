@@ -3,7 +3,8 @@
 /******************************************************************************
  * ベースシーン関係に必要なヘッダーの読み込み
 ******************************************************************************/
-
+#include "../../common/network/networkCommand.h"
+#include "./sceneId.h"
 /******************************************************************************
  * class BaseScene
  * 機能1：
@@ -17,7 +18,7 @@ public:
   BaseScene() {}
 
   virtual bool init();
-  virtual void executeCommand(char command, int pos);
+  virtual SCENE_ID executeCommand(int command, int pos);
 
 protected:
 };

@@ -4,6 +4,7 @@ bool SceneMainGame::init()
 {
     return true;
 }
-void SceneMainGame::executeCommand(char command, int pos)
+SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 {
+    return SI_MAIN;
 }

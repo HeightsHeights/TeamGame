@@ -24,8 +24,9 @@ bool SceneTitle::init()
 void SceneTitle::reactController()
 {
 }
-void SceneTitle::executeCommand()
+SCENE_ID SceneTitle::executeCommand()
 {
+    return SI_TITLE;
 }
 void SceneTitle::drawWindow()
 {

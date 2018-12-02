@@ -32,7 +32,7 @@ bool SceneManager::init()
     return true;
 }
 
-bool SceneManager::executeCommand(char command, int pos)
+bool SceneManager::executeCommand(int command, int pos)
 {
-    scenes[sceneId]->executeCommand(command, pos);
+    sceneId = scenes[sceneId]->executeCommand(command, pos);
 }

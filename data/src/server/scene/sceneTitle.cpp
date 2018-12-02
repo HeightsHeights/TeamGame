@@ -4,6 +4,7 @@ bool SceneTitle::init()
 {
     return true;
 }
-void SceneTitle::executeCommand(char command, int pos)
+SCENE_ID SceneTitle::executeCommand(int command, int pos)
 {
+    return SI_TITLE;
 }

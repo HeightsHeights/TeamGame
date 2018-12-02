@@ -39,7 +39,7 @@ void SceneManager::reactController()
 
 void SceneManager::executeCommand()
 {
-    scenes[sceneId]->executeCommand();
+    sceneId = scenes[sceneId]->executeCommand();
 }
 
 void SceneManager::drawWindow()

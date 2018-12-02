@@ -1,15 +1,10 @@
 #pragma once
 
-typedef enum
-{
-  SI_TITLE = 0,
-  SI_MAIN = 1,
-  SI_NUMBER = 2,
-} SCENE_ID;
 /******************************************************************************
  * SceneManager関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+#include "./sceneId.h"
 /******************************************************************************
  * class SceneManager
  * 機能1：
@@ -23,5 +18,5 @@ private:
 
 public:
   static bool init();
-  static bool executeCommand(char command, int pos);
+  static bool executeCommand(int command, int pos);
 };

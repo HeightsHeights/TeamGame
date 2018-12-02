@@ -10,8 +10,9 @@ bool SceneMainGame::init()
 void SceneMainGame::reactController()
 {
 }
-void SceneMainGame::executeCommand()
+SCENE_ID SceneMainGame::executeCommand()
 {
+    return SI_MAIN;
 }
 void SceneMainGame::drawWindow()
 {

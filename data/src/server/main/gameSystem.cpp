@@ -61,10 +61,10 @@ bool GameSystem::gameLoop()
 
         for (int i = 0; i < gClientNum; i++)
         {
-            char command;
+            int command;
             if (FD_ISSET(gClients[i].fd, &readOK))
             {
-                NetworkManager::recvData(i, &command, sizeof(char));
+                NetworkManager::recvData(i, &command, sizeof(int));
                 if (SceneManager::executeCommand(command, i))
                 {
                     SDL_AtomicDecRef(&atm);

@@ -108,7 +108,7 @@ bool Joystick::scanEndFrag()
     {
         return true;
     }
-    if (SDL_JoystickGetButton(joy, 10) > 0)
+    if (SDL_JoystickGetButton(joy, CT_FINISH) > 0)
     {
         return true;
     }

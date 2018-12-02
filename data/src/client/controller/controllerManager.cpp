@@ -6,6 +6,7 @@
 #include "./joystick.h"
 #include "./keybord.h"
 #include "./wiiRemoteController.h"
+#include "../scene/sceneManager.h"
 
 /******************************************************************************
  * class ControllerManager
@@ -39,7 +40,7 @@ bool ControllerManager::updateController()
 void ControllerManager::requestReaction(ControllerParam param)
 {
     //シーンマネージャーにparamを渡します
-    //今は書く必要はありません
+    SceneManager::reactController(param);
 }
 void ControllerManager::cleanUp()
 {

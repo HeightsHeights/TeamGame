@@ -7,10 +7,10 @@ BaseScene::BaseScene(WindowManager *window)
 bool BaseScene::init()
 {
 }
-void BaseScene::reactController()
+void BaseScene::reactController(ControllerParam param)
 {
 }
-SCENE_ID BaseScene::executeCommand()
+SCENE_ID BaseScene::executeCommand(int command)
 {
 }
 void BaseScene::drawWindow()

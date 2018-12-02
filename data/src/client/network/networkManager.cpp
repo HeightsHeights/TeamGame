@@ -9,9 +9,11 @@
  * class NetworkManager
 ******************************************************************************/
 int NetworkManager::gSocket;
+fd_set NetworkManager::gMask;
+int NetworkManager::gWidth;
 NetConnector *NetworkManager::connector;
 
-bool NetworkManager::init(char *hostName)
+bool NetworkManager::init(const char *hostName)
 {
     struct hostent *servHost;
     struct sockaddr_in server;
@@ -58,7 +60,20 @@ void NetworkManager::disconnect()
 {
     connector->disconnectServer();
 }
+bool NetworkManager::waitRequest(fd_set *readOK)
+{
+    struct timeval timeout;
 
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 20;
+
+    *readOK = gMask;
+    if (select(gWidth, readOK, NULL, NULL, &timeout))
+    {
+        return false;
+    }
+    return true;
+}
 void NetworkManager::sendData(void *data, int dataSize)
 {
     /* 引き数チェック */
@@ -67,7 +82,7 @@ void NetworkManager::sendData(void *data, int dataSize)
 
     write(gSocket, data, dataSize);
 }
-int NetworkManager::recieveData(void *data, int dataSize)
+int NetworkManager::recvData(void *data, int dataSize)
 {
     /* 引き数チェック */
     assert(data != NULL);

@@ -32,14 +32,14 @@ bool SceneManager::init(WindowManager *window)
     return true;
 }
 
-void SceneManager::reactController()
+void SceneManager::reactController(ControllerParam param)
 {
-    scenes[sceneId]->reactController();
+    scenes[sceneId]->reactController(param);
 }
 
-void SceneManager::executeCommand()
+bool SceneManager::executeCommand(int command)
 {
-    sceneId = scenes[sceneId]->executeCommand();
+    sceneId = scenes[sceneId]->executeCommand(command);
 }
 
 void SceneManager::drawWindow()

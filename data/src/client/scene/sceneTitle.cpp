@@ -21,10 +21,10 @@ bool SceneTitle::init()
     glEnable(GL_TEXTURE_2D);
     return true;
 }
-void SceneTitle::reactController()
+void SceneTitle::reactController(ControllerParam param)
 {
 }
-SCENE_ID SceneTitle::executeCommand()
+SCENE_ID SceneTitle::executeCommand(int command)
 {
     return SI_TITLE;
 }

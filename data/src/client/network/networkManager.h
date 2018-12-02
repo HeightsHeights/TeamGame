@@ -11,13 +11,19 @@ class NetworkManager
 {
 private:
   static int gSocket;
+  static fd_set gMask;
+  static int gWidth;
   static NetConnector *connector;
+  static void setMask(void);
 
 public:
-  static bool init(char *hostName);
+  static int getGSocket() { return gSocket; }
+
+  static bool init(const char *hostName);
   static bool connect();
   static void disconnect();
+  static bool waitRequest(fd_set *readOK);
 
-  void sendData(void *data, int dataSize);
-  int recieveData(void *data, int dataSize);
+  static void sendData(void *data, int dataSize);
+  static int recvData(void *data, int dataSize);
 };

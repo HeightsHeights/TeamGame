@@ -1,29 +1,28 @@
 #pragma once
-typedef enum
-{
-  SI_TITLE = 0,
-  SI_MAIN = 1,
-  SI_NUMBER = 2,
-} SCENE_ID;
 
 /******************************************************************************
- * SceneManager関係に必要なヘッダーの読み込み
+ * title関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+
+#include "../render/objRawModel/objRawModel.h"
 /******************************************************************************
- * class SceneManager
+ * class SceneTitle
  * 機能1：
  * 機能2：
 ******************************************************************************/
-class SceneManager
+
+class SceneTitle : public BaseScene
 {
 private:
-  static int sceneId;
-  static BaseScene *scenes[SI_NUMBER];
+  ObjRawModel *obj;
 
 public:
-  static bool init(WindowManager *window);
-  static void reactController();
-  static void executeCommand();
-  static void drawWindow();
+  SceneTitle() : BaseScene() {}
+  SceneTitle(WindowManager *window);
+
+  virtual bool init();
+  virtual void reactController();
+  virtual void executeCommand();
+  virtual void drawWindow();
 };

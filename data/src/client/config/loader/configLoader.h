@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../common/loader/baseLoader.h"
 #include "./configData.h"
 

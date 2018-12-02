@@ -5,13 +5,14 @@
 #include "../controller/controllerManager.h"
 #include "../scene/sceneManager.h"
 #include "../config/loader/configLoader.h"
+#include "../config/saver/configSaver.h"
 /******************************************************************************
  * メイン関数
 ******************************************************************************/
 int main(int argc, char *argv[])
 {
 
-    ConfigData *config = ConfigLoader().load("clientConfig");
+    ConfigData *config = ConfigLoader().load("cConfig");
     if (config == NULL)
     {
         fprintf(stderr, "Error --> ConfigLoader().load()\n");
@@ -57,6 +58,12 @@ int main(int argc, char *argv[])
 
         SceneManager::drawWindow();
         SDL_Delay(1);
+    }
+
+    if (!ConfigSaver().save("cConfig", config))
+    {
+        fprintf(stderr, "Error --> ConfigSave().save()\n");
+        return -1;
     }
     return 0;
 }

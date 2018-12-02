@@ -1,10 +1,10 @@
-#include "testXLoader.h"
+#include "xLoader.h"
 #include <string.h>
 #include <limits>
 
 #define BUFFER_LENGTH 256
 
-void TestXLoader::readMesh(TestXNode *node)
+void XLoader::readMesh(XNode *node)
 {
     char key[BUFFER_LENGTH] = {0};
     while (1)
@@ -79,7 +79,7 @@ void TestXLoader::readMesh(TestXNode *node)
     }
     return;
 }
-void TestXLoader::readFrame(TestXNode *node)
+void XLoader::readFrame(XNode *node)
 {
     int currentHierarchy = hierarchy;
     char key[BUFFER_LENGTH] = {0};
@@ -122,7 +122,7 @@ void TestXLoader::readFrame(TestXNode *node)
 
             if (begin > end || ((begin == 0) && (end == 0)))
             {
-                node->node = new TestXNode(frameName);
+                node->node = new XNode(frameName);
                 readMesh(node->node);
                 file.seekg(posFile, std::fstream::beg);
                 hierarchy++;
@@ -131,7 +131,7 @@ void TestXLoader::readFrame(TestXNode *node)
             if (back == currentHierarchy)
             {
                 back = -1;
-                node->next = new TestXNode(frameName);
+                node->next = new XNode(frameName);
                 readMesh(node->next);
                 file.seekg(posFile, std::fstream::beg);
                 readFrame(node->next);
@@ -143,7 +143,7 @@ void TestXLoader::readFrame(TestXNode *node)
             }
             if (begin == end && begin != 0 && end != 0)
             {
-                node->next = new TestXNode(frameName);
+                node->next = new XNode(frameName);
                 readMesh(node->next);
                 file.seekg(posFile, std::fstream::beg);
                 readFrame(node->next);
@@ -157,7 +157,7 @@ void TestXLoader::readFrame(TestXNode *node)
     }
 }
 
-bool TestXLoader::readFile()
+bool XLoader::readFile()
 {
     hierarchy = 0;
     ret->root.frameName = "root";
@@ -166,11 +166,11 @@ bool TestXLoader::readFile()
     readFrame(&ret->root);
 }
 
-TestXModel *TestXLoader::load(const std::string dirPath, const std::string fileName)
+XModel *XLoader::load(const std::string dirPath, const std::string fileName)
 {
     std::string xFilePath = dirPath + fileName + ".x";
 
-    ret = new TestXModel();
+    ret = new XModel();
 
     if (!loadFile(xFilePath.c_str()))
     {

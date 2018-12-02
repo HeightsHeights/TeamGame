@@ -1,10 +1,10 @@
-#include "testXNode.h"
-TestXNode::TestXNode()
+#include "xNode.h"
+XNode::XNode()
 {
     this->node = NULL;
     this->next = NULL;
 }
-TestXNode::TestXNode(std::string frameName)
+XNode::XNode(std::string frameName)
 {
     this->node = NULL;
     this->next = NULL;

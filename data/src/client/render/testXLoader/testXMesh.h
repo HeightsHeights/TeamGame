@@ -1,5 +1,0 @@
-class TestXMesh
-{
-  private:
-  public:
-};

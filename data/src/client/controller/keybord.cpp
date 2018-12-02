@@ -10,36 +10,36 @@
 
 void Keybord::scanDirection(ControllerParam *param)
 {
-    if (keys[SDLK_w])
+    if (keys[SDL_SCANCODE_W])
     {
         param->axisL.y = -1;
     }
-    else if (keys[SDLK_s])
+    else if (keys[SDL_SCANCODE_S])
     {
         param->axisL.y = 1;
     }
-    else if (keys[SDLK_a])
+    else if (keys[SDL_SCANCODE_A])
     {
         param->axisL.x = -1;
     }
-    else if (keys[SDLK_d])
+    else if (keys[SDL_SCANCODE_D])
     {
         param->axisL.x = 1;
     }
 
-    if (keys[SDLK_8])
+    if (keys[SDL_SCANCODE_8])
     {
         param->axisR.y = -1;
     }
-    else if (keys[SDLK_2])
+    else if (keys[SDL_SCANCODE_2])
     {
         param->axisR.y = 1;
     }
-    else if (keys[SDLK_4])
+    else if (keys[SDL_SCANCODE_4])
     {
         param->axisR.x = -1;
     }
-    else if (keys[SDLK_6])
+    else if (keys[SDL_SCANCODE_6])
     {
         param->axisR.x = 1;
     }
@@ -47,7 +47,7 @@ void Keybord::scanDirection(ControllerParam *param)
 
 void Keybord::scanButton(ControllerParam *param)
 {
-    if (keys[SDLK_p])
+    if (keys[SDL_SCANCODE_P])
     {
         param->buttonDown[CT_DECITION_OR_ATTACK] = true;
         param->buttonUp[CT_DECITION_OR_ATTACK] = false;
@@ -58,7 +58,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_DECITION_OR_ATTACK] = true;
     }
 
-    if (keys[SDLK_i])
+    if (keys[SDL_SCANCODE_I])
     {
         param->buttonDown[CT_GUARD] = true;
         param->buttonUp[CT_GUARD] = false;
@@ -69,7 +69,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_GUARD] = true;
     }
 
-    if (keys[SDLK_u])
+    if (keys[SDL_SCANCODE_U])
     {
         param->buttonDown[CT_GRUB] = true;
         param->buttonUp[CT_GRUB] = false;
@@ -80,7 +80,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_GRUB] = true;
     }
 
-    if (keys[SDLK_5])
+    if (keys[SDL_SCANCODE_5])
     {
         param->buttonDown[CT_PRDGDIRECTION] = true;
         param->buttonUp[CT_PRDGDIRECTION] = false;
@@ -91,7 +91,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_PRDGDIRECTION] = true;
     }
 
-    if (keys[SDLK_SPACE])
+    if (keys[SDL_SCANCODE_SPACE])
     {
         param->buttonDown[CT_PAUSE] = true;
         param->buttonUp[CT_PAUSE] = false;
@@ -102,7 +102,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_PAUSE] = true;
     }
 
-    if (keys[SDLK_BACKSPACE])
+    if (keys[SDL_SCANCODE_BACKSPACE])
     {
         param->buttonDown[CT_CANCEL] = true;
         param->buttonUp[CT_CANCEL] = false;
@@ -113,7 +113,7 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_CANCEL] = true;
     }
 
-    if (keys[SDLK_q] || keys[SDLK_e])
+    if (keys[SDL_SCANCODE_Q] || keys[SDL_SCANCODE_E])
     {
         param->buttonDown[CT_JUMP] = true;
         param->buttonUp[CT_JUMP] = false;

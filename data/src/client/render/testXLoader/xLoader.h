@@ -1,13 +1,13 @@
-#include "testXModel.h"
+#include "xModel.h"
 #include <vector>
 #include "../../../common/math/vector/vectorSet.h"
 #include "../../common/loader/baseLoader.h"
 
-class TestXLoader : public BaseLoader
+class XLoader : public BaseLoader
 {
 private:
   int hierarchy;
-  TestXModel *ret;
+  XModel *ret;
   int back;
 
   std::vector<Vector3f> vertices;
@@ -18,10 +18,10 @@ private:
   std::vector<unsigned int> textureIndices;
   std::vector<unsigned int> normalIndices;
 
-  void readMesh(TestXNode *node);
-  void readFrame(TestXNode *node);
+  void readMesh(XNode *node);
+  void readFrame(XNode *node);
   bool virtual readFile();
 
 public:
-  TestXModel *load(const std::string dirPath, const std::string fileName);
+  XModel *load(const std::string dirPath, const std::string fileName);
 };

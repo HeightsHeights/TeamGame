@@ -1,7 +1,7 @@
 #include "./configLoader.h"
 #include <string.h>
 
-#define BUFFER_LENGTH 255
+#define BUFFER_LENGTH 256
 
 bool ConfigLoader::readFile()
 {

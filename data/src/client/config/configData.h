@@ -1,9 +1,7 @@
 #include <fstream>
 class ConfigData
 {
-
 private:
-
 public:
   ConfigData() {}
   ~ConfigData() {}

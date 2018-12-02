@@ -4,7 +4,7 @@
 #include "../render/shader/shaderManager.h"
 #include "../controller/controllerManager.h"
 #include "../scene/sceneManager.h"
-#include "../configLoader/configLoader.h"
+#include "../config/loader/configLoader.h"
 /******************************************************************************
  * メイン関数
 ******************************************************************************/

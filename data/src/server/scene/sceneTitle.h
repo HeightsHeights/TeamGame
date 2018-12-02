@@ -4,7 +4,7 @@
  * title関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
-
+#include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneTitle
  * 機能1：
@@ -14,6 +14,8 @@
 class SceneTitle : public BaseScene
 {
 private:
+  Vector3f position[2];
+
 public:
   SceneTitle() : BaseScene() {}
 

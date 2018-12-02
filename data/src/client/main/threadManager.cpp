@@ -11,12 +11,14 @@ bool ThreadManager::init(void *data)
         fprintf(stderr, "Error --> SDL_CreateThread()\n");
         return false;
     }
+#ifndef _UNENABLE_NETWORK
     SDL_Thread *nThread = SDL_CreateThread(netWorkThread, "NetworkThread", data);
     if (nThread == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateThread()\n");
         return false;
     }
+#endif
     return true;
 }
 int ThreadManager::netWorkThread(void *data)

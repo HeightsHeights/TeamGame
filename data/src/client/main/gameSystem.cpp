@@ -77,11 +77,18 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ControllerManager::init()\n");
         return false;
     }
+#ifndef _UNENABLE_NETWORK
     if (NetworkManager::init(config->serverAddress.c_str()))
     {
         fprintf(stderr, "Error --> NetworkManager::init()\n");
         return false;
     }
+    if (NetworkManager::connect())
+    {
+        fprintf(stderr, "Error --> NetworkManager::connect()\n");
+        return false;
+    }
+#endif
     if (!ThreadManager::init(&atm))
     {
         fprintf(stderr, "Error --> ThreadManager::init()\n");
@@ -102,7 +109,9 @@ bool GameSystem::gameLoop()
 
 bool GameSystem::terminate()
 {
+#ifndef _UNENABLE_NETWORK
     NetworkManager::disconnect();
+#endif
     if (!saveConfig("cConfig"))
     {
         fprintf(stderr, "Error --> saveConfig()\n");

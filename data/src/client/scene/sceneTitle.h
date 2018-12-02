@@ -6,6 +6,7 @@
 #include "./sceneBase.h"
 
 #include "../render/objRawModel/objRawModel.h"
+#include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneTitle
  * 機能1：
@@ -15,7 +16,8 @@
 class SceneTitle : public BaseScene
 {
 private:
-  ObjRawModel *obj;
+  ObjRawModel *obj[2];
+  Vector3f position[2];
 
 public:
   SceneTitle() : BaseScene() {}

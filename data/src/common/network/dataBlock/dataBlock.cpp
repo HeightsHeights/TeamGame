@@ -15,6 +15,6 @@ void DataBlock::setData(void *data, int dataSize)
     assert(data != NULL);
     assert(0 < dataSize);
 
-    memcpy(data + this->dataSize, data, dataSize);
+    memcpy(this->dataBlock + this->dataSize, data, dataSize);
     this->dataSize += dataSize;
 }

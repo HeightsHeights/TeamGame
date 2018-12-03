@@ -27,7 +27,25 @@ void WiiRemoteController::scanDirection(ControllerParam *param)
     {
         param->axisR.x = 1;
     }
+
+    if (wiimote.ext.nunchuk.joyy < 93)
+    {
+        param->axisR.y = -1;
+    }
+    else if (wiimote.ext.nunchuk.joyy > 153)
+    {
+        param->axisR.y = 1;
+    }
+    else if (wiimote.ext.nunchuk.joyx < 93)
+    {
+        param->axisR.x = -1;
+    }
+    else if (wiimote.ext.nunchuk.joyx > 153)
+    {
+        param->axisR.x = 1;
+    }
 }
+
 void WiiRemoteController::scanButton(ControllerParam *param)
 {
     if (wiimote.keys.a)

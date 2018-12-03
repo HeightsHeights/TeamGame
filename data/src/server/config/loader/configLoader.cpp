@@ -17,7 +17,7 @@ bool ConfigLoader::readFile()
         }
         if (0 == strcmp(key, "ClientNum:"))
         {
-            file >> ret->name;
+            file >> ret->clientNum;
         }
     }
 }

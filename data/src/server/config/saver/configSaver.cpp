@@ -3,7 +3,7 @@
 
 bool ConfigSaver::writeFile()
 {
-    file << "ClientNum: " + data->ClientNum;
+    file << "ClientNum: " + data->clientNum;
 }
 
 bool ConfigSaver::save(std::string fileName, ConfigData *data)

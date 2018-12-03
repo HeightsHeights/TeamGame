@@ -78,7 +78,20 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 #ifndef _UNENABLE_NETWORK
-    if (!NetworkManager::init(config->serverAddress.c_str()))
+    char sAddr[256];
+    Console().inputString("ServerAddress", sAddr);
+
+    std::string addr;
+    if (sAddr[0] == '\0')
+    {
+        addr = config->serverAddress;
+    }
+    else
+    {
+        addr = std::string(sAddr);
+    }
+
+    if (!NetworkManager::init(addr.c_str()))
     {
         fprintf(stderr, "Error --> NetworkManager::init()\n");
         return false;

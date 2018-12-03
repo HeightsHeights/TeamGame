@@ -23,6 +23,7 @@ private:
 public:
   Joystick();
   Joystick(const unsigned int controllerID);
+  virtual void cleanUp();
   virtual bool updateEvent();
   virtual bool scanEndFlag();
 };

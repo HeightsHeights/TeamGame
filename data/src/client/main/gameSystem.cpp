@@ -57,7 +57,9 @@ bool GameSystem::init(int argc, char *argv[])
     }
     Console().scanString("YourName", config->name.c_str(), &config->name);
     Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+#ifdef _ENABLE_WII
     Console().scanString("WiiRemoteId", config->wiiRemoteId.c_str(), &config->wiiRemoteId);
+#endif
     if (!makeWindow(argc, argv, config->name + "'sGame"))
     {
         fprintf(stderr, "Error --> makeWindow()\n");
@@ -81,7 +83,7 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 #ifdef _ENABLE_WII
-    if (!ControllerManager::connectWiiRemoteController(config->wiiRemoteId.c_str()))
+    if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
     {
         fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
         return false;
@@ -124,6 +126,8 @@ bool GameSystem::terminate()
 #ifndef _UNENABLE_NETWORK
     NetworkManager::disconnect();
 #endif
+    ControllerManager::cleanUp();
+
     if (!saveConfig("cPrevConfig"))
     {
         fprintf(stderr, "Error --> saveConfig()\n");

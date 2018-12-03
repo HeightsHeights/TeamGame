@@ -91,7 +91,10 @@ void Joystick::scanButton(ControllerParam *param)
         }
     }
 }
-
+void Joystick::cleanUp()
+{
+    SDL_JoystickClose(joy);
+}
 bool Joystick::updateEvent()
 {
 

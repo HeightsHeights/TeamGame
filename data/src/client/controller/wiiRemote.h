@@ -7,14 +7,15 @@
 ******************************************************************************/
 #include "../../common/controllerParam/controllerParam.h"
 #include "./baseController.h"
-extern "C" {
-#include <libcwiimote/wiimote.h>     // Wiiリモコンを用いるために必要なヘッダファイル
-#include <libcwiimote/wiimote_api.h> // Wiiリモコンを用いるために必要なヘッダファイル
+extern "C"
+{
+#include <libcwiimote/wiimote.h>
+#include <libcwiimote/wiimote_api.h>
 }
 /******************************************************************************
  * class WiiRemoteController
 ******************************************************************************/
-class WiiRemoteController : public BaseController
+class WiiRemote : public BaseController
 {
 private:
   wiimote_t wiimote = WIIMOTE_INIT;
@@ -22,11 +23,11 @@ private:
   virtual void scanButton(ControllerParam *param);
 
 public:
-  WiiRemoteController() {}
-  ~WiiRemoteController() {}
+  WiiRemote() {}
+  WiiRemote(wiimote_t wiimote) { this->wiimote = wiimote; }
+  virtual void cleanUp() { wiimote_disconnect(&this->wiimote); }
   virtual bool updateEvent();
   virtual bool scanEndFlag();
-  WiiRemoteController *connect(const char *id);
 };
 
 #endif

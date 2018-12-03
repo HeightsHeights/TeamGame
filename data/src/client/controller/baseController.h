@@ -10,6 +10,8 @@ private:
   virtual void scanButton(ControllerParam *param);
 
 public:
+  ~BaseController() {}
+  virtual void cleanUp();
   virtual bool updateEvent();
   virtual bool scanEndFlag();
   ControllerParam readStateController();

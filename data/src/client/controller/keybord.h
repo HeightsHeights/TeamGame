@@ -18,6 +18,7 @@ private:
 
 public:
   Keybord() { this->keys = SDL_GetKeyboardState(NULL); }
+  virtual void cleanUp() {}
   virtual bool updateEvent();
   virtual bool scanEndFlag();
 };

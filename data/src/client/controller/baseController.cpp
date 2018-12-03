@@ -7,6 +7,9 @@ void BaseController::scanButton(ControllerParam *param)
 {
 }
 
+void BaseController::cleanUp()
+{
+}
 ControllerParam BaseController::readStateController()
 {
     ControllerParam param = ControllerParam();

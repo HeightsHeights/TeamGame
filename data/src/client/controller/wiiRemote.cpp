@@ -4,12 +4,12 @@
  * コントローラー関係に必要なヘッダーの読み込み
 ******************************************************************************/
 
-#include "./wiiRemoteController.h"
+#include "./wiiRemote.h"
 
 /******************************************************************************
  * class Keybord
 ******************************************************************************/
-void WiiRemoteController::scanDirection(ControllerParam *param)
+void WiiRemote::scanDirection(ControllerParam *param)
 {
     if (wiimote.keys.up)
     {
@@ -46,7 +46,7 @@ void WiiRemoteController::scanDirection(ControllerParam *param)
     }
 }
 
-void WiiRemoteController::scanButton(ControllerParam *param)
+void WiiRemote::scanButton(ControllerParam *param)
 {
     if (wiimote.keys.a)
     {
@@ -115,7 +115,7 @@ void WiiRemoteController::scanButton(ControllerParam *param)
     }
 }
 
-bool WiiRemoteController::updateEvent()
+bool WiiRemote::updateEvent()
 {
     bool isSdlUpdate = BaseController::updateEvent();
 
@@ -128,17 +128,7 @@ bool WiiRemoteController::updateEvent()
     return isSdlUpdate || isWiiUpdate;
 }
 
-WiiRemoteController *WiiRemoteController::connect(const char *id)
-{
-    if (wiimote_connect(&this->wiimote, id) < 0)
-    {
-        return NULL;
-    }
-    this->wiimote.led.one = 1;
-    return this;
-}
-
-bool WiiRemoteController::scanEndFlag()
+bool WiiRemote::scanEndFlag()
 {
     if (BaseController::scanEndFlag())
     {

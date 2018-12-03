@@ -5,7 +5,7 @@
 #include "./controllerManager.h"
 #include "./joystick.h"
 #include "./keybord.h"
-#include "./wiiRemoteController.h"
+#include "./wiiRemoteConnector.h"
 #include "../scene/sceneManager.h"
 
 /******************************************************************************
@@ -45,18 +45,18 @@ void ControllerManager::requestReaction(ControllerParam param)
 void ControllerManager::cleanUp()
 {
     //コントローラーの終了処理←
-    //SDL_JoystickClose(joystick);
+    controller->cleanUp();
+    delete controller;
 }
 #ifdef _ENABLE_WII
-bool ControllerManager::connectWiiRemoteController(const char *id)
+bool ControllerManager::connectWiiRemote(const char *id)
 {
     fprintf(stderr, "Connect WiiRemote......\n");
-    WiiRemoteController *wiiController = new WiiRemoteController();
-    wiiController = wiiController->connect(id);
+    WiiRemoteController *wiiController = WiiRemoteConnector().connect();
+
     if (wiiController == NULL)
     {
-        fprintf(stderr, "Error --> connot connect wii\n");
-        delete wiiController;
+        fprintf(stderr, "Error --> Cannot connect WiiRemote\n");
         return false;
     }
     fprintf(stderr, "Connected!\n");

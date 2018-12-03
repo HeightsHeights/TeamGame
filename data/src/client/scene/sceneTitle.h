@@ -18,6 +18,8 @@ class SceneTitle : public BaseScene
 private:
   ObjRawModel *obj[2];
   Vector3f position[2];
+  Vector3f dir[2];
+  void lookAtVector(Vector3f direction);
 
 public:
   SceneTitle() : BaseScene() {}

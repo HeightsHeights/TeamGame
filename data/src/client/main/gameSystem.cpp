@@ -102,7 +102,7 @@ bool GameSystem::gameLoop()
     while (SDL_AtomicGet(&atm) > 0)
     {
         SceneManager::drawWindow();
-        SDL_Delay(1);
+        SDL_Delay(4);
     }
     return true;
 }

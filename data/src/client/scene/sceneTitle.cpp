@@ -11,7 +11,7 @@ bool SceneTitle::init()
 {
     for (int i = 0; i < 2; i++)
     {
-        obj[i] = ObjModelLoader().load("data/res/gui/obj/", "test");
+        obj[i] = ObjModelLoader().load("data/res/gui/obj/kinokochara/", "kinokochara");
         if (obj[i] == NULL)
         {
             return false;
@@ -40,24 +40,26 @@ SCENE_ID SceneTitle::executeCommand(int command)
 {
     if (command == NC_SERVER_2_CLIENT)
     {
-        Vector3f positionData[2];
+        Vector3f positionData[1];
 
         for (int i = 0; i < 2; i++)
         {
             NetworkManager::recvData(positionData[i], sizeof(Vector3f));
-            position[i].x = positionData[i].x;
-            position[i].z = positionData[i].z;
+            dir[i] = positionData[i];
+            positionData[i] *= 0.1;
+            position[i].x += positionData[i].x;
+            position[i].z += positionData[i].z;
         }
     }
     return SI_TITLE;
 }
 void SceneTitle::drawWindow()
 {
-    GLfloat light0pos[] = {5.0, 8.0, 3.0, 1.0};
+    GLfloat light0pos[] = {15.0, 30.0, 3.0, 1.0};
     window->clearWindow();
     glLoadIdentity();
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(15.0, 18.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
 
     ShaderManager::startShader(SID_STATIC);
@@ -65,6 +67,11 @@ void SceneTitle::drawWindow()
     {
         glPushMatrix();
         glTranslated(position[i].x, position[i].y, position[i].z);
+        if (dir[i].x == 0 && dir[i].y == 0 && dir[i].z == 0)
+        {
+            dir[i] = Vector3f(1, 1, 1);
+        }
+        lookAtVector(dir[i]);
         obj[i]->draw();
         glPopMatrix();
     }
@@ -72,4 +79,19 @@ void SceneTitle::drawWindow()
 
     glFlush();
     window->swapWindow();
+}
+
+void SceneTitle::lookAtVector(Vector3f direction)
+{
+    direction = direction.normalize();
+    Vector3f up = Vector3f(0, 1, 0);
+    Vector3f cross1 = Vector3f::cross(direction, up).normalize();
+    Vector3f cross2 = Vector3f::cross(cross1, direction).normalize();
+
+    float rotation[4][4] = {{cross1.x, cross1.y, cross1.z, 0},
+                            {cross2.x, cross2.y, cross2.z, 0},
+                            {direction.x, direction.y, direction.z, 0},
+                            {0, 0, 0, 1}};
+
+    glMultMatrixf(rotation[0]);
 }

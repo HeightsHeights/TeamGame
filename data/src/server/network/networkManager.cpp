@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#define PORT (u_short)8885 /* ポート番号 */
+#define PORT (u_short)8888 /* ポート番号 */
 /******************************************************************************
  * class NetworkManager
 ******************************************************************************/
@@ -28,7 +28,7 @@ void NetworkManager::setMask(int maxFd)
 
 bool NetworkManager::init()
 {
-    gClientNum = 1;
+    gClientNum = 2;
     struct sockaddr_in server;
     int dstSocket;
     int val = 1;

@@ -168,17 +168,17 @@ bool ObjModelLoader::loadObjFile(const char *filename)
         normalArraySum[indices[i]] += normals[normalIndices[i]];
     }
 
-    Vector2f textureArray[indices.size()];
-    for (unsigned int i = 0; i < indices.size(); i++)
-    {
-        textureArray[i] = textures[textureIndices[i]];
-    }
+    // Vector2f textureArray[indices.size()];
+    // for (unsigned int i = 0; i < indices.size(); i++)
+    // {
+    //     textureArray[i] = textures[textureIndices[i]];
+    // }
 
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
     storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
-    storeAttributeData(3, textureIndices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
+    // storeAttributeData(3, textureIndices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
     unbindVao();
 
     ret->setVao(vao);
@@ -211,7 +211,7 @@ void ObjModelLoader::createSubset()
         {
             float u, v;
             file >> u >> v;
-            textures.push_back(Vector2f(u, v));
+            // textures.push_back(Vector2f(u, v));
         }
         else if (0 == strcmp(buf, "vn"))
         {
@@ -260,7 +260,7 @@ void ObjModelLoader::createSubset()
                     if ('/' != file.peek())
                     {
                         file >> iTexCoord;
-                        textureIndices.push_back(iTexCoord - 1);
+                        // textureIndices.push_back(iTexCoord - 1);
                     }
 
                     if ('/' == file.peek())
@@ -402,16 +402,15 @@ void ObjModelLoader::createMaterial()
         else if (0 == strcmp(buf, "illum"))
         {
             file.ignore(std::numeric_limits<std::streamsize>::max(), file.widen('\n'));
-            file >> buf;
-            if (0 == strcmp(buf, "map_Kd"))
-            {
-                std::string textureName;
-                file >> textureName;
-                createTexture(textureName);
-                break;
-            }
-            else
-                break;
+            // file >> buf;
+            //if (0 == strcmp(buf, "map_Kd"))
+            //{
+            //std::string textureName;
+            //file >> textureName;
+            // createTexture(textureName);
+            break;
+            //}
+            // else break;
         }
     }
     ret->pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power));

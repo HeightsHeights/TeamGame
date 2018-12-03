@@ -50,12 +50,16 @@ void ControllerManager::cleanUp()
 #ifdef _ENABLE_WII
 bool ControllerManager::connectWiiRemoteController(const char *id)
 {
-    WiiRemoteController *wiiController = WiiRemoteController().connect("88");
+    fprintf(stderr, "Connect WiiRemote......\n");
+    WiiRemoteController *wiiController = new WiiRemoteController();
+    wiiController = wiiController->connect(id);
     if (wiiController == NULL)
     {
         fprintf(stderr, "Error --> connot connect wii\n");
+        delete wiiController;
         return false;
     }
+    fprintf(stderr, "Connected!\n");
     controller = wiiController;
     return true;
 }

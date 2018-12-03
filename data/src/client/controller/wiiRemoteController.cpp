@@ -30,19 +30,19 @@ void WiiRemoteController::scanDirection(ControllerParam *param)
 
     if (wiimote.ext.nunchuk.joyy < 93)
     {
-        param->axisR.y = -1;
+        param->axisL.y = 1;
     }
     else if (wiimote.ext.nunchuk.joyy > 153)
     {
-        param->axisR.y = 1;
+        param->axisL.y = -1;
     }
     if (wiimote.ext.nunchuk.joyx < 93)
     {
-        param->axisR.x = -1;
+        param->axisL.x = -1;
     }
     else if (wiimote.ext.nunchuk.joyx > 153)
     {
-        param->axisR.x = 1;
+        param->axisL.x = 1;
     }
 }
 
@@ -134,13 +134,17 @@ WiiRemoteController *WiiRemoteController::connect(const char *id)
     {
         return NULL;
     }
-    wiimote.led.one = 1;
+    this->wiimote.led.one = 1;
     return this;
 }
 
-bool Joystick::scanEndFlag()
+bool WiiRemoteController::scanEndFlag()
 {
     if (BaseController::scanEndFlag())
+    {
+        return true;
+    }
+    if (wiimote.keys.a && wiimote.keys.b && wiimote.ext.nunchuk.keys.c && wiimote.ext.nunchuk.keys.c)
     {
         return true;
     }

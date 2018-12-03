@@ -30,11 +30,16 @@ bool SceneTitle::init()
 }
 void SceneTitle::reactController(ControllerParam param)
 {
+#ifndef _UNENABLE_NETWORK
     DataBlock data;
     NETWORK_COMMAND command = NC_CONTROLLER_INFO;
     data.setData(&command, sizeof(NETWORK_COMMAND));
     data.setData(&param, sizeof(ControllerParam));
     NetworkManager::sendData(data, data.getDataSize());
+#else
+    position[0].x += 0.1 * param.axisL.x;
+    position[0].z += 0.1 * param.axisL.y;
+#endif
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {
@@ -71,7 +76,7 @@ void SceneTitle::drawWindow()
         {
             dir[i] = Vector3f(1, 1, 1);
         }
-        lookAtVector(dir[i]);
+        //lookAtVector(dir[i]);
         obj[i]->draw();
         glPopMatrix();
     }

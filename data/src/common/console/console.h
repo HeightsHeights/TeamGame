@@ -5,6 +5,8 @@
 class Console
 {
 private:
+  bool input(const char *message, const char *defaultValue, char *str);
+
 public:
-  void inputString(char *message, char *str);
+  bool scanString(const char *message, const char *defaultValue, std::string *str);
 };

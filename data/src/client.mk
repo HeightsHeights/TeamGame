@@ -18,14 +18,14 @@ CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 ########################################################################################
 ##
 ########################################################################################
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -lcwiimote -Wl,-rpath,/usr/local/lib
 
 $(BUILD_DIR)/$(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 ########################################################################################
 ##
 ########################################################################################
-CXXFLAGS = -g
+CXXFLAGS = -g -D_UNENABLE_NETWORK -D_ENABLE_WII
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@

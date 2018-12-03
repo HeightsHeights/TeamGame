@@ -5,6 +5,9 @@
 class ThreadManager
 {
 private:
+  static SDL_Thread *cThread;
+  static SDL_Thread *nThread;
+
 public:
   static bool init(void *data);
   static int netWorkThread(void *data);

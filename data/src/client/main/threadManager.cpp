@@ -3,16 +3,19 @@
 #include "../scene/sceneManager.h"
 #include "../network/networkManager.h"
 
+SDL_Thread *ThreadManager::cThread;
+SDL_Thread *ThreadManager::nThread;
+
 bool ThreadManager::init(void *data)
 {
-    SDL_Thread *cThread = SDL_CreateThread(controllerThread, "ControllerThread", data);
+    cThread = SDL_CreateThread(controllerThread, "ControllerThread", data);
     if (cThread == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateThread()\n");
         return false;
     }
 #ifndef _UNENABLE_NETWORK
-    SDL_Thread *nThread = SDL_CreateThread(netWorkThread, "NetworkThread", data);
+    nThread = SDL_CreateThread(netWorkThread, "NetworkThread", data);
     if (nThread == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateThread()\n");

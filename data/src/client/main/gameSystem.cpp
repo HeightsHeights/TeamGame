@@ -50,12 +50,14 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
-    if (!loadConfig("cConfig"))
+    if (!loadConfig("cDefaultConfig"))
     {
         fprintf(stderr, "Error --> loadConfig()\n");
         return false;
     }
-
+    Console().scanString("YourName", config->name.c_str(), &config->name);
+    Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+    Console().scanString("WiiRemoteId", config->wiiRemoteId.c_str(), &config->wiiRemoteId);
     if (!makeWindow(argc, argv, config->name + "'sGame"))
     {
         fprintf(stderr, "Error --> makeWindow()\n");
@@ -66,6 +68,7 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ShaderManager::init()\n");
         return false;
     }
+
     if (!SceneManager::init(window))
     {
         fprintf(stderr, "Error --> SceneManager::init()\n");
@@ -77,21 +80,16 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ControllerManager::init()\n");
         return false;
     }
+#ifdef _ENABLE_WII
+    if (!ControllerManager::connectWiiRemoteController(config->wiiRemoteId.c_str()))
+    {
+        fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
+        return false;
+    }
+#endif
 #ifndef _UNENABLE_NETWORK
-    char sAddr[256];
-    Console().inputString("ServerAddress", sAddr);
 
-    std::string addr;
-    if (sAddr[0] == '\0')
-    {
-        addr = config->serverAddress;
-    }
-    else
-    {
-        addr = std::string(sAddr);
-    }
-
-    if (!NetworkManager::init(addr.c_str()))
+    if (!NetworkManager::init(config->serverAddress.c_str()))
     {
         fprintf(stderr, "Error --> NetworkManager::init()\n");
         return false;
@@ -102,6 +100,7 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 #endif
+
     if (!ThreadManager::init(&atm))
     {
         fprintf(stderr, "Error --> ThreadManager::init()\n");
@@ -125,7 +124,7 @@ bool GameSystem::terminate()
 #ifndef _UNENABLE_NETWORK
     NetworkManager::disconnect();
 #endif
-    if (!saveConfig("cConfig"))
+    if (!saveConfig("cPrevConfig"))
     {
         fprintf(stderr, "Error --> saveConfig()\n");
         return false;

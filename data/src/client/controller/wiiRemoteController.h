@@ -7,8 +7,7 @@
 ******************************************************************************/
 #include "../../common/controllerParam/controllerParam.h"
 #include "./baseController.h"
-extern "C"
-{
+extern "C" {
 #include <libcwiimote/wiimote.h>     // Wiiリモコンを用いるために必要なヘッダファイル
 #include <libcwiimote/wiimote_api.h> // Wiiリモコンを用いるために必要なヘッダファイル
 }
@@ -24,6 +23,7 @@ private:
 
 public:
   WiiRemoteController() {}
+  ~WiiRemoteController() {}
   virtual bool updateEvent();
   virtual bool scanEndFlag();
   WiiRemoteController *connect(const char *id);

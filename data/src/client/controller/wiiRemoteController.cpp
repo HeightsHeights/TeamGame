@@ -45,7 +45,7 @@ void WiiRemoteController::scanDirection(ControllerParam *param)
         param->axisR.x = 1;
     }
 }
-}
+
 void WiiRemoteController::scanButton(ControllerParam *param)
 {
     if (wiimote.keys.a)

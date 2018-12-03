@@ -22,11 +22,6 @@ SCENE_ID SceneTitle::executeCommand(int command, int pos)
         position[pos].x = paramData.axisL.x;
         position[pos].z = paramData.axisL.y;
 
-        if (paramData.axisL.x > 0.5)
-        {
-            printf("saaaaaaaaaa\n\n\n");
-        }
-
         DataBlock data;
         NETWORK_COMMAND command = NC_SERVER_2_CLIENT;
         data.setData(&command, sizeof(NETWORK_COMMAND));

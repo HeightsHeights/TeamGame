@@ -14,7 +14,7 @@ void Keybord::scanDirection(ControllerParam *param)
     {
         param->axisL.y = -1;
     }
-    else if (keys[SDL_SCANCODE_S])
+    if (keys[SDL_SCANCODE_S])
     {
         param->axisL.y = 1;
     }
@@ -22,7 +22,7 @@ void Keybord::scanDirection(ControllerParam *param)
     {
         param->axisL.x = -1;
     }
-    else if (keys[SDL_SCANCODE_D])
+    if (keys[SDL_SCANCODE_D])
     {
         param->axisL.x = 1;
     }
@@ -31,7 +31,7 @@ void Keybord::scanDirection(ControllerParam *param)
     {
         param->axisR.y = -1;
     }
-    else if (keys[SDL_SCANCODE_2])
+    if (keys[SDL_SCANCODE_2])
     {
         param->axisR.y = 1;
     }
@@ -39,7 +39,7 @@ void Keybord::scanDirection(ControllerParam *param)
     {
         param->axisR.x = -1;
     }
-    else if (keys[SDL_SCANCODE_6])
+    if (keys[SDL_SCANCODE_6])
     {
         param->axisR.x = 1;
     }

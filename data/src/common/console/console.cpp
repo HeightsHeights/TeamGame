@@ -8,7 +8,7 @@ bool Console::input(const char *message, const char *defaultValue, char *str)
     printf("Input %s", message);
     if (defaultValue != NULL)
     {
-        printf("\tDefaultValue (%s)", defaultValue);
+        printf("\t(DefaultValue --> \"%s\")", defaultValue);
     }
     printf("\n> ");
 

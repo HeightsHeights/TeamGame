@@ -46,6 +46,7 @@ int ThreadManager::netWorkThread(void *data)
             }
         }
     }
+    return 1;
 }
 int ThreadManager::controllerThread(void *data)
 {
@@ -57,4 +58,27 @@ int ThreadManager::controllerThread(void *data)
         }
         SDL_Delay(4);
     }
+    return 1;
+}
+
+bool ThreadManager::wait()
+{
+    bool ret = true;
+    int cThreadReturnValue;
+    SDL_WaitThread(cThread, &cThreadReturnValue);
+    if (cThreadReturnValue < 0)
+    {
+        fprintf(stderr, "Error --> ControllerThread is Abend\n");
+        ret = false;
+    }
+#ifndef _UNENABLE_NETWORK
+    int nThreadReturnValue;
+    SDL_WaitThread(nThread, &nThreadReturnValue);
+    if (nThreadReturnValue < 0)
+    {
+        fprintf(stderr, "Error --> NetworkThread is Abend\n");
+        ret = false;
+    }
+#endif
+    return true;
 }

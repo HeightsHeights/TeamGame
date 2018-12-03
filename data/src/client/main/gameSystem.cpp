@@ -123,6 +123,13 @@ bool GameSystem::gameLoop()
 
 bool GameSystem::terminate()
 {
+    if (!ThreadManager::wait())
+    {
+        fprintf(stderr, "Error --> ThreadManager::wait\n");
+        return false;
+    }
+    fprintf(stderr, "Threads terminated successfully\n");
+
 #ifndef _UNENABLE_NETWORK
     NetworkManager::disconnect();
 #endif

@@ -12,4 +12,5 @@ public:
   static bool init(void *data);
   static int netWorkThread(void *data);
   static int controllerThread(void *data);
+  static bool wait();
 };

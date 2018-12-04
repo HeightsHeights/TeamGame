@@ -7,8 +7,7 @@
 #include "../math/vector/vector2f.h"
 
 //ジョイコンの番号にあった番号を割り振ってください
-typedef enum
-{
+typedef enum {
   CT_DECITION_OR_ATTACK = 0,
   CT_CANCEL = 1,
   CT_JUMP = 2,

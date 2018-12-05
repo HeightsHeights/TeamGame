@@ -1,4 +1,6 @@
 #ifdef _ENABLE_WII
+#include "./wiiRemoteConnector.h"
+
 WiiRemoteConnector::WiiRemoteConnector()
 {
 }

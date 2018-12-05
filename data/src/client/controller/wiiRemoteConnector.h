@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "../wiiRemote.h"
+#include "./wiiRemote.h"
 
 class WiiRemoteConnector
 {

@@ -52,15 +52,15 @@ void ControllerManager::cleanUp()
 bool ControllerManager::connectWiiRemote(const char *id)
 {
     fprintf(stderr, "Connect WiiRemote......\n");
-    WiiRemoteController *wiiController = WiiRemoteConnector().connect();
+    WiiRemote *wiiRemote = WiiRemoteConnector().connect(id);
 
-    if (wiiController == NULL)
+    if (wiiRemote == NULL)
     {
         fprintf(stderr, "Error --> Cannot connect WiiRemote\n");
         return false;
     }
     fprintf(stderr, "Connected!\n");
-    controller = wiiController;
+    controller = wiiRemote;
     return true;
 }
 #endif

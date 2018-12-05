@@ -11,21 +11,23 @@
 ******************************************************************************/
 void WiiRemote::scanDirection(ControllerParam *param)
 {
+    param->axisL = Vector2f_ZERO;
+    param->axisR = Vector2f_ZERO;
     if (wiimote.keys.up)
     {
-        param->axisR.y = -1;
+        param->axisR.y += -1;
     }
-    else if (wiimote.keys.down)
+    if (wiimote.keys.down)
     {
-        param->axisR.y = 1;
+        param->axisR.y += 1;
     }
     if (wiimote.keys.left)
     {
-        param->axisR.x = -1;
+        param->axisR.x += -1;
     }
-    else if (wiimote.keys.right)
+    if (wiimote.keys.right)
     {
-        param->axisR.x = 1;
+        param->axisR.x += 1;
     }
 
     if (wiimote.ext.nunchuk.joyy < 93)

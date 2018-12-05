@@ -1,4 +1,4 @@
-#include "sceneBase.h"
+#include "./sceneBase.h"
 
 BaseScene::BaseScene(WindowManager *window)
 {

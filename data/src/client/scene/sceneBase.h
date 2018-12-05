@@ -4,7 +4,7 @@
  * ベースシーン関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "../render/window/window.h"
-#include "./sceneId.h"
+#include "../../common/scene/sceneId.h"
 #include "../../common/controllerParam/controllerParam.h"
 /******************************************************************************
  * class BaseScene

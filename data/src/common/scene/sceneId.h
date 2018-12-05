@@ -5,4 +5,3 @@ typedef enum {
     SI_MAIN = 1,
     SI_NUMBER = 2,
 } SCENE_ID;
-;

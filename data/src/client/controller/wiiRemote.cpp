@@ -11,8 +11,6 @@
 ******************************************************************************/
 void WiiRemote::scanDirection(ControllerParam *param)
 {
-    param->axisL = Vector2f_ZERO;
-    param->axisR = Vector2f_ZERO;
     if (wiimote.keys.up)
     {
         param->axisR.y += -1;

@@ -10,9 +10,6 @@
 
 void Keybord::scanDirection(ControllerParam *param)
 {
-    param->axisL = Vector2f_ZERO;
-    param->axisR = Vector2f_ZERO;
-
     if (keys[SDL_SCANCODE_W])
     {
         param->axisL.y += -1;

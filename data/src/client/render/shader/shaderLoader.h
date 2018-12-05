@@ -10,20 +10,22 @@
 ******************************************************************************/
 class BaseShaderLoader
 {
-  private:
-    GLuint programID;
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
+private:
+  GLuint programID;
+  GLuint vertexShaderID;
+  GLuint fragmentShaderID;
 
-    GLuint loadShader(const char *file, int type);
-    virtual void bindAttributes();
+  GLuint loadShader(const char *file, int type);
+  virtual void bindAttributes();
 
-  public:
-    ShaderProgram *generateShader(const char *vertex_filename, const char *fragment_filename);
-    virtual ~BaseShaderLoader() {}
+public:
+  ShaderProgram *generateShader(const char *vertex_filename, const char *fragment_filename);
+  virtual ~BaseShaderLoader() {}
 
-  protected:
-    void bindAttribute(int attribute, const char *variableName);
+protected:
+  void bindAttribute(int attribute, const char *variableName);
+  GLint getAttribute(const char *variableName);
+  GLint getUniform(const char *variableName);
 };
 
 /******************************************************************************
@@ -32,10 +34,10 @@ class BaseShaderLoader
 ******************************************************************************/
 class StaticShaderLoader : public BaseShaderLoader
 {
-  private:
-    virtual void bindAttributes();
+private:
+  virtual void bindAttributes();
 
-  public:
+public:
 };
 /******************************************************************************
  * class TestShaderLoader
@@ -43,8 +45,19 @@ class StaticShaderLoader : public BaseShaderLoader
 ******************************************************************************/
 class TestShaderLoader : public BaseShaderLoader
 {
-  private:
-    virtual void bindAttributes();
+private:
+  virtual void bindAttributes();
 
-  public:
+public:
+};
+/******************************************************************************
+ * class GuiShaderLoader
+ * 機能1：GuiShader用のAttribute変数設定をする
+******************************************************************************/
+class GuiShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
 };

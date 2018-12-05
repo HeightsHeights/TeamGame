@@ -4,83 +4,95 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
 }
 bool SceneTitle::init()
 {
-    for (int i = 0; i < 2; i++)
+    glEnable(GL_TEXTURE_2D);
+    SDL_Surface *surface = IMG_Load("./data/res/gui/image/google.png");
+    if (!surface)
     {
-        obj[i] = ObjModelLoader().load("data/res/gui/obj/kinokochara/", "kinokochara");
-        if (obj[i] == NULL)
-        {
-            return false;
-        }
+        return false;
+    }
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(window->getRenderer(), surface);
+    glGenTextures(1, &texId);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glBindTexture(GL_TEXTURE_2D, texId);
+    int Mode = GL_RGBA;
+    if (surface->format->BytesPerPixel == 4)
+    {
+        Mode = GL_RGBA;
     }
 
-    //TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
+    glTexImage2D(GL_TEXTURE_2D, 0, Mode, surface->w, surface->h, 0, Mode, GL_UNSIGNED_BYTE, surface);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
-    glEnable(GL_TEXTURE_2D);
+
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
-#ifndef _UNENABLE_NETWORK
-    DataBlock data;
-    NETWORK_COMMAND command = NC_CONTROLLER_INFO;
-    data.setData(&command, sizeof(NETWORK_COMMAND));
-    data.setData(&param, sizeof(ControllerParam));
-    NetworkManager::sendData(data, data.getDataSize());
-#else
-    position[0].x += 0.1 * param.axisL.x;
-    position[0].z += 0.1 * param.axisL.y;
-#endif
     return SI_TITLE;
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {
-    if (command == NC_SERVER_2_CLIENT)
-    {
-        Vector3f positionData[1];
-
-        for (int i = 0; i < 2; i++)
-        {
-            NetworkManager::recvData(positionData[i], sizeof(Vector3f));
-            dir[i] = positionData[i];
-            positionData[i] *= 0.1;
-            position[i].x += positionData[i].x;
-            position[i].z += positionData[i].z;
-        }
-    }
     return SI_TITLE;
 }
 void SceneTitle::drawWindow()
 {
-    GLfloat light0pos[] = {15.0, 30.0, 3.0, 1.0};
     window->clearWindow();
-    glLoadIdentity();
-    gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(15.0, 18.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    glClearDepth(1.0);
+    ShaderManager::startShader(SID_GUI);
+
+    GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
 
-    ShaderManager::startShader(SID_STATIC);
-    for (int i = 0; i < 2; i++)
-    {
-        glPushMatrix();
-        glTranslated(position[i].x, position[i].y, position[i].z);
-        if (dir[i].x == 0 && dir[i].y == 0 && dir[i].z == 0)
-        {
-            dir[i] = Vector3f(1, 1, 1);
-        }
-        //lookAtVector(dir[i]);
-        obj[i]->draw();
-        glPopMatrix();
-    }
-    ShaderManager::stopShader(SID_STATIC);
+    float vertexPosition[] = {
+        0.5f, 0.5f,
+        -0.5f, 0.5f,
+        -0.5f, -0.5f,
+        0.5f, -0.5f};
+
+   
+    const GLfloat vertexUv[] = {
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+    };
+    int positionLocation = glGetAttribLocation(42, "position");
+    int uvLocation = glGetAttribLocation(42, "uv");
+    int textureLocation = glGetUniformLocation(42, "texture");
+
+    // attribute属性を有効にする
+    glEnableVertexAttribArray(positionLocation);
+    glEnableVertexAttribArray(uvLocation);
+
+    // uniform属性を設定する
+    glUniform1i(textureLocation, 0);
+
+    // attribute属性を登録
+    glVertexAttribPointer(positionLocation, 2, GL_FLOAT, false, 0, vertexPosition);
+    glVertexAttribPointer(uvLocation, 2, GL_FLOAT, false, 0, vertexUv);
+
+    glBindTexture(GL_TEXTURE_2D, texId);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    ShaderManager::stopShader(SID_GUI);
 
     glFlush();
     window->swapWindow();

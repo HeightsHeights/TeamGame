@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../common/loader/baseLoader.h"
-#include "./configData.h"
+#include "../../../common/loader/baseLoader.h"
+#include "../configData.h"
 
 class ConfigLoader : public BaseLoader
 {

@@ -25,4 +25,5 @@ public:
   WindowManager(int argc, char *argv[], const char *windowName);
   void clearWindow();
   void swapWindow();
+  SDL_Renderer *getRenderer() { return this->renderer; }
 };

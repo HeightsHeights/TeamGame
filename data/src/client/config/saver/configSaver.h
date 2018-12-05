@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../common/saver/baseSaver.h"
-#include "./configData.h"
+#include "../../../common/saver/baseSaver.h"
+#include "../configData.h"
 
 class ConfigSaver : public BaseSaver
 {

@@ -55,8 +55,8 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> loadConfig()\n");
         return false;
     }
-    Console().scanString("YourName", config->name.c_str(), &config->name);
-    Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+        // Console().scanString("YourName", config->name.c_str(), &config->name);
+        // Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
 #ifdef _ENABLE_WII
     Console().scanString("WiiRemoteId", config->wiiRemoteId.c_str(), &config->wiiRemoteId);
 #endif

@@ -1,4 +1,4 @@
-#include "sceneBase.h"
+#include "./sceneBase.h"
 
 bool BaseScene::init()
 {

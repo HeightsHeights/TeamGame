@@ -51,7 +51,14 @@ void BaseShaderLoader::bindAttribute(int attribute, const char *variableName)
 {
     glBindAttribLocation(programID, attribute, variableName);
 }
-
+GLint BaseShaderLoader::getAttribute(const char *variableName)
+{
+    return glGetAttribLocation(programID, variableName);
+}
+GLint BaseShaderLoader::getUniform(const char *variableName)
+{
+    return glGetUniformLocation(programID, variableName);
+}
 void BaseShaderLoader::bindAttributes()
 {
 }
@@ -61,7 +68,7 @@ void BaseShaderLoader::bindAttributes()
 ******************************************************************************/
 void StaticShaderLoader::bindAttributes()
 {
-    bindAttribute(0, "position");
+    //bindAttribute(0, "position");
     //bindAttribute(2, "normal");
 }
 /******************************************************************************
@@ -72,18 +79,17 @@ void TestShaderLoader::bindAttributes()
     //bindAttribute(0, "position");
     //bindAttribute(2, "normal");
 }
-/******************************************************************************
- * ShaderProgram
-******************************************************************************/
-ShaderProgram::ShaderProgram()
+void GuiShaderLoader::bindAttributes()
 {
-    this->programID = 0;
-    this->vertexShaderID = 0;
-    this->fragmentShaderID = 0;
-}
-ShaderProgram::ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fragmentShaderID)
-{
-    this->programID = programID;
-    this->vertexShaderID = vertexShaderID;
-    this->fragmentShaderID = fragmentShaderID;
+    // // 何番目のattribute変数か
+    // int positionLocation = getAttribute("position");
+    // int uvLocation = getAttribute("uv");
+    // int textureLocation = getUniform("texture");
+
+    // // attribute属性を有効にする
+    // glEnableVertexAttribArray(positionLocation);
+    // glEnableVertexAttribArray(uvLocation);
+
+    // // uniform属性を設定する
+    // glUniform1i(textureLocation, 0);
 }

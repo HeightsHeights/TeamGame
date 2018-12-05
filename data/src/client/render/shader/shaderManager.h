@@ -2,11 +2,11 @@
 
 #include "./shaderProgram.h"
 
-typedef enum
-{
+typedef enum {
   SID_STATIC = 0,
   SID_TEST = 1,
-  SID_NUM = 2,
+  SID_GUI = 2,
+  SID_NUM = 3,
 } SHADER_ID;
 
 /******************************************************************************

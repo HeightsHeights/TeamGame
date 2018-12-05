@@ -33,14 +33,14 @@ bool ControllerManager::updateController()
 
     ControllerParam param = controller->readStateController();
 
-    requestReaction(param);
+    bool endFlag = requestReaction(param);
 
-    return controller->scanEndFlag();
+    return controller->scanEndFlag() || endFlag;
 }
-void ControllerManager::requestReaction(ControllerParam param)
+bool ControllerManager::requestReaction(ControllerParam param)
 {
     //シーンマネージャーにparamを渡します
-    SceneManager::reactController(param);
+    return SceneManager::reactController(param);
 }
 void ControllerManager::cleanUp()
 {

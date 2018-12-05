@@ -18,7 +18,7 @@ private:
 public:
   static bool init();
   static bool updateController();
-  static void requestReaction(ControllerParam param);
+  static bool requestReaction(ControllerParam param);
   static void cleanUp();
 #ifdef _ENABLE_WII
   static bool connectWiiRemote(const char *id);

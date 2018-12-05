@@ -16,7 +16,6 @@ bool SceneTitle::init()
         {
             return false;
         }
-        position[i] = Vector3f_ZERO;
     }
 
     //TestXModel *obj = TestXLoader().load("data/res/gui/x/", "sample");
@@ -28,7 +27,7 @@ bool SceneTitle::init()
     glEnable(GL_TEXTURE_2D);
     return true;
 }
-void SceneTitle::reactController(ControllerParam param)
+SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
 #ifndef _UNENABLE_NETWORK
     DataBlock data;
@@ -40,6 +39,7 @@ void SceneTitle::reactController(ControllerParam param)
     position[0].x += 0.1 * param.axisL.x;
     position[0].z += 0.1 * param.axisL.y;
 #endif
+    return SI_TITLE;
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {

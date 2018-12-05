@@ -32,9 +32,15 @@ bool SceneManager::init(WindowManager *window)
     return true;
 }
 
-void SceneManager::reactController(ControllerParam param)
+bool SceneManager::reactController(ControllerParam param)
 {
-    scenes[sceneId]->reactController(param);
+    bool endFlag = false;
+    sceneId = scenes[sceneId]->reactController(param);
+    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    {
+        endFlag = true;
+    }
+    return endFlag;
 }
 
 bool SceneManager::executeCommand(int command)

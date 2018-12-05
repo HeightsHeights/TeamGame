@@ -18,7 +18,7 @@ private:
 
 public:
   static bool init(WindowManager *window);
-  static void reactController(ControllerParam param);
+  static bool reactController(ControllerParam param);
   static bool executeCommand(int command);
   static void drawWindow();
 };

@@ -7,8 +7,9 @@ bool SceneMainGame::init()
 {
     return true;
 }
-void SceneMainGame::reactController(ControllerParam param)
+SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
+    return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
 {

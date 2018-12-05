@@ -26,7 +26,7 @@ public:
   SceneTitle(WindowManager *window);
 
   virtual bool init();
-  virtual void reactController(ControllerParam param);
+  virtual SCENE_ID reactController(ControllerParam param);
   virtual SCENE_ID executeCommand(int command);
   virtual void drawWindow();
 };

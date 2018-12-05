@@ -7,7 +7,7 @@ BaseScene::BaseScene(WindowManager *window)
 bool BaseScene::init()
 {
 }
-void BaseScene::reactController(ControllerParam param)
+SCENE_ID BaseScene::reactController(ControllerParam param)
 {
 }
 SCENE_ID BaseScene::executeCommand(int command)

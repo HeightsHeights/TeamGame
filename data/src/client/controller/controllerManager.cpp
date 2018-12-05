@@ -18,11 +18,12 @@ bool ControllerManager::init()
     //接続があるか確認←
     if (SDL_NumJoysticks() > 0)
     {
+        fprintf(stderr, "Connect Joystick!\n");
         controller = new Joystick(0);
     }
     else
     {
-        fprintf(stderr, "Error --> connot connect joystick\n");
+        fprintf(stderr, "Connect Keybord!\n");
         controller = new Keybord();
     }
     return true;

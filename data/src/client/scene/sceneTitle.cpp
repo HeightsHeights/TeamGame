@@ -96,19 +96,19 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glEnable(GL_TEXTURE_2D);
-    SDL_Surface *surface = IMG_Load("./data/res/gui/obj/cube/test2_a.png");
+    SDL_Surface *surface = IMG_Load("./data/res/gui/image/google.png");
 
     SDL_Texture *texture = SDL_CreateTextureFromSurface(window->getRenderer(), surface);
     glGenTextures(1, &texId);
     glBindTexture(GL_TEXTURE_2D, texId);
-    int Mode = GL_RGB;
+    int Mode = GL_RGBA;
     if (surface->format->BytesPerPixel == 4)
     {
         Mode = GL_RGBA;
     }
 
     glTexImage2D(GL_TEXTURE_2D, 0, Mode, surface->w, surface->h, 0, Mode, GL_UNSIGNED_BYTE, surface->pixels);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

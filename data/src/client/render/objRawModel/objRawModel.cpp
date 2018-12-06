@@ -177,8 +177,8 @@ bool ObjModelLoader::loadObjFile(const char *filename)
     GLuint vao = createVao();
     bindIndicesBuffer(indices.size() * sizeof(unsigned int), &indices[0]);
     storeAttributeData(0, vertices.size() * sizeof(Vector3f), vertices[0], GL_FALSE);
-    storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
-    // storeAttributeData(3, textureIndices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
+    //storeAttributeData(2, vertices.size() * sizeof(Vector3f), normalArraySum[0], GL_TRUE);
+    //storeAttributeData(3, textureIndices.size() * sizeof(Vector2f), textureArray[0], GL_FALSE);
     unbindVao();
 
     ret->setVao(vao);

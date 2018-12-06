@@ -6,7 +6,8 @@ typedef enum {
   SID_STATIC = 0,
   SID_TEST = 1,
   SID_GUI = 2,
-  SID_NUM = 3,
+  SID_RED = 3,
+  SID_NUM = 4,
 } SHADER_ID;
 
 /******************************************************************************

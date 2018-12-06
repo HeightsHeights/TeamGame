@@ -61,3 +61,14 @@ private:
 
 public:
 };
+/******************************************************************************
+ * class RedShaderLoader
+ * 機能1：RedShader用のAttribute変数設定をする
+******************************************************************************/
+class RedShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
+};

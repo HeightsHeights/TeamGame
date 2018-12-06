@@ -25,7 +25,7 @@ bool SceneTitle::init()
     glGenTextures(1, &texId);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glBindTexture(GL_TEXTURE_2D, texId);
-    int Mode = GL_RGBA;
+    int Mode = GL_RGB;
     if (surface->format->BytesPerPixel == 4)
     {
         Mode = GL_RGBA;

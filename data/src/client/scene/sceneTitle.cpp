@@ -13,6 +13,9 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 bool SceneTitle::init()
 {
     glEnable(GL_TEXTURE_2D);
+
+    ObjRawModel *obj = ObjModelLoader().load("", "");
+
     SDL_Surface *surface = IMG_Load("./data/res/gui/image/google.png");
     if (!surface)
     {
@@ -28,15 +31,28 @@ bool SceneTitle::init()
         Mode = GL_RGBA;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, Mode, surface->w, surface->h, 0, Mode, GL_UNSIGNED_BYTE, surface);
+    glTexImage2D(GL_TEXTURE_2D, 0, Mode, surface->w, surface->h, 0, Mode, GL_UNSIGNED_BYTE, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     GLfloat green[] = {1.0, 1.0, 1.0, 1.0};
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, green);
+
+    int positionLocation = glGetAttribLocation(42, "position");
+    int uvLocation = glGetAttribLocation(42, "uv");
+    int textureLocation = glGetUniformLocation(42, "texture");
+
+    // attribute属性を有効にする
+    glEnableVertexAttribArray(positionLocation);
+    glEnableVertexAttribArray(uvLocation);
+
+    // uniform属性を設定する
+    glUniform1i(textureLocation, 0);
 
     return true;
 }
@@ -52,47 +68,40 @@ void SceneTitle::drawWindow()
 {
     window->clearWindow();
     glClearDepth(1.0);
+    // ShaderManager::startShader(SID_GUI);
+
+    // GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
+    // glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
+
+    // float vertexPosition[] = {
+    //     0.5f, 0.5f,
+    //     -0.5f, 0.5f,
+    //     -0.5f, -0.5f,
+    //     0.5f, -0.5f};
+
+    // const GLfloat vertexUv[] = {
+    //     1,
+    //     0,
+    //     0,
+    //     0,
+    //     0,
+    //     1,
+    //     1,
+    //     1,
+    // };
+
+    // // attribute属性を登録
+    // glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, vertexPosition);
+    // glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, vertexUv);
+
+    // glBindTexture(GL_TEXTURE_2D, texId);
+    // glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    // ShaderManager::stopShader(SID_GUI);
+
     ShaderManager::startShader(SID_GUI);
-
-    GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
-    glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
-
-    float vertexPosition[] = {
-        0.5f, 0.5f,
-        -0.5f, 0.5f,
-        -0.5f, -0.5f,
-        0.5f, -0.5f};
-
-   
-    const GLfloat vertexUv[] = {
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        1,
-    };
-    int positionLocation = glGetAttribLocation(42, "position");
-    int uvLocation = glGetAttribLocation(42, "uv");
-    int textureLocation = glGetUniformLocation(42, "texture");
-
-    // attribute属性を有効にする
-    glEnableVertexAttribArray(positionLocation);
-    glEnableVertexAttribArray(uvLocation);
-
-    // uniform属性を設定する
-    glUniform1i(textureLocation, 0);
-
-    // attribute属性を登録
-    glVertexAttribPointer(positionLocation, 2, GL_FLOAT, false, 0, vertexPosition);
-    glVertexAttribPointer(uvLocation, 2, GL_FLOAT, false, 0, vertexUv);
-
-    glBindTexture(GL_TEXTURE_2D, texId);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-    ShaderManager::stopShader(SID_GUI);
+    obj.draw();
+    ShaderManager::startShader(SID_GUI);
 
     glFlush();
     window->swapWindow();

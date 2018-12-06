@@ -16,6 +16,7 @@
 class SceneTitle : public BaseScene
 {
 private:
+  ObjRawModel obj;
   GLuint texId;
   void lookAtVector(Vector3f direction);
 

@@ -81,15 +81,15 @@ void TestShaderLoader::bindAttributes()
 }
 void GuiShaderLoader::bindAttributes()
 {
-    // // 何番目のattribute変数か
-    // int positionLocation = getAttribute("position");
-    // int uvLocation = getAttribute("uv");
-    // int textureLocation = getUniform("texture");
+    // 何番目のattribute変数か
+    int positionLocation = getAttribute("position");
+    int uvLocation = getAttribute("uv");
+    int textureLocation = getUniform("texture");
 
-    // // attribute属性を有効にする
-    // glEnableVertexAttribArray(positionLocation);
-    // glEnableVertexAttribArray(uvLocation);
+    // attribute属性を有効にする
+    glEnableVertexAttribArray(positionLocation);
+    glEnableVertexAttribArray(uvLocation);
 
-    // // uniform属性を設定する
-    // glUniform1i(textureLocation, 0);
+    // uniform属性を設定する
+    glUniform1i(textureLocation, 0);
 }

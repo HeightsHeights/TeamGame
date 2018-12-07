@@ -34,13 +34,14 @@ private:
   Touple4f specular;
   Touple4f emissive;
   float power;
+  GLuint texId;
 
 public:
   ObjMaterial();
-  ObjMaterial(char *name, Touple4f ambient, Touple4f diffuse, Touple4f specular, Touple4f emissive, float power);
+  ObjMaterial(char *name, Touple4f ambient, Touple4f diffuse, Touple4f specular, Touple4f emissive, float power, GLuint texId);
   bool isEqualName(const char *name);
   void applyMaterial();
-  void creattexture();
+  void applyTexture();
 };
 class ObjRawModel
 {
@@ -56,34 +57,4 @@ public:
   void pushMaterial(const ObjMaterial material);
   unsigned int getMtlId(const char *mName);
   void draw();
-};
-class ObjModelLoader
-{
-private:
-  std::ifstream file;
-  std::string dirPath;
-  std::vector<Vector3f> vertices;
-  std::vector<Vector2f> textures;
-  std::vector<Vector3f> normals;
-
-  std::vector<unsigned int> indices;
-  std::vector<unsigned int> textureIndices;
-  std::vector<unsigned int> normalIndices;
-
-  ObjRawModel *ret;
-
-  bool loadObjFile(const char *fileName);
-  void createSubset();
-  GLuint createVao();
-  void storeAttributeData(const int attributeNumber, const GLsizeiptr size, const float *data, GLboolean normalize);
-  void bindIndicesBuffer(const GLsizeiptr size, const unsigned int *indices);
-  void unbindVao();
-
-  bool loadMtlFile(const char *fileName);
-  void createMaterial();
-  void createTexture(std::string fileName);
-
-public:
-  ObjModelLoader();
-  ObjRawModel *load(const std::string dirPath, const std::string fileName);
 };

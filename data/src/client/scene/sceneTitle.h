@@ -5,7 +5,7 @@
 ******************************************************************************/
 #include "./sceneBase.h"
 
-#include "../render/objRawModel/objRawModel.h"
+#include "../render/objRawModel/objModelLoader.h"
 #include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneTitle
@@ -20,6 +20,7 @@ private:
   GLuint vao2;
   GLuint texId;
   ObjRawModel *obj;
+  float angle;
 
 public:
   SceneTitle() : BaseScene() {}

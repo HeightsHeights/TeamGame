@@ -5,14 +5,14 @@ typedef enum{
     BGM_TITLE = 1,
     BGM_MAIN = 2,
     BGM_NUMBER = 3,
-}BGM;
+}BGM_ID;
 
 typedef enum{
     SE_NULL = 0,
     SE_SODO = 1,
     SE_HAMMER = 2,
     SE_NUMBER = 3,
-}SE;
+}SE_ID;
 
 class BGM{
     private:

@@ -1,7 +1,7 @@
 #include "xModel.h"
 #include <vector>
 #include "../../../common/math/vector/vectorSet.h"
-#include "../../common/loader/baseLoader.h"
+#include "../../../common/loader/baseLoader.h"
 
 class XLoader : public BaseLoader
 {

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "./objRawModel.h"
-#include "../../../common/math/vector/vectorSet.h"
-#include <vector>
 #include <fstream>
 
 #define GL_GLEXT_PROTOTYPES 1

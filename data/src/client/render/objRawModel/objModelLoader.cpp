@@ -2,9 +2,10 @@
 #include "./objFileLoader.h"
 #include "./objMtlFileLoader.h"
 
+#define OBJFILE_EXTENSION ".obj"
+#define MTLFILE_EXTENSION ".mtl"
+
 #include <stdio.h>
-#define OBJ_NAME_LENGTH 256
-#define OBJ_BUFFER_LENGTH 256
 /******************************************************************************
  * ObjModelLoader
 ******************************************************************************/
@@ -17,8 +18,8 @@ ObjRawModel *ObjModelLoader::load(const std::string dirPath, const std::string f
 
     ret = new ObjRawModel();
 
-    std::string objFileName = dirPath + fileName + ".obj";
-    std::string mtlFileName = dirPath + fileName + ".mtl";
+    std::string objFileName = dirPath + fileName + OBJFILE_EXTENSION;
+    std::string mtlFileName = dirPath + fileName + MTLFILE_EXTENSION;
 
     if (!ObjMtlFileLoader(ret, dirPath).load(mtlFileName.c_str()))
     {

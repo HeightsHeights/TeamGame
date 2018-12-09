@@ -3,10 +3,11 @@
 #include "../../../common/math/vector/vectorSet.h"
 #include "../../../common/loader/baseLoader.h"
 
+#define BUFFER_LENGTH 256
+
 class XLoader : public BaseLoader
 {
 private:
-  int hierarchy;
   XModel *ret;
   int back;
 
@@ -18,8 +19,9 @@ private:
   std::vector<unsigned int> textureIndices;
   std::vector<unsigned int> normalIndices;
 
+  char buffer[BUFFER_LENGTH];
   void readMesh(XNode *node);
-  void readFrame(XNode *node);
+  void readFrame(XNode *node, int hierarchy);
   bool virtual readFile();
 
 public:

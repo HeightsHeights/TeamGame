@@ -6,6 +6,7 @@
 #include "./sceneBase.h"
 
 #include "../render/objRawModel/objModelLoader.h"
+#include "../render/xLoader/xLoader.h"
 #include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneTitle
@@ -20,6 +21,7 @@ private:
   GLuint vao2;
   GLuint texId;
   ObjRawModel *obj;
+  XModel *model;
   float angle;
 
 public:

@@ -58,7 +58,7 @@ Quaternion4f Quaternion4f::getConjugate()
     return ret;
 }
 
-Vector3f rotate(Vector3f p, Vector3f v, float angle)
+Vector3f Quaternion4f::rotate(Vector3f p, Vector3f v, float angle)
 {
     Quaternion4f qP = Quaternion4f(p);
     Quaternion4f qR = Quaternion4f(v, angle);

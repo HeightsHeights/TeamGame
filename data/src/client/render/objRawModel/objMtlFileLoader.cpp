@@ -93,7 +93,7 @@ void ObjMtlFileLoader::createMaterial()
         else if (0 == strcmp(buf, "illum"))
         {
             skipLine();
-            unsigned int posFile = file.tellg();
+            unsigned int posFile = getFilePos();
             file >> buf;
             if (0 == strcmp(buf, "map_Kd"))
             {
@@ -101,9 +101,9 @@ void ObjMtlFileLoader::createMaterial()
                 file >> textureName;
                 texLoader.load(textureName, &texId);
             }
-            else 
+            else
             {
-                file.seekg(posFile, std::fstream::beg);
+                jumpFile(posFile);
             }
             break;
         }

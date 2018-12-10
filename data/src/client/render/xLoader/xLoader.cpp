@@ -116,18 +116,18 @@ void XLoader::readFrame(XNode *node, int hierarchy)
             if (begin > end || ((begin == 0) && (end == 0)))
             {
                 node->node = new XNode(frameName);
-                unsigned int posFile = file.tellg();
+                unsigned int posFile = getFilePos();
                 readMesh(node->node);
-                file.seekg(posFile, std::fstream::beg);
+                jumpFile(posFile);
                 readFrame(node->node, currentHierarchy + 1);
             }
             if (back == currentHierarchy)
             {
                 back = -1;
                 node->next = new XNode(std::string(buffer));
-                unsigned int posFile = file.tellg();
+                unsigned int posFile = getFilePos();
                 readMesh(node->next);
-                file.seekg(posFile, std::fstream::beg);
+                jumpFile(posFile);
                 readFrame(node->next, currentHierarchy);
             }
             if (begin < end) // too many "}"
@@ -139,9 +139,9 @@ void XLoader::readFrame(XNode *node, int hierarchy)
             if (begin == end && begin != 0 && end != 0)
             {
                 node->next = new XNode(frameName);
-                unsigned int posFile = file.tellg();
+                unsigned int posFile = getFilePos();
                 readMesh(node->next);
-                file.seekg(posFile, std::fstream::beg);
+                jumpFile(posFile);
                 readFrame(node->next, currentHierarchy);
             }
             if ((back != -1) && (back < currentHierarchy))

@@ -4,6 +4,7 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include "../../common/math/quat/quat.h"
+#include "../../common/math/angle/angle.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -13,7 +14,7 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 
     Vector3f p(0, 1, 0);
     Vector3f v(0, 0, 1);
-    p = Quaternion4f::rotate(p, v, 90);
+    p = Quaternion4f::rotate(p, v, RADIAN(90));
     Quaternion4f(p).callMe();
 
     glEnable(GL_TEXTURE_2D);

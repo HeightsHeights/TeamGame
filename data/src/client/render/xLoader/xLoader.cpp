@@ -3,7 +3,6 @@
 #include <limits>
 
 #define FILE_EXTENSION ".x"
-#define BUFFER_LENGTH 256
 
 void XLoader::readMesh(XNode *node)
 {
@@ -80,7 +79,7 @@ void XLoader::readMesh(XNode *node)
     }
     return;
 }
-void XLoader::readFrame(XNode *node)
+void XLoader::readFrame(XNode *node, int hierarchy)
 {
     int currentHierarchy = hierarchy;
     char key[BUFFER_LENGTH] = {0};
@@ -113,45 +112,40 @@ void XLoader::readFrame(XNode *node)
         {
             std::string frameName;
             file >> frameName;
-            unsigned int posFile = file.tellg();
-
-            for (int i = 0; i < currentHierarchy; i++)
-            {
-                printf("\t");
-            }
-            printf("Frame:%s\n", frameName.c_str());
 
             if (begin > end || ((begin == 0) && (end == 0)))
             {
                 node->node = new XNode(frameName);
+                unsigned int posFile = file.tellg();
                 readMesh(node->node);
                 file.seekg(posFile, std::fstream::beg);
-                hierarchy++;
-                readFrame(node->node);
+                readFrame(node->node, currentHierarchy + 1);
             }
             if (back == currentHierarchy)
             {
                 back = -1;
-                node->next = new XNode(frameName);
+                node->next = new XNode(std::string(buffer));
+                unsigned int posFile = file.tellg();
                 readMesh(node->next);
                 file.seekg(posFile, std::fstream::beg);
-                readFrame(node->next);
+                readFrame(node->next, currentHierarchy);
             }
             if (begin < end) // too many "}"
             {
+                strcpy(buffer, frameName.c_str());
                 back = currentHierarchy - (end - begin);
                 return;
             }
             if (begin == end && begin != 0 && end != 0)
             {
                 node->next = new XNode(frameName);
+                unsigned int posFile = file.tellg();
                 readMesh(node->next);
                 file.seekg(posFile, std::fstream::beg);
-                readFrame(node->next);
+                readFrame(node->next, currentHierarchy);
             }
             if ((back != -1) && (back < currentHierarchy))
             {
-                hierarchy--;
                 return;
             }
         }
@@ -160,11 +154,11 @@ void XLoader::readFrame(XNode *node)
 
 bool XLoader::readFile()
 {
-    hierarchy = 0;
+    int rootHierarchy = 0;
     ret->root.frameName = "root";
     back = -1;
     //保留
-    readFrame(&ret->root);
+    readFrame(&ret->root, rootHierarchy);
 }
 
 XModel *XLoader::load(const std::string dirPath, const std::string fileName)

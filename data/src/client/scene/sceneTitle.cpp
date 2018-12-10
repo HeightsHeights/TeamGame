@@ -12,6 +12,7 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glEnable(GL_TEXTURE_2D);
     obj = ObjModelLoader().load("data/res/gui/obj/", "bomb");
 
+    model = XLoader().load("data/res/gui/x/", "sample");
     int textureLocation = glGetUniformLocation(45, "texture");
     glUniform1i(textureLocation, 0);
     angle = 0;

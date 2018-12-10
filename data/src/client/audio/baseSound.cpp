@@ -14,7 +14,7 @@ bool BaseSound::loadFile(const char *fileName){
     }
 
     for(int i = 0;i > SE_NUMBER;i++){
-        s->se[i] = Mix_LoadMUS(fileName);
+        s->se[i] = Mix_LoadWAV(fileName);
         if(s->se[i] == NULL){
             fprintf(stderr, "Error --> failed to open sefile\n");
             return false;

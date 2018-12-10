@@ -2,7 +2,11 @@ varying vec2 vuv;
 uniform sampler2D texture;
 varying vec3 vPos;
 varying vec3 vNrm;
+vec4 color;
 void main(void){
+
+    color = texture2D(texture, vuv);
+
     // 光源
     vec3 La = gl_LightSource[0].ambient.xyz;    // ライト環境光
     vec3 Ld = gl_LightSource[0].diffuse.xyz;    // ライト拡散反射光
@@ -16,9 +20,9 @@ void main(void){
     vec3 Ks = gl_FrontMaterial.specular.xyz;    // 鏡面反射
     float shine = gl_FrontMaterial.shininess;
  
-    vec3 V = normalize(-vPos.xyz);        // 視線ベクトル
+    vec3 V = normalize(-vPos);        // 視線ベクトル
     vec3 N = normalize(vNrm);            // 法線ベクトル
-    vec3 L = normalize(Lp-vPos.xyz);    // ライトベクトル
+    vec3 L = normalize(Lp-vPos);    // ライトベクトル
  
     // 放射色の計算
     vec3 emissive = Ke;
@@ -43,6 +47,11 @@ void main(void){
         float specularLight = pow(max(dot(H, N), 0.0), shine);
  
         specular = Ks*Ls*specularLight;
-}
-    gl_FragColor = texture2D(texture, vuv) + vec4 (specular,1.0);
+    }
+    // if(vuv != vec2(0,0))
+        gl_FragColor = color + vec4 (specular,1.0);
+    // else {
+    //     gl_FragColor.xyz = emissive + ambient + diffuse + specular;
+    //     gl_FragColor.w = 1.0;
+    // }
 }

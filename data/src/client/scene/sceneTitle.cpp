@@ -10,7 +10,7 @@
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
     glEnable(GL_TEXTURE_2D);
-    obj = ObjModelLoader().load("data/res/gui/obj/cube/", "cube");
+    obj = ObjModelLoader().load("data/res/gui/obj/", "bomb");
 
     int textureLocation = glGetUniformLocation(45, "texture");
     glUniform1i(textureLocation, 0);
@@ -38,10 +38,9 @@ void SceneTitle::drawWindow()
     gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     angle += 1;
     glRotated(angle, 0, 1, 1);
-    ShaderManager::startShader(SID_RED);
+    ShaderManager::startShader(SID_STATIC);
     obj->draw();
-    ShaderManager::stopShader(SID_RED);
-
+    ShaderManager::stopShader(SID_STATIC);
     glFlush();
     window->swapWindow();
 }

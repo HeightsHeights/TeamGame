@@ -15,6 +15,8 @@ protected:
 
   void skipLine();
   void skip2Key(const char key);
+  unsigned int getFilePos();
+  void jumpFile(unsigned int pos);
 
   bool loadFile(const char *filePath);
 };

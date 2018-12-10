@@ -5,7 +5,7 @@
 
 bool ObjTextureLoader::load(std::string fileName, GLuint *texId)
 {
-    SDL_Surface *surface = IMG_Load((this->dirPath + "test2_a.png").c_str());
+    SDL_Surface *surface = IMG_Load((this->dirPath + fileName).c_str());
     if (surface == NULL)
     {
         fprintf(stderr, "Error --> loadTextureFile(%s)\n", fileName.c_str());

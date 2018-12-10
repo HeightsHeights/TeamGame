@@ -7,9 +7,9 @@
 
 std::string SE_NAME[SE_NUMBER] =
     {
-        ,
-        ,
-
+        "",
+        "",
+        "",
 };
 
 // bool AudioManager::initAudio(){

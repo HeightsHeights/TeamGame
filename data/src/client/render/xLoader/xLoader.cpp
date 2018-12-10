@@ -157,7 +157,6 @@ bool XLoader::readFile()
     int rootHierarchy = 0;
     ret->root.frameName = "root";
     back = -1;
-    //保留
     readFrame(&ret->root, rootHierarchy);
 }
 

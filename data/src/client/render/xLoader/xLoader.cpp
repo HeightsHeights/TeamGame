@@ -130,7 +130,7 @@ void XLoader::readFrame(XNode *node, int hierarchy)
                 jumpFile(posFile);
                 readFrame(node->next, currentHierarchy);
             }
-            if (begin < end) // too many "}"
+            if (begin < end)
             {
                 strcpy(buffer, frameName.c_str());
                 back = currentHierarchy - (end - begin);

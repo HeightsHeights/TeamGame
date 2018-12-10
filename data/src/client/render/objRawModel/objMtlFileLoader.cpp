@@ -92,17 +92,21 @@ void ObjMtlFileLoader::createMaterial()
         }
         else if (0 == strcmp(buf, "illum"))
         {
-            int ill;
-            file >> ill;
-        }
-        else if (0 == strcmp(buf, "map_Kd"))
-        {
-            std::string textureName;
-            file >> textureName;
-            texLoader.load(textureName, &texId);
-        }
-        else
+            skipLine();
+            unsigned int posFile = file.tellg();
+            file >> buf;
+            if (0 == strcmp(buf, "map_Kd"))
+            {
+                std::string textureName;
+                file >> textureName;
+                texLoader.load(textureName, &texId);
+            }
+            else 
+            {
+                file.seekg(posFile, std::fstream::beg);
+            }
             break;
+        }
     }
     model->pushMaterial(ObjMaterial(name, ambient, diffuse, specular, emissive, power, texId));
 }

@@ -125,26 +125,29 @@ void ObjFileLoader::createSubset()
 
 void ObjFileLoader::processVertex(unsigned int textureIndexArray[], Vector2f uvArray[], Vector3f normalSumArray[])
 {
-    for (unsigned int i = 0; i < vertices.size(); i++)
+    if (textures[0] != Vector2f(0, 0) && uvArray[0] != Vector2f(0, 0))
     {
-        textureIndexArray[i] = 0;
-    }
+        for (unsigned int i = 0; i < vertices.size(); i++)
+        {
+            textureIndexArray[i] = 0;
+        }
 
-    for (unsigned int i = 0; i < vertexIndices.size(); i++)
-    {
-        if (textureIndexArray[vertexIndices[i]] == 0)
+        for (unsigned int i = 0; i < vertexIndices.size(); i++)
         {
-            textureIndexArray[vertexIndices[i]] = textureIndices[i];
+            if (textureIndexArray[vertexIndices[i]] == 0)
+            {
+                textureIndexArray[vertexIndices[i]] = textureIndices[i];
+            }
+            else if (textureIndexArray[vertexIndices[i]] != textureIndices[i])
+            {
+                vertices.push_back(vertices[vertexIndices[i]]);
+                vertexIndices[i] = vertices.size() - 1;
+            }
         }
-        else if (textureIndexArray[vertexIndices[i]] != textureIndices[i])
+        for (unsigned int i = 0; i < vertexIndices.size(); i++)
         {
-            vertices.push_back(vertices[vertexIndices[i]]);
-            vertexIndices[i] = vertices.size() - 1;
+            uvArray[vertexIndices[i]] = textures[textureIndices[i]];
         }
-    }
-    for (unsigned int i = 0; i < vertexIndices.size(); i++)
-    {
-        uvArray[vertexIndices[i]] = textures[textureIndices[i]];
     }
 
     for (unsigned int i = 0; i < vertexIndices.size(); i++)

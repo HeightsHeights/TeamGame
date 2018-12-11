@@ -14,8 +14,8 @@ Quaternion4f::Quaternion4f(float w, Vector3f v)
 }
 Quaternion4f::Quaternion4f(Vector3f position)
 {
-    w = 0;
-    v = position;
+    this->w = 0;
+    this->v = position;
 }
 Quaternion4f::Quaternion4f(float w, float x, float y, float z)
 {

@@ -9,8 +9,8 @@ typedef enum {
 } BGM_ID;
 
 typedef enum {
-  SE_SODO = 0,
-  SE_HAMMER = 1,
+  SE_ATTACK = 0,
+  SE_SODO = 1,
   SE_NUMBER = 2,
 } SE_ID;
 

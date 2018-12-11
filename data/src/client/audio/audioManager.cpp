@@ -7,8 +7,8 @@
 
 std::string SE_NAME[SE_NUMBER] =
     {
-        "",
-        "",
+        "attack.wav",
+        "sodo.wav",
 };
 
 std::string BGM_NAME[BGM_NUMBER] =
@@ -35,12 +35,12 @@ bool AudioManager::init()
         }
     }
 
-    // for(int i = 0;i < SE_NUMBER; i++){
-    //     if(!am.se[i].loadFile((SE_DIR_PATH + SE_NAME[i]).c_str())){
-    //         fprintf(stderr,"Error --> failed to initialization.\n");
-    //         return false;
-    //     }
-    // }
+    for(int i = 0;i < SE_NUMBER; i++){
+        if(!am.se[i].loadFile((SE_DIR_PATH + SE_NAME[i]).c_str())){
+            fprintf(stderr,"Error --> failed to initialization.\n");
+            return false;
+        }
+    }
 
     return true;
 }
@@ -53,10 +53,10 @@ void AudioManager::stopBGM(BGM_ID id){
     am.bgm[id].stop();
 }
 
-// void AudioManager::playSE(SE_ID id){
-//     am.se[id].play();
-// }
+void AudioManager::playSE(SE_ID id){
+    am.se[id].play();
+}
 
-// void AudioManager::stopSE(SE_ID id){
-//     am.se[id].stop();
-// }
+void AudioManager::stopSE(SE_ID id){
+    am.se[id].stop();
+}

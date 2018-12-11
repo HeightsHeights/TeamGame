@@ -4,8 +4,7 @@
 #include "./se.h"
 typedef enum {
   BGM_TITLE = 0,
-  BGM_MAIN = 1,
-  BGM_NUMBER = 2,
+  BGM_NUMBER = 1,
 } BGM_ID;
 
 typedef enum {

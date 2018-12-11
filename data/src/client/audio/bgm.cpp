@@ -14,5 +14,9 @@ void BGM::play(){
 }
 
 void BGM::stop(){
-    Mix_FadeOutMusic(2000);
+    Mix_FadeOutMusic(100);
+}
+
+void BGM::volume(){
+    Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 }

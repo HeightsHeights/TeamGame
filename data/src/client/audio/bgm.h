@@ -9,4 +9,5 @@ public:
   bool loadFile(const char *fileName);
   void play();
   void stop();
+  void volume();
 };

@@ -26,4 +26,6 @@ public:
   static void playSE(SE_ID id);
   static void stopBGM(BGM_ID id);
   static void stopSE(SE_ID id);
+  static void volumeBGM(BGM_ID id);
+  static void volumeSE(SE_ID id);
 };

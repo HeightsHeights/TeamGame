@@ -53,10 +53,18 @@ void AudioManager::stopBGM(BGM_ID id){
     am.bgm[id].stop();
 }
 
+void AudioManager::volumeBGM(BGM_ID id){
+    am.bgm[id].volume();
+}
+
 void AudioManager::playSE(SE_ID id){
     am.se[id].play();
 }
 
 void AudioManager::stopSE(SE_ID id){
     am.se[id].stop();
+}
+
+void AudioManager::volumeSE(SE_ID id){
+    am.se[id].volume();
 }

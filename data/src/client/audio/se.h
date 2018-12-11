@@ -7,6 +7,7 @@ class SE
 
   public:
     bool loadFile(const char *fileName);
-    void play();
-    void stop();
+    void play(int chnum);
+    void stop(int chnum);
+    void volume(int chnum);
 };

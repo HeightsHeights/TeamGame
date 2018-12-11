@@ -8,6 +8,7 @@
 #include "../config/saver/configSaver.h"
 #include "../../common/console/console.h"
 #include "../network/networkManager.h"
+//#include "../audio/audioManager.h"
 
 bool GameSystem::loadConfig(std::string fileName)
 {
@@ -82,6 +83,12 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ControllerManager::init()\n");
         return false;
     }
+
+    // if(!AudioManager::init()){
+    //     fprintf(stderr, "Error --> AudioManager::init()\n");
+    //     return false;
+    //     }
+
 #ifdef _ENABLE_WII
     if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
     {

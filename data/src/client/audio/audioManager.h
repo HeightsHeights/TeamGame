@@ -9,10 +9,9 @@ typedef enum {
 } BGM_ID;
 
 typedef enum {
-  SE_NULL = 0,
+  SE_ATTACK = 0,
   SE_SODO = 1,
-  SE_HAMMER = 2,
-  SE_NUMBER = 3,
+  SE_NUMBER = 2,
 } SE_ID;
 
 class AudioManager
@@ -27,4 +26,6 @@ public:
   static void playSE(SE_ID id);
   static void stopBGM(BGM_ID id);
   static void stopSE(SE_ID id);
+  static void volumeBGM(BGM_ID id);
+  static void volumeSE(SE_ID id);
 };

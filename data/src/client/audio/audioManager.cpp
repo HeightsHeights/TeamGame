@@ -14,7 +14,7 @@ std::string SE_NAME[SE_NUMBER] =
 std::string BGM_NAME[BGM_NUMBER] =
     {
         "honobono.mp3",
-        "famima.mp3"
+        "famima.mp3",
 };
 
 AudioManager am;

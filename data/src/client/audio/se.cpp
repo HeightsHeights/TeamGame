@@ -10,7 +10,7 @@ bool SE::loadFile(const char *fileName){
 }
 
 void SE::play(){
-    Mix_PlayMusic(se,1);
+    Mix_PlayMusic(se,0);
 }
 
 void SE::stop(){

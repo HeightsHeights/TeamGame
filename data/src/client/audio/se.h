@@ -3,11 +3,11 @@
 class SE
 {
   private:
-    Mix_Music *se;
+    Mix_Chunk *se;
 
   public:
     bool loadFile(const char *fileName);
-    void play();
-    void stop();
-    void volume();
+    void play(int chnum);
+    void stop(int chnum);
+    void volume(int chnum);
 };

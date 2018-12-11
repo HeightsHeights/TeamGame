@@ -4,14 +4,14 @@
 #include "./se.h"
 typedef enum {
   BGM_TITLE = 0,
-  BGM_NUMBER = 1,
+  BGM_MAIN = 1,
+  BGM_NUMBER = 2,
 } BGM_ID;
 
 typedef enum {
-  SE_NULL = 0,
-  SE_SODO = 1,
-  SE_HAMMER = 2,
-  SE_NUMBER = 3,
+  SE_SODO = 0,
+  SE_HAMMER = 1,
+  SE_NUMBER = 2,
 } SE_ID;
 
 class AudioManager

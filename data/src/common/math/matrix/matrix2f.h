@@ -9,6 +9,7 @@
 #define Matrix2x2f_MAX_LINE 2
 #define Matrix2x2f_MAX_ROW 2
 #define Matrix2x2f_MAX_SIZE Matrix2x2f_MAX_LINE *Matrix2x2f_MAX_ROW
+#define Matrix2x2f_INDEX(i, j) i *Matrix2x2f_MAX_LINE + j
 
 #define Matrix2x2f_ZERO Matrix2x2f()
 const float FLOAT22_IDENTITY[Matrix2x2f_MAX_SIZE] = {1, 0, 0, 1};

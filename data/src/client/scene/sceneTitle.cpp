@@ -11,6 +11,12 @@
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
+    Quaternion4f q(Vector3f(1, 2, 3), RADIAN(45));
+    q.callMe();
+    Matrix4x4f mat = q.toMatrix();
+    mat.callMe();
+    q = mat.toQuaternion();
+    q.callMe();
     // glEnable(GL_TEXTURE_2D);
     // obj = ObjModelLoader().load("data/res/gui/obj/", "bomb");
 

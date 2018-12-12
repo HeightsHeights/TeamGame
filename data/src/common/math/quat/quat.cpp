@@ -57,7 +57,33 @@ Quaternion4f Quaternion4f::getConjugate()
     ret.v = -(this->v);
     return ret;
 }
+Matrix4x4f Quaternion4f::toMatrix()
+{
+    Matrix4x4f ret = Matrix4x4f_IDENTITY;
+    float sx = this->v.x * this->v.x;
+    float sy = this->v.y * this->v.y;
+    float sz = this->v.z * this->v.z;
+    float cx = this->v.y * this->v.z;
+    float cy = this->v.x * this->v.z;
+    float cz = this->v.x * this->v.y;
+    float wx = this->w * this->v.x;
+    float wy = this->w * this->v.y;
+    float wz = this->w * this->v.z;
 
+    ret[Matrix4x4f_INDEX(0, 0)] = 1.0f - 2.0f * (sy + sz);
+    ret[Matrix4x4f_INDEX(0, 1)] = 2.0f * (cz + wz);
+    ret[Matrix4x4f_INDEX(0, 2)] = 2.0f * (cy - wy);
+    ret[Matrix4x4f_INDEX(1, 0)] = 2.0f * (cz - wz);
+    ret[Matrix4x4f_INDEX(1, 1)] = 1.0f - 2.0f * (sx + sz);
+    ret[Matrix4x4f_INDEX(1, 2)] = 2.0f * (cx + wx);
+    ret[Matrix4x4f_INDEX(2, 0)] = 2.0f * (cy + wy);
+    ret[Matrix4x4f_INDEX(2, 1)] = 2.0f * (cx - wx);
+    ret[Matrix4x4f_INDEX(2, 2)] = 1.0f - 2.0f * (sx + sy);
+    ret[Matrix4x4f_INDEX(3, 0)] = 0.0f;
+    ret[Matrix4x4f_INDEX(3, 1)] = 0.0f;
+    ret[Matrix4x4f_INDEX(3, 2)] = 0.0f;
+    return ret;
+}
 Vector3f Quaternion4f::rotate(Vector3f p, Vector3f v, float angle)
 {
     Quaternion4f qP = Quaternion4f(p);
@@ -68,4 +94,5 @@ Vector3f Quaternion4f::rotate(Vector3f p, Vector3f v, float angle)
 void Quaternion4f::callMe()
 {
     printf("%4f\t%4f\t%4f\t%4f\n", this->w, this->v.x, this->v.y, this->v.z);
+    printf("\n\n\n");
 }

@@ -1,9 +1,11 @@
 #pragma once
 
+#include "../matrix/matrix4f.h"
 #include "../vector/vector3f.h"
 
 #define Quaternion4f_ZERO Quaternion4f()
 
+class Matrix4x4f;
 class Quaternion4f
 {
 private:
@@ -25,6 +27,8 @@ public:
   operator const float *() const { return (const float *)&w; }
 
   Quaternion4f getConjugate();
+
+  Matrix4x4f toMatrix();
 
   static Vector3f rotate(Vector3f p, Vector3f v, float angle);
 

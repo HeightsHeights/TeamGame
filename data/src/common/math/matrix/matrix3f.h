@@ -9,6 +9,7 @@
 #define Matrix3x3f_MAX_LINE 3
 #define Matrix3x3f_MAX_ROW 3
 #define Matrix3x3f_MAX_SIZE Matrix3x3f_MAX_LINE *Matrix3x3f_MAX_ROW
+#define Matrix3x3f_INDEX(i, j) i *Matrix3x3f_MAX_LINE + j
 
 #define Matrix3x3f_ZERO Matrix3x3f()
 const float FLOAT33_IDENTITY[Matrix3x3f_MAX_SIZE] = {1, 0, 0, 0, 1, 0, 0, 0, 1};

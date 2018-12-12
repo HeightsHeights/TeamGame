@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../quat/quat.h"
 #include "../vector/vector4f.h"
 
 /******************************************************************************
@@ -9,11 +10,13 @@
 #define Matrix4x4f_MAX_LINE 4
 #define Matrix4x4f_MAX_ROW 4
 #define Matrix4x4f_MAX_SIZE Matrix4x4f_MAX_LINE *Matrix4x4f_MAX_ROW
+#define Matrix4x4f_INDEX(i, j) i *Matrix4x4f_MAX_LINE + j
 
 #define Matrix4x4f_ZERO Matrix4x4f()
 const float FLOAT44_IDENTITY[Matrix4x4f_MAX_SIZE] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 #define Matrix4x4f_IDENTITY Matrix4x4f(FLOAT44_IDENTITY)
 
+class Quaternion4f;
 class Matrix4x4f
 {
 private:
@@ -43,5 +46,6 @@ public:
   float determinant();
   bool isRegularMatrix();
   Matrix4x4f *getInverseMatrix();
+  Quaternion4f toQuaternion();
   void callMe();
 };

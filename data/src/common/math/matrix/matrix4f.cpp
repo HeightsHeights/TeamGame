@@ -1,5 +1,6 @@
 #include "./matrix4f.h"
 #include <stdio.h>
+#include <cmath>
 
 /******************************************************************************
  * Matrix4x4f
@@ -189,6 +190,68 @@ Matrix4x4f *Matrix4x4f::getInverseMatrix()
         }
     }
     return ret;
+}
+Quaternion4f Matrix4x4f::toQuaternion()
+{
+    Quaternion4f q;
+
+    float s;
+    float tr = this->matrix[Matrix4x4f_INDEX(0, 0)] + this->matrix[Matrix4x4f_INDEX(1, 1)] + this->matrix[Matrix4x4f_INDEX(2, 2)] + 1.0f;
+    if (tr >= 1.0f)
+    {
+        s = 0.5f / (float)sqrt(tr);
+        q.w = 0.25f / s;
+        q.v.x = (this->matrix[Matrix4x4f_INDEX(1, 2)] - this->matrix[Matrix4x4f_INDEX(2, 1)]) * s;
+        q.v.y = (this->matrix[Matrix4x4f_INDEX(2, 0)] - this->matrix[Matrix4x4f_INDEX(0, 2)]) * s;
+        q.v.z = (this->matrix[Matrix4x4f_INDEX(0, 1)] - this->matrix[Matrix4x4f_INDEX(1, 0)]) * s;
+        return q;
+    }
+    else
+    {
+        float max;
+        if (*this[Matrix4x4f_INDEX(1, 1)] > *this[Matrix4x4f_INDEX(2, 2)])
+        {
+            max = this->matrix[Matrix4x4f_INDEX(1, 1)];
+        }
+        else
+        {
+            max = this->matrix[Matrix4x4f_INDEX(2, 2)];
+        }
+
+        if (max < this->matrix[Matrix4x4f_INDEX(0, 0)])
+        {
+            s = (float)sqrt(this->matrix[Matrix4x4f_INDEX(0, 0)] - (this->matrix[Matrix4x4f_INDEX(1, 1)] + this->matrix[Matrix4x4f_INDEX(2, 2)]) + 1.0f);
+            float x = s * 0.5f;
+            s = 0.5f / s;
+            q.v.x = x;
+            q.v.y = (this->matrix[Matrix4x4f_INDEX(0, 1)] + this->matrix[Matrix4x4f_INDEX(1, 0)]) * s;
+            q.v.z = (this->matrix[Matrix4x4f_INDEX(2, 0)] + this->matrix[Matrix4x4f_INDEX(0, 2)]) * s;
+            q.w = (this->matrix[Matrix4x4f_INDEX(1, 2)] - this->matrix[Matrix4x4f_INDEX(2, 1)]) * s;
+            return q;
+        }
+        else if (max == *this[Matrix4x4f_INDEX(1, 1)])
+        {
+            s = (float)sqrt(this->matrix[Matrix4x4f_INDEX(1, 1)] - (this->matrix[Matrix4x4f_INDEX(2, 2)] + this->matrix[Matrix4x4f_INDEX(0, 0)]) + 1.0f);
+            float y = s * 0.5f;
+            s = 0.5f / s;
+            q.v.x = (this->matrix[Matrix4x4f_INDEX(0, 1)] + this->matrix[Matrix4x4f_INDEX(1, 0)]) * s;
+            q.v.y = y;
+            q.v.z = (this->matrix[Matrix4x4f_INDEX(1, 2)] + this->matrix[Matrix4x4f_INDEX(2, 1)]) * s;
+            q.w = (this->matrix[Matrix4x4f_INDEX(2, 0)] - this->matrix[Matrix4x4f_INDEX(0, 2)]) * s;
+            return q;
+        }
+        else
+        {
+            s = (float)sqrt(this->matrix[Matrix4x4f_INDEX(2, 2)] - (this->matrix[Matrix4x4f_INDEX(0, 0)] + this->matrix[Matrix4x4f_INDEX(1, 1)]) + 1.0f);
+            float z = s * 0.5f;
+            s = 0.5f / s;
+            q.v.x = (this->matrix[Matrix4x4f_INDEX(2, 0)] + this->matrix[Matrix4x4f_INDEX(0, 2)]) * s;
+            q.v.y = (this->matrix[Matrix4x4f_INDEX(1, 2)] + this->matrix[Matrix4x4f_INDEX(2, 1)]) * s;
+            q.v.z = z;
+            q.w = (this->matrix[Matrix4x4f_INDEX(0, 1)] - this->matrix[Matrix4x4f_INDEX(1, 0)]) * s;
+            return q;
+        }
+    }
 }
 void Matrix4x4f::callMe()
 {

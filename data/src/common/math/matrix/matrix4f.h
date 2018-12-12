@@ -40,5 +40,8 @@ public:
   Matrix4x4f operator-();
 
   float getElement(unsigned int i, unsigned int j);
+  float determinant();
+  bool isRegularMatrix();
+  Matrix4x4f *getInverseMatrix();
   void callMe();
 };

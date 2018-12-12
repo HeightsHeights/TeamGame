@@ -118,14 +118,78 @@ Matrix4x4f Matrix4x4f::operator-()
 }
 float Matrix4x4f::getElement(unsigned int i, unsigned int j)
 {
-    i--;
-    j--;
-
     int index = Matrix4x4f_MAX_LINE * i + j;
 
     return this->matrix[index];
 }
+float Matrix4x4f::determinant()
+{
+    float ret = 1.0f;
+    Matrix4x4f copy = *this;
+    //三角行列を作成
+    for (int i = 0; i < Matrix4x4f_MAX_LINE; i++)
+    {
+        for (int j = 0; j < Matrix4x4f_MAX_LINE; j++)
+        {
+            if (i < j)
+            {
+                float buf = copy.getElement(j, i) / copy.getElement(i, i);
+                for (int k = 0; k < Matrix4x4f_MAX_LINE; k++)
+                {
+                    copy.matrix[j * Matrix4x4f_MAX_LINE + k] -= copy.getElement(i, k) * buf;
+                }
+            }
+        }
+    }
 
+    //対角部分の積
+    for (int i = 0; i < Matrix4x4f_MAX_LINE; i++)
+    {
+        ret *= copy.getElement(i, i);
+    }
+    return ret;
+}
+bool Matrix4x4f::isRegularMatrix()
+{
+    bool ret = false;
+    if (determinant() != 0)
+    {
+        ret = true;
+    }
+    return ret;
+}
+Matrix4x4f *Matrix4x4f::getInverseMatrix()
+{
+    if (!isRegularMatrix())
+    {
+        return NULL;
+    }
+    Matrix4x4f copy = *this;
+
+    Matrix4x4f *ret = new Matrix4x4f_IDENTITY;
+    for (int i = 0; i < Matrix4x4f_MAX_LINE; i++)
+    {
+        float buf = 1 / copy.getElement(i, i);
+        for (int j = 0; j < Matrix4x4f_MAX_LINE; j++)
+        {
+            copy.matrix[i * Matrix4x4f_MAX_LINE + j] *= buf;
+            ret->matrix[i * Matrix4x4f_MAX_LINE + j] *= buf;
+        }
+        for (int j = 0; j < Matrix4x4f_MAX_LINE; j++)
+        {
+            if (i != j)
+            {
+                float buf = copy.matrix[j * Matrix4x4f_MAX_LINE + i];
+                for (int k = 0; k < Matrix4x4f_MAX_LINE; k++)
+                {
+                    copy.matrix[j * Matrix4x4f_MAX_LINE + k] -= copy.matrix[i * Matrix4x4f_MAX_LINE + k] * buf;
+                    ret->matrix[j * Matrix4x4f_MAX_LINE + k] -= ret->matrix[i * Matrix4x4f_MAX_LINE + k] * buf;
+                }
+            }
+        }
+    }
+    return ret;
+}
 void Matrix4x4f::callMe()
 {
     for (int i = 0; i < Matrix4x4f_MAX_ROW; i++)

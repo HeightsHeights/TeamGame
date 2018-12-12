@@ -118,14 +118,61 @@ Matrix3x3f Matrix3x3f::operator-()
 }
 float Matrix3x3f::getElement(unsigned int i, unsigned int j)
 {
-    i--;
-    j--;
-
     int index = Matrix3x3f_MAX_LINE * i + j;
 
     return this->matrix[index];
 }
+float Matrix3x3f::determinant()
+{
+    float ret;
+    ret = getElement(0, 0) * getElement(1, 1) * getElement(2, 2);
+    ret += getElement(1, 0) * getElement(2, 1) * getElement(0, 2);
+    ret += getElement(2, 0) * getElement(0, 1) * getElement(1, 2);
+    ret -= getElement(2, 0) * getElement(1, 1) * getElement(0, 2);
+    ret -= getElement(1, 0) * getElement(0, 1) * getElement(2, 2);
+    ret -= getElement(0, 0) * getElement(2, 1) * getElement(1, 2);
+}
+bool Matrix3x3f::isRegularMatrix()
+{
+    bool ret = false;
+    if (determinant() != 0)
+    {
+        ret = true;
+    }
+    return ret;
+}
+Matrix3x3f *Matrix3x3f::getInverseMatrix()
+{
+    if (!isRegularMatrix())
+    {
+        return NULL;
+    }
+    Matrix3x3f copy = *this;
 
+    Matrix3x3f *ret = new Matrix3x3f_IDENTITY;
+    for (int i = 0; i < Matrix3x3f_MAX_LINE; i++)
+    {
+        float buf = 1 / copy.getElement(i, i);
+        for (int j = 0; j < Matrix3x3f_MAX_LINE; j++)
+        {
+            copy.matrix[i * Matrix3x3f_MAX_LINE + j] *= buf;
+            ret->matrix[i * Matrix3x3f_MAX_LINE + j] *= buf;
+        }
+        for (int j = 0; j < Matrix3x3f_MAX_LINE; j++)
+        {
+            if (i != j)
+            {
+                float buf = copy.matrix[j * Matrix3x3f_MAX_LINE + i];
+                for (int k = 0; k < Matrix3x3f_MAX_LINE; k++)
+                {
+                    copy.matrix[j * Matrix3x3f_MAX_LINE + k] -= copy.matrix[i * Matrix3x3f_MAX_LINE + k] * buf;
+                    ret->matrix[j * Matrix3x3f_MAX_LINE + k] -= ret->matrix[i * Matrix3x3f_MAX_LINE + k] * buf;
+                }
+            }
+        }
+    }
+    return ret;
+}
 void Matrix3x3f::callMe()
 {
     for (int i = 0; i < Matrix3x3f_MAX_ROW; i++)

@@ -40,5 +40,8 @@ public:
   Matrix3x3f operator-();
 
   float getElement(unsigned int i, unsigned int j);
+  float determinant();
+  bool isRegularMatrix();
+  Matrix3x3f *getInverseMatrix();
   void callMe();
 };

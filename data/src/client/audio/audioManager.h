@@ -17,8 +17,8 @@ typedef enum {
 class AudioManager
 {
 private:
-  BGM bgm[BGM_NUMBER];
-  SE se[SE_NUMBER];
+  static BGM bgm[BGM_NUMBER];
+  static SE se[SE_NUMBER];
 
 public:
   static bool init();

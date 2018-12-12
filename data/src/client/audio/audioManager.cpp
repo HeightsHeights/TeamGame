@@ -17,7 +17,8 @@ std::string BGM_NAME[BGM_NUMBER] =
         "famima.mp3",
 };
 
-AudioManager am;
+BGM AudioManager::bgm[BGM_NUMBER];
+SE AudioManager::se[SE_NUMBER];
 
 bool AudioManager::init()
 {
@@ -28,16 +29,20 @@ bool AudioManager::init()
         return false;
     }
 
-    for(int i = 0;i < BGM_NUMBER; i++){
-        if(!am.bgm[i].loadFile((BGM_DIR_PATH + BGM_NAME[i]).c_str())){
-            fprintf(stderr,"Error --> failed to initialization.\n");
+    for (int i = 0; i < BGM_NUMBER; i++)
+    {
+        if (!bgm[i].loadFile((BGM_DIR_PATH + BGM_NAME[i]).c_str()))
+        {
+            fprintf(stderr, "Error --> failed to initialization.\n");
             return false;
         }
     }
 
-    for(int i = 0;i < SE_NUMBER; i++){
-        if(!am.se[i].loadFile((SE_DIR_PATH + SE_NAME[i]).c_str())){
-            fprintf(stderr,"Error --> failed to initialization.\n");
+    for (int i = 0; i < SE_NUMBER; i++)
+    {
+        if (!se[i].loadFile((SE_DIR_PATH + SE_NAME[i]).c_str()))
+        {
+            fprintf(stderr, "Error --> failed to initialization.\n");
             return false;
         }
     }
@@ -45,26 +50,32 @@ bool AudioManager::init()
     return true;
 }
 
-void AudioManager::playBGM(BGM_ID id){
-    am.bgm[id].play();
+void AudioManager::playBGM(BGM_ID id)
+{
+    bgm[id].play();
 }
 
-void AudioManager::stopBGM(BGM_ID id){
-    am.bgm[id].stop();
+void AudioManager::stopBGM(BGM_ID id)
+{
+    bgm[id].stop();
 }
 
-void AudioManager::volumeBGM(BGM_ID id){
-    am.bgm[id].volume();
+void AudioManager::volumeBGM(BGM_ID id)
+{
+    bgm[id].volume();
 }
 
-void AudioManager::playSE(SE_ID id){
-    am.se[id].play(id);
+void AudioManager::playSE(SE_ID id)
+{
+    se[id].play(id);
 }
 
-void AudioManager::stopSE(SE_ID id){
-    am.se[id].stop(id);
+void AudioManager::stopSE(SE_ID id)
+{
+    se[id].stop(id);
 }
 
-void AudioManager::volumeSE(SE_ID id){
-    am.se[id].volume(id);
+void AudioManager::volumeSE(SE_ID id)
+{
+    se[id].volume(id);
 }

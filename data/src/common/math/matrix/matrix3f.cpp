@@ -173,6 +173,18 @@ Matrix3x3f *Matrix3x3f::getInverseMatrix()
     }
     return ret;
 }
+Matrix3x3f Matrix3x3f::getTransverseMatrix()
+{
+    Matrix3x3f ret;
+    for (int i = 0; i < Matrix3x3f_MAX_LINE; i++)
+    {
+        for (int j = 0; j < Matrix3x3f_MAX_ROW; j++)
+        {
+            ret[Matrix3x3f_INDEX(i, j)] = (*this)[Matrix3x3f_INDEX(j, i)];
+        }
+    }
+    return ret;
+}
 void Matrix3x3f::callMe()
 {
     for (int i = 0; i < Matrix3x3f_MAX_ROW; i++)

@@ -44,5 +44,6 @@ public:
   float determinant();
   bool isRegularMatrix();
   Matrix2x2f *getInverseMatrix();
+  Matrix2x2f getTransverseMatrix();
   void callMe();
 };

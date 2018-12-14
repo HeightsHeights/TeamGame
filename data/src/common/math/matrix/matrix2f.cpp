@@ -142,7 +142,7 @@ Matrix2x2f *Matrix2x2f::getInverseMatrix()
         return NULL;
     }
     Matrix2x2f copy = *this;
-    
+
     Matrix2x2f *ret = new Matrix2x2f_IDENTITY;
     for (int i = 0; i < Matrix2x2f_MAX_LINE; i++)
     {
@@ -163,6 +163,18 @@ Matrix2x2f *Matrix2x2f::getInverseMatrix()
                     ret->matrix[j * Matrix2x2f_MAX_LINE + k] -= ret->matrix[i * Matrix2x2f_MAX_LINE + k] * buf;
                 }
             }
+        }
+    }
+    return ret;
+}
+Matrix2x2f Matrix2x2f::getTransverseMatrix()
+{
+    Matrix2x2f ret;
+    for (int i = 0; i < Matrix2x2f_MAX_LINE; i++)
+    {
+        for (int j = 0; j < Matrix2x2f_MAX_ROW; j++)
+        {
+            ret[Matrix2x2f_INDEX(i, j)] = (*this)[Matrix2x2f_INDEX(j, i)];
         }
     }
     return ret;

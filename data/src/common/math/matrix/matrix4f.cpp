@@ -191,6 +191,18 @@ Matrix4x4f *Matrix4x4f::getInverseMatrix()
     }
     return ret;
 }
+Matrix4x4f Matrix4x4f::getTransverseMatrix()
+{
+    Matrix4x4f ret;
+    for (int i = 0; i < Matrix4x4f_MAX_LINE; i++)
+    {
+        for (int j = 0; j < Matrix4x4f_MAX_ROW; j++)
+        {
+            ret[Matrix4x4f_INDEX(i, j)] = (*this)[Matrix4x4f_INDEX(j, i)];
+        }
+    }
+    return ret;
+}
 Quaternion4f Matrix4x4f::toQuaternion()
 {
     Quaternion4f q;

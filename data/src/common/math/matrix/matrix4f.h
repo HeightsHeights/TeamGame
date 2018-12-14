@@ -46,6 +46,7 @@ public:
   float determinant();
   bool isRegularMatrix();
   Matrix4x4f *getInverseMatrix();
+  Matrix4x4f getTransverseMatrix();
   Quaternion4f toQuaternion();
   void callMe();
 };

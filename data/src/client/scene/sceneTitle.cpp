@@ -5,18 +5,20 @@
 #include "../network/networkManager.h"
 #include "../../common/math/quat/quat.h"
 #include "../../common/math/angle/angle.h"
+#include "../../common/math/matrix/matrixSet.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-    Quaternion4f q(Vector3f(1, 2, 3), RADIAN(45));
-    q.callMe();
-    Matrix4x4f mat = q.toMatrix();
+    float a[] = {
+        1, 2, 3, 4,
+        5, 6, 7, 8,
+        9, 10, 11, 12};
+    Matrix4x4f mat(a);
     mat.callMe();
-    q = mat.toQuaternion();
-    q.callMe();
+    mat.getTransverseMatrix().callMe();
     // glEnable(GL_TEXTURE_2D);
     // obj = ObjModelLoader().load("data/res/gui/obj/", "bomb");
 

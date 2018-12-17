@@ -23,8 +23,9 @@ SCENE_ID SceneTitle::executeCommand(int command, int pos)
         position[pos].z = paramData.axisL.y;
 
         DataBlock data;
-        NETWORK_COMMAND command = NC_SERVER_2_CLIENT;
-        data.setData(&command, sizeof(NETWORK_COMMAND));
+
+        data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
+
         data.setData(position[0], sizeof(Vector3f));
         data.setData(position[1], sizeof(Vector3f));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());

@@ -49,7 +49,8 @@ void main(void){
         specular = Ks*Ls*specularLight;
     }
     // if(vuv != vec2(0,0))
-        gl_FragColor = color + vec4 (specular,1.0);
+        gl_FragColor = color ;
+        // gl_FragColor.a = 1.0;
     // else {
     //     gl_FragColor.xyz = emissive + ambient + diffuse + specular;
     //     gl_FragColor.w = 1.0;

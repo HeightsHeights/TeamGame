@@ -20,7 +20,9 @@ private:
   GLuint vao1;
   GLuint vao2;
   GLuint texId;
+  GLuint texID2;
   ObjRawModel *obj;
+  ObjRawModel *obj2;
   XModel *model;
   float angle;
 

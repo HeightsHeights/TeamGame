@@ -9,32 +9,45 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include <SDL2/SDL_ttf.h>
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
 
-    float a[] = {
-        3, 1, 1, 2,
-        5, 1, 3, 4,
-        2, 0, 1, 0,
-        1, 3, 2, 1};
-    Matrix4x4f mat(a);
-    mat.callMe();
+    // float a[] = {
+    //     3, 1, 1, 2,
+    //     5, 1, 3, 4,
+    //     2, 0, 1, 0,
+    //     1, 3, 2, 1};
+    // Matrix4x4f mat(a);
+    // mat.callMe();
 
-    Matrix4x4f *invMat = mat.getInverseMatrix();
-    if (invMat != NULL)
-    {
-        invMat->callMe();
-    }
+    // Matrix4x4f *invMat = mat.getInverseMatrix();
+    // if (invMat != NULL)
+    // {
+    //     invMat->callMe();
+    // }
 
-    printf("%4f\n", mat.determinant());
-    // glEnable(GL_TEXTURE_2D);
-    // obj = ObjModelLoader().load("data/res/gui/obj/", "bomb");
+    // printf("%4f\n", mat.determinant());
 
-    // model = XLoader().load("data/res/gui/x/", "sample");
-    // int textureLocation = glGetUniformLocation(45, "texture");
-    // glUniform1i(textureLocation, 0);
-    // angle = 0;
+    obj = ObjModelLoader().load("data/res/gui/obj/cube/", "cube");
+    obj2 = ObjModelLoader().load("data/res/gui/obj/", "test");
+    model = XLoader().load("data/res/gui/x/", "sample");
+    int textureLocation = glGetUniformLocation(45, "texture");
+    glUniform1i(textureLocation, 0);
+    angle = 0;
+
+    SDL_Surface *strings;
+    SDL_Color black = {0xff, 0x00, 0x00};
+    TTF_Init();
+    TTF_Font *font = TTF_OpenFont("data/res/gui/image/TakaoMincho.ttf", 24);
+    glGenTextures(1, &texID2);
+    glBindTexture(GL_TEXTURE_2D, texID2);
+    strings = TTF_RenderUTF8_Blended(font, "ティーえー", black);
+    // SDL_Texture *texture = SDL_CreateTextureFromSurface(window->getRenderer(), strings);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, strings->w, strings->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, strings->pixels);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 bool SceneTitle::init()
 {
@@ -50,17 +63,65 @@ SCENE_ID SceneTitle::executeCommand(int command)
 }
 void SceneTitle::drawWindow()
 {
-    //     window->clearWindow();
-    //     glLoadIdentity();
-    //     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
-    //     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
-    //     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    //     gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    //     angle += 1;
-    //     glRotated(angle, 0, 1, 1);
-    //     ShaderManager::startShader(SID_STATIC);
-    //     obj->draw();
-    //     ShaderManager::stopShader(SID_STATIC);
-    //     glFlush();
-    //     window->swapWindow();
+    window->clearWindow();
+    // glEnable(GL_TEXTURE_2D);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glAlphaFunc(GL_GREATER, 0.5);
+    glEnable(GL_ALPHA_TEST);
+    glPushMatrix();
+    glLoadIdentity();
+    GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
+    gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
+    gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    angle += 1;
+    // glTranslatef(angle / 50, 0.0, 0.0);
+    glRotated(angle, 0, 1, 1);
+    // glDepthMask(GL_FALSE);
+    // ShaderManager::startShader(SID_RED);
+    // obj->draw();
+    // ShaderManager::stopShader(SID_RED);
+    ShaderManager::startShader(SID_RED);
+    // glTranslatef(-1.0, -3, -6);
+    obj2->draw();
+    ShaderManager::stopShader(SID_RED);
+    // glDepthMask(GL_TRUE);
+    glPopMatrix();
+    glDisable(GL_ALPHA_TEST);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+
+    glPushMatrix();
+    glLoadIdentity();
+    glColor4d(1.0, 0.0, 0.0, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex2d(-0.9, -0.9);
+    glVertex2d(0.6, -0.9);
+    glVertex2d(0.6, 0.9);
+    glVertex2d(-0.9, 0.9);
+    glEnd();
+    glPopMatrix();
+
+    // glClear(GL_COLOR_BUFFER_BIT);
+
+    // glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texID2);
+    glEnable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(-0.3f, 0.3f, 0.0f);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(-0.3f, -0.3f, 0.0f);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(0.3f, -0.3f, 0.0f);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(0.3f, 0.3f, 0.0f);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glFlush();
+    window->swapWindow();
 }

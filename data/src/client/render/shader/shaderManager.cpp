@@ -1,19 +1,17 @@
 #include "./shaderManager.h"
 #include "./shaderLoader.h"
 #include <stdio.h>
+#include <fstream>
 
-const char *VERTEX_FILE[SID_NUM] = {
-    "./data/src/client/shader/staticVertexShader.vert",
-    "./data/src/client/shader/testVertexShader.vert",
-    "./data/src/client/shader/guiVertexShader.vert",
-    "./data/src/client/shader/redVertexShader.vert",
-};
+#define SHADER_DIR_PATH "./data/src/client/shaders/"
+#define VERTEX_FILE_EXTENSION ".vert"
+#define FRAGMENT_FILE_EXTENSION ".frag"
 
-const char *FRAGMENT_FILE[SID_NUM] = {
-    "./data/src/client/shader/staticFragmentShader.frag",
-    "./data/src/client/shader/testFragmentShader.frag",
-    "./data/src/client/shader/guiFragmentShader.frag",
-    "./data/src/client/shader/redFragmentShader.frag",
+const std::string SHADER_NAME[SID_NUM] = {
+    "staticShader",
+    "testShader",
+    "guiShader",
+    "redShader",
 };
 
 ShaderProgram *ShaderManager::shaders[SID_NUM];
@@ -34,7 +32,9 @@ bool ShaderManager::init()
 
     for (int i = 0; i < SID_NUM; i++)
     {
-        shaders[i] = loaders[i]->generateShader(VERTEX_FILE[i], FRAGMENT_FILE[i]);
+        std::string vertexPath = SHADER_DIR_PATH + SHADER_NAME[i] + VERTEX_FILE_EXTENSION;
+        std::string fragmentPath = SHADER_DIR_PATH + SHADER_NAME[i] + FRAGMENT_FILE_EXTENSION;
+        shaders[i] = loaders[i]->generateShader(vertexPath.c_str(), fragmentPath.c_str());
         if (shaders[i] == NULL)
         {
             fprintf(stderr, "Error --> shader[%d] is NULL\n", i);

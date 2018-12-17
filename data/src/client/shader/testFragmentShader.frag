@@ -4,5 +4,5 @@
 void main(void)
 {
     gl_FragColor.xyz = outcolor;
-    gl_FragColor.w = 1.0;
+    gl_FragColor.w = 0.6;
 }

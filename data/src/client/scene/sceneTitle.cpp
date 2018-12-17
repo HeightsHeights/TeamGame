@@ -13,19 +13,10 @@
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
     static const GLfloat g_vertex_buffer_data[] = {
-        -2.0f,
-        -2.0f,
-        0.0f,
-        2.0f,
-        -2.0f,
-        0.0f,
-        -2.0f,
-        2.0f,
-        0.0f,
-        2.0f,
-        2.0f,
-        0.0f,
-    };
+        -4.0f, -4.0f, 1.0f,
+        4.0f, -4.0f, 1.0f,
+        -4.0f, 4.0f, 1.0f,
+        4.0f, 4.0f, 1.0f};
 
     static const GLuint g_indice_buffer_data[] = {
         0.0,
@@ -132,19 +123,22 @@ void SceneTitle::drawWindow()
     glAlphaFunc(GL_GREATER, 0.5);
     // glEnable(GL_ALPHA_TEST);
     glPushMatrix();
+    // glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glLoadIdentity();
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(5.0, 18.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    // gluLookAt(5.0, 6.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    // gluLookAt(5.0, 1.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
+
+    gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     angle += 1;
     // glTranslatef(angle / 50, 0.0, 0.0);
     glRotated(angle, 0, 1, 1);
     // glDepthMask(GL_FALSE);
-    // ShaderManager::startShader(SID_RED);
-    // obj->draw();
-    // ShaderManager::stopShader(SID_RED);
+    ShaderManager::startShader(SID_RED);
+    obj->draw();
+    ShaderManager::stopShader(SID_RED);
     // ShaderManager::startShader(SID_STATIC);
     // // glTranslatef(-1.0, -3, -6);
     // obj2->draw();

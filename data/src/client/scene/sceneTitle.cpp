@@ -42,7 +42,7 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     TTF_Font *font = TTF_OpenFont("data/res/gui/image/TakaoMincho.ttf", 24);
     glGenTextures(1, &texID2);
     glBindTexture(GL_TEXTURE_2D, texID2);
-    strings = TTF_RenderUTF8_Blended(font, "ティーえー", black);
+    strings = TTF_RenderUTF8_Blended(font, "ティーえー!#$", black);
     // SDL_Texture *texture = SDL_CreateTextureFromSurface(window->getRenderer(), strings);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, strings->w, strings->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, strings->pixels);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -64,22 +64,24 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::drawWindow()
 {
     window->clearWindow();
+
     // glEnable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glAlphaFunc(GL_GREATER, 0.5);
-    glEnable(GL_ALPHA_TEST);
+    // glEnable(GL_ALPHA_TEST);
     glPushMatrix();
     glLoadIdentity();
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
     gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    // gluLookAt(0.0, 0.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     angle += 1;
     // glTranslatef(angle / 50, 0.0, 0.0);
-    glRotated(angle, 0, 1, 1);
+    // glRotated(angle, 0, 1, 1);
     // glDepthMask(GL_FALSE);
     // ShaderManager::startShader(SID_RED);
     // obj->draw();
@@ -88,40 +90,40 @@ void SceneTitle::drawWindow()
     // glTranslatef(-1.0, -3, -6);
     obj2->draw();
     ShaderManager::stopShader(SID_RED);
-    // glDepthMask(GL_TRUE);
-    glPopMatrix();
-    glDisable(GL_ALPHA_TEST);
-    glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
-
     glPushMatrix();
-    glLoadIdentity();
-    glColor4d(1.0, 0.0, 0.0, 0.5);
+    // glLoadIdentity();
+    glColor4d(1.0, 0.0, 0.0, 1.0);
     glBegin(GL_POLYGON);
-    glVertex2d(-0.9, -0.9);
-    glVertex2d(0.6, -0.9);
-    glVertex2d(0.6, 0.9);
-    glVertex2d(-0.9, 0.9);
+    glVertex3d(-2.0, -2.0, -5.0);
+    glVertex3d(2.0, -2.0, -5.0);
+    glVertex3d(2.0, 2.0, -5.0);
+    glVertex3d(-2.0, 2.0, -5.0);
     glEnd();
     glPopMatrix();
+    // glDepthMask(GL_TRUE);
+    glPopMatrix();
+    // glDisable(GL_ALPHA_TEST);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
 
     // glClear(GL_COLOR_BUFFER_BIT);
 
     // glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texID2);
-    glEnable(GL_TEXTURE_2D);
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(-0.3f, 0.3f, 0.0f);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(-0.3f, -0.3f, 0.0f);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(0.3f, -0.3f, 0.0f);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(0.3f, 0.3f, 0.0f);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    // glBindTexture(GL_TEXTURE_2D, texID2);
+    // glEnable(GL_TEXTURE_2D);
+    // glBegin(GL_QUADS);
+    // glTexCoord2f(0.0f, 0.0f);
+    // glVertex3f(-0.3f, 0.3f, 0.0f);
+    // glTexCoord2f(0.0f, 1.0f);
+    // glVertex3f(-0.3f, -0.3f, 0.0f);
+    // glTexCoord2f(1.0f, 1.0f);
+    // glVertex3f(0.3f, -0.3f, 0.0f);
+    // glTexCoord2f(1.0f, 0.0f);
+    // glVertex3f(0.3f, 0.3f, 0.0f);
+    // glEnd();
+    // glDisable(GL_TEXTURE_2D);
+    // glBindTexture(GL_TEXTURE_2D, 0);
     glFlush();
     window->swapWindow();
 }

@@ -3,7 +3,7 @@
 #include "./sceneManager.h"
 #include "./sceneTitle.h"
 #include "./sceneMainGame.h"
-
+#include "./sceneRule.h"
 /* static */
 int SceneManager::sceneId;
 BaseScene *SceneManager::scenes[SI_NUMBER];
@@ -14,7 +14,7 @@ bool SceneManager::init(WindowManager *window)
     sceneId = SI_TITLE;
 
     scenes[SI_TITLE] = new SceneTitle(window);
-    // scenes[SI_RULE] = new SceneMainGame(window);
+    scenes[SI_RULE] = new SceneRule(window);
     // scenes[SI_TEAM] = new SceneMainGame(window);
     // scenes[SI_CHARA] = new SceneMainGame(window);
     scenes[SI_MAIN] = new SceneMainGame(window);

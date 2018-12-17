@@ -39,8 +39,14 @@ bool WindowManager::initOpenGL(int argc, char *argv[])
 
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glAlphaFunc(GL_GREATER, 0.5);
+    glEnable(GL_ALPHA_TEST);
+
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
+
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 }
@@ -52,5 +58,6 @@ void WindowManager::clearWindow()
 
 void WindowManager::swapWindow()
 {
+    glFlush();
     SDL_GL_SwapWindow(window);
 }

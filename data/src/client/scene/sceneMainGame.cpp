@@ -15,6 +15,9 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 {
     return SI_MAIN;
 }
-void SceneMainGame::drawWindow()
+void SceneMainGame::draw3D()
+{
+}
+void SceneMainGame::draw2D()
 {
 }

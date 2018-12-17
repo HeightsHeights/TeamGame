@@ -15,6 +15,10 @@
 class BaseScene
 {
 private:
+  WindowManager *window;
+  virtual void draw3D();
+  virtual void draw2D();
+
 public:
   BaseScene();
   BaseScene(WindowManager *window);
@@ -22,8 +26,7 @@ public:
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);
   virtual SCENE_ID executeCommand(int command);
-  virtual void drawWindow();
+  void drawWindow();
 
 protected:
-  WindowManager *window;
 };

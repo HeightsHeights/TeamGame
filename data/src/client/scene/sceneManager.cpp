@@ -11,7 +11,7 @@ BaseScene *SceneManager::scenes[SI_NUMBER];
 /* method */
 bool SceneManager::init(WindowManager *window)
 {
-    sceneId = 0;
+    sceneId = SI_TITLE;
 
     scenes[SI_TITLE] = new SceneTitle(window);
     scenes[SI_MAIN] = new SceneMainGame(window);

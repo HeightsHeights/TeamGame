@@ -12,14 +12,6 @@
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-    float a[] = {
-        1, 2, 3, 4,
-        5, 6, 7, 8,
-        9, 10, 11, 12,
-        13, 14, 15, 16};
-    Matrix4x4f mat(a);
-    mat.callMe();
-    mat.getTransverseMatrix().callMe();
 }
 bool SceneTitle::init()
 {

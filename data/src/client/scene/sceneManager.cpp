@@ -4,6 +4,8 @@
 #include "./sceneTitle.h"
 #include "./sceneMainGame.h"
 #include "./sceneRule.h"
+#include "./sceneTeam.h"
+#include "./sceneChara.h"
 /* static */
 int SceneManager::sceneId;
 BaseScene *SceneManager::scenes[SI_NUMBER];
@@ -15,10 +17,10 @@ bool SceneManager::init(WindowManager *window)
 
     scenes[SI_TITLE] = new SceneTitle(window);
     scenes[SI_RULE] = new SceneRule(window);
-    // scenes[SI_TEAM] = new SceneMainGame(window);
-    // scenes[SI_CHARA] = new SceneMainGame(window);
+    scenes[SI_TEAM] = new SceneTeam(window);
+    scenes[SI_CHARA] = new SceneChara(window);
     scenes[SI_MAIN] = new SceneMainGame(window);
-
+    
     for (int i = 0; i < SI_NUMBER; i++)
     {
         if (scenes[i] == NULL)

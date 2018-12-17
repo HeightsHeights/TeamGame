@@ -1,10 +1,4 @@
 #include "./sceneRule.h"
-#include "../../common/network/networkCommand.h"
-#include "../../common/network/dataBlock/dataBlock.h"
-#include "../network/networkManager.h"
-#include "../../common/math/quat/quat.h"
-#include "../../common/math/angle/angle.h"
-#include "../../common/math/matrix/matrixSet.h"
 
 SceneRule::SceneRule(WindowManager *window) : BaseScene(window)
 {

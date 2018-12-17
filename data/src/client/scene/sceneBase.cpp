@@ -26,6 +26,7 @@ void BaseScene::drawWindow()
     glDisable(GL_LIGHTING);
     glPushMatrix();
     glLoadIdentity();
+    glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_HEIGHT / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
     draw2D();
     glPopMatrix();
     window->swapWindow();

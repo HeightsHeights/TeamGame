@@ -14,12 +14,12 @@ bool SceneManager::init(WindowManager *window)
     sceneId = SI_TITLE;
 
     scenes[SI_TITLE] = new SceneTitle(window);
-    scenes[SI_RULE] = new SceneRule(window);
+    //scenes[SI_RULE] = new SceneRule(window);
     // scenes[SI_TEAM] = new SceneMainGame(window);
     // scenes[SI_CHARA] = new SceneMainGame(window);
     scenes[SI_MAIN] = new SceneMainGame(window);
 
-    for (int i = 0; i < SI_NUMBER; i++)
+    for (int i = 0; i < 1; i++)
     {
         if (scenes[i] == NULL)
         {

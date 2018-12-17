@@ -1,12 +1,10 @@
-varying vec3 vPos;
-varying vec3 vNrm;
- 
+attribute vec3 position;
+attribute vec3 color;
+varying vec3 outcolor;
 void main(void)
 {
-    // 頂点位置と法線
-    vPos = (gl_ModelViewMatrix*gl_Vertex).xyz;
-    vNrm = gl_NormalMatrix*gl_Normal;
- 
+    vec4 a = mul(gl_ProjectionMatrix,mul(gl_ModelViewProjectionMatrix,vec4(0,0,0,1))+vec4(position.x,position.y,0,0));
+    outcolor = color;
     // 描画頂点位置
-    gl_Position = ftransform();
+    gl_Position = a ;
 }

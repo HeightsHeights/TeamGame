@@ -17,6 +17,7 @@
 class SceneTitle : public BaseScene
 {
 private:
+  GLuint vao123;
   GLuint vao1;
   GLuint vao2;
   GLuint texId;

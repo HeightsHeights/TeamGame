@@ -15,4 +15,5 @@ public:
   operator const char *() const { return (const char *)dataBlock; }
   int getDataSize() { return this->dataSize; }
   void setData(void *data, int dataSize);
+  void setCommand2DataBlock(int command) { setData(&command, sizeof(int)); }
 };

@@ -55,7 +55,7 @@ bool SceneTitle::init()
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
-     return SI_TITLE;
+    return SI_TITLE;
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {

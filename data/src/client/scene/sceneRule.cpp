@@ -2,12 +2,13 @@
 #include "../../common/network/networkCommand.h"
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
+#include "../../common/scene/sceneParam.h"
 SceneRule::SceneRule(WindowManager *window) : BaseScene(window)
 {
 }
 bool SceneRule::init()
 {
-    //position = Vector2f_ZERO;
+    //position = Vector3f_ZERO;
     return true;
 }
 SCENE_ID SceneRule::reactController(ControllerParam param)
@@ -22,11 +23,10 @@ SCENE_ID SceneRule::executeCommand(int command)
 {
     // if (command == NC_SERVER_MASTER_CLIENT)
     // {
-    //     Vector2f positionData;
-    //     NetworkManager::recvData(positionData,sizeof(Vector2f));
-    //     position.x = positionData.x;
-    //     position.y = positionData.y;
-        
+    //     SceneParam paramNet;
+    //     NetworkManager::recvData(&paramNet,sizeof(SceneParam));
+    //     position.x = paramNet.axis.x;
+    //     position.y = paramNet.axis.y;    
     // }
     return SI_RULE;
 }

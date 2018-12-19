@@ -8,7 +8,7 @@ bool SceneChara::init()
 {
     for (int i = 0; i < 2; i++)
     {
-        position[i] = Vector3f_ZERO;
+        param[i].axis = Vector3f_ZERO;
     }
     return true;
 }
@@ -18,15 +18,19 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     {
         ControllerParam paramData;
         NetworkManager::recvData(pos, &paramData, sizeof(ControllerParam));
-        position[pos].x = paramData.axisL.x;
-        position[pos].z = paramData.axisL.y;
+        param[pos].axis.x = paramData.axisL.x;
+        param[pos].axis.z = paramData.axisL.y;
+        if(paramData.buttonDown[CT_DECITION_OR_ATTACK])
+            param[pos].button = true;
+        else 
+            param[pos].button = false;
 
         DataBlock data;
 
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
 
-        data.setData(position[0], sizeof(Vector3f));
-        data.setData(position[1], sizeof(Vector3f));
+        data.setData(&param[0], sizeof(SceneParam));
+        data.setData(&param[1], sizeof(SceneParam));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
     return SI_CHARA;

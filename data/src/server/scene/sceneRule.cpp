@@ -7,7 +7,7 @@
 
 bool SceneRule::init()
 {
-    position= Vector2f_ZERO;
+    param.axis = Vector3f_ZERO;
     
     return true;
 }
@@ -18,13 +18,16 @@ SCENE_ID SceneRule::executeCommand(int command, int pos)
         {
             ControllerParam paramData;
             NetworkManager::recvData(pos, &paramData, sizeof(ControllerParam));
-            position.x = paramData.axisL.x;
-            position.y = paramData.axisL.y;
-
+            param.axis.x = paramData.axisL.x;
+            param.axis.y = paramData.axisL.y;
+            if(paramData.buttonDown[CT_DECITION_OR_ATTACK])
+                param.button = true;
+            else 
+                param.button = false;
             DataBlock data;
 
             data.setCommand2DataBlock(NC_SERVER_MASTER_CLIENT);
-            data.setData(position, sizeof(Vector2f));
+            data.setData(&param, sizeof(SceneParam));
             NetworkManager::sendData(pos, data, data.getDataSize());
         }
     }

@@ -4,6 +4,7 @@
  * rule関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+#include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneRule
  * 機能1：
@@ -13,6 +14,7 @@
 class SceneRule : public BaseScene
 {
 private:
+  Vector2f position;
 public:
   SceneRule() : BaseScene() {}
 

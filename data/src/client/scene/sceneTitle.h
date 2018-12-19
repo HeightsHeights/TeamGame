@@ -23,7 +23,6 @@ private:
   ObjRawModel *obj;
   XModel *model;
   float angle;
-  Vector3f position[2];
 
   virtual void draw3D();
   virtual void draw2D();

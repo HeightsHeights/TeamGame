@@ -4,6 +4,7 @@
  * team関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+#include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneTeam
  * 機能1：
@@ -15,6 +16,7 @@ class SceneTeam : public BaseScene
 private:
   virtual void draw3D();
   virtual void draw2D();
+  Vector2f position[2];
 
 public:
   SceneTeam() : BaseScene() {}

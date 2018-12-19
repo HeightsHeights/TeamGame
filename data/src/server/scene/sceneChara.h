@@ -4,6 +4,7 @@
  * chara関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+#include "../../common/math/vector/vectorSet.h"
 /******************************************************************************
  * class SceneChara
  * 機能1：
@@ -13,6 +14,7 @@
 class SceneChara : public BaseScene
 {
 private:
+  Vector3f position[2];
 public:
   SceneChara() : BaseScene() {}
 

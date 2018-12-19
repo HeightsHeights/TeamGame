@@ -33,8 +33,9 @@ bool GuiString::init()
 GuiString::GuiString()
 {
 }
-GuiString::GuiString(FONT_ID id, const char *string, SDL_Color color)
+GuiString::GuiString(FONT_ID id, const char *string, SDL_Color color) : BaseGui()
 {
+    init();
     if (id < FID_NUM)
     {
         surface = TTF_RenderUTF8_Blended(font[id], string, color);

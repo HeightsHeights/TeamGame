@@ -4,12 +4,15 @@
 GuiImage::GuiImage()
 {
 }
-GuiImage::GuiImage(const char *filePath)
+GuiImage::GuiImage(const char *filePath) : BaseGui()
 {
-    SDL_Surface *surface = IMG_Load(filePath);
+    surface = IMG_Load(filePath);
     if (surface == NULL)
     {
         fprintf(stderr, "Error --> loadTextureFile(%s)\n", filePath);
     }
-    bindTexture();
+    else
+    {
+        bindTexture();
+    }
 }

@@ -12,8 +12,8 @@
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-    SDL_Color b = {0, 0, 0, 0};
-    image = GuiString(FID_NORMAL, "b", b);
+
+    image = GuiImageLoader().load("./data/res/gui/image/google.png");
 
     // static const GLfloat g_vertex_buffer_data[] = {
     //     -1.9f, -0.9f, 0.0f,
@@ -67,11 +67,16 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::draw3D()
 {
 }
+static int i;
 void SceneTitle::draw2D()
 {
+    i++;
+
     ShaderManager::startShader(SID_GUI);
-    image.draw(Vector2f(2, 2));
+    glRotated(i, 0, 0, 1);
+    image->draw();
     ShaderManager::stopShader(SID_GUI);
+
     // ShaderManager::startShader(SID_GUI);
     // glBindVertexArray(vao1);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);

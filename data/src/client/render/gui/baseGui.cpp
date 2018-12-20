@@ -2,6 +2,11 @@
 
 BaseGui::BaseGui()
 {
+}
+BaseGui::BaseGui(GLuint texId)
+{
+    this->texId = texId;
+
     const GLfloat vertexData[] = {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
@@ -18,24 +23,24 @@ BaseGui::BaseGui()
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     GLuint vertexBufferObject;
-    GLuint textureBufferObject;
+    GLuint uvBufferObject;
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexData), indexData, GL_DYNAMIC_DRAW);
     glGenBuffers(1, &vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-    glGenBuffers(1, &textureBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, textureBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(uvData), uvData, GL_STATIC_DRAW);
+    glGenBuffers(1, &uvBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uvData), uvData, GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
     glBindVertexArray(0);
 }
-void BaseGui::draw(Vector2f pos)
+void BaseGui::draw()
 {
     glBindTexture(GL_TEXTURE_2D, texId);
     glBindVertexArray(vao);
@@ -43,12 +48,6 @@ void BaseGui::draw(Vector2f pos)
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
-void BaseGui::bindTexture()
+void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect)
 {
-    glGenTextures(1, &texId);
-    glBindTexture(GL_TEXTURE_2D, texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, 0);
 }

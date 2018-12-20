@@ -8,7 +8,7 @@
 #include "../render/objRawModel/objModelLoader.h"
 #include "../render/xLoader/xLoader.h"
 #include "../../common/math/vector/vectorSet.h"
-#include "../render/gui/guiString.h"
+#include "../render/gui/image/guiImageLoader.h"
 /******************************************************************************
  * class SceneTitle
  * 機能1：
@@ -25,7 +25,7 @@ private:
   XModel *model;
   float angle;
 
-  GuiString image;
+  GuiImage *image;
 
   virtual void draw3D();
   virtual void draw2D();

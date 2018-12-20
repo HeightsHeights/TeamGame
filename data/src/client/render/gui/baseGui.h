@@ -1,23 +1,23 @@
 #pragma once
 
+#include "./guiRect.h"
+#include "./guiFlip.h"
+
 #define GL_GLEXT_PROTOTYPES 1
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-#include <SDL2/SDL.h>
-
-#include "../../../common/math/vector/vectorSet.h"
 class BaseGui
 {
 private:
-  GLuint texId;
   GLuint vao;
+  GLuint texId;
 
 public:
-  BaseGui();
-  void draw(Vector2f pos);
+  void draw();
+  void draw(GuiRect *srcRect, GuiRect *dstRect);
 
 protected:
-  SDL_Surface *surface;
-  void bindTexture();
+  BaseGui();
+  BaseGui(GLuint texId);
 };

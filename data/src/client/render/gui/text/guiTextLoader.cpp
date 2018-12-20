@@ -1,18 +1,18 @@
-#include "./guiString.h"
+#include "./guiTextLoader.h"
 
 #include <fstream>
 
 #define FONT_DIR_PATH "./data/res/gui/fonts/"
 #define TTFFILE_EXTENSION ".ttf"
 
-TTF_Font *GuiString::font[FID_NUM];
+TTF_Font *GuiTextLoader::font[FID_NUM];
 
 const std::string FONT_NAME[FID_NUM] =
     {
         "TakaoMincho",
 };
 
-bool GuiString::init()
+bool GuiTextLoader::init()
 {
     if (TTF_Init() < 0)
     {
@@ -30,14 +30,22 @@ bool GuiString::init()
     return true;
 }
 
-GuiString::GuiString()
+GuiTextLoader::GuiTextLoader()
 {
 }
-GuiString::GuiString(FONT_ID id, const char *string, SDL_Color color)
+GuiText *GuiTextLoader::load(FONT_ID id, const char *string, SDL_Color color)
 {
-    if (id < FID_NUM)
+    init();
+    if (FID_NUM <= id)
     {
-        surface = TTF_RenderUTF8_Blended(font[id], string, color);
-        bindTexture();
+        return NULL;
     }
+    surface = TTF_RenderUTF8_Blended(font[id], string, color);
+    if (surface == NULL)
+    {
+        return NULL;
+    }
+    GLuint texId = bindTexture();
+    freeSurface();
+    return new GuiText();
 }

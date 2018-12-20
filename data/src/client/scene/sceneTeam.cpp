@@ -28,7 +28,7 @@ SCENE_ID SceneTeam::executeCommand(int command)
     //     Vector2f positionData[2];
     //     for(int i = 0;i < 2; i++){
     //     NetworkManager::recvData(positionData[i],sizeof(Vector2f));
-    //     position[i].x = positionData[i].x;
+    //     position[i].x += positionData[i].x;
     //     }
     // }
     return SI_TEAM;

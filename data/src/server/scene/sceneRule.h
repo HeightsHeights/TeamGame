@@ -14,6 +14,7 @@
 class SceneRule : public BaseScene
 {
 private:
+  Vector2f position;
 public:
   SceneRule() : BaseScene() {}
 

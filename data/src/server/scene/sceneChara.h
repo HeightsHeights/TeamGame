@@ -14,6 +14,7 @@
 class SceneChara : public BaseScene
 {
 private:
+  bool decision[2];
 public:
   SceneChara() : BaseScene() {}
 

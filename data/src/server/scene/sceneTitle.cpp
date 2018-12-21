@@ -30,18 +30,5 @@ SCENE_ID SceneTitle::executeCommand(int command, int pos)
         data.setData(position[1], sizeof(Vector3f));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    // if (command == NC_START)
-    // {
-    //     DataBlock data;
-    //     if (pos == 0)
-    //     {
-    //         data.setCommand2DataBlock(NC_SERVER_MASTER_CLIENT);
-    //     }
-    //     else if (pos > 0)
-    //     {
-    //         data.setCommand2DataBlock(NC_SERVER_NONMASTER_CLIENT);
-    //     }
-    //     NetworkManager::sendData(pos, data, data.getDataSize());
-    // }
     return SI_TITLE;
 }

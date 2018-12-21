@@ -9,21 +9,21 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::executeCommand(int command, int pos)
 {
-    if (command == NC_NEXT)
+    if (command == NC_READY && ready[pos] == false)
     {
-        for (int i = 0; i < 2; i++)
-        {
-            if (pos == i)
-                decision[i] = true;
-            else
-                decision[i] = false;
-        }
-
+        num = pos;
+        ready[pos] = true;
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
-        data.setData(&decision[0], sizeof(bool));
-        data.setData(&decision[1], sizeof(bool));
+        data.setData(&num, sizeof(int));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    return SI_CHARA;
+    // else if (command == NC_MAINGAME)
+    // {
+    //     DataBlock data;
+    //     data.setCommand2DataBlock(NC_SERVER_MAINGAME);
+    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    //     return SI_MAIN;
+    // }
+    return SI_CHARASELECT;
 }

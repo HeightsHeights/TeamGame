@@ -17,8 +17,8 @@ bool SceneManager::init(WindowManager *window)
 
     scenes[SI_TITLE] = new SceneTitle(window);
     scenes[SI_RULE] = new SceneRule(window);
-    scenes[SI_TEAM] = new SceneTeam(window);
-    scenes[SI_CHARA] = new SceneChara(window);
+    scenes[SI_TEAMSELECT] = new SceneTeam(window);
+    scenes[SI_CHARASELECT] = new SceneChara(window);
     scenes[SI_MAIN] = new SceneMainGame(window);
     
     for (int i = 0; i < SI_NUMBER; i++)

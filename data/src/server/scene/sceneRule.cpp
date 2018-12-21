@@ -29,6 +29,18 @@ SCENE_ID SceneRule::executeCommand(int command, int pos)
 
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         }
+        else if(command == NC_SINGLE){
+            DataBlock data;
+            data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
+            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+            return SI_CHARASELECT;
+        }
+        else if(command == NC_TEAM){
+            DataBlock data;
+            data.setCommand2DataBlock(NC_SERVER_TEAMSELECT);
+            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+            return SI_TEAMSELECT;
+        }
     }
     return SI_RULE;
 }

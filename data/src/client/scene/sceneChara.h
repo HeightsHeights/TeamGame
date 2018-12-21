@@ -17,6 +17,8 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector3f position;
+  bool decision[2];
+
 public:
   SceneChara() : BaseScene() {}
   SceneChara(WindowManager *window);

@@ -18,8 +18,8 @@ bool SceneManager::init()
     scenes[SI_TITLE] = new SceneTitle();
     scenes[SI_MAIN] = new SceneMainGame();
     scenes[SI_RULE] = new SceneRule();
-    scenes[SI_TEAM] = new SceneTeam();
-    scenes[SI_CHARA] = new SceneChara();
+    scenes[SI_TEAMSELECT] = new SceneTeam();
+    scenes[SI_CHARASELECT] = new SceneChara();
 
     for (int i = 0; i < SI_NUMBER; i++)
     {

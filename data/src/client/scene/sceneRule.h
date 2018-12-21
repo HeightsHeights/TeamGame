@@ -16,6 +16,7 @@ class SceneRule : public BaseScene
 private:
   virtual void draw3D();
   virtual void draw2D();
+  Vector2f position[2];
 
 public:
   SceneRule() : BaseScene() {}

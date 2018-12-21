@@ -2,6 +2,7 @@
 #include "../render/shader/shaderManager.h"
 #include "../../common/network/networkCommand.h"
 #include "../../common/network/dataBlock/dataBlock.h"
+#include "../network/networkManager.h"
 
 SceneTeam::SceneTeam(WindowManager *window) : BaseScene(window)
 {
@@ -19,19 +20,19 @@ SCENE_ID SceneTeam::reactController(ControllerParam param)
     // data.setCommand2DataBlock(NC_CONTROLLER_INFO);
     // data.setData(&param, sizeof(ControllerParam));
     // NetworkManager::sendData(data, data.getDataSize());
-    return SI_TEAM;
+    return SI_TEAMSELECT;
 }
 SCENE_ID SceneTeam::executeCommand(int command)
 {
     // if (command == NC_SERVER_2_CLIENT)
     // {
-    //     Vector2f positionData[2];
+    //     Vector2f positionData;
     //     for(int i = 0;i < 2; i++){
-    //     NetworkManager::recvData(positionData[i],sizeof(Vector2f));
-    //     position[i].x += positionData[i].x;
+    //     NetworkManager::recvData(positionData,sizeof(Vector2f));
+    //     position[i].x += positionData.x;
     //     }
     // }
-    return SI_TEAM;
+    return SI_TEAMSELECT;
 }
 void SceneTeam::draw3D()
 {

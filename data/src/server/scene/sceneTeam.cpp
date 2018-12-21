@@ -29,5 +29,5 @@ SCENE_ID SceneTeam::executeCommand(int command, int pos)
         data.setData(position[1], sizeof(Vector2f));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    return SI_TEAM;
+    return SI_TEAMSELECT;
 }

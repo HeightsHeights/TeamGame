@@ -98,6 +98,18 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    SDL_Surface *skybox = IMG_Load("data/res/gui/image/skyex.png");
+
+    for (int i = 0; i < 6; i++)
+    {
+        glGenTextures(1, &sky[i]);
+        glBindTexture(GL_TEXTURE_2D, sky[i]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, skybox->w, skybox->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, skybox->pixels);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 }
 bool SceneTitle::init()
 {
@@ -132,7 +144,7 @@ void SceneTitle::drawWindow()
     // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
 
     gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    angle += 1;
+    angle++;
     // glTranslatef(angle / 50, 0.0, 0.0);
     glRotated(angle, 0, 1, 1);
     // glDepthMask(GL_FALSE);
@@ -143,30 +155,43 @@ void SceneTitle::drawWindow()
     // // glTranslatef(-1.0, -3, -6);
     // obj2->draw();
     // ShaderManager::stopShader(SID_STATIC);
+    glPushMatrix();
+    glScalef(3.0f, 3.0, 3.0f);
     ShaderManager::startShader(SID_TEST);
     glBindVertexArray(vao123);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
     glBindVertexArray(0);
     ShaderManager::stopShader(SID_TEST);
+    glPopMatrix();
     // glDepthMask(GL_TRUE);
     glPopMatrix();
     // glDisable(GL_ALPHA_TEST);
-    glDisable(GL_DEPTH_TEST);
+    // glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
 
-    // glPushMatrix();
-    // glLoadIdentity();
-    // glColor4d(1.0, 0.0, 0.0, 1.0);
-    // glBegin(GL_POLYGON);
-    // glVertex3d(-2.0, -2.0, -5.0);
-    // glVertex3d(2.0, -2.0, -5.0);
-    // glVertex3d(2.0, 2.0, -5.0);
-    // glVertex3d(-2.0, 2.0, -5.0);
-    // glEnd();
-    // glPopMatrix();
     // glClear(GL_COLOR_BUFFER_BIT);
 
+    // glBindTexture(GL_TEXTURE_2D, sky[0]);
+    // glEnable(GL_TEXTURE_2D);
+    // glPushMatrix();
+    // glLoadIdentity();
+    // // glColor4d(1.0, 0.0, 1.0, 1.0);
+    // glBegin(GL_POLYGON);
+    // glTexCoord2f(0.0f, 0.0f);
+    // glVertex2d(-0.5, 0.5);
+    // glTexCoord2f(0.0f, 1.0f);
+    // glVertex2d(-0.5, -0.5);
+    // glTexCoord2f(1.0f, 1.0f);
+    // glVertex2d(0.5, -0.5);
+    // glTexCoord2f(1.0f, 0.0f);
+    // glVertex2d(0.5, 0.5);
+    // glEnd();
+    // glPopMatrix();
     // glDisable(GL_TEXTURE_2D);
+    // glBindTexture(GL_TEXTURE_2D, 0);
+    // glDisable(GL_TEXTURE_2D);
+    // glPushMatrix();
+
     // glBindTexture(GL_TEXTURE_2D, texID2);
     // glEnable(GL_TEXTURE_2D);
     // glBegin(GL_QUADS);
@@ -181,6 +206,7 @@ void SceneTitle::drawWindow()
     // glEnd();
     // glDisable(GL_TEXTURE_2D);
     // glBindTexture(GL_TEXTURE_2D, 0);
+    // glPopMatrix();
     glFlush();
     window->swapWindow();
 }

@@ -17,7 +17,7 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector2f position[2];
-
+  int team[2];
 public:
   SceneTeam() : BaseScene() {}
   SceneTeam(WindowManager *window);

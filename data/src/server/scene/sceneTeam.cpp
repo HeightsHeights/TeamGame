@@ -41,5 +41,11 @@ SCENE_ID SceneTeam::executeCommand(int command, int pos)
         data.setData(position[1], sizeof(Vector2f));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
+    else if(command == NC_READY){
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+        return SI_CHARASELECT;
+    }
     return SI_TEAMSELECT;
 }

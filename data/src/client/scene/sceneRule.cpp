@@ -68,7 +68,6 @@ SCENE_ID SceneRule::executeCommand(int command)
         return SI_CHARASELECT;
     }
     else if(command == NC_SERVER_TEAMSELECT){
-        printf("team\n");
         return SI_TEAMSELECT;
     }
     

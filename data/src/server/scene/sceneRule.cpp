@@ -21,13 +21,27 @@ SCENE_ID SceneRule::executeCommand(int command, int pos)
         {
             ControllerParam paramData;
             NetworkManager::recvData(pos, &paramData, sizeof(ControllerParam));
-            position.x = paramData.axisL.x;
-            position.y = paramData.axisL.y;
+
+            if(button == true){
+                position.x = paramData.axisL.x;
+                position.y = paramData.axisL.y;
+                button = false;
+            }
+            else{
+                position.x = 0;
+                position.y = 0;
+            } 
+
+            if(paramData.axisL.x == 0 && paramData.axisL.y == 0){
+                button = true;
+            }
+
             DataBlock data;
             data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
             data.setData(position, sizeof(Vector2f));
 
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+            
         }
         else if(command == NC_SINGLE){
             DataBlock data;

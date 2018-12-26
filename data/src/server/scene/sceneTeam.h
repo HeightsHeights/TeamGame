@@ -15,7 +15,7 @@ class SceneTeam : public BaseScene
 {
 private:
   Vector2f position[2];
-
+  bool button[2];
 public:
   SceneTeam() : BaseScene() {}
 

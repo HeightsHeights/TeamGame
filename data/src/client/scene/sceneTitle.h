@@ -24,7 +24,7 @@ private:
   ObjRawModel *obj;
   XModel *model;
   float angle;
-
+ 
   GuiImage *image;
 
   virtual void draw3D();

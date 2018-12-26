@@ -19,7 +19,19 @@ SCENE_ID SceneTeam::executeCommand(int command, int pos)
     {
         ControllerParam paramData;
         NetworkManager::recvData(pos, &paramData, sizeof(ControllerParam));
-        position[pos].x = paramData.axisL.x;
+
+        if(button[pos] == true){
+            position[pos].x = paramData.axisL.x;
+            button[pos] = false;
+        }
+        else{
+            position[pos].x = 0;
+        } 
+
+        if(paramData.axisL.x == 0){
+            button[pos] = true;
+        }
+        
 
         DataBlock data;
 

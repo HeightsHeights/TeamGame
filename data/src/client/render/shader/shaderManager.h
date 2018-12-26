@@ -7,7 +7,8 @@ typedef enum {
   SID_TEST = 1,
   SID_GUI = 2,
   SID_RED = 3,
-  SID_NUM = 4,
+  SID_PART = 4,
+  SID_NUM = 5,
 } SHADER_ID;
 
 /******************************************************************************

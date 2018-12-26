@@ -7,6 +7,7 @@ const char *VERTEX_FILE[SID_NUM] = {
     "./data/src/client/shader/testVertexShader.vert",
     "./data/src/client/shader/guiVertexShader.vert",
     "./data/src/client/shader/redVertexShader.vert",
+    "./data/src/client/shader/partVertexShader.vert",
 };
 
 const char *FRAGMENT_FILE[SID_NUM] = {
@@ -14,6 +15,7 @@ const char *FRAGMENT_FILE[SID_NUM] = {
     "./data/src/client/shader/testFragmentShader.frag",
     "./data/src/client/shader/guiFragmentShader.frag",
     "./data/src/client/shader/redFragmentShader.frag",
+    "./data/src/client/shader/partFragmentShader.frag",
 };
 
 ShaderProgram *ShaderManager::shaders[SID_NUM];
@@ -30,6 +32,7 @@ bool ShaderManager::init()
         new TestShaderLoader(),
         new GuiShaderLoader(),
         new RedShaderLoader(),
+        new PartShaderLoader(),
     };
 
     for (int i = 0; i < SID_NUM; i++)

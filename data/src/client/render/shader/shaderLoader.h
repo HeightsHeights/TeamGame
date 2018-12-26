@@ -72,3 +72,11 @@ private:
 
 public:
 };
+
+class PartShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
+};

@@ -10,13 +10,16 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+GLfloat sub_buffer_data[12];
+GLuint vertexBufferObject;
+GLuint posBufferObject;
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
     static const GLfloat g_vertex_buffer_data[] = {
-        -4.0f, -4.0f, 1.0f,
-        4.0f, -4.0f, 1.0f,
-        -4.0f, 4.0f, 1.0f,
-        4.0f, 4.0f, 1.0f};
+        -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f};
 
     static const GLuint g_indice_buffer_data[] = {
         0.0,
@@ -26,41 +29,50 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
         1.0,
         3.0,
     };
-
-    static const GLfloat g_color_buffer_data[] = {
-        1.0f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        0.0f,
-    };
-
+    int R = 200;
+    GLfloat position_data[R];
+    for (int i = 0; i < R; i++)
+    {
+        float x = rand() % 201 - 100;
+        x /= 10;
+        position_data[i] = x;
+    }
+    GLfloat g_color_buffer_data[R];
+    for (int i = 0; i < R; i++)
+    {
+        float x = (rand() % 1000);
+        x /= 1000;
+        g_color_buffer_data[i] = x;
+    }
     GLuint vao;
     glGenVertexArrays(1, &vao123);
     glBindVertexArray(vao123);
-    GLuint vertexBufferObject;
+
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_indice_buffer_data), g_indice_buffer_data, GL_STATIC_DRAW);
     glGenBuffers(1, &vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector3f), g_vertex_buffer_data, GL_STATIC_DRAW);
+    // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(sub_buffer_data), sub_buffer_data);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glGenBuffers(1, &posBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, 200 * sizeof(Vector3f), position_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     GLuint colorbuffer;
     glGenBuffers(1, &colorbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glBufferData(GL_ARRAY_BUFFER, 200 * sizeof(GLubyte) * 3, g_color_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glVertexAttribDivisor(0, 0);
+    glVertexAttribDivisor(1, 1);
+    glVertexAttribDivisor(2, 1);
+
     glBindVertexArray(0);
 
     // float a[] = {
@@ -126,10 +138,9 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::drawWindow()
 {
     window->clearWindow();
-
     // glEnable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHTING);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glAlphaFunc(GL_GREATER, 0.5);
@@ -140,28 +151,28 @@ void SceneTitle::drawWindow()
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    // gluLookAt(5.0, 1.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
 
-    gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    // gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     angle++;
     // glTranslatef(angle / 50, 0.0, 0.0);
     glRotated(angle, 0, 1, 1);
     // glDepthMask(GL_FALSE);
-    ShaderManager::startShader(SID_RED);
-    obj->draw();
-    ShaderManager::stopShader(SID_RED);
+    // ShaderManager::startShader(SID_RED);
+    // obj->draw();
+    // ShaderManager::stopShader(SID_RED);
     // ShaderManager::startShader(SID_STATIC);
     // // glTranslatef(-1.0, -3, -6);
     // obj2->draw();
     // ShaderManager::stopShader(SID_STATIC);
     glPushMatrix();
-    glScalef(3.0f, 3.0, 3.0f);
-    ShaderManager::startShader(SID_TEST);
+    // glScalef(3.0f, 3.0, 3.0f);
+    ShaderManager::startShader(SID_PART);
     glBindVertexArray(vao123);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 200);
     glBindVertexArray(0);
-    ShaderManager::stopShader(SID_TEST);
+    ShaderManager::stopShader(SID_PART);
     glPopMatrix();
     // glDepthMask(GL_TRUE);
     glPopMatrix();

@@ -98,3 +98,9 @@ void GuiShaderLoader::bindAttributes()
 void RedShaderLoader::bindAttributes()
 {
 }
+
+void PartShaderLoader::bindAttributes()
+{
+    GLuint timelocation = glGetUniformLocation(4, "timer");
+    glUniform1f(timelocation, 0.0f);
+}

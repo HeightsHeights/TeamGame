@@ -10,39 +10,50 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-GLfloat sub_buffer_data[12];
 GLuint vertexBufferObject;
 GLuint posBufferObject;
+GLuint colorbuffer;
+int R = 100000;
+GLfloat position_data[100000];
+GLfloat g_color_buffer_data[100000];
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
     static const GLfloat g_vertex_buffer_data[] = {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f};
+        1.000000, -1.000000, -1.000000,
+        1.000000, -1.000000, 1.000000,
+        -1.000000, -1.000000, 1.000000,
+        -1.000000, -1.000000, -1.000000,
+        1.000000, 1.000000, -1.00000,
+        1.000000, 1.000000, 1.000000,
+        -1.000000, 1.000000, 1.000000,
+        -1.000000, 1.000000, -1.000000};
 
     static const GLuint g_indice_buffer_data[] = {
-        0.0,
-        1.0,
-        2.0,
-        2.0,
-        1.0,
-        3.0,
-    };
-    int R = 200;
-    GLfloat position_data[R];
+        1, 2, 3,
+        7, 6, 5,
+        4, 5, 1,
+        5, 6, 2,
+        2, 6, 7,
+        0, 3, 7,
+        0, 1, 3,
+        4, 7, 5,
+        0, 4, 1,
+        1, 5, 2,
+        3, 2, 7,
+        4, 0, 7};
+
     for (int i = 0; i < R; i++)
     {
-        float x = rand() % 201 - 100;
-        x /= 10;
-        position_data[i] = x;
+        // float x = rand() % 201 - 100;
+        // x /= 10;
+        position_data[i] = 0;
     }
-    GLfloat g_color_buffer_data[R];
+
     for (int i = 0; i < R; i++)
     {
-        float x = (rand() % 1000);
-        x /= 1000;
-        g_color_buffer_data[i] = x;
+        // float x = (rand() % 1000);
+        // x /= 1000;
+        g_color_buffer_data[i] = 0;
     }
     GLuint vao;
     glGenVertexArrays(1, &vao123);
@@ -51,24 +62,25 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_indice_buffer_data), g_indice_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(unsigned int), g_indice_buffer_data, GL_STATIC_DRAW);
     glGenBuffers(1, &vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector3f), g_vertex_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(Vector3f), g_vertex_buffer_data, GL_STATIC_DRAW);
     // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(sub_buffer_data), sub_buffer_data);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     glGenBuffers(1, &posBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, 200 * sizeof(Vector3f), position_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, R * sizeof(Vector3f), position_data, GL_STREAM_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, R * sizeof(Vector3f), position_data);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-    GLuint colorbuffer;
     glGenBuffers(1, &colorbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glBufferData(GL_ARRAY_BUFFER, 200 * sizeof(GLubyte) * 3, g_color_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, R * sizeof(Vector4f), g_color_buffer_data, GL_STREAM_DRAW);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, R * sizeof(Vector4f), g_color_buffer_data);
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, (void *)0);
     glVertexAttribDivisor(0, 0);
     glVertexAttribDivisor(1, 1);
     glVertexAttribDivisor(2, 1);
@@ -137,6 +149,24 @@ SCENE_ID SceneTitle::executeCommand(int command)
 }
 void SceneTitle::drawWindow()
 {
+    for (int i = 0; i < R; i++)
+    {
+        if (position_data[i] < 25.0 && position_data[i] > -25)
+        {
+            int x = rand() % 1001;
+            if (x > 500)
+            {
+                position_data[i] += 1.;
+                g_color_buffer_data[i] += 0.1;
+            }
+            else
+            {
+                position_data[i] -= 1.;
+                g_color_buffer_data[i] -= 0.1;
+            }
+        }
+    }
+
     window->clearWindow();
     // glEnable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
@@ -151,7 +181,7 @@ void SceneTitle::drawWindow()
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(0.0, 0.0, 30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
 
     // gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -170,7 +200,12 @@ void SceneTitle::drawWindow()
     // glScalef(3.0f, 3.0, 3.0f);
     ShaderManager::startShader(SID_PART);
     glBindVertexArray(vao123);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 200);
+    glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, R * sizeof(Vector3f), position_data);
+    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, R * sizeof(Vector4f), g_color_buffer_data);
+
+    glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void *)0, R);
     glBindVertexArray(0);
     ShaderManager::stopShader(SID_PART);
     glPopMatrix();

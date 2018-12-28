@@ -28,8 +28,7 @@ SCENE_ID SceneRule::executeCommand(int command, int pos)
                 button = false;
             }
             else{
-                position.x = 0;
-                position.y = 0;
+                position = Vector2f_ZERO;
             } 
 
             if(paramData.axisL.x == 0 && paramData.axisL.y == 0){

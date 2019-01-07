@@ -125,7 +125,7 @@ void ObjFileLoader::createSubset()
 
 void ObjFileLoader::processVertex(unsigned int textureIndexArray[], Vector2f uvArray[], Vector3f normalSumArray[])
 {
-    if (textures[0] != Vector2f(0, 0) && uvArray[0] != Vector2f(0, 0))
+    if (textures.size() > 0)
     {
         for (unsigned int i = 0; i < vertices.size(); i++)
         {

@@ -5,9 +5,13 @@ GLuint ObjDataBinder::dataBind(std::vector<unsigned int> vertexIndices, std::vec
         GLuint vao = createVao();
         bindIndicesBuffer(vertexIndices.size() * sizeof(unsigned int), &vertexIndices[0]);
         unsigned int arraySize = vertexPositions.size();
-        storeAttributeData(0, 3, arraySize * sizeof(Vector3f), vertexPositions[0]);
-        storeAttributeData(1, 2, arraySize * sizeof(Vector2f), vertexUvs[0]);
-        storeAttributeData(2, 3, arraySize * sizeof(Vector3f), vertexNormals[0]);
+        int attributeNumber = 0;
+        storeAttributeData(attributeNumber++, 3, arraySize * sizeof(Vector3f), vertexPositions[0]);
+        if (vertexUvs != NULL)
+        {
+                storeAttributeData(attributeNumber++, 2, arraySize * sizeof(Vector2f), vertexUvs[0]);
+        }
+        storeAttributeData(attributeNumber++, 3, arraySize * sizeof(Vector3f), vertexNormals[0]);
         unbindVao();
 
         return vao;

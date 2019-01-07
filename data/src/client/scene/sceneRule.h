@@ -21,6 +21,7 @@ private:
 public:
   SceneRule() : BaseScene() {}
   SceneRule(WindowManager *window);
+  SceneRule(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

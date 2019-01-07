@@ -2,6 +2,7 @@
 
 #include "./threadManager.h"
 #include "../render/shader/shaderManager.h"
+#include "../render/gui/text/guiTextLoader.h"
 #include "../controller/controllerManager.h"
 #include "../scene/sceneManager.h"
 #include "../config/loader/configLoader.h"
@@ -56,12 +57,8 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> loadConfig()\n");
         return false;
     }
-        // Console().scanString("YourName", config->name.c_str(), &config->name);
-        // Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
-#ifdef _ENABLE_WII
-    Console().scanString("WiiRemoteId", config->wiiRemoteId.c_str(), &config->wiiRemoteId);
-#endif
-    if (!makeWindow(argc, argv, config->name + "'sGame"))
+
+    if (!makeWindow(argc, argv, "SuperSmashHogeHoge"))
     {
         fprintf(stderr, "Error --> makeWindow()\n");
         return false;
@@ -71,8 +68,13 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ShaderManager::init()\n");
         return false;
     }
+    if (!GuiTextLoader::init())
+    {
+        fprintf(stderr, "Error --> GuiTextLoader::init()\n");
+        return false;
+    }
 
-    if (!SceneManager::init(window))
+    if (!SceneManager::init(window, config))
     {
         fprintf(stderr, "Error --> SceneManager::init()\n");
         return false;
@@ -84,10 +86,10 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
-    // if(!AudioManager::init()){
-    //     fprintf(stderr, "Error --> AudioManager::init()\n");
-    //     return false;
-    //     }
+        // if(!AudioManager::init()){
+        //     fprintf(stderr, "Error --> AudioManager::init()\n");
+        //     return false;
+        //     }
 
 #ifdef _ENABLE_WII
     if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
@@ -142,10 +144,5 @@ bool GameSystem::terminate()
 #endif
     ControllerManager::cleanUp();
 
-    if (!saveConfig("cPrevConfig"))
-    {
-        fprintf(stderr, "Error --> saveConfig()\n");
-        return false;
-    }
     return true;
 }

@@ -38,6 +38,7 @@ private:
 public:
   SceneTitle() : BaseScene() {}
   SceneTitle(WindowManager *window);
+  SceneTitle(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

@@ -35,7 +35,6 @@ GuiTextLoader::GuiTextLoader()
 }
 GuiText *GuiTextLoader::load(FONT_ID id, const char *string, SDL_Color color)
 {
-    init();
     if (FID_NUM <= id)
     {
         return NULL;

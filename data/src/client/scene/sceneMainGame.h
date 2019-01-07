@@ -4,6 +4,8 @@
  * maingame関係に必要なヘッダーの読み込み
 ******************************************************************************/
 #include "./sceneBase.h"
+
+#include "../render/objRawModel/objModelLoader.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -13,12 +15,15 @@
 class SceneMainGame : public BaseScene
 {
 private:
+  ObjRawModel *tile;
+  ObjRawModel *mush;
   virtual void draw3D();
   virtual void draw2D();
 
 public:
   SceneMainGame() : BaseScene() {}
   SceneMainGame(WindowManager *window);
+  SceneMainGame(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

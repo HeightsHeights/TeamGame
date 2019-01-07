@@ -11,16 +11,16 @@ int SceneManager::sceneId;
 BaseScene *SceneManager::scenes[SI_NUMBER];
 
 /* method */
-bool SceneManager::init(WindowManager *window)
+bool SceneManager::init(WindowManager *window, ConfigData *config)
 {
     sceneId = SI_TITLE;
 
-    scenes[SI_TITLE] = new SceneTitle(window);
-    scenes[SI_RULE] = new SceneRule(window);
-    scenes[SI_TEAMSELECT] = new SceneTeam(window);
-    scenes[SI_CHARASELECT] = new SceneChara(window);
-    scenes[SI_MAIN] = new SceneMainGame(window);
-    
+    scenes[SI_TITLE] = new SceneTitle(window, config);
+    scenes[SI_RULE] = new SceneRule(window, config);
+    scenes[SI_TEAMSELECT] = new SceneTeam(window, config);
+    scenes[SI_CHARASELECT] = new SceneChara(window, config);
+    scenes[SI_MAIN] = new SceneMainGame(window, config);
+
     for (int i = 0; i < SI_NUMBER; i++)
     {
         if (scenes[i] == NULL)

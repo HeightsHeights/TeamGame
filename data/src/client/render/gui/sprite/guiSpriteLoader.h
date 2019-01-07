@@ -8,5 +8,5 @@ class GuiSpriteLoader : public BaseGuiLoader
 private:
 public:
   GuiSpriteLoader();
-  GuiSprite *load(const char *filePath);
+  GuiSprite *load(const char *filePath, const unsigned int horizontallyNum, const unsigned int verticallyNum);
 };

@@ -52,6 +52,9 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     // glBindVertexArray(0);
 }
 static int num;
+SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(window, config)
+{
+}
 bool SceneTitle::init()
 {
     image[0] = GuiImageLoader().load("./data/res/gui/image/title.png");

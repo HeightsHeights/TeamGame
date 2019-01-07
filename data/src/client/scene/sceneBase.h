@@ -16,7 +16,6 @@
 class BaseScene
 {
 private:
-  ConfigData *config;
   WindowManager *window;
   virtual void draw3D();
   virtual void draw2D();
@@ -32,4 +31,5 @@ public:
   void drawWindow();
 
 protected:
+  ConfigData *config;
 };

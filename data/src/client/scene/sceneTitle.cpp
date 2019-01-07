@@ -60,14 +60,20 @@ bool SceneTitle::init()
     image[0] = GuiImageLoader().load("./data/res/gui/image/title.png");
     image[1] = GuiImageLoader().load("./data/res/gui/image/google.png");
     text[0] = GuiTextLoader().load(FID_NORMAL, "TA", gaRed);
-    for (int j = 0; j < 2; j++)
-    {
-        position[j] = Vector2f_ZERO;
-    }
+
     for (int i = 0; i < 2; i++)
     {
-        if (image[i] == NULL || text[i] == NULL)
+        if (image[i] == NULL)
+        {
             return false;
+        }
+    }
+    for (int i = 0; i < 1; i++)
+    {
+        if (text[i] == NULL)
+        {
+            return false;
+        }
     }
     return true;
 }

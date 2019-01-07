@@ -9,7 +9,7 @@ TTF_Font *GuiTextLoader::font[FID_NUM];
 
 const std::string FONT_NAME[FID_NUM] =
     {
-        "TakaoMincho",
+        "DejaVuSans-Bold",
 };
 
 bool GuiTextLoader::init()
@@ -47,5 +47,5 @@ GuiText *GuiTextLoader::load(FONT_ID id, const char *string, SDL_Color color)
     }
     GLuint texId = bindTexture();
     freeSurface();
-    return new GuiText();
+    return new GuiText(texId);
 }

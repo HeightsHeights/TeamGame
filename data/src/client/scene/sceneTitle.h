@@ -25,13 +25,12 @@ private:
   ObjRawModel *obj;
   XModel *model;
   float angle;
-  Vector2f position;
+  Vector2f position[2];
   bool button;
   bool configbutton;
-  GuiText *text;
+  GuiText *text[2];
 
-  GuiImage *image;
-  GuiImage *image2;
+  GuiImage *image[2];
 
   virtual void draw3D();
   virtual void draw2D();

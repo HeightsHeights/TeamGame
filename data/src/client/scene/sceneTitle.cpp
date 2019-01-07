@@ -10,12 +10,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-static const SDL_Color gWhite = {255, 255, 255, 255};
+static const SDL_Color gaRed = {0, 0, 255, 0};
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-    image = GuiImageLoader().load("./data/res/gui/image/google.png");
-    //image2 = GuiImageLoader().load("./data/res/gui/image/kuro.png");
-    text = GuiTextLoader().load(FID_NORMAL, "config", gWhite);
+
     // static const GLfloat g_vertex_buffer_data[] = {
     //     -1.9f, -0.9f, 0.0f,
     //     0.9f, -0.9f, 0.0f,
@@ -53,34 +51,45 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     // glBindVertexArray(0);
 }
+static int num;
 bool SceneTitle::init()
 {
-    position = Vector2f_ZERO;
+    image[0] = GuiImageLoader().load("./data/res/gui/image/title.png");
+    image[1] = GuiImageLoader().load("./data/res/gui/image/google.png");
+    text[0] = GuiTextLoader().load(FID_NORMAL, "TA", gaRed);
+    for (int j = 0; j < 2; j++)
+    {
+        position[j] = Vector2f_ZERO;
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        if (image[i] == NULL || text[i] == NULL)
+            return false;
+    }
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
     if (button == true)
     {
-        position.x += param.axisL.x;
+        position[0].x += param.axisL.x;
         button = false;
     }
-    //printf("%f\n",position.x);
     if (param.axisL.x == 0)
     {
         button = true;
     }
 
-    if (position.x == 3)
+    if (position[0].x == 3)
     {
-        position.x = 0;
+        position[0].x = 0;
     }
-    else if (position.x == -1)
+    else if (position[0].x == -1)
     {
-        position.x = 1;
+        position[0].x = 1;
     }
 
-    if (position.x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+    if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
     {
         configbutton = true;
     }
@@ -104,16 +113,21 @@ void SceneTitle::draw2D()
         i++;
         glPushMatrix();
         glScaled(i, i, 0);
-        if (i > 10)
-            i = 10;
-        //image2->draw();
+        if (i > 5)
+            i = 5;
+        text[0]->draw();
+        image[1]->draw();
         glPopMatrix();
     }
     else
     {
-        image->draw();
+        i = 0;
+        image[0]->draw();
     }
     ShaderManager::stopShader(SID_GUI);
+    //名前変更
+    // Console().scanString("YourName", config->name.c_str(), &config->name);
+    // Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
 
     // ShaderManager::startShader(SID_GUI);
     // glBindVertexArray(vao1);

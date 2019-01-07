@@ -19,18 +19,18 @@
 class SceneTitle : public BaseScene
 {
 private:
-  GLuint vao1;
-  GLuint vao2;
-  GLuint texId;
-  ObjRawModel *obj;
-  XModel *model;
-  float angle;
+  // GLuint vao1;
+  // GLuint vao2;
+  // GLuint texId;
+  // ObjRawModel *obj;
+  // XModel *model;
+  //float angle;
   Vector2f position[2];
   bool button;
-  bool configbutton;
-  GuiText *text[2];
-
+  bool configmode;
+  GuiText *text[10];
   GuiImage *image[2];
+  int num;
 
   virtual void draw3D();
   virtual void draw2D();

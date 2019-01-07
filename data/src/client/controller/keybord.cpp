@@ -124,9 +124,18 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_JUMP] = true;
     }
 
-    for (int i = 0; i > 12; i++)
+    for(int i = 0; i < 12; i++){
+        if(param->buttonDown[i] == true){
+            count[i]++;
+        }
+        else{ 
+            count[i] = 0;
+        }
+    }
+
+    for (int i = 0; i < 12; i++)
     {
-        if (param->buttonDown[i] = true)
+        if (count[i] > 1)
         {
             param->buttonState[i] = true;
         }
@@ -135,6 +144,7 @@ void Keybord::scanButton(ControllerParam *param)
             param->buttonState[i] = false;
         }
     }
+
 }
 
 bool Keybord::updateEvent()

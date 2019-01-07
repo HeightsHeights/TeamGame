@@ -19,6 +19,7 @@ private:
   SDL_Joystick *joy;
   virtual void scanDirection(ControllerParam *param);
   virtual void scanButton(ControllerParam *param);
+  int count[12];
 
 public:
   Joystick();

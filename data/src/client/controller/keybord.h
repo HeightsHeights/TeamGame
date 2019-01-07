@@ -15,6 +15,7 @@ private:
   virtual void scanDirection(ControllerParam *param);
   virtual void scanButton(ControllerParam *param);
   const Uint8 *keys;
+  int count[12];
 
 public:
   Keybord() { this->keys = SDL_GetKeyboardState(NULL); }

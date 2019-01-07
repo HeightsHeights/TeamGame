@@ -6,60 +6,31 @@
 #include "../../common/math/quat/quat.h"
 #include "../../common/math/angle/angle.h"
 #include "../../common/math/matrix/matrixSet.h"
-
+#include "../../common/console/console.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-static const SDL_Color gaRed = {0, 0, 255, 0};
+static const SDL_Color gRed = {0, 0, 255, 0};
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-
-    // static const GLfloat g_vertex_buffer_data[] = {
-    //     -1.9f, -0.9f, 0.0f,
-    //     0.9f, -0.9f, 0.0f,
-    //     -0.9f, 0.9f, 0.0f,
-    //     0.9f, 0.9f, 0.0f};
-
-    // static const GLuint g_indice_buffer_data[] = {
-    //     0, 1, 2,
-    //     2, 1, 3};
-
-    // static const GLfloat g_color_buffer_data[] = {
-    //     1.0f, 0.0f, 0.0f,
-    //     1.0f, 1.0f, 0.0f,
-    //     0.0f, 0.0f, 1.0f,
-    //     0.0f, 1.0f, 1.0f};
-
-    // GLuint vao;
-    // glGenVertexArrays(1, &vao1);
-    // glBindVertexArray(vao1);
-    // GLuint vertexBufferObject;
-    // GLuint indexBufferObject;
-    // glGenBuffers(1, &indexBufferObject);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_indice_buffer_data), g_indice_buffer_data, GL_STATIC_DRAW);
-    // glGenBuffers(1, &vertexBufferObject);
-    // glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-    // glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-    // GLuint colorbuffer;
-    // glGenBuffers(1, &colorbuffer);
-    // glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-    // glEnableVertexAttribArray(1);
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-    // glBindVertexArray(0);
 }
-static int num;
 SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(window, config)
 {
 }
 bool SceneTitle::init()
 {
+    configmode = false;
     image[0] = GuiImageLoader().load("./data/res/gui/image/title.png");
     image[1] = GuiImageLoader().load("./data/res/gui/image/google.png");
-    text[0] = GuiTextLoader().load(FID_NORMAL, "TA", gaRed);
+    text[0] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
+    text[1] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
+    text[2] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
+    text[3] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+    text[4] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
+    text[5] = GuiTextLoader().load(FID_NORMAL, config->wiiRemoteId.c_str(), gRed);
+    text[6] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
+    text[7] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
+    text[8] = GuiTextLoader().load(FID_NORMAL, "Init", gRed);
 
     for (int i = 0; i < 2; i++)
     {
@@ -68,7 +39,7 @@ bool SceneTitle::init()
             return false;
         }
     }
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 9; i++)
     {
         if (text[i] == NULL)
         {
@@ -79,28 +50,60 @@ bool SceneTitle::init()
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
+    if(configmode)
+        num = 1;
+    else
+        num = 0;
+
+    
     if (button == true)
     {
-        position[0].x += param.axisL.x;
+        position[num].x += param.axisL.x;
+        position[num].y += param.axisL.y;
         button = false;
     }
-    if (param.axisL.x == 0)
+    if (param.axisL.x == 0 && param.axisR.y == 0)
     {
         button = true;
     }
 
-    if (position[0].x == 3)
+    if (position[num].x >= 3)
     {
-        position[0].x = 0;
+        position[num].x = 0;
     }
-    else if (position[0].x == -1)
+    else if (position[num].x <= -1)
     {
-        position[0].x = 1;
+        position[num].x = 1;
+    }
+
+    if(position[1].y >= 4){
+        position[1].y = 3; 
+    }
+    else if(position[1].y <= -1){
+        position[1].y = 0;
+    }
+
+    if(position[1].y != 3){
+        position[1].x = 0;
+    }
+
+    if(configmode){
+        
+        if(position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK]){
+            Console().scanString("YourName", config->name.c_str(), &config->name);
+        }
+        else if(position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK]){
+            Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+        }
     }
 
     if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
     {
-        configbutton = true;
+        configmode = true;
+    }
+    else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+    {
+        return SI_NUMBER;
     }
     return SI_TITLE;
 }
@@ -117,7 +120,7 @@ void SceneTitle::draw2D()
 
     ShaderManager::startShader(SID_GUI);
 
-    if (configbutton)
+    if (configmode)
     {
         i++;
         glPushMatrix();

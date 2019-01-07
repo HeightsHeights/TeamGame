@@ -68,8 +68,17 @@ void Joystick::scanDirection(ControllerParam *param)
 void Joystick::scanButton(ControllerParam *param)
 {
     //ButtonUp/Down/State←
-    for (int i = 0; i > 12; i++)
+    for (int i = 0; i < 12; i++)
     {
+        if (param->buttonDown[i] == true)
+        {
+            param->buttonState[i] = true;
+        }
+        else
+        {
+            param->buttonState[i] = false;
+        }
+
         if (SDL_JoystickGetButton(joy, i) > 0)
         {
             param->buttonDown[i] = true;
@@ -81,7 +90,16 @@ void Joystick::scanButton(ControllerParam *param)
             param->buttonDown[i] = false;
         }
 
-        if (param->buttonDown[i] = true)
+        if(param->buttonDown[i] == true)
+        {
+            count[i]++;
+        }
+        else
+        { 
+            count[i] = 0;
+        }
+    
+        if (count[i] > 1)
         {
             param->buttonState[i] = true;
         }
@@ -89,6 +107,7 @@ void Joystick::scanButton(ControllerParam *param)
         {
             param->buttonState[i] = false;
         }
+        
     }
 }
 void Joystick::cleanUp()

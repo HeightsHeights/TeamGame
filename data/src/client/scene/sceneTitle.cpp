@@ -7,6 +7,7 @@
 #include "../../common/math/angle/angle.h"
 #include "../../common/math/matrix/matrixSet.h"
 #include "../../common/console/console.h"
+#include "../config/saver/configSaver.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -50,19 +51,18 @@ bool SceneTitle::init()
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
-    if(configmode)
+    if (configmode)
         num = 1;
     else
         num = 0;
 
-    
     if (button == true)
     {
         position[num].x += param.axisL.x;
         position[num].y += param.axisL.y;
         button = false;
     }
-    if (param.axisL.x == 0 && param.axisR.y == 0)
+    if (param.axisL.x == 0 && param.axisL.y == 0)
     {
         button = true;
     }
@@ -76,25 +76,44 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[num].x = 1;
     }
 
-    if(position[1].y >= 4){
-        position[1].y = 3; 
+    if (position[1].y >= 4)
+    {
+        position[1].y = 3;
     }
-    else if(position[1].y <= -1){
+    else if (position[1].y <= -1)
+    {
         position[1].y = 0;
     }
 
-    if(position[1].y != 3){
+    if (position[1].y != 3)
+    {
         position[1].x = 0;
     }
 
-    if(configmode){
-        
-        if(position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK]){
+    printf("%f\n", position[1].y);
+    if (configmode)
+    {
+
+        if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
             Console().scanString("YourName", config->name.c_str(), &config->name);
         }
-        else if(position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK]){
+        else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        {
             Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
         }
+
+        if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        {
+            //ConfigSaver().save("cPrevConfig", config);
+        }
+        else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        {
+            configmode = false;
+        }
+        // else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        // {
+        // }
     }
 
     if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])

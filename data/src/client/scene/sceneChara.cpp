@@ -5,6 +5,9 @@
 SceneChara::SceneChara(WindowManager *window) : BaseScene(window)
 {
 }
+SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(window, config)
+{
+}
 bool SceneChara::init()
 {
     position = Vector3f_ZERO;

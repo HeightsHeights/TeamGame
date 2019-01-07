@@ -5,6 +5,11 @@ BaseScene::BaseScene(WindowManager *window)
 {
     this->window = window;
 }
+BaseScene::BaseScene(WindowManager *window, ConfigData *config)
+{
+    this->window = window;
+    this->config = config;
+}
 bool BaseScene::init()
 {
 }

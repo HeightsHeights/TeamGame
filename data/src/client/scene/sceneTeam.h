@@ -18,9 +18,11 @@ private:
   virtual void draw2D();
   Vector2f position[2];
   int team[2];
+
 public:
   SceneTeam() : BaseScene() {}
   SceneTeam(WindowManager *window);
+  SceneTeam(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

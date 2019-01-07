@@ -53,6 +53,9 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     // glBindVertexArray(0);
 }
+SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(window, config)
+{
+}
 bool SceneTitle::init()
 {
     position = Vector2f_ZERO;

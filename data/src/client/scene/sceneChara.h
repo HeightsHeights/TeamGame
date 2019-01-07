@@ -22,6 +22,7 @@ private:
 public:
   SceneChara() : BaseScene() {}
   SceneChara(WindowManager *window);
+  SceneChara(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

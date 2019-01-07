@@ -16,13 +16,14 @@ class SceneMainGame : public BaseScene
 {
 private:
   ObjRawModel *tile;
-  ObiRawModel *mush;
+  ObjRawModel *mush;
   virtual void draw3D();
   virtual void draw2D();
 
 public:
   SceneMainGame() : BaseScene() {}
   SceneMainGame(WindowManager *window);
+  SceneMainGame(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

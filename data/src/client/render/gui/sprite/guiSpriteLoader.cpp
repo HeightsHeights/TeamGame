@@ -3,15 +3,27 @@
 GuiSpriteLoader::GuiSpriteLoader()
 {
 }
-GuiSprite *GuiSpriteLoader::load(const char *filePath)
+GuiSprite *GuiSpriteLoader::load(const char *filePath, const unsigned int horizontallyNum, const unsigned int verticallyNum)
 {
+    if (horizontallyNum == 0 || verticallyNum == 0)
+    {
+        fprintf(stderr, "Error --> horizontallyNum or verticallyNum = 0\n");
+        return NULL;
+    }
+
     surface = IMG_Load(filePath);
     if (surface == NULL)
     {
         fprintf(stderr, "Error --> loadTextureFile(%s)\n", filePath);
         return NULL;
     }
+
     GLuint texId = bindTexture();
+
+    GuiSprite *ret = new GuiSprite(texId);
+    ret->setSurfaceSize(Vector2f(surface->w, surface->h));
+    ret->setSpriteNum(Touple2f(horizontallyNum, verticallyNum));
+
     freeSurface();
-    return new GuiSprite(texId);
+    return ret;
 }

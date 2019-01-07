@@ -6,6 +6,7 @@
 #include "../render/window/window.h"
 #include "../../common/scene/sceneId.h"
 #include "../../common/controllerParam/controllerParam.h"
+#include "../config/configData.h"
 /******************************************************************************
  * class BaseScene
  * 機能1：
@@ -15,6 +16,7 @@
 class BaseScene
 {
 private:
+  ConfigData *config;
   WindowManager *window;
   virtual void draw3D();
   virtual void draw2D();
@@ -22,6 +24,7 @@ private:
 public:
   BaseScene();
   BaseScene(WindowManager *window);
+  BaseScene(WindowManager *window, ConfigData *config);
 
   virtual bool init();
   virtual SCENE_ID reactController(ControllerParam param);

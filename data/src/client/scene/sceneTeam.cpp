@@ -7,6 +7,9 @@
 SceneTeam::SceneTeam(WindowManager *window) : BaseScene(window)
 {
 }
+SceneTeam::SceneTeam(WindowManager *window, ConfigData *config) : BaseScene(window, config)
+{
+}
 bool SceneTeam::init()
 {
     // for(int i = 0;i < 2; i++){

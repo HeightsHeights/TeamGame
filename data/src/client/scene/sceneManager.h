@@ -17,7 +17,7 @@ private:
   static BaseScene *scenes[SI_NUMBER];
 
 public:
-  static bool init(WindowManager *window);
+  static bool init(WindowManager *window, ConfigData *config);
   static bool reactController(ControllerParam param);
   static bool executeCommand(int command);
   static void drawWindow();

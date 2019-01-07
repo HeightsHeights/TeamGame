@@ -9,6 +9,7 @@
 #include "../render/xLoader/xLoader.h"
 #include "../../common/math/vector/vectorSet.h"
 #include "../render/gui/image/guiImageLoader.h"
+#include "../render/gui/text/guiTextLoader.h"
 /******************************************************************************
  * class SceneTitle
  * 機能1：
@@ -24,8 +25,13 @@ private:
   ObjRawModel *obj;
   XModel *model;
   float angle;
- 
+  Vector2f position;
+  bool button;
+  bool configbutton;
+  GuiText *text;
+
   GuiImage *image;
+  GuiImage *image2;
 
   virtual void draw3D();
   virtual void draw2D();

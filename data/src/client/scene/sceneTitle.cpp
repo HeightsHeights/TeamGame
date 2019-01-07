@@ -10,11 +10,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+static const SDL_Color gWhite = {255, 255, 255, 255};
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
-
     image = GuiImageLoader().load("./data/res/gui/image/google.png");
-
+    //image2 = GuiImageLoader().load("./data/res/gui/image/kuro.png");
+    text = GuiTextLoader().load(FID_NORMAL, "config", gWhite);
     // static const GLfloat g_vertex_buffer_data[] = {
     //     -1.9f, -0.9f, 0.0f,
     //     0.9f, -0.9f, 0.0f,
@@ -54,10 +55,35 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 }
 bool SceneTitle::init()
 {
+    position = Vector2f_ZERO;
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
 {
+    if (button == true)
+    {
+        position.x += param.axisL.x;
+        button = false;
+    }
+    //printf("%f\n",position.x);
+    if (param.axisL.x == 0)
+    {
+        button = true;
+    }
+
+    if (position.x == 3)
+    {
+        position.x = 0;
+    }
+    else if (position.x == -1)
+    {
+        position.x = 1;
+    }
+
+    if (position.x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+    {
+        configbutton = true;
+    }
     return SI_TITLE;
 }
 SCENE_ID SceneTitle::executeCommand(int command)
@@ -70,11 +96,23 @@ void SceneTitle::draw3D()
 static int i;
 void SceneTitle::draw2D()
 {
-    i++;
 
     ShaderManager::startShader(SID_GUI);
-    glRotated(i, 0, 0, 1);
-    image->draw();
+
+    if (configbutton)
+    {
+        i++;
+        glPushMatrix();
+        glScaled(i, i, 0);
+        if (i > 10)
+            i = 10;
+        //image2->draw();
+        glPopMatrix();
+    }
+    else
+    {
+        image->draw();
+    }
     ShaderManager::stopShader(SID_GUI);
 
     // ShaderManager::startShader(SID_GUI);

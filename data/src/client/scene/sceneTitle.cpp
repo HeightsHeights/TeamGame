@@ -121,20 +121,22 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         // {
         // }
     }
-
-    if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    else
     {
-        DataBlock data;
-        data.setCommand2DataBlock(NC_READY);
-        NetworkManager::sendData(data, data.getDataSize());
-    }
-    else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
-    {
-        configmode = true;
-    }
-    else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
-    {
-        return SI_NUMBER;
+        if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            DataBlock data;
+            data.setCommand2DataBlock(NC_READY);
+            NetworkManager::sendData(data, data.getDataSize());
+        }
+        else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            configmode = true;
+        }
+        else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            return SI_NUMBER;
+        }
     }
     return SI_TITLE;
 }
@@ -157,14 +159,17 @@ void SceneTitle::draw2D()
 
     if (configmode)
     {
-        i++;
-        glPushMatrix();
-        glScaled(i, i, 0);
-        if (i > 5)
-            i = 5;
-        text[3]->draw();
-        //image[1]->draw();
-        glPopMatrix();
+        if (position[1].y == 3)
+        {
+            i++;
+            glPushMatrix();
+            glScaled(i, i, 0);
+            if (i > 5)
+                i = 5;
+            text[6]->draw();
+            //image[1]->draw();
+            glPopMatrix();
+        }
     }
     else
     {

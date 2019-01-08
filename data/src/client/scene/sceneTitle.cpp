@@ -13,6 +13,7 @@
 GLuint vertexBufferObject;
 GLuint posBufferObject;
 GLuint colorbuffer;
+GLuint uvbuffer;
 int R = 1000;
 GLfloat position_data[2000];
 GLfloat g_color_buffer_data[3000];
@@ -28,6 +29,12 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     static const GLuint g_indice_buffer_data[] = {
         0, 1, 2,
         2, 1, 3};
+
+    static const GLfloat uv_buffer_date[]{
+        0.4f, 0.6f,
+        0.6f, 0.6f,
+        0.4f, 0.4f,
+        0.6f, 0.4f};
 
     for (int i = 0; i < R; i++)
     {
@@ -68,9 +75,27 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glBufferSubData(GL_ARRAY_BUFFER, 0, R * 3 * sizeof(GLfloat), g_color_buffer_data);
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glGenBuffers(1, &uvbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2f), uv_buffer_date, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
+
     glVertexAttribDivisor(0, 0);
     glVertexAttribDivisor(1, 1);
     glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 0);
+
+    SDL_Surface *skybox = IMG_Load("data/res/gui/image/google.png");
+    // for (int i = 0; i < 6; i++)
+    // {
+    glGenTextures(1, &sky);
+    glBindTexture(GL_TEXTURE_2D, sky);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, skybox->w, skybox->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, skybox->pixels);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    // }
 
     glBindVertexArray(0);
 
@@ -109,18 +134,6 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-    SDL_Surface *skybox = IMG_Load("data/res/gui/image/skyex.png");
-
-    for (int i = 0; i < 6; i++)
-    {
-        glGenTextures(1, &sky[i]);
-        glBindTexture(GL_TEXTURE_2D, sky[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, skybox->w, skybox->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, skybox->pixels);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glBindTexture(GL_TEXTURE_2D, 0);
-    }
 
     for (int i = 0; i < 2000; i++)
     {
@@ -189,7 +202,7 @@ void SceneTitle::drawWindow()
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 25.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
 
     // gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -207,6 +220,7 @@ void SceneTitle::drawWindow()
     glPushMatrix();
     // glScalef(3.0f, 3.0, 3.0f);
     ShaderManager::startShader(SID_PART);
+    glBindTexture(GL_TEXTURE_2D, sky);
     glBindVertexArray(vao123);
     glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
     glBufferSubData(GL_ARRAY_BUFFER, 0, R * 2 * sizeof(GLfloat), position_data);
@@ -215,6 +229,7 @@ void SceneTitle::drawWindow()
 
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0, R);
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     ShaderManager::stopShader(SID_PART);
     // glPopMatrix();
     // glDepthMask(GL_TRUE);

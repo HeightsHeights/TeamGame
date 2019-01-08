@@ -31,7 +31,10 @@ bool SceneTitle::init()
     text[5] = GuiTextLoader().load(FID_NORMAL, config->wiiRemoteId.c_str(), gRed);
     text[6] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
     text[7] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
-    text[8] = GuiTextLoader().load(FID_NORMAL, "Init", gRed);
+    text[8] = GuiTextLoader().load(FID_NORMAL, "Reset", gRed);
+    text[9] = GuiTextLoader().load(FID_NORMAL, "Start", gRed);
+    text[10] = GuiTextLoader().load(FID_NORMAL, "Config", gRed);
+    text[11] = GuiTextLoader().load(FID_NORMAL, "End", gRed);
 
     for (int i = 0; i < 2; i++)
     {
@@ -40,7 +43,7 @@ bool SceneTitle::init()
             return false;
         }
     }
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 12; i++)
     {
         if (text[i] == NULL)
         {
@@ -90,24 +93,26 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    //printf("%f\n", position[1].y);
     if (configmode)
     {
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            Console().scanString("YourName", config->name.c_str(), &config->name);
+            if (Console().scanString("YourName", config->name.c_str(), &config->name))
+            {
+                text2[0] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+            }
         }
-        else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
         }
 
-        if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             //ConfigSaver().save("cPrevConfig", config);
         }
-        else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             configmode = false;
         }
@@ -116,11 +121,17 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         // }
     }
 
-    if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK])
+    if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_READY);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
+    else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
         configmode = true;
     }
-    else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+    else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
         return SI_NUMBER;
     }
@@ -128,6 +139,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {
+    if (command == NC_SERVER_CHARASELSECT)
+    {
+        return SI_CHARASELECT;
+    }
     return SI_TITLE;
 }
 void SceneTitle::draw3D()
@@ -146,14 +161,43 @@ void SceneTitle::draw2D()
         glScaled(i, i, 0);
         if (i > 5)
             i = 5;
-        text[0]->draw();
-        image[1]->draw();
+        text[3]->draw();
+        //image[1]->draw();
         glPopMatrix();
     }
     else
     {
         i = 0;
+        glPushMatrix();
+        glScaled(10.0, 5.0, 0);
+        glTranslatef(0, 0.8, 0);
         image[0]->draw();
+        glPopMatrix();
+
+        if (position[0].x == 0)
+        {
+            glPushMatrix();
+            glScaled(5.0, 2.5, 0);
+            glTranslatef(0, -2.0, 0);
+            text[9]->draw();
+            glPopMatrix();
+        }
+        else if (position[0].x == 1)
+        {
+            glPushMatrix();
+            glScaled(5.0, 2.5, 0);
+            glTranslatef(0, -2.0, 0);
+            text[10]->draw();
+            glPopMatrix();
+        }
+        else if (position[0].x == 2)
+        {
+            glPushMatrix();
+            glScaled(5.0, 2.5, 0);
+            glTranslatef(0, -2.0, 0);
+            text[11]->draw();
+            glPopMatrix();
+        }
     }
     ShaderManager::stopShader(SID_GUI);
     //名前変更

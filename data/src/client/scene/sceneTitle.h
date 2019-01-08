@@ -28,7 +28,8 @@ private:
   Vector2f position[2];
   bool button;
   bool configmode;
-  GuiText *text[10];
+  GuiText *text[12];
+  GuiText *text2[2];
   GuiImage *image[2];
   int num;
 

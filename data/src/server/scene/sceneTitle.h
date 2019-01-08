@@ -14,7 +14,8 @@
 class SceneTitle : public BaseScene
 {
 private:
-  Vector3f position[2];
+  //Vector3f position[2];
+  bool master;
 
 public:
   SceneTitle() : BaseScene() {}

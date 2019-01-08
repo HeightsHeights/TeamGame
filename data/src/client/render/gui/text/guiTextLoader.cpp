@@ -45,6 +45,7 @@ GuiText *GuiTextLoader::load(FONT_ID id, const char *string, SDL_Color color)
         return NULL;
     }
     GLuint texId = bindTexture();
+    Vector2f textureSize(surface->w, surface->h);
     freeSurface();
-    return new GuiText(texId);
+    return new GuiText(texId, textureSize);
 }

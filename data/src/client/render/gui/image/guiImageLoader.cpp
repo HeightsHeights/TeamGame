@@ -12,6 +12,7 @@ GuiImage *GuiImageLoader::load(const char *filePath)
         return NULL;
     }
     GLuint texId = bindTexture();
+    Vector2f textureSize(surface->w, surface->h);
     freeSurface();
-    return new GuiImage(texId);
+    return new GuiImage(texId, textureSize);
 }

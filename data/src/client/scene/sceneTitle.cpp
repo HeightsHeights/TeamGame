@@ -31,10 +31,10 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
         2, 1, 3};
 
     static const GLfloat uv_buffer_date[]{
-        0.4f, 0.6f,
-        0.6f, 0.6f,
-        0.4f, 0.4f,
-        0.6f, 0.4f};
+        0.45f, 0.55f,
+        0.55f, 0.55f,
+        0.45f, 0.45f,
+        0.55f, 0.45f};
 
     for (int i = 0; i < R; i++)
     {
@@ -197,7 +197,7 @@ void SceneTitle::drawWindow()
     glAlphaFunc(GL_GREATER, 0.5);
     // glEnable(GL_ALPHA_TEST);
     glPushMatrix();
-    // glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glLoadIdentity();
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
@@ -208,17 +208,18 @@ void SceneTitle::drawWindow()
     // gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     angle++;
     // glTranslatef(angle / 50, 0.0, 0.0);
-    // glRotated(angle, 0, 1, 1);
+    glRotated(angle, 0, 1, 1);
     // glDepthMask(GL_FALSE);
-    // ShaderManager::startShader(SID_RED);
-    // obj->draw();
-    // ShaderManager::stopShader(SID_RED);
+    ShaderManager::startShader(SID_RED);
+    obj->draw();
+    ShaderManager::stopShader(SID_RED);
     // ShaderManager::startShader(SID_STATIC);
     // // glTranslatef(-1.0, -3, -6);
     // obj2->draw();
     // ShaderManager::stopShader(SID_STATIC);
     glPushMatrix();
     // glScalef(3.0f, 3.0, 3.0f);
+    glDisable(GL_DEPTH_TEST);
     ShaderManager::startShader(SID_PART);
     glBindTexture(GL_TEXTURE_2D, sky);
     glBindVertexArray(vao123);
@@ -233,6 +234,7 @@ void SceneTitle::drawWindow()
     ShaderManager::stopShader(SID_PART);
     // glPopMatrix();
     // glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
     glPopMatrix();
     // glDisable(GL_ALPHA_TEST);
     // glDisable(GL_DEPTH_TEST);

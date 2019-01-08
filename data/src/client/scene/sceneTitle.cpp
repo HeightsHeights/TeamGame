@@ -90,7 +90,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    printf("%f\n", position[1].y);
+    //printf("%f\n", position[1].y);
     if (configmode)
     {
 

@@ -15,24 +15,36 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         int gClientNum = NetworkManager::getGClientNum();
         ready[pos] = true;
 
-        for(int i = 0; i < gClientNum; i++){
-            if(ready[i] == true){
+        for (int i = 0; i < gClientNum; i++)
+        {
+            if (ready[i] == true)
+            {
                 count++;
             }
         }
 
-        if(count == gClientNum){
+        if (count == gClientNum)
+        {
             DataBlock data;
             data.setCommand2DataBlock(NC_SERVER_MAINGAME);
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
             return SI_MAIN;
         }
-        else{
+        else
+        {
             DataBlock data;
-            data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
+            data.setCommand2DataBlock(NC_SERVER_READY);
             data.setData(&pos, sizeof(int));
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         }
+    }
+    else
+    {
+        int gClientNum = NetworkManager::getGClientNum();
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
+        data.setData(&gClientNum, sizeof(int));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
     return SI_CHARASELECT;
 }

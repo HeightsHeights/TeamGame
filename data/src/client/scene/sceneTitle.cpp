@@ -23,6 +23,8 @@ bool SceneTitle::init()
     configmode = false;
     image[0] = GuiImageLoader().load("./data/res/gui/image/title.png");
     image[1] = GuiImageLoader().load("./data/res/gui/image/google.png");
+    image[2] = GuiImageLoader().load("./data/res/gui/image/back.png");
+    image[3] = GuiImageLoader().load("./data/res/gui/image/button.png");
     text[0] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
     text[1] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
     text[2] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
@@ -36,7 +38,7 @@ bool SceneTitle::init()
     text[10] = GuiTextLoader().load(FID_NORMAL, "Config", gRed);
     text[11] = GuiTextLoader().load(FID_NORMAL, "End", gRed);
 
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 4; i++)
     {
         if (image[i] == NULL)
         {
@@ -151,7 +153,7 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::draw3D()
 {
 }
-static int i;
+//static double i;
 void SceneTitle::draw2D()
 {
 
@@ -159,21 +161,50 @@ void SceneTitle::draw2D()
 
     if (configmode)
     {
-        if (position[1].y == 3)
+        if (position[1].x == 0)
         {
-            i++;
+            
+            //i+=0.1;
             glPushMatrix();
-            glScaled(i, i, 0);
-            if (i > 5)
-                i = 5;
+            glScaled(2, 1.5 , 0);
+            glTranslatef(0, -4.0, 0);
+            // if (i > 2)
+            //     i = 2;
             text[6]->draw();
             //image[1]->draw();
             glPopMatrix();
         }
+
+        glPushMatrix();
+        glScaled(5, 1.0 , 0);
+        glTranslatef(0, -6.0, 0);
+        image[3]->draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glScaled(5, 1.0 , 0);
+        glTranslatef(0, -2.0, 0);
+        image[3]->draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glScaled(5, 1.0 , 0);
+        glTranslatef(0, 2.0, 0);
+        image[3]->draw();
+        glPopMatrix();
+
+        glPushMatrix();
+        glScaled(5, 1.0 , 0);
+        glTranslatef(0, 6.0, 0);
+        image[3]->draw();
+        glPopMatrix();
+
+        
     }
     else
     {
-        i = 0;
+        //i = 0;
+        
         glPushMatrix();
         glScaled(10.0, 5.0, 0);
         glTranslatef(0, 0.8, 0);
@@ -183,27 +214,35 @@ void SceneTitle::draw2D()
         if (position[0].x == 0)
         {
             glPushMatrix();
-            glScaled(5.0, 2.5, 0);
-            glTranslatef(0, -2.0, 0);
+            glScaled(4.0, 1.5, 0);
+            glTranslatef(0, -4.0, 0);
             text[9]->draw();
+            image[3]->draw();
             glPopMatrix();
         }
         else if (position[0].x == 1)
         {
             glPushMatrix();
-            glScaled(5.0, 2.5, 0);
-            glTranslatef(0, -2.0, 0);
+            glScaled(4.0, 1.5, 0);
+            glTranslatef(0, -4.0, 0);
             text[10]->draw();
+            image[3]->draw();
             glPopMatrix();
         }
         else if (position[0].x == 2)
         {
             glPushMatrix();
-            glScaled(5.0, 2.5, 0);
-            glTranslatef(0, -2.0, 0);
+            glScaled(4.0, 1.5, 0);
+            glTranslatef(0, -4.0, 0);
             text[11]->draw();
+            image[3]->draw();
             glPopMatrix();
         }
+
+        glPushMatrix();
+        glScaled(20.0, 10.0, 0);
+        image[2]->draw();
+        glPopMatrix();
     }
     ShaderManager::stopShader(SID_GUI);
     //名前変更

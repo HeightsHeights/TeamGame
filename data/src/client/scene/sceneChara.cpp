@@ -10,22 +10,42 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneChara::init()
 {
-    position = Vector3f_ZERO;
     return true;
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
-    // position.x += param.axisL.x;
-    // if (position.x == 2)
-    // {
-    //     position.x = 0;
-    // }
-    // else if (position.x == -1)
-    // {
-    //     position.x = 1;
-    // }
+    if (button == true)
+    {
+        if (position.y == 0)
+            position.x += param.axisL.x;
 
-    // if (param.buttonDown[CT_DECITION_OR_ATTACK])
+        position.y += param.axisL.y;
+        button = false;
+    }
+    if (param.axisL.x == 0 && param.axisL.y == 0)
+    {
+        button = true;
+    }
+
+    if (position.x >= 2)
+    {
+        position.x = 0;
+    }
+    else if (position.x <= -1)
+    {
+        position.x = 1;
+    }
+
+    if (position.y >= 1)
+    {
+        position.y = 1;
+    }
+    else if (position.y < 0)
+    {
+        position.y = 0;
+    }
+
+    // if (position.y = 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     // {
     //     DataBlock data;
     //     data.setCommand2DataBlock(NC_READY);
@@ -36,16 +56,20 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
 }
 SCENE_ID SceneChara::executeCommand(int command)
 {
-    // if (command == NC_SERVER_2_CLIENT)
-    // {
-    //     int num;
-    //     NetworkManager::recvData(&num, sizeof(int));
-    //     decision[num] = true;
-    // }
-    // else if (command == NC_SERVER_MAINGAME)
-    // {
-    //     return SI_MAIN;
-    // }
+    if (command == NC_SERVER_READY)
+    {
+        int num;
+        NetworkManager::recvData(&num, sizeof(int));
+        decision[num] = true;
+    }
+    else if (command == NC_SERVER_MAINGAME)
+    {
+        return SI_MAIN;
+    }
+    else if (command == NC_SERVER_2_CLIENT)
+    {
+        NetworkManager::recvData(&playernum, sizeof(int));
+    }
     return SI_CHARASELECT;
 }
 void SceneChara::draw3D()

@@ -17,7 +17,9 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector3f position;
-  bool decision[2];
+  bool decision[4];
+  bool button;
+  int playernum;
 
 public:
   SceneChara() : BaseScene() {}

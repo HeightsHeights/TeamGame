@@ -30,7 +30,7 @@ private:
   bool configmode;
   GuiText *text[12];
   GuiText *text2[2];
-  GuiImage *image[2];
+  GuiImage *image[12];
   int num;
 
   virtual void draw3D();

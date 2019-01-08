@@ -98,10 +98,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            if (Console().scanString("YourName", config->name.c_str(), &config->name))
-            {
-                text2[0] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-            }
+            // if (Console().scanString("YourName", config->name.c_str(), &config->name))
+            // {
+            //     text2[0] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+            // }
         }
         else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
@@ -111,6 +111,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             //ConfigSaver().save("cPrevConfig", config);
+            configmode = false;
         }
         else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {

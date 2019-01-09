@@ -1,3 +1,4 @@
+#pragma once
 #include "../baseGui.h"
 
 class GuiImage : public BaseGui

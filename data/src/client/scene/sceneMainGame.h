@@ -6,6 +6,10 @@
 #include "./sceneBase.h"
 
 #include "../render/objRawModel/objModelLoader.h"
+
+#include "../render/gui/image/guiImageLoader.h"
+#include "../render/gui/text/guiTextLoader.h"
+#include "../render/gui/sprite/guiSpriteLoader.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -17,6 +21,9 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *tile;
   ObjRawModel *mush;
+
+  GuiImage *imageNumber[10];
+
   virtual void draw3D();
   virtual void draw2D();
 

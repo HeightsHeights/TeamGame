@@ -1,20 +1,17 @@
+#pragma once
+
 #include "../baseGui.h"
 
-class GuiSprite
+class GuiSprite : BaseGui
 {
 private:
-  GLuint vao;
-  GLuint texId;
-  Vector2f surfaceSize;
   Touple2f spriteMaxNum;
-  GLuint vertexBufferObject;
-  GLuint uvBufferObject;
-  GLuint indexBufferObject;
 
 public:
   GuiSprite();
   GuiSprite(GLuint texId);
-  void setSurfaceSize(Vector2f surfaceSize);
+  GuiSprite(GLuint texId, Vector2f textureSize);
+  ~GuiSprite();
   void setSpriteNum(Touple2f spriteMaxNum);
-  void draw(const unsigned int spriteNum);
+  void draw(const unsigned int spriteNum, GuiRect *dstRect);
 };

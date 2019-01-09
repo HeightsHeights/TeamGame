@@ -7,8 +7,8 @@
 
 std::string SE_NAME[SE_NUMBER] =
     {
-        "attack.wav",
-        "sodo.wav",
+        "decision.wav",
+        "cursor.wav",
 };
 
 std::string BGM_NAME[BGM_NUMBER] =

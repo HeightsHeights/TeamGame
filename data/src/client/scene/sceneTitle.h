@@ -30,7 +30,10 @@ typedef enum {
   TEXT_YOUSERNAME = 3,
   TEXT_SERVERID = 4,
   TEXT_WIIMOTEID = 5,
-  TEXT_NUMBER = 6,
+  TEXT_NAMETITLE = 6,
+  TEXT_SERVERTITLE = 7,
+  TEXT_WIITITLE = 8,
+  TEXT_NUMBER = 9,
 } TEXT_ID;
 /******************************************************************************
  * class SceneTitle
@@ -53,6 +56,7 @@ private:
   GuiText *text[TEXT_NUMBER];
   GuiImage *image[IMAGE_NUMBER];
   int num;
+  int secount;
   GuiRect dstRect[IMAGE_NUMBER];
   GuiRect dstRect2[TEXT_NUMBER];
   virtual void draw3D();

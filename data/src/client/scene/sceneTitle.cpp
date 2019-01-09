@@ -8,6 +8,7 @@
 #include "../../common/math/matrix/matrixSet.h"
 #include "../../common/console/console.h"
 #include "../config/saver/configSaver.h"
+#include "../audio/audioManager.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <fstream>
@@ -36,13 +37,9 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneTitle::init()
 {
+    secount = 0;
     dstRect[IMAGE_START] = GuiRect(-200, -180, 400, 80);
     dstRect[IMAGE_TITLE] = GuiRect(-393, 256, 786, 255);
-    dstRect[IMAGE_SAVE] = GuiRect(640, -180, 400, 80);
-    
-    dstRect2[TEXT_YOUSERNAME] = GuiRect(640, 250, 350, 80);
-    dstRect2[TEXT_SERVERID] = GuiRect(640, 100, 350, 80);
-    dstRect2[TEXT_WIIMOTEID] = GuiRect(640, -50, 350, 80);
     configmode = false;
     for (int i = 0; i < IMAGE_NUMBER; i++)
     {
@@ -52,15 +49,16 @@ bool SceneTitle::init()
             return false;
         }
     }
-    // text[0] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
-    // text[1] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
-    // text[2] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
+    
     text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
     text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
     text[TEXT_WIIMOTEID] = GuiTextLoader().load(FID_NORMAL, config->wiiRemoteId.c_str(), gRed);
     text[TEXT_SAVE] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
     text[TEXT_CANCEL] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
     text[TEXT_RESET] = GuiTextLoader().load(FID_NORMAL, "Reset", gRed);
+    text[TEXT_NAMETITLE] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
+    text[TEXT_SERVERTITLE] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
+    text[TEXT_WIITITLE] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
 
     for (int i = 0; i < TEXT_NUMBER; i++)
     {
@@ -112,6 +110,11 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
+    if(secount > position[0].x || secount < position[0].x){
+        secount = position[0].x;
+        AudioManager::playSE(SE_CURSOR);
+    }
+
     if (configmode)
     {
 
@@ -142,12 +145,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
     {
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
+            AudioManager::playSE(SE_DECISION);
             DataBlock data;
             data.setCommand2DataBlock(NC_READY);
             NetworkManager::sendData(data, data.getDataSize());
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
+            AudioManager::playSE(SE_DECISION);
             configmode = true;
         }
         else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
@@ -175,13 +180,16 @@ void SceneTitle::draw2D()
 
     if (configmode)
     {
-        i-=5;
+        i-=10;
         if(i <= -200)
             i = -200;
-        dstRect2[TEXT_YOUSERNAME] = GuiRect(i+10, 250, 350, 80);
-        dstRect2[TEXT_SERVERID] = GuiRect(i+10, 100, 350, 80);
-        dstRect2[TEXT_WIIMOTEID] = GuiRect(i+12, -50, 350, 80);
-        dstRect[IMAGE_SAVE] = GuiRect(i, -180, 400, 80);
+        dstRect2[TEXT_YOUSERNAME] = GuiRect(i + 10, 250, 350, 80);
+        dstRect2[TEXT_SERVERID] = GuiRect(i + 10, 100, 350, 80);
+        dstRect2[TEXT_WIIMOTEID] = GuiRect(i + 12, -50, 350, 80);
+        dstRect2[TEXT_NAMETITLE] = GuiRect(i, 300, 175, 40);
+        dstRect2[TEXT_SERVERTITLE] = GuiRect(i, 150, 175, 40);
+        dstRect2[TEXT_WIITITLE] = GuiRect(i + 2, 0, 175, 40);
+        dstRect[IMAGE_SAVE] = GuiRect(i, -200, 400, 80);
         if (position[1].x == 0)
         {
             image[IMAGE_SAVE]->draw(NULL, &dstRect[IMAGE_SAVE]);
@@ -195,16 +203,15 @@ void SceneTitle::draw2D()
             image[IMAGE_RESET]->draw(NULL, &dstRect[IMAGE_SAVE]);
         }
         text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-        text[TEXT_YOUSERNAME]->draw(NULL,&dstRect2[TEXT_YOUSERNAME]);
-
         text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
-        text[TEXT_SERVERID]->draw(NULL,&dstRect2[TEXT_SERVERID]);
-        
-        text[TEXT_WIIMOTEID]->draw(NULL,&dstRect2[TEXT_WIIMOTEID]);
+
+        for(int i = 3; i < TEXT_NUMBER; i++){
+        text[i]->draw(NULL,&dstRect2[i]);
+        }
     }
     else
     {
-        //i = 0;
+        i = 640;
         image[IMAGE_TITLE]->draw(NULL, &dstRect[IMAGE_TITLE]);
 
         if (position[0].x == 0)
@@ -221,7 +228,6 @@ void SceneTitle::draw2D()
         }
 
         image[IMAGE_BG]->draw(NULL, NULL);
-        image[IMAGE_BG]->draw(NULL,NULL);
     }
     ShaderManager::stopShader(SID_GUI);
 

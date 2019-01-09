@@ -7,4 +7,5 @@ public:
   GuiText();
   GuiText(GLuint texId);
   GuiText(GLuint texId, Vector2f textureSize);
+  ~GuiText();
 };

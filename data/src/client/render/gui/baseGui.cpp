@@ -16,6 +16,14 @@ BaseGui::BaseGui(GLuint texId, Vector2f textureSize)
     this->textureSize = textureSize;
     storeData();
 }
+BaseGui::~BaseGui()
+{
+    glDeleteTextures(1, &texId);
+    glDeleteBuffers(1, &vboIndex);
+    glDeleteBuffers(1, &vboVertex);
+    glDeleteBuffers(1, &vboUv);
+    glDeleteVertexArrays(1, &vao);
+}
 void BaseGui::draw()
 {
     bindTexture();

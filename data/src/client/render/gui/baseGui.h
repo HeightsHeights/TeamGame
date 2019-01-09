@@ -36,4 +36,5 @@ protected:
   BaseGui();
   BaseGui(GLuint texId);
   BaseGui(GLuint texId, Vector2f textureSize);
+  virtual ~BaseGui();
 };

@@ -10,14 +10,15 @@
 ******************************************************************************/
 class ShaderProgram
 {
-  private:
-    GLuint programID;
-    GLuint vertexShaderID;
-    GLuint fragmentShaderID;
+private:
+  GLuint programID;
+  GLuint vertexShaderID;
+  GLuint fragmentShaderID;
 
-  public:
-    ShaderProgram();
-    ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fragmentShaderID);
-    void startShader();
-    void stopShader();
+public:
+  ShaderProgram();
+  ShaderProgram(GLuint programID, GLuint vertexShaderID, GLuint fragmentShaderID);
+  void startShader();
+  void stopShader();
+  GLuint getProgramId();
 };

@@ -55,3 +55,7 @@ void ShaderManager::stopShader(SHADER_ID sid)
 {
     shaders[sid]->stopShader();
 }
+GLuint ShaderManager::getProgramId(SHADER_ID sid)
+{
+    return shaders[sid]->getProgramId();
+}

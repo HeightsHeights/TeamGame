@@ -25,3 +25,7 @@ void ShaderProgram::stopShader()
 {
     glUseProgram(0);
 }
+GLuint ShaderProgram::getProgramId()
+{
+    return programID;
+}

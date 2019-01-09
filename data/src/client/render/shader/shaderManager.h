@@ -24,4 +24,5 @@ public:
   static bool init();
   static void startShader(SHADER_ID sid);
   static void stopShader(SHADER_ID sid);
+  static GLuint getProgramId(SHADER_ID sid);
 };

@@ -50,6 +50,6 @@ void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
     GuiRect dst = GuiRect(0.0, 0.0, 100, 200);
-    imageNumber[1]->draw(NULL, &dst);
+    imageNumber[1]->draw(NULL, &dst, 0.5f);
     ShaderManager::stopShader(SID_GUI);
 }

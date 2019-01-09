@@ -14,4 +14,5 @@ public:
   ~GuiSprite();
   void setSpriteNum(Touple2f spriteMaxNum);
   void draw(const unsigned int spriteNum, GuiRect *dstRect);
+  void draw(const unsigned int spriteNum, GuiRect *dstRect, float brightness);
 };

@@ -17,10 +17,14 @@ void GuiSprite::setSpriteNum(Touple2f spriteMaxNum)
 }
 void GuiSprite::draw(const unsigned int spriteNum, GuiRect *dstRect)
 {
+    draw(spriteNum, dstRect, 1.0f);
+}
+void GuiSprite::draw(const unsigned int spriteNum, GuiRect *dstRect, float brightness)
+{
     Vector2f textureSize = getTextureSize();
     int rowNum = spriteNum % (int)spriteMaxNum.x;
     int lineNum = spriteNum / (int)spriteMaxNum.x;
     Vector2f spriteSize = Vector2f(textureSize.x / spriteMaxNum.x, textureSize.y / spriteMaxNum.y);
     GuiRect srcRect = GuiRect(rowNum * spriteSize.x, lineNum * spriteSize.y, spriteSize.x, spriteSize.y);
-    BaseGui::draw(&srcRect, dstRect);
+    BaseGui::draw(&srcRect, dstRect, brightness);
 }

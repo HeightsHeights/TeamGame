@@ -1,5 +1,7 @@
 #include "./baseGui.h"
 
+#include "../render/shader/shaderManager.h"
+
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 BaseGui::BaseGui()
@@ -34,6 +36,21 @@ void BaseGui::draw()
 }
 void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect)
 {
+    draw(srcRect, dstRect, 1.0f);
+}
+void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness)
+{
+    if (brightness < 0)
+    {
+        brightness = 0.0;
+    }
+    if (brightness > 1)
+    {
+        brightness = 1.0f;
+    }
+    GLint loc = glGetUniformLocation(ShaderManager::getProgramId(SID_GUI), "brightness");
+    glUniform1f(loc, brightness);
+
     bindTexture();
     bindVao();
 

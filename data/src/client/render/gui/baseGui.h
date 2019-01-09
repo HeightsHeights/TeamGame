@@ -30,6 +30,7 @@ private:
 public:
   void draw();
   void draw(GuiRect *srcRect, GuiRect *dstRect);
+  void draw(GuiRect *srcRect, GuiRect *dstRect, float brightness);
   Vector2f getTextureSize();
 
 protected:

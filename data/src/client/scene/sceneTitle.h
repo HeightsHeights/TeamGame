@@ -14,20 +14,23 @@
 typedef enum {
   IMAGE_TITLE = 0,
   IMAGE_BG = 1,
-  IMAGE_NUMBER = 2,
+  IMAGE_START = 2,
+  IMAGE_CONFIG = 3,
+  IMAGE_END = 4,
+  IMAGE_SAVE = 5,
+  IMAGE_CANCEL = 6,
+  IMAGE_RESET = 7,
+  IMAGE_NUMBER = 8,
 } IMAGE_ID;
 
 typedef enum {
-  TEXT_START = 0,
-  TEXT_CONFIG = 1,
-  TEXT_END = 2,
+  TEXT_SAVE = 0,
+  TEXT_CANCEL = 1,
+  TEXT_RESET = 2,
   TEXT_YOUSERNAME = 3,
   TEXT_SERVERID = 4,
   TEXT_WIIMOTEID = 5,
-  TEXT_SAVE = 6,
-  TEXT_CANCEL = 7,
-  TEXT_RESET = 8,
-  TEXT_NUMBER = 9,
+  TEXT_NUMBER = 6,
 } TEXT_ID;
 /******************************************************************************
  * class SceneTitle
@@ -50,7 +53,8 @@ private:
   GuiText *text[TEXT_NUMBER];
   GuiImage *image[IMAGE_NUMBER];
   int num;
-
+  GuiRect dstRect[IMAGE_NUMBER];
+  GuiRect dstRect2[TEXT_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
 

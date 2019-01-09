@@ -10,6 +10,7 @@
 #include "../config/saver/configSaver.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <fstream>
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
 
@@ -19,6 +20,12 @@ std::string IMAGE_NAME[IMAGE_NUMBER] =
     {
         "title.png",
         "back.png",
+        "start.png",
+        "config.png",
+        "end.png",
+        "save.png",
+        "cancel.png",
+        "reset.png",
 };
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
@@ -29,35 +36,39 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneTitle::init()
 {
-    // configmode = false;
-    // for (int i = 0; i < IMAGE_NUMBER; i++)
-    // {
-    //     image[i] = GuiImageLoader().load((PNG_DIR_PATH + IMAGE_NAME[IMAGE_NUMBER]).c_str());
-    //     if (image[i] == NULL)
-    //     {
-    //         return false;
-    //     }
-    // }
+    dstRect[IMAGE_START] = GuiRect(-200, -180, 400, 80);
+    dstRect[IMAGE_TITLE] = GuiRect(-393, 256, 786, 255);
+    dstRect[IMAGE_SAVE] = GuiRect(640, -180, 400, 80);
+    
+    dstRect2[TEXT_YOUSERNAME] = GuiRect(640, 250, 350, 80);
+    dstRect2[TEXT_SERVERID] = GuiRect(640, 100, 350, 80);
+    dstRect2[TEXT_WIIMOTEID] = GuiRect(640, -50, 350, 80);
+    configmode = false;
+    for (int i = 0; i < IMAGE_NUMBER; i++)
+    {
+        image[i] = GuiImageLoader().load((PNG_DIR_PATH + IMAGE_NAME[i]).c_str());
+        if (image[i] == NULL)
+        {
+            return false;
+        }
+    }
     // text[0] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
     // text[1] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
     // text[2] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
-    // text[3] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-    // text[4] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
-    // text[5] = GuiTextLoader().load(FID_NORMAL, config->wiiRemoteId.c_str(), gRed);
-    // text[6] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
-    // text[7] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
-    // text[8] = GuiTextLoader().load(FID_NORMAL, "Reset", gRed);
-    // text[9] = GuiTextLoader().load(FID_NORMAL, "Start", gRed);
-    // text[10] = GuiTextLoader().load(FID_NORMAL, "Config", gRed);
-    // text[11] = GuiTextLoader().load(FID_NORMAL, "End", gRed);
+    text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+    text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
+    text[TEXT_WIIMOTEID] = GuiTextLoader().load(FID_NORMAL, config->wiiRemoteId.c_str(), gRed);
+    text[TEXT_SAVE] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
+    text[TEXT_CANCEL] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
+    text[TEXT_RESET] = GuiTextLoader().load(FID_NORMAL, "Reset", gRed);
 
-    // for (int i = 0; i < 12; i++)
-    // {
-    //     if (text[i] == NULL)
-    //     {
-    //         return false;
-    //     }
-    // }
+    for (int i = 0; i < TEXT_NUMBER; i++)
+    {
+        if (text[i] == NULL)
+        {
+            return false;
+        }
+    }
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
@@ -106,10 +117,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            // if (Console().scanString("YourName", config->name.c_str(), &config->name))
-            // {
-            //     text[3] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-            // }
+            Console().scanString("YourName", config->name.c_str(), &config->name);
         }
         else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
@@ -125,9 +133,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         {
             configmode = false;
         }
-        // else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
-        // {
-        // }
+        else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        {
+            configmode = false;
+        }
     }
     else
     {
@@ -159,103 +168,66 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::draw3D()
 {
 }
-//static double i;
+static int i;
 void SceneTitle::draw2D()
 {
-
     ShaderManager::startShader(SID_GUI);
 
-    // if (configmode)
-    // {
-    //     if (position[1].x == 0)
-    //     {
+    if (configmode)
+    {
+        i-=5;
+        if(i <= -200)
+            i = -200;
+        dstRect2[TEXT_YOUSERNAME] = GuiRect(i+10, 250, 350, 80);
+        dstRect2[TEXT_SERVERID] = GuiRect(i+10, 100, 350, 80);
+        dstRect2[TEXT_WIIMOTEID] = GuiRect(i+12, -50, 350, 80);
+        dstRect[IMAGE_SAVE] = GuiRect(i, -180, 400, 80);
+        if (position[1].x == 0)
+        {
+            image[IMAGE_SAVE]->draw(NULL, &dstRect[IMAGE_SAVE]);
+        }
+        else if (position[1].x == 1)
+        {
+            image[IMAGE_CANCEL]->draw(NULL, &dstRect[IMAGE_SAVE]);
+        }
+        else if (position[1].x == 2)
+        {
+            image[IMAGE_RESET]->draw(NULL, &dstRect[IMAGE_SAVE]);
+        }
+        text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+        text[TEXT_YOUSERNAME]->draw(NULL,&dstRect2[TEXT_YOUSERNAME]);
 
-    //         //i+=0.1;
-    //         glPushMatrix();
-    //         glScaled(2, 1.5, 0);
-    //         glTranslatef(0, -4.0, 0);
-    //         // if (i > 2)
-    //         //     i = 2;
-    //         text[6]->draw();
-    //         //image[1]->draw();
-    //         glPopMatrix();
-    //     }
+        text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
+        text[TEXT_SERVERID]->draw(NULL,&dstRect2[TEXT_SERVERID]);
+        
+        text[TEXT_WIIMOTEID]->draw(NULL,&dstRect2[TEXT_WIIMOTEID]);
+    }
+    else
+    {
+        //i = 0;
+        image[IMAGE_TITLE]->draw(NULL, &dstRect[IMAGE_TITLE]);
 
-    //     glPushMatrix();
-    //     glScaled(5, 1.0, 0);
-    //     glTranslatef(0, -6.0, 0);
-    //     image[3]->draw();
-    //     glPopMatrix();
+        if (position[0].x == 0)
+        {
+            image[IMAGE_START]->draw(NULL, &dstRect[IMAGE_START]);
+        }
+        else if (position[0].x == 1)
+        {
+            image[IMAGE_CONFIG]->draw(NULL, &dstRect[IMAGE_START]);
+        }
+        else if (position[0].x == 2)
+        {
+            image[IMAGE_END]->draw(NULL, &dstRect[IMAGE_START]);
+        }
 
-    //     glPushMatrix();
-    //     glScaled(5, 1.0, 0);
-    //     glTranslatef(0, -2.0, 0);
-    //     image[3]->draw();
-    //     glPopMatrix();
-
-    //     glPushMatrix();
-    //     glScaled(5, 1.0, 0);
-    //     glTranslatef(0, 2.0, 0);
-    //     image[3]->draw();
-    //     glPopMatrix();
-
-    //     glPushMatrix();
-    //     glScaled(5, 1.0, 0);
-    //     glTranslatef(0, 6.0, 0);
-    //     image[3]->draw();
-    //     glPopMatrix();
-    // }
-    // else
-    // {
-    //     //i = 0;
-
-    //     glPushMatrix();
-    //     glScaled(10.0, 5.0, 0);
-    //     glTranslatef(0, 0.8, 0);
-    //     image[0]->draw();
-    //     glPopMatrix();
-
-    //     if (position[0].x == 0)
-    //     {
-    //         glPushMatrix();
-    //         glScaled(4.0, 1.5, 0);
-    //         glTranslatef(0, -4.0, 0);
-    //         text[9]->draw();
-    //         image[3]->draw();
-    //         glPopMatrix();
-    //     }
-    //     else if (position[0].x == 1)
-    //     {
-    //         glPushMatrix();
-    //         glScaled(4.0, 1.5, 0);
-    //         glTranslatef(0, -4.0, 0);
-    //         text[10]->draw();
-    //         image[3]->draw();
-    //         glPopMatrix();
-    //     }
-    //     else if (position[0].x == 2)
-    //     {
-    //         glPushMatrix();
-    //         glScaled(4.0, 1.5, 0);
-    //         glTranslatef(0, -4.0, 0);
-    //         text[11]->draw();
-    //         image[3]->draw();
-    //         glPopMatrix();
-    //     }
-
-    //     glPushMatrix();
-    //     glScaled(20.0, 10.0, 0);
-    //     image[2]->draw();
-    //     glPopMatrix();
-    // }
-    // ShaderManager::stopShader(SID_GUI);
-    // 名前変更
-    // Console().scanString("YourName", config->name.c_str(), &config->name);
-    // Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+        image[IMAGE_BG]->draw(NULL, NULL);
+        image[IMAGE_BG]->draw(NULL,NULL);
+    }
+    ShaderManager::stopShader(SID_GUI);
 
     // ShaderManager::startShader(SID_GUI);
     // glBindVertexArray(vao1);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
     // glBindVertexArray(0);
-    ShaderManager::stopShader(SID_GUI);
+    //ShaderManager::stopShader(SID_GUI);
 }

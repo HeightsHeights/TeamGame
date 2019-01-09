@@ -18,6 +18,8 @@ int R = 1000;
 GLfloat position_data[2000];
 GLfloat g_color_buffer_data[3000];
 float x[2000];
+GLfloat z = 0.0;
+
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
     static const GLfloat g_vertex_buffer_data[] = {
@@ -31,10 +33,10 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
         2, 1, 3};
 
     static const GLfloat uv_buffer_date[]{
-        0.45f, 0.55f,
-        0.55f, 0.55f,
-        0.45f, 0.45f,
-        0.55f, 0.45f};
+        0.45, 0.55,
+        0.55, 0.55,
+        0.45, 0.45,
+        0.55, 0.45};
 
     for (int i = 0; i < R; i++)
     {
@@ -98,7 +100,7 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     // }
 
     glBindVertexArray(0);
-
+    ubo = glGetUniformLocation(48, "zaz");
     // float a[] = {
     //     3, 1, 1, 2,
     //     5, 1, 3, 4,
@@ -202,7 +204,7 @@ void SceneTitle::drawWindow()
     GLfloat light0pos[] = {0.0, 0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     gluPerspective(60.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    gluLookAt(0.0, 0.0, 25.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // glOrtho(-WINDOW_WIDTH / 200.0, WINDOW_WIDTH / 200.0, -WINDOW_WIDTH / 200.0, WINDOW_HEIGHT / 200.0, -1.0, 1.0);
 
     // gluLookAt(5.0, 8.0, 12.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
@@ -221,13 +223,16 @@ void SceneTitle::drawWindow()
     // glScalef(3.0f, 3.0, 3.0f);
     glDisable(GL_DEPTH_TEST);
     ShaderManager::startShader(SID_PART);
+    glUniform1f(ubo, z);
+
     glBindTexture(GL_TEXTURE_2D, sky);
+
     glBindVertexArray(vao123);
+
     glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
     glBufferSubData(GL_ARRAY_BUFFER, 0, R * 2 * sizeof(GLfloat), position_data);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
     glBufferSubData(GL_ARRAY_BUFFER, 0, R * 3 * sizeof(GLfloat), g_color_buffer_data);
-
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0, R);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);

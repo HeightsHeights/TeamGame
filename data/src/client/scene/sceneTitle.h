@@ -23,6 +23,7 @@ private:
   GLuint texId;
   GLuint texID2;
   GLuint sky;
+  GLuint ubo;
   ObjRawModel *obj;
   ObjRawModel *obj2;
   XModel *model;

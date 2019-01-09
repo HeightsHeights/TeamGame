@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../baseGui.h"
 
 class GuiText : public BaseGui

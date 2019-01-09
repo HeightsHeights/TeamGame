@@ -19,9 +19,9 @@ GuiSprite *GuiSpriteLoader::load(const char *filePath, const unsigned int horizo
     }
 
     GLuint texId = bindTexture();
+    Vector2f textureSize(surface->w, surface->h);
 
-    GuiSprite *ret = new GuiSprite(texId);
-    ret->setSurfaceSize(Vector2f(surface->w, surface->h));
+    GuiSprite *ret = new GuiSprite(texId, textureSize);
     ret->setSpriteNum(Touple2f(horizontallyNum, verticallyNum));
 
     freeSurface();

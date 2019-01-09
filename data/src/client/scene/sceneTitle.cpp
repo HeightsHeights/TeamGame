@@ -100,10 +100,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            // if (Console().scanString("YourName", config->name.c_str(), &config->name))
-            // {
-            //     text2[0] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-            // }
+            if (Console().scanString("YourName", config->name.c_str(), &config->name))
+            {
+                text[3] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
+            }
         }
         else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
@@ -163,10 +163,10 @@ void SceneTitle::draw2D()
     {
         if (position[1].x == 0)
         {
-            
+
             //i+=0.1;
             glPushMatrix();
-            glScaled(2, 1.5 , 0);
+            glScaled(2, 1.5, 0);
             glTranslatef(0, -4.0, 0);
             // if (i > 2)
             //     i = 2;
@@ -176,35 +176,33 @@ void SceneTitle::draw2D()
         }
 
         glPushMatrix();
-        glScaled(5, 1.0 , 0);
+        glScaled(5, 1.0, 0);
         glTranslatef(0, -6.0, 0);
         image[3]->draw();
         glPopMatrix();
 
         glPushMatrix();
-        glScaled(5, 1.0 , 0);
+        glScaled(5, 1.0, 0);
         glTranslatef(0, -2.0, 0);
         image[3]->draw();
         glPopMatrix();
 
         glPushMatrix();
-        glScaled(5, 1.0 , 0);
+        glScaled(5, 1.0, 0);
         glTranslatef(0, 2.0, 0);
         image[3]->draw();
         glPopMatrix();
 
         glPushMatrix();
-        glScaled(5, 1.0 , 0);
+        glScaled(5, 1.0, 0);
         glTranslatef(0, 6.0, 0);
         image[3]->draw();
         glPopMatrix();
-
-        
     }
     else
     {
         //i = 0;
-        
+
         glPushMatrix();
         glScaled(10.0, 5.0, 0);
         glTranslatef(0, 0.8, 0);

@@ -64,6 +64,7 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     image[IMAGE_NAME_FRAME_RED + cid]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
 
     GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, gRed);
+    dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 10 / 2, pos.y - UNIT_WIDTH * 11 / 8, std::string(name).length() * 10, 30);
     nameText->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
     delete nameText;
 

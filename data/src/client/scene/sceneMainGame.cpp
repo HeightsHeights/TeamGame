@@ -65,7 +65,7 @@ void SceneMainGame::draw2D()
 
     statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "q");
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "b");
-    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "x");
+    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "xksdokaokd");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "ttt");
     ShaderManager::stopShader(SID_GUI);
 }

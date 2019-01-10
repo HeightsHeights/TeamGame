@@ -23,12 +23,14 @@ void BaseScene::drawWindow()
 {
     window->clearWindow();
     glEnable(GL_LIGHTING);
+    glEnable(GL_DEPTH_TEST);
     glPushMatrix();
     glLoadIdentity();
     draw3D();
     glPopMatrix();
 
     glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
     glPushMatrix();
     glLoadIdentity();
     draw2D();

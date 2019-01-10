@@ -6,10 +6,7 @@
 #include "./sceneBase.h"
 
 #include "../render/objRawModel/objModelLoader.h"
-
-#include "../render/gui/image/guiImageLoader.h"
-#include "../render/gui/text/guiTextLoader.h"
-#include "../render/gui/sprite/guiSpriteLoader.h"
+#include "./mainGame/statusDrawer.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -24,7 +21,7 @@ private:
 
   Vector2f positionMush;
 
-  GuiImage *imageNumber[10];
+  StatusDrawer *statusDrawer;
 
   virtual void draw3D();
   virtual void draw2D();

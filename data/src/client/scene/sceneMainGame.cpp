@@ -5,6 +5,8 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
+static const SDL_Color gRed = {0, 0, 255, 0};
+
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
 }
@@ -16,21 +18,17 @@ bool SceneMainGame::init()
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
 
-    std::string numbersNameTemplate = "numbers/number_";
-    for (int i = 0; i < 10; i++)
+    statusDrawer = new StatusDrawer();
+    if (!statusDrawer->init())
     {
-        char numberString[4];
-        sprintf(numberString, "%d", i);
-
-        std::string imageName = numbersNameTemplate + std::string(numberString) + PNG_FILE_EXTENSION;
-        imageNumber[i] = GuiImageLoader().load((PNG_DIR_PATH + imageName).c_str());
+        return false;
     }
 
     return true;
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
-    positionMush += Vector2f(param.axisL.x, param.axisL.y);
+    positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -39,11 +37,12 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 }
 void SceneMainGame::draw3D()
 {
-    float lightPos[] = {0, 50, 0, 1};
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 100);
-    gluLookAt(0 + positionMush.x, 50, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+
+    gluLookAt(positionMush.x, 100, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    float lightPos[] = {0, 100, 0, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     ShaderManager::startShader(SID_STATIC);
 
@@ -63,7 +62,10 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    GuiRect dst = GuiRect(0.0, 0.0, 100, 200);
-    imageNumber[1]->draw(NULL, &dst, 0.5f);
+
+    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "q");
+    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "b");
+    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "x");
+    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "ttt");
     ShaderManager::stopShader(SID_GUI);
 }

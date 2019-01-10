@@ -14,7 +14,7 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 bool SceneMainGame::init()
 {
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
-    mush = ObjModelLoader().load("./data/res/gui/obj/", "mush");
+    mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
 
     std::string numbersNameTemplate = "numbers/number_";
     for (int i = 0; i < 10; i++)
@@ -30,6 +30,7 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
+    positionMush += Vector2f(param.axisL.x, param.axisL.y);
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -38,12 +39,25 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 }
 void SceneMainGame::draw3D()
 {
+    float lightPos[] = {0, 50, 0, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 100);
-    gluLookAt(0, 20, 1, 0, 0, 0, 0, 1, 0);
+    gluLookAt(0 + positionMush.x, 50, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+
     ShaderManager::startShader(SID_STATIC);
+
     glPushMatrix();
+    glScalef(10.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
+    glTranslatef(positionMush.x, 0, positionMush.y);
+    mush->draw();
+    glPopMatrix();
+
     ShaderManager::stopShader(SID_STATIC);
 }
 void SceneMainGame::draw2D()

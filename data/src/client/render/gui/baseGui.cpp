@@ -1,6 +1,6 @@
 #include "./baseGui.h"
 
-#include "../render/shader/shaderManager.h"
+#include "../shader/shaderManager.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720

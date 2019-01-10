@@ -22,6 +22,8 @@ private:
   ObjRawModel *tile;
   ObjRawModel *mush;
 
+  Vector2f positionMush;
+
   GuiImage *imageNumber[10];
 
   virtual void draw3D();

@@ -38,12 +38,19 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         }
     }
-    else
+    else if (command == NC_CANCEL && ready[pos] == true)
     {
-        int gClientNum = NetworkManager::getGClientNum();
+        ready[pos] == false;
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SERVER_CANCEL);
+        data.setData(&pos, sizeof(int));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
+    else if(command == NC_CONNECT)
+    {
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
-        data.setData(&gClientNum, sizeof(int));
+        data.setData(&pos, sizeof(int));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
     return SI_CHARASELECT;

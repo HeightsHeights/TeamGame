@@ -18,6 +18,7 @@ private:
   virtual void draw2D();
   Vector3f position;
   bool decision[4];
+  bool connect[4];
   bool button;
   int playernum;
 

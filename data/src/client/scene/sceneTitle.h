@@ -57,8 +57,9 @@ private:
   GuiImage *image[IMAGE_NUMBER];
   int num;
   int secount;
-  GuiRect dstRect[IMAGE_NUMBER];
-  GuiRect dstRect2[TEXT_NUMBER];
+  int bright;
+  GuiRect dst[IMAGE_NUMBER];
+  GuiRect dst2[TEXT_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
 

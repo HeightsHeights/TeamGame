@@ -45,12 +45,24 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         position.y = 0;
     }
 
-    // if (position.y = 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_READY);
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
+    if (position.y = 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_READY);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
+    else if (position.y = 1 && param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_CANCEL);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
+    else
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_CONNECT);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
 
     return SI_CHARASELECT;
 }
@@ -62,6 +74,12 @@ SCENE_ID SceneChara::executeCommand(int command)
         NetworkManager::recvData(&num, sizeof(int));
         decision[num] = true;
     }
+    else if(command == NC_SERVER_CANCEL)
+    {
+        int num;
+        NetworkManager::recvData(&num, sizeof(int));
+        decision[num] = false;
+    }
     else if (command == NC_SERVER_MAINGAME)
     {
         return SI_MAIN;
@@ -69,6 +87,7 @@ SCENE_ID SceneChara::executeCommand(int command)
     else if (command == NC_SERVER_2_CLIENT)
     {
         NetworkManager::recvData(&playernum, sizeof(int));
+        connect[playernum] = true;
     }
     return SI_CHARASELECT;
 }

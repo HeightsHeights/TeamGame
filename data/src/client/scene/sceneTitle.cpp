@@ -8,6 +8,7 @@
 #include "../../common/math/matrix/matrixSet.h"
 #include "../../common/console/console.h"
 #include "../config/saver/configSaver.h"
+#include "../config/loader/configLoader.h"
 #include "../audio/audioManager.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -38,8 +39,8 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneTitle::init()
 {
     secount = 0;
-    dstRect[IMAGE_START] = GuiRect(-200, -180, 400, 80);
-    dstRect[IMAGE_TITLE] = GuiRect(-393, 256, 786, 255);
+    dst[IMAGE_START] = GuiRect(-200, -180, 400, 80);
+    dst[IMAGE_TITLE] = GuiRect(-393, 256, 786, 255);
     configmode = false;
     for (int i = 0; i < IMAGE_NUMBER; i++)
     {
@@ -110,10 +111,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    if(secount > position[0].x || secount < position[0].x){
-        secount = position[0].x;
-        AudioManager::playSE(SE_CURSOR);
-    }
+    // if(secount > position[0].x || secount < position[0].x){
+    //     secount = position[0].x;
+    //     AudioManager::playSE(SE_CURSOR);
+    // }
 
     if (configmode)
     {
@@ -129,7 +130,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            //ConfigSaver().save("cPrevConfig", config);
+            ConfigSaver().save("cPrevConfig", config);
             configmode = false;
         }
         else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
@@ -138,14 +139,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         }
         else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
         {
-            configmode = false;
+            config = ConfigLoader().load("cDefaultConfig");
         }
     }
     else
     {
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            AudioManager::playSE(SE_DECISION);
+            //AudioManager::playSE(SE_DECISION);
             DataBlock data;
             data.setCommand2DataBlock(NC_READY);
             NetworkManager::sendData(data, data.getDataSize());
@@ -178,59 +179,61 @@ void SceneTitle::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
 
+    image[IMAGE_BG]->draw(NULL, NULL,bright);
+    image[IMAGE_TITLE]->draw(NULL, &dst[IMAGE_TITLE],bright);
+
+    if (position[0].x == 0)
+    {
+        image[IMAGE_START]->draw(NULL, &dst[IMAGE_START],bright);
+    }
+    else if (position[0].x == 1)
+    {
+        image[IMAGE_CONFIG]->draw(NULL, &dst[IMAGE_START],bright);
+    }
+    else if (position[0].x == 2)
+    {
+        image[IMAGE_END]->draw(NULL, &dst[IMAGE_START],bright);
+    }
+
     if (configmode)
     {
+        bright = 0;
         i-=10;
         if(i <= -200)
             i = -200;
-        dstRect2[TEXT_YOUSERNAME] = GuiRect(i + 10, 250, 350, 80);
-        dstRect2[TEXT_SERVERID] = GuiRect(i + 10, 100, 350, 80);
-        dstRect2[TEXT_WIIMOTEID] = GuiRect(i + 12, -50, 350, 80);
-        dstRect2[TEXT_NAMETITLE] = GuiRect(i, 300, 175, 40);
-        dstRect2[TEXT_SERVERTITLE] = GuiRect(i, 150, 175, 40);
-        dstRect2[TEXT_WIITITLE] = GuiRect(i + 2, 0, 175, 40);
-        dstRect[IMAGE_SAVE] = GuiRect(i, -200, 400, 80);
+        dst2[TEXT_YOUSERNAME] = GuiRect(i + 10, 250, 350, 80);
+        dst2[TEXT_SERVERID] = GuiRect(i + 10, 100, 350, 80);
+        dst2[TEXT_WIIMOTEID] = GuiRect(i + 12, -50, 350, 80);
+        dst2[TEXT_NAMETITLE] = GuiRect(i, 300, 175, 40);
+        dst2[TEXT_SERVERTITLE] = GuiRect(i, 150, 175, 40);
+        dst2[TEXT_WIITITLE] = GuiRect(i + 2, 0, 175, 40);
+        dst[IMAGE_SAVE] = GuiRect(i, -200, 400, 80);
         if (position[1].x == 0)
         {
-            image[IMAGE_SAVE]->draw(NULL, &dstRect[IMAGE_SAVE]);
+            image[IMAGE_SAVE]->draw(NULL, &dst[IMAGE_SAVE]);
         }
         else if (position[1].x == 1)
         {
-            image[IMAGE_CANCEL]->draw(NULL, &dstRect[IMAGE_SAVE]);
+            image[IMAGE_CANCEL]->draw(NULL, &dst[IMAGE_SAVE]);
         }
         else if (position[1].x == 2)
         {
-            image[IMAGE_RESET]->draw(NULL, &dstRect[IMAGE_SAVE]);
+            image[IMAGE_RESET]->draw(NULL, &dst[IMAGE_SAVE]);
         }
         text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
         text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
 
         for(int i = 3; i < TEXT_NUMBER; i++){
-        text[i]->draw(NULL,&dstRect2[i]);
+        text[i]->draw(NULL,&dst2[i]);
         }
     }
     else
     {
         i = 640;
-        image[IMAGE_TITLE]->draw(NULL, &dstRect[IMAGE_TITLE]);
-
-        if (position[0].x == 0)
-        {
-            image[IMAGE_START]->draw(NULL, &dstRect[IMAGE_START]);
-        }
-        else if (position[0].x == 1)
-        {
-            image[IMAGE_CONFIG]->draw(NULL, &dstRect[IMAGE_START]);
-        }
-        else if (position[0].x == 2)
-        {
-            image[IMAGE_END]->draw(NULL, &dstRect[IMAGE_START]);
-        }
-
-        image[IMAGE_BG]->draw(NULL, NULL);
+        bright = 1;
     }
+    
     ShaderManager::stopShader(SID_GUI);
-
     // ShaderManager::startShader(SID_GUI);
     // glBindVertexArray(vao1);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);

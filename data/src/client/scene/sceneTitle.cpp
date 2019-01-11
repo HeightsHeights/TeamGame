@@ -56,15 +56,9 @@ bool SceneTitle::init()
         }
     }
 
-    text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, config->name.c_str(), gRed);
-    text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, config->serverAddress.c_str(), gRed);
-    text[TEXT_WIIMOTEID] = GuiTextLoader().load(FID_NORMAL, subconfig->wiiRemoteId.c_str(), gRed);
     text[TEXT_SAVE] = GuiTextLoader().load(FID_NORMAL, "Save", gRed);
     text[TEXT_CANCEL] = GuiTextLoader().load(FID_NORMAL, "Cancel", gRed);
     text[TEXT_RESET] = GuiTextLoader().load(FID_NORMAL, "Reset", gRed);
-    text[TEXT_NAMETITLE] = GuiTextLoader().load(FID_NORMAL, "NAME", gRed);
-    text[TEXT_SERVERTITLE] = GuiTextLoader().load(FID_NORMAL, "ServerID", gRed);
-    text[TEXT_WIITITLE] = GuiTextLoader().load(FID_NORMAL, "WiimoteID", gRed);
 
     for (int i = 0; i < TEXT_NUMBER; i++)
     {
@@ -193,18 +187,7 @@ void SceneTitle::draw2D()
     image[IMAGE_BG]->draw(NULL, NULL, bright);
     image[IMAGE_TITLE]->draw(NULL, &dst[IMAGE_TITLE], bright);
 
-    if (position[0].x == 0)
-    {
-        image[IMAGE_START]->draw(NULL, &dst[IMAGE_START], bright);
-    }
-    else if (position[0].x == 1)
-    {
-        image[IMAGE_CONFIG]->draw(NULL, &dst[IMAGE_START], bright);
-    }
-    else if (position[0].x == 2)
-    {
-        image[IMAGE_END]->draw(NULL, &dst[IMAGE_START], bright);
-    }
+    image[IMAGE_START + (int)position[0].x]->draw(NULL, &dst[IMAGE_START], bright);
 
     if (!configmode)
     {
@@ -233,11 +216,6 @@ void SceneTitle::draw2D()
     }
 
     ShaderManager::stopShader(SID_GUI);
-    // ShaderManager::startShader(SID_GUI);
-    // glBindVertexArray(vao1);
-    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
-    // glBindVertexArray(0);
-    //ShaderManager::stopShader(SID_GUI);
 }
 
 void SceneTitle::drawConfig(Vector2f pos)

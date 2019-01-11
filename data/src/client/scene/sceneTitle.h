@@ -39,13 +39,7 @@ public:
     TEXT_SAVE = 0,
     TEXT_CANCEL = 1,
     TEXT_RESET = 2,
-    TEXT_YOUSERNAME = 3,
-    TEXT_SERVERID = 4,
-    TEXT_WIIMOTEID = 5,
-    TEXT_NAMETITLE = 6,
-    TEXT_SERVERTITLE = 7,
-    TEXT_WIITITLE = 8,
-    TEXT_NUMBER = 9,
+    TEXT_NUMBER = 3,
   } TEXT_ID;
 
 private:

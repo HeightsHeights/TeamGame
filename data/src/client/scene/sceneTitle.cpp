@@ -113,11 +113,11 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    if (secount > position[0].x || secount < position[0].x)
-    {
-        secount = position[0].x;
-        AudioManager::playSE(SE_CURSOR);
-    }
+    // if (secount > position[0].x || secount < position[0].x)
+    // {
+    //     secount = position[0].x;
+    //     AudioManager::playSE(SE_CURSOR);
+    // }
 
     if (configmode)
     {
@@ -156,14 +156,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            AudioManager::playSE(SE_DECISION);
+            // AudioManager::playSE(SE_DECISION);
             DataBlock data;
             data.setCommand2DataBlock(NC_READY);
             NetworkManager::sendData(data, data.getDataSize());
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            AudioManager::playSE(SE_DECISION);
+            // AudioManager::playSE(SE_DECISION);
             configmode = true;
         }
         else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])

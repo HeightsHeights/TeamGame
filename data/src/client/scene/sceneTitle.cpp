@@ -124,16 +124,20 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            Console().scanString("YourName", config->name.c_str(), &config->name);
+            Console().scanString("YourName", subconfig->name.c_str(), &subconfig->name);
         }
         else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+            Console().scanString("ServerAddress", subconfig->serverAddress.c_str(), &subconfig->serverAddress);
+        }
+        else if (position[1].y == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            Console().scanString("WiiRemoteId", subconfig->wiiRemoteId.c_str(), &subconfig->wiiRemoteId);
         }
 
         if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            ConfigSaver().save("cPrevConfig", config);
+            ConfigSaver().save("cPrevConfig", subconfig);
             configmode = false;
         }
         else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])

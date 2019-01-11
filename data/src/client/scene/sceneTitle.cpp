@@ -18,7 +18,7 @@
 
 static const SDL_Color gRed = {0, 0, 255, 0};
 
-std::string IMAGE_NAME[IMAGE_NUMBER] =
+std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
     {
         "title.png",
         "back.png",
@@ -90,20 +90,20 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         button = true;
     }
 
-    if (position[num].x >= 3)
+    if (position[num].x > 2)
     {
         position[num].x = 0;
     }
-    else if (position[num].x <= -1)
+    else if (position[num].x < 0)
     {
-        position[num].x = 1;
+        position[num].x = 2;
     }
 
-    if (position[1].y >= 4)
+    if (position[1].y > 3)
     {
         position[1].y = 3;
     }
-    else if (position[1].y <= -1)
+    else if (position[1].y < 0)
     {
         position[1].y = 0;
     }

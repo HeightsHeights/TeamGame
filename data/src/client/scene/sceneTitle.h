@@ -11,30 +11,6 @@
 #include "../render/gui/image/guiImageLoader.h"
 #include "../render/gui/text/guiTextLoader.h"
 
-typedef enum {
-  IMAGE_TITLE = 0,
-  IMAGE_BG = 1,
-  IMAGE_START = 2,
-  IMAGE_CONFIG = 3,
-  IMAGE_END = 4,
-  IMAGE_SAVE = 5,
-  IMAGE_CANCEL = 6,
-  IMAGE_RESET = 7,
-  IMAGE_NUMBER = 8,
-} IMAGE_ID;
-
-typedef enum {
-  TEXT_SAVE = 0,
-  TEXT_CANCEL = 1,
-  TEXT_RESET = 2,
-  TEXT_YOUSERNAME = 3,
-  TEXT_SERVERID = 4,
-  TEXT_WIIMOTEID = 5,
-  TEXT_NAMETITLE = 6,
-  TEXT_SERVERTITLE = 7,
-  TEXT_WIITITLE = 8,
-  TEXT_NUMBER = 9,
-} TEXT_ID;
 /******************************************************************************
  * class SceneTitle
  * 機能1：
@@ -43,6 +19,32 @@ typedef enum {
 
 class SceneTitle : public BaseScene
 {
+public:
+  typedef enum {
+    IMAGE_TITLE = 0,
+    IMAGE_BG = 1,
+    IMAGE_START = 2,
+    IMAGE_CONFIG = 3,
+    IMAGE_END = 4,
+    IMAGE_SAVE = 5,
+    IMAGE_CANCEL = 6,
+    IMAGE_RESET = 7,
+    IMAGE_NUMBER = 8,
+  } IMAGE_ID;
+
+  typedef enum {
+    TEXT_SAVE = 0,
+    TEXT_CANCEL = 1,
+    TEXT_RESET = 2,
+    TEXT_YOUSERNAME = 3,
+    TEXT_SERVERID = 4,
+    TEXT_WIIMOTEID = 5,
+    TEXT_NAMETITLE = 6,
+    TEXT_SERVERTITLE = 7,
+    TEXT_WIITITLE = 8,
+    TEXT_NUMBER = 9,
+  } TEXT_ID;
+
 private:
   // GLuint vao1;
   // GLuint vao2;

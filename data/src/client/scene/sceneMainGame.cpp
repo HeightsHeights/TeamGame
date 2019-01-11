@@ -24,6 +24,8 @@ bool SceneMainGame::init()
         return false;
     }
 
+    mushEye = Vector3f(1, 0, 1);
+
     return true;
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
@@ -54,6 +56,14 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
     glTranslatef(positionMush.x, 0, positionMush.y);
+
+    lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    mush->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
+    glTranslatef(mushEye.x, 0, mushEye.y);
     mush->draw();
     glPopMatrix();
 
@@ -68,4 +78,21 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
     ShaderManager::stopShader(SID_GUI);
+}
+
+void SceneMainGame::lookatVector(Vector3f direction)
+{
+    direction = direction.normalize();
+    Vector3f up = Vector3f(0, 1, 0);
+    Vector3f cross1 = Vector3f::cross(direction, up).normalize();
+    Vector3f cross2 = Vector3f::cross(cross1, direction).normalize();
+
+    float rotation[4][4] = {
+        {cross1.x, cross1.y, cross1.z, 0},
+        {cross2.x, cross2.y, cross2.z, 0},
+        {direction.x, direction.y, direction.z, 0},
+        {0, 0, 0, 1},
+    };
+    glMatrixMode(GL_MODELVIEW_MATRIX);
+    glMultMatrixf(rotation[0]);
 }

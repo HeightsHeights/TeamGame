@@ -20,11 +20,13 @@ private:
   ObjRawModel *mush;
 
   Vector2f positionMush;
+  Vector3f mushEye;
 
   StatusDrawer *statusDrawer;
 
   virtual void draw3D();
   virtual void draw2D();
+  void lookatVector(Vector3f direction);
 
 public:
   SceneMainGame() : BaseScene() {}

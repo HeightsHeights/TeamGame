@@ -20,14 +20,14 @@ static const SDL_Color gRed = {0, 0, 255, 0};
 
 std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
     {
-        "title.png",
-        "back.png",
-        "start.png",
-        "config.png",
-        "end.png",
-        "save.png",
-        "cancel.png",
-        "reset.png",
+        "title/title.png",
+        "title/back.png",
+        "title/start.png",
+        "title/config.png",
+        "title/end.png",
+        "title/save.png",
+        "title/cancel.png",
+        "title/reset.png",
         "configFrames/configFrame00.png",
         "configFrames/configFrame01.png",
         "configFrames/configFrame02.png",
@@ -149,7 +149,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
             subconfig = ConfigLoader().load("cDefaultConfig");
         }
 
-        if(param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
+        if (param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
         {
             configmode = false;
         }

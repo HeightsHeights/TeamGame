@@ -113,36 +113,45 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    if (secount > position[0].x || secount < position[0].x)
-    {
-        secount = position[0].x;
-        AudioManager::playSE(SE_CURSOR);
-    }
+    // if (secount > position[0].x || secount < position[0].x)
+    // {
+    //     secount = position[0].x;
+    //     AudioManager::playSE(SE_CURSOR);
+    // }
 
     if (configmode)
     {
 
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            Console().scanString("YourName", config->name.c_str(), &config->name);
+            Console().scanString("YourName", subconfig->name.c_str(), &subconfig->name);
         }
         else if (position[1].y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            Console().scanString("ServerAddress", config->serverAddress.c_str(), &config->serverAddress);
+            Console().scanString("ServerAddress", subconfig->serverAddress.c_str(), &subconfig->serverAddress);
+        }
+        else if (position[1].y == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            Console().scanString("WiiRemoteId", subconfig->wiiRemoteId.c_str(), &subconfig->wiiRemoteId);
         }
 
         if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            ConfigSaver().save("cPrevConfig", config);
+            ConfigSaver().save("cPrevConfig", subconfig);
             configmode = false;
         }
         else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             configmode = false;
         }
-        else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             subconfig = ConfigLoader().load("cDefaultConfig");
+        }
+
+        if(param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
+        {
+            configmode = false;
         }
     }
     else
@@ -152,14 +161,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            AudioManager::playSE(SE_DECISION);
+            // AudioManager::playSE(SE_DECISION);
             DataBlock data;
             data.setCommand2DataBlock(NC_READY);
             NetworkManager::sendData(data, data.getDataSize());
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            AudioManager::playSE(SE_DECISION);
+            // AudioManager::playSE(SE_DECISION);
             configmode = true;
         }
         else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])

@@ -180,7 +180,6 @@ SCENE_ID SceneTitle::executeCommand(int command)
 void SceneTitle::draw3D()
 {
 }
-static int i;
 void SceneTitle::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
@@ -203,61 +202,28 @@ void SceneTitle::draw2D()
 
     if (!configmode)
     {
-        i = 640;
-        bright += 0.1;
-        if (bright > 1)
-            bright = 1;
+        configPos.x = 640;
 
-        if (position[0].x == 0)
+        bright += 0.1f;
+        if (bright > 1.0f)
         {
-            image[IMAGE_START]->draw(NULL, &dst[IMAGE_START], bright);
+            bright = 1.0f;
         }
-        else if (position[0].x == 1)
-        {
-            image[IMAGE_CONFIG]->draw(NULL, &dst[IMAGE_START], bright);
-        }
-        else if (position[0].x == 2)
-        {
-            image[IMAGE_END]->draw(NULL, &dst[IMAGE_START], bright);
-        }
+        image[(int)IMAGE_START + (int)position[0].x]->draw(NULL, &dst[IMAGE_START], bright);
     }
     else
     {
-        bright -= 0.1;
-        if (bright < 0.4)
-            bright = 0.4;
-        i -= 10;
-        if (i <= -200)
-            i = -200;
-        dst2[TEXT_YOUSERNAME] = GuiRect(i + 10, 250, 350, 80);
-        dst2[TEXT_SERVERID] = GuiRect(i + 10, 100, 350, 80);
-        dst2[TEXT_WIIMOTEID] = GuiRect(i + 12, -50, 350, 80);
-        dst2[TEXT_NAMETITLE] = GuiRect(i, 300, 175, 40);
-        dst2[TEXT_SERVERTITLE] = GuiRect(i, 150, 175, 40);
-        dst2[TEXT_WIITITLE] = GuiRect(i + 2, 0, 175, 40);
-        dst[IMAGE_SAVE] = GuiRect(i, -200, 400, 80);
-        if (position[1].x == 0)
+        bright -= 0.1f;
+        if (bright < 0.4f)
         {
-            image[IMAGE_SAVE]->draw(NULL, &dst[IMAGE_SAVE]);
+            bright = 0.4f;
         }
-        else if (position[1].x == 1)
+        configPos.x -= 10;
+        if (configPos.x <= -200)
         {
-            image[IMAGE_CANCEL]->draw(NULL, &dst[IMAGE_SAVE]);
+            configPos.x = -200;
         }
-        else if (position[1].x == 2)
-        {
-            image[IMAGE_RESET]->draw(NULL, &dst[IMAGE_SAVE]);
-        }
-
-        delete text[TEXT_YOUSERNAME];
-        delete text[TEXT_SERVERID];
-        text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, subconfig->name.c_str(), gRed);
-        text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, subconfig->serverAddress.c_str(), gRed);
-
-        for (int i = 3; i < TEXT_NUMBER; i++)
-        {
-            text[i]->draw(NULL, &dst2[i]);
-        }
+        drawConfig(configPos);
     }
 
     ShaderManager::stopShader(SID_GUI);
@@ -266,4 +232,27 @@ void SceneTitle::draw2D()
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
     // glBindVertexArray(0);
     //ShaderManager::stopShader(SID_GUI);
+}
+
+void SceneTitle::drawConfig(Vector2f pos)
+{
+    delete text[TEXT_YOUSERNAME];
+    delete text[TEXT_SERVERID];
+    text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, subconfig->name.c_str(), gRed);
+    text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, subconfig->serverAddress.c_str(), gRed);
+
+    dst2[TEXT_YOUSERNAME] = GuiRect(pos.x + 10, 250, 350, 80);
+    dst2[TEXT_SERVERID] = GuiRect(pos.x + 10, 100, 350, 80);
+    dst2[TEXT_WIIMOTEID] = GuiRect(pos.x + 12, -50, 350, 80);
+    dst2[TEXT_NAMETITLE] = GuiRect(pos.x, 300, 175, 40);
+    dst2[TEXT_SERVERTITLE] = GuiRect(pos.x, 150, 175, 40);
+    dst2[TEXT_WIITITLE] = GuiRect(pos.x + 2, 0, 175, 40);
+    dst[IMAGE_SAVE] = GuiRect(pos.x, -200, 400, 80);
+
+    image[(int)IMAGE_SAVE + (int)position[1].x]->draw(NULL, &dst[IMAGE_SAVE]);
+
+    for (int i = TEXT_YOUSERNAME; i < TEXT_NUMBER; i++)
+    {
+        text[i]->draw(NULL, &dst2[i]);
+    }
 }

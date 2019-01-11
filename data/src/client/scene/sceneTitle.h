@@ -46,12 +46,7 @@ public:
   } TEXT_ID;
 
 private:
-  // GLuint vao1;
-  // GLuint vao2;
-  // GLuint texId;
-  // ObjRawModel *obj;
-  // XModel *model;
-  //float angle;
+  Vector2f configPos;
   Vector2f position[2];
   bool button;
   bool configmode;
@@ -59,12 +54,14 @@ private:
   GuiImage *image[IMAGE_NUMBER];
   int num;
   int secount;
-  double bright;
+  float bright;
   ConfigData *subconfig;
   GuiRect dst[IMAGE_NUMBER];
   GuiRect dst2[TEXT_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
+
+  void drawConfig(Vector2f pos);
 
 public:
   SceneTitle() : BaseScene() {}

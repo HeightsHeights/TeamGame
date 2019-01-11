@@ -144,9 +144,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         {
             configmode = false;
         }
-        else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK])
+        else if (position[1].y == 3 && position[1].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             subconfig = ConfigLoader().load("cDefaultConfig");
+        }
+
+        if(param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
+        {
+            configmode = false;
         }
     }
     else

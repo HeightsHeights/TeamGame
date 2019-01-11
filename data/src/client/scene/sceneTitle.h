@@ -29,7 +29,10 @@ public:
     IMAGE_SAVE = 5,
     IMAGE_CANCEL = 6,
     IMAGE_RESET = 7,
-    IMAGE_NUMBER = 8,
+    IMAGE_CONFIG_FRAME_0 = 8,
+    IMAGE_CONFIG_FRAME_1 = 9,
+    IMAGE_CONFIG_FRAME_2 = 10,
+    IMAGE_NUMBER = 11,
   } IMAGE_ID;
 
   typedef enum {

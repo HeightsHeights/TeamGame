@@ -28,6 +28,9 @@ std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
         "save.png",
         "cancel.png",
         "reset.png",
+        "configFrames/configFrame00.png",
+        "configFrames/configFrame01.png",
+        "configFrames/configFrame02.png",
 };
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
@@ -248,6 +251,10 @@ void SceneTitle::drawConfig(Vector2f pos)
     dst2[TEXT_SERVERTITLE] = GuiRect(pos.x, 150, 175, 40);
     dst2[TEXT_WIITITLE] = GuiRect(pos.x + 2, 0, 175, 40);
     dst[IMAGE_SAVE] = GuiRect(pos.x, -200, 400, 80);
+
+    dst[IMAGE_CONFIG_FRAME_0] = GuiRect(pos.x, 0, 500, 100);
+
+    image[IMAGE_CONFIG_FRAME_2]->draw(NULL, &dst[IMAGE_CONFIG_FRAME_0]);
 
     image[(int)IMAGE_SAVE + (int)position[1].x]->draw(NULL, &dst[IMAGE_SAVE]);
 

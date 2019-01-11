@@ -73,6 +73,9 @@ bool SceneTitle::init()
             return false;
         }
     }
+
+    configPos = Vector2f(0, 440);
+
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
@@ -239,27 +242,44 @@ void SceneTitle::draw2D()
 
 void SceneTitle::drawConfig(Vector2f pos)
 {
-    delete text[TEXT_YOUSERNAME];
-    delete text[TEXT_SERVERID];
-    text[TEXT_YOUSERNAME] = GuiTextLoader().load(FID_NORMAL, subconfig->name.c_str(), gRed);
-    text[TEXT_SERVERID] = GuiTextLoader().load(FID_NORMAL, subconfig->serverAddress.c_str(), gRed);
+    dst[IMAGE_CONFIG_FRAME_0] = GuiRect(pos.x - 50, pos.y, 500, 880);
+    image[IMAGE_CONFIG_FRAME_0]->draw(NULL, &dst[IMAGE_CONFIG_FRAME_0]);
 
-    dst2[TEXT_YOUSERNAME] = GuiRect(pos.x + 10, 250, 350, 80);
-    dst2[TEXT_SERVERID] = GuiRect(pos.x + 10, 100, 350, 80);
-    dst2[TEXT_WIIMOTEID] = GuiRect(pos.x + 12, -50, 350, 80);
-    dst2[TEXT_NAMETITLE] = GuiRect(pos.x, 300, 175, 40);
-    dst2[TEXT_SERVERTITLE] = GuiRect(pos.x, 150, 175, 40);
-    dst2[TEXT_WIITITLE] = GuiRect(pos.x + 2, 0, 175, 40);
+    drawConfigElement(pos + Vector2f(0, -140), std::string("Name"), subconfig->name, position[1].y == 0);
+    drawConfigElement(pos + Vector2f(0, -290), std::string("ServerAddress"), subconfig->serverAddress, position[1].y == 1);
+    drawConfigElement(pos + Vector2f(0, -440), std::string("WiimoteID"), subconfig->wiiRemoteId, position[1].y == 2);
+
     dst[IMAGE_SAVE] = GuiRect(pos.x, -200, 400, 80);
+    image[(int)IMAGE_SAVE + (int)position[1].x]->draw(NULL, &dst[IMAGE_SAVE], position[1].y == 3 ? 1.0f : 0.6f);
+}
+void SceneTitle::drawConfigElement(Vector2f pos, std::string label, std::string string, bool selected)
+{
 
-    dst[IMAGE_CONFIG_FRAME_0] = GuiRect(pos.x, 0, 500, 100);
+    const Vector2f labelSize = Vector2f(150.0f, 50.0f);
+    const Vector2f stringSize = Vector2f(400.0f, 80.0f);
 
-    image[IMAGE_CONFIG_FRAME_2]->draw(NULL, &dst[IMAGE_CONFIG_FRAME_0]);
+    const float unitWord[2] = {
+        10.0f,
+        20.0f,
+    };
 
-    image[(int)IMAGE_SAVE + (int)position[1].x]->draw(NULL, &dst[IMAGE_SAVE]);
+    float brightness = selected ? 1.0f : 0.6f;
 
-    for (int i = TEXT_YOUSERNAME; i < TEXT_NUMBER; i++)
-    {
-        text[i]->draw(NULL, &dst2[i]);
-    }
+    dst[IMAGE_CONFIG_FRAME_1] = GuiRect(pos.x, pos.y, labelSize.x, labelSize.y);
+    dst[IMAGE_CONFIG_FRAME_2] = GuiRect(pos.x, pos.y - labelSize.y, stringSize.x, stringSize.y);
+
+    image[IMAGE_CONFIG_FRAME_1]->draw(NULL, &dst[IMAGE_CONFIG_FRAME_1], brightness);
+    image[IMAGE_CONFIG_FRAME_2]->draw(NULL, &dst[IMAGE_CONFIG_FRAME_2], brightness);
+
+    float center = pos.x + labelSize.x / 2;
+    GuiText *text = GuiTextLoader().load(FID_NORMAL, label.c_str(), gRed);
+    GuiRect dst = GuiRect(center - label.length() * unitWord[0] / 2, pos.y - labelSize.y / 4, label.length() * unitWord[0], labelSize.y / 2);
+    text->draw(NULL, &dst, brightness);
+    delete text;
+
+    center = pos.x + stringSize.x / 2;
+    text = GuiTextLoader().load(FID_NORMAL, string.c_str(), gRed);
+    dst = GuiRect(center - string.length() * unitWord[1] / 2, pos.y - labelSize.y * 5 / 4, string.length() * unitWord[1], labelSize.y);
+    text->draw(NULL, &dst, brightness);
+    delete text;
 }

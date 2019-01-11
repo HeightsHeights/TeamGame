@@ -65,6 +65,7 @@ private:
   virtual void draw2D();
 
   void drawConfig(Vector2f pos);
+  void drawConfigElement(Vector2f pos, std::string label, std::string string, bool selected);
 
 public:
   SceneTitle() : BaseScene() {}

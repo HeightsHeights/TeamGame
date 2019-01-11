@@ -5,7 +5,7 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
-static const SDL_Color gRed = {0, 0, 255, 0};
+static const SDL_Color black = {0, 0, 0, 0};
 
 StatusDrawer::StatusDrawer()
 {
@@ -56,6 +56,11 @@ void StatusDrawer::cleanUp()
 }
 void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name)
 {
+    if (hp > 999)
+    {
+        hp = 999;
+    }
+
     float brightness = (float)(hp + 50) / 100;
     GuiRect dst = GuiRect(pos.x, pos.y, UNIT_WIDTH, UNIT_WIDTH);
     image[IMAGE_ICON]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
@@ -63,8 +68,8 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     dst = GuiRect(pos.x, pos.y - UNIT_WIDTH * 9 / 8, 4 * UNIT_WIDTH, UNIT_WIDTH);
     image[IMAGE_NAME_FRAME_RED + cid]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
 
-    GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, gRed);
-    dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 10 / 2, pos.y - UNIT_WIDTH * 11 / 8, std::string(name).length() * 10, 30);
+    GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
+    dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 15 / 2, pos.y - UNIT_WIDTH * 11 / 8, std::string(name).length() * 15, 30);
     nameText->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
     delete nameText;
 

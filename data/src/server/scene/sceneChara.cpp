@@ -40,7 +40,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     }
     else if (command == NC_CANCEL && ready[pos] == true)
     {
-        ready[pos] == false;
+        ready[pos] = false;
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_CANCEL);
         data.setData(&pos, sizeof(int));

@@ -8,7 +8,6 @@
 #include "../../common/math/vector/vectorSet.h"
 #include "../render/gui/image/guiImageLoader.h"
 #include "../render/gui/text/guiTextLoader.h"
-
 #define FRAME_WIDTH 80
 /******************************************************************************
  * class SceneChara
@@ -44,13 +43,17 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector2f position;
+  Vector2f positionMush;
   bool decision[4];
   bool connect[4];
+  bool own;
   bool button;
   float bright;
 
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];
+  ObjRawModel *mush;
+  ObjRawModel *bamboo;
 
   void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit,bool ready, const char *name);
 

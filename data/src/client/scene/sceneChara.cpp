@@ -16,6 +16,7 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneChara::init()
 {
+    mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
@@ -32,6 +33,7 @@ bool SceneChara::init()
 
     dst[IMAGE_BAMBOO] = GuiRect(-500,-150,200,50);
     dst[IMAGE_READY] = GuiRect(-150,-225,300,100);
+    own = false;
     for (int i = 0; i < IMAGE_NUMBER; i++)
     {
         image[i] = GuiImageLoader().load((PNG_DIR_PATH + IMAGE_NAME[i]).c_str());
@@ -45,7 +47,7 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
-    if (button == true)
+    if (!own && button == true)
     {
         if (position.y == 0){
             position.x += param.axisL.x;
@@ -76,14 +78,16 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         position.y = 0;
     }
 
-    if (position.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    if (!own && position.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
+        own = true;
         DataBlock data;
         data.setCommand2DataBlock(NC_READY);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else if (position.y == 1 && param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
+    else if (own == true && position.y == 1 && param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
     {
+        own = false;
         DataBlock data;
         data.setCommand2DataBlock(NC_CANCEL);
         NetworkManager::sendData(data, data.getDataSize());
@@ -123,21 +127,27 @@ SCENE_ID SceneChara::executeCommand(int command)
     }
     return SI_CHARASELECT;
 }
+
 void SceneChara::draw3D()
 {
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    float lightPos[] = {-100, 50, 150, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    ShaderManager::startShader(SID_STATIC);
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
+    glTranslatef(-10, -1, positionMush.y);
+    mush->draw();
+    glPopMatrix();
 }
 void SceneChara::draw2D()
 {
-    if(position.y == 0){
-        bright = 0.3f;
-    }
-    else{
-        bright = 1.0f;
-    }
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_CONFIGBG]->draw(NULL, NULL, 1);
-    image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
-    image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO]);
+    image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own)? 1.0f : 0.3f);
+    image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO],(position.y == 0)? 1.0f : 0.3f);
     drawPlayer(Vector2f(100, 400),COLOR_RED,true,true,"suyama");
     drawPlayer(Vector2f(100, 280),COLOR_BLUE,true,false,"suyama");
     drawPlayer(Vector2f(100, 160),COLOR_YELLOW,true,false,"suyama");

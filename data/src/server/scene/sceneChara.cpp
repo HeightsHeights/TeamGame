@@ -3,6 +3,8 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include <stdio.h>
+#include<string>
+#include<sstream>
 bool SceneChara::init()
 {
     return true;
@@ -48,8 +50,19 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     }
     else if(command == NC_CONNECT)
     {
+        // std::string cstr;
+        // std::ostringstream oss;
+        // const char *myname;
+        // const char *name;
+        // NetworkManager::recvData(pos, &myname, sizeof(char));
+        // oss << pos;
+        // cstr = std::string(myname);
+        // name = (oss.str() + cstr).c_str();
+
+
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
+        // data.setData(&name, sizeof(char));
         data.setData(&pos, sizeof(int));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }

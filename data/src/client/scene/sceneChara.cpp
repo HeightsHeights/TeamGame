@@ -92,12 +92,15 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_CANCEL);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    // else
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_CONNECT);
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
+    else
+    {
+        // const char *myname;
+        // myname = config->name.c_str();
+        DataBlock data;
+        data.setCommand2DataBlock(NC_CONNECT);
+        // data.setData(&myname, sizeof(char));
+        NetworkManager::sendData(data, data.getDataSize());
+    }
 
     return SI_CHARASELECT;
 }
@@ -124,23 +127,24 @@ SCENE_ID SceneChara::executeCommand(int command)
         int num;
         NetworkManager::recvData(&num, sizeof(int));
         connect[num] = true;
+
     }
     return SI_CHARASELECT;
 }
 
 void SceneChara::draw3D()
 {
-    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
-    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
-    float lightPos[] = {-100, 50, 150, 1};
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    // gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+    // gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    // float lightPos[] = {-100, 50, 150, 1};
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    ShaderManager::startShader(SID_STATIC);
-    glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
-    glTranslatef(-10, -1, positionMush.y);
-    mush->draw();
-    glPopMatrix();
+    // ShaderManager::startShader(SID_STATIC);
+    // glPushMatrix();
+    // glScalef(1.0f, 2.0f, 1.0f);
+    // glTranslatef(-10, -1, positionMush.y);
+    // mush->draw();
+    // glPopMatrix();
 }
 void SceneChara::draw2D()
 {
@@ -148,10 +152,10 @@ void SceneChara::draw2D()
     image[IMAGE_CONFIGBG]->draw(NULL, NULL, 1);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own)? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO],(position.y == 0)? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400),COLOR_RED,true,true,"suyama");
-    drawPlayer(Vector2f(100, 280),COLOR_BLUE,true,false,"suyama");
-    drawPlayer(Vector2f(100, 160),COLOR_YELLOW,true,false,"suyama");
-    drawPlayer(Vector2f(100, 40),COLOR_GREEN,false,false,"suyama");
+    drawPlayer(Vector2f(100, 400),COLOR_RED,connect[0],decision[0],"suyama");
+    drawPlayer(Vector2f(100, 280),COLOR_BLUE,connect[1],decision[1],"aaa");
+    drawPlayer(Vector2f(100, 160),COLOR_YELLOW,connect[2],decision[2],"suyama");
+    drawPlayer(Vector2f(100, 40),COLOR_GREEN,connect[3],decision[3],"suyama");
     ShaderManager::stopShader(SID_GUI);
 }
 
@@ -167,7 +171,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit,bool ready, co
         dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, FRAME_WIDTH);
         image[IMAGE_PLAYER_FRAME_0 + cid]->draw(NULL, &dst2, 1.0f);
 
-        dst2 = GuiRect(pos.x - 80, pos.y - FRAME_WIDTH * 9 / 8, FRAME_WIDTH, FRAME_WIDTH);
+        dst2 = GuiRect(pos.x - FRAME_WIDTH, pos.y - FRAME_WIDTH * 9 / 8, FRAME_WIDTH, FRAME_WIDTH);
         image[IMAGE_CHECK]->draw(NULL,&dst2,(ready) ? 1.0f : 0.2f);
     
 

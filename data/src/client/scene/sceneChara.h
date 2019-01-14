@@ -49,6 +49,7 @@ private:
   bool own;
   bool button;
   float bright;
+  const char *username;
 
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];

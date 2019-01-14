@@ -82,17 +82,15 @@ void SceneMainGame::draw2D()
 
 void SceneMainGame::lookatVector(Vector3f direction)
 {
-    direction = direction.normalize();
-    Vector3f up = Vector3f(0, 1, 0);
-    Vector3f cross1 = Vector3f::cross(direction, up).normalize();
-    Vector3f cross2 = Vector3f::cross(cross1, direction).normalize();
+    direction.y = 0;
 
-    float rotation[4][4] = {
-        {cross1.x, cross1.y, cross1.z, 0},
-        {cross2.x, cross2.y, cross2.z, 0},
-        {direction.x, direction.y, direction.z, 0},
-        {0, 0, 0, 1},
-    };
-    glMatrixMode(GL_MODELVIEW_MATRIX);
-    glMultMatrixf(rotation[0]);
+    Vector3f vecY = Vector3f(0, 1, 0);
+    Vector3f vecZ = Vector3f(0, 0, 1);
+
+    float theta = direction.betweenAngleDegree(vecZ);
+    if (Vector3f::cross(vecZ, direction).y < 0)
+    {
+        theta *= -1;
+    }
+    glRotated(theta, vecY.x, vecY.y, vecY.z);
 }

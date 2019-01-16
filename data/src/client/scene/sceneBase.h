@@ -17,6 +17,7 @@ class BaseScene
 {
 private:
   WindowManager *window;
+  virtual void drawBackground();
   virtual void draw3D();
   virtual void draw2D();
 

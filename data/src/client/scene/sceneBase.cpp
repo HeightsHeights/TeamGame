@@ -22,6 +22,7 @@ SCENE_ID BaseScene::executeCommand(int command)
 void BaseScene::drawWindow()
 {
     window->clearWindow();
+    drawBackground();
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
     glPushMatrix();
@@ -36,6 +37,9 @@ void BaseScene::drawWindow()
     draw2D();
     glPopMatrix();
     window->swapWindow();
+}
+void BaseScene::drawBackground()
+{
 }
 void BaseScene::draw3D()
 {

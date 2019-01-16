@@ -16,6 +16,7 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneChara::init()
 {
+    angle = 0;
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
@@ -132,28 +133,48 @@ SCENE_ID SceneChara::executeCommand(int command)
     return SI_CHARASELECT;
 }
 
+void SceneChara::drawBackground()
+{
+    ShaderManager::startShader(SID_GUI);
+    image[IMAGE_CONFIGBG]->draw(NULL, NULL, 1);
+    ShaderManager::stopShader(SID_GUI);
+}
+
 void SceneChara::draw3D()
 {
-    // gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
-    // gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
-    // float lightPos[] = {-100, 50, 150, 1};
-    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    if (angle < 365)
+        angle++;
+    else
+        angle = 0;
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    float lightPos[] = {-100, 50, 150, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
 
-    // ShaderManager::startShader(SID_STATIC);
-    // glPushMatrix();
-    // glScalef(1.0f, 2.0f, 1.0f);
-    // glTranslatef(-10, -1, positionMush.y);
-    // mush->draw();
-    // glPopMatrix();
+    ShaderManager::startShader(SID_STATIC);
+    glTranslatef(-10, -1, positionMush.y);
+    glRotated(angle, 0, 1, 0);
+    mush->draw();
+    glPopMatrix();
 }
 void SceneChara::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
+<<<<<<< HEAD
     image[IMAGE_CONFIGBG]->draw(NULL, NULL, 1);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
     drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "suyama");
     drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
+=======
+
+    image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
+    image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
+    drawPlayer(Vector2f(100, 400), COLOR_RED, true, true, "suyama");
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, true, false, "aaa");
+>>>>>>> 4427eb7db5335dedd23cdeac9772cd696b8791c3
     drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "suyama");
     drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);

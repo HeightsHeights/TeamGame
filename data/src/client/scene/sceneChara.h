@@ -39,7 +39,7 @@ private:
     COLOR_GREEN = 3,
     COLOR_NUMBER = 4,
   } COLOR_ID;
-
+  virtual void drawBackground();
   virtual void draw3D();
   virtual void draw2D();
   Vector2f position;
@@ -50,13 +50,13 @@ private:
   bool button;
   float bright;
   const char *username;
-
+  unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];
   ObjRawModel *mush;
   ObjRawModel *bamboo;
 
-  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit,bool ready, const char *name);
+  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, bool ready, const char *name);
 
 public:
   SceneChara() : BaseScene() {}

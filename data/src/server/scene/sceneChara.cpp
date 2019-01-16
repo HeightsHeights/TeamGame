@@ -25,7 +25,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
             }
         }
 
-        if (count == gClientNum)
+        if (count == gClientNum && gClientNum > 1)
         {
             DataBlock data;
             data.setCommand2DataBlock(NC_SERVER_MAINGAME);

@@ -8,10 +8,9 @@
 #define FRAGMENT_FILE_EXTENSION ".frag"
 
 const std::string SHADER_NAME[SID_NUM] = {
-    "staticShader",
-    "testShader",
+    "texturingPhongShader",
+    "nonTexturingPhongShader",
     "guiShader",
-    "redShader",
 };
 
 ShaderProgram *ShaderManager::shaders[SID_NUM];

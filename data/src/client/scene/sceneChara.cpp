@@ -18,6 +18,7 @@ bool SceneChara::init()
 {
     angle = 0;
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
+    bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
@@ -97,11 +98,15 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
     else
     {
         // const char *myname;
+        // char name[50];
         // myname = config->name.c_str();
+        // strcpy(name,myname);
         DataBlock data;
         data.setCommand2DataBlock(NC_CONNECT);
-        // data.setData(&myname, sizeof(char));
+        //data.setData(&name, sizeof(char *));
         NetworkManager::sendData(data, data.getDataSize());
+            
+        
     }
 
     return SI_CHARASELECT;
@@ -127,7 +132,8 @@ SCENE_ID SceneChara::executeCommand(int command)
     else if (command == NC_SERVER_2_CLIENT)
     {
         int num;
-        NetworkManager::recvData(&num, sizeof(int));
+        // char name[50];
+        /NetworkManager::recvData(&num, sizeof(int));
         connect[num] = true;
     }
     return SI_CHARASELECT;
@@ -142,22 +148,22 @@ void SceneChara::drawBackground()
 
 void SceneChara::draw3D()
 {
-    if (angle < 365)
-        angle++;
-    else
-        angle = 0;
-    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
-    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
-    float lightPos[] = {-100, 50, 150, 1};
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
+    // if (angle < 365)
+    //     angle++;
+    // else
+    //     angle = 0;
+    // gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+    // gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    // float lightPos[] = {-100, 50, 150, 1};
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    // glPushMatrix();
+    // glScalef(1.0f, 2.0f, 1.0f);
 
-    ShaderManager::startShader(SID_STATIC);
-    glTranslatef(-10, -1, positionMush.y);
-    glRotated(angle, 0, 1, 0);
-    mush->draw();
-    glPopMatrix();
+    // ShaderManager::startShader(SID_STATIC);
+    // glTranslatef(-10, -1, positionMush.y);
+    // glRotated(angle, 0, 1, 0);
+    // mush->draw();
+    // glPopMatrix();
 }
 void SceneChara::draw2D()
 {
@@ -165,10 +171,12 @@ void SceneChara::draw2D()
 
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, true, true, "suyama");
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, true, false, "aaa");
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "suyama");
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
+
+    
+    drawPlayer(Vector2f(100, 400), COLOR_RED, true, decision[0], username);
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, false, decision[1], "aaa");
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, false, decision[2], "suyama");
+    drawPlayer(Vector2f(100, 40), COLOR_GREEN, false, decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);
 }
 

@@ -48,8 +48,9 @@ private:
   bool connect[4];
   bool own;
   bool button;
+  int count;
   float bright;
-  const char *username;
+  const char username[4][50];
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];

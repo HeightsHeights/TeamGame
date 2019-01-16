@@ -165,8 +165,8 @@ void SceneChara::draw2D()
 
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "suyama");
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
+    drawPlayer(Vector2f(100, 400), COLOR_RED, true, true, "suyama");
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, true, false, "aaa");
     drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "suyama");
     drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);

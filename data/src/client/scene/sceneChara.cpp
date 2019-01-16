@@ -44,6 +44,20 @@ bool SceneChara::init()
         }
     }
 
+    for (int i = 0; i < 3; i++)
+    {
+        if (i != 2)
+        {
+            connect[i] = true;
+            decision[i] = true;
+        }
+        else
+        {
+            connect[i] = true;
+            decision[i] = false;
+        }
+    }
+
     return true;
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
@@ -162,12 +176,11 @@ void SceneChara::draw3D()
 void SceneChara::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "suyama");
+    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "SYM");
     drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "suyama");
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "sss");
     drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);
 }

@@ -18,9 +18,11 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *tile;
   ObjRawModel *mush;
-
+  ObjRawModel *bamboo;
+  ObjRawModel *Uhono;
   Vector2f positionMush;
   Vector3f mushEye;
+  GuiSprite *sprite;
 
   StatusDrawer *statusDrawer;
   virtual void draw3D();

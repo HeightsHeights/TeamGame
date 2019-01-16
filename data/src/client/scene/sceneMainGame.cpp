@@ -15,9 +15,11 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
+    sprite = GuiSpriteLoader().load("./data/res/gui/image/effe/m/pipo-btleffect133.png", 3, 3);
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
-
+    bamboo = ObjModelLoader().load("./data/res/gui/obj/", "bambooshootchara");
+    Uhono = ObjModelLoader().load("./data/res/gui/obj/", "bardicheWithMaterial");
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
@@ -42,7 +44,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
 
-    gluLookAt(positionMush.x, 100, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(positionMush.x, 20, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
@@ -56,15 +58,24 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
     glTranslatef(positionMush.x, 0, positionMush.y);
-
-    lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    // lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    glRotated(-35, 0, 1, 0);
     mush->draw();
     glPopMatrix();
 
     glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
+    glScalef(2.0f, 4.0f, 2.0f);
+    glRotated(290, 0, 1, 0);
     glTranslatef(mushEye.x, 0, mushEye.y);
-    mush->draw();
+    bamboo->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1.6f, 1.6f, 1.6f);
+    glTranslatef(positionMush.x, 1.0, positionMush.y + 3.5);
+    glRotated(-60, 0, 0, 1);
+    // lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    Uhono->draw();
     glPopMatrix();
 
     ShaderManager::stopShader(SID_STATIC);
@@ -73,10 +84,19 @@ void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
 
-    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "suyama");
-    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
-    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
-    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
+    static int rotate;
+
+    GuiRect rect = GuiRect(300, 250, 300, 300);
+    sprite->draw(rotate, &rect);
+
+    if (rotate++ > 9)
+    {
+        rotate = 0;
+    }
+    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "SYM");
+    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "YSD");
+    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "TNOK");
+    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "MZN");
     ShaderManager::stopShader(SID_GUI);
 }
 

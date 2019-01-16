@@ -45,6 +45,12 @@ bool SceneChara::init()
         }
     }
 
+    for (int i = 0; i < COLOR_NUMBER; i++)
+    {
+        connect[i] = true;
+        decision[i] = false;
+    }
+
     return true;
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
@@ -148,35 +154,30 @@ void SceneChara::drawBackground()
 
 void SceneChara::draw3D()
 {
-    // if (angle < 365)
-    //     angle++;
-    // else
-    //     angle = 0;
-    // gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
-    // gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
-    // float lightPos[] = {-100, 50, 150, 1};
-    // glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    // glPushMatrix();
-    // glScalef(1.0f, 2.0f, 1.0f);
+    ++angle %= 360;
 
-    // ShaderManager::startShader(SID_STATIC);
-    // glTranslatef(-10, -1, positionMush.y);
-    // glRotated(angle, 0, 1, 0);
-    // mush->draw();
-    // glPopMatrix();
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
+    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    float lightPos[] = {-100, 50, 150, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
+
+    ShaderManager::startShader(SID_NT_PHONG);
+    glTranslatef(-10, -1, positionMush.y);
+    glRotated(angle, 0, 1, 0);
+    mush->draw();
+    glPopMatrix();
 }
 void SceneChara::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-
-    
-    drawPlayer(Vector2f(100, 400), COLOR_RED, true, decision[0], username);
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, false, decision[1], "aaa");
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, false, decision[2], "suyama");
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, false, decision[3], "suyama");
+    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "SYM");
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "sss");
+    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);
 }
 
@@ -198,7 +199,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, bool ready, c
         image[IMAGE_CHECK]->draw(NULL, &dst2, (ready) ? 1.0f : 0.2f);
 
         GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
-        dst2 = GuiRect(pos.x + FRAME_WIDTH * 2 - std::string(name).length() * 15 / 2, pos.y - FRAME_WIDTH * 11 / 9, std::string(name).length() * 30, 60);
+        dst2 = GuiRect(pos.x + FRAME_WIDTH * 2 - std::string(name).length() * 15 / 2 + FRAME_WIDTH / 2, pos.y - FRAME_WIDTH * 11 / 9, std::string(name).length() * 30, 60);
         nameText->draw(NULL, &dst2, 1.0f);
         delete nameText;
     }

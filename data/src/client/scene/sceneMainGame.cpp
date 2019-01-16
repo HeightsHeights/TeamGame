@@ -46,7 +46,7 @@ void SceneMainGame::draw3D()
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    ShaderManager::startShader(SID_STATIC);
+    ShaderManager::startShader(SID_NT_PHONG);
 
     glPushMatrix();
     glScalef(10.0f, 1.0f, 10.0f);
@@ -67,7 +67,7 @@ void SceneMainGame::draw3D()
     mush->draw();
     glPopMatrix();
 
-    ShaderManager::stopShader(SID_STATIC);
+    ShaderManager::stopShader(SID_NT_PHONG);
 }
 void SceneMainGame::draw2D()
 {

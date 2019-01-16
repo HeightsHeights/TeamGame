@@ -66,35 +66,15 @@ void BaseShaderLoader::bindAttributes()
 /******************************************************************************
  * class StaticShaderLoader
 ******************************************************************************/
-void StaticShaderLoader::bindAttributes()
+void TPhongShaderLoader::bindAttributes()
 {
-    //bindAttribute(0, "position");
-    //bindAttribute(2, "normal");
 }
 /******************************************************************************
  * class TestShaderLoader
 ******************************************************************************/
-void TestShaderLoader::bindAttributes()
+void NTPhongShaderLoader::bindAttributes()
 {
-    //bindAttribute(0, "position");
-    //bindAttribute(2, "normal");
 }
 void GuiShaderLoader::bindAttributes()
-{
-
-    // bindAttribute(0, "position");
-    // // 何番目のattribute変数か
-    // int positionLocation = getAttribute("position");
-    // int uvLocation = getAttribute("uv");
-    // int textureLocation = getUniform("texture");
-
-    // // attribute属性を有効にする
-    // glEnableVertexAttribArray(positionLocation);
-    // glEnableVertexAttribArray(uvLocation);
-
-    // // uniform属性を設定する
-    // glUniform1i(textureLocation, 0);
-}
-void RedShaderLoader::bindAttributes()
 {
 }

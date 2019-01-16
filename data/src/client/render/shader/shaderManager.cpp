@@ -23,10 +23,9 @@ bool ShaderManager::init()
 {
 
     BaseShaderLoader *loaders[SID_NUM] = {
-        new StaticShaderLoader(),
-        new TestShaderLoader(),
+        new TPhongShaderLoader(),
+        new NTPhongShaderLoader(),
         new GuiShaderLoader(),
-        new RedShaderLoader(),
     };
 
     for (int i = 0; i < SID_NUM; i++)

@@ -153,28 +153,26 @@ void SceneChara::draw3D()
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
 
-    ShaderManager::startShader(SID_STATIC);
+    ShaderManager::startShader(SID_T_PHONG);
     glTranslatef(-10, -1, positionMush.y);
     glRotated(angle, 0, 1, 0);
     mush->draw();
     glPopMatrix();
+    ShaderManager::stopShader(SID_T_PHONG);
 }
 void SceneChara::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-<<<<<<< HEAD
     image[IMAGE_CONFIGBG]->draw(NULL, NULL, 1);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
     drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "suyama");
     drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
-=======
 
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
     drawPlayer(Vector2f(100, 400), COLOR_RED, true, true, "suyama");
     drawPlayer(Vector2f(100, 280), COLOR_BLUE, true, false, "aaa");
->>>>>>> 4427eb7db5335dedd23cdeac9772cd696b8791c3
     drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "suyama");
     drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
     ShaderManager::stopShader(SID_GUI);

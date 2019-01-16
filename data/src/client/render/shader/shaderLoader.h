@@ -28,44 +28,21 @@ protected:
   GLint getUniform(const char *variableName);
 };
 
-/******************************************************************************
- * class StaticShaderLoader
- * 機能1：StaticShader用のAttribute変数設定をする
-******************************************************************************/
-class StaticShaderLoader : public BaseShaderLoader
+class TPhongShaderLoader : public BaseShaderLoader
 {
 private:
   virtual void bindAttributes();
 
 public:
 };
-/******************************************************************************
- * class TestShaderLoader
- * 機能1：TestShader用のAttribute変数設定をする
-******************************************************************************/
-class TestShaderLoader : public BaseShaderLoader
+class NTPhongShaderLoader : public BaseShaderLoader
 {
 private:
   virtual void bindAttributes();
 
 public:
 };
-/******************************************************************************
- * class GuiShaderLoader
- * 機能1：GuiShader用のAttribute変数設定をする
-******************************************************************************/
 class GuiShaderLoader : public BaseShaderLoader
-{
-private:
-  virtual void bindAttributes();
-
-public:
-};
-/******************************************************************************
- * class RedShaderLoader
- * 機能1：RedShader用のAttribute変数設定をする
-******************************************************************************/
-class RedShaderLoader : public BaseShaderLoader
 {
 private:
   virtual void bindAttributes();

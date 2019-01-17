@@ -17,6 +17,10 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneChara::init()
 {
     angle = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        player[i] = NULL;
+    }
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
@@ -33,7 +37,7 @@ bool SceneChara::init()
             "check.png",
         };
 
-    dst[IMAGE_BAMBOO] = GuiRect(-500, -150, 200, 50);
+    dst[IMAGE_BAMBOO] = GuiRect(-475, -150, 200, 50);
     dst[IMAGE_READY] = GuiRect(-150, -225, 300, 100);
     own = false;
     for (int i = 0; i < IMAGE_NUMBER; i++)
@@ -47,7 +51,7 @@ bool SceneChara::init()
 
     for (int i = 0; i < COLOR_NUMBER; i++)
     {
-        connect[i] = true;
+        connect[i] = false;
         decision[i] = false;
     }
 
@@ -103,16 +107,16 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
     }
     else
     {
+
         // const char *myname;
-        // char name[50];
+        // char name[MAX_LEN_NAME];
         // myname = config->name.c_str();
-        // strcpy(name,myname);
-        DataBlock data;
-        data.setCommand2DataBlock(NC_CONNECT);
-        //data.setData(&name, sizeof(char *));
-        NetworkManager::sendData(data, data.getDataSize());
-            
-        
+        // if (strlen(myname) < MAX_LEN_NAME)
+        //     strcpy(name, myname);
+        // DataBlock data;
+        // data.setCommand2DataBlock(NC_CONNECT);
+        // data.setData(&name, sizeof(char *));
+        // NetworkManager::sendData(data, data.getDataSize());
     }
 
     return SI_CHARASELECT;
@@ -138,8 +142,29 @@ SCENE_ID SceneChara::executeCommand(int command)
     else if (command == NC_SERVER_2_CLIENT)
     {
         int num;
-        // char name[50];
-        /NetworkManager::recvData(&num, sizeof(int));
+        char name[MAX_LEN_NAME];
+        NetworkManager::recvData(&name, sizeof(char *));
+        switch (name[0])
+        {
+        case '0':
+            num = 0;
+            player[0] = &name[0];
+            break;
+        case '1':
+            num = 1;
+            player[1] = &name[0];
+            break;
+        case '2':
+            num = 2;
+            player[2] = &name[0];
+            break;
+        case '3':
+            num = 3;
+            player[3] = &name[0];
+            break;
+        default:
+            break;
+        }
         connect[num] = true;
     }
     return SI_CHARASELECT;
@@ -157,16 +182,23 @@ void SceneChara::draw3D()
     ++angle %= 360;
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
-    gluLookAt(-5, 4, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(-5, 4, 30 + positionChara.y, positionChara.x, 0, positionChara.y, 0, 1, 0);
     float lightPos[] = {-100, 50, 150, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
 
     ShaderManager::startShader(SID_NT_PHONG);
-    glTranslatef(-10, -1, positionMush.y);
+    glTranslatef(-10, -1, positionChara.y);
     glRotated(angle, 0, 1, 0);
-    mush->draw();
+    if(position.x == 0)
+    {
+        bamboo->draw();
+    }
+    else
+    {
+        mush->draw();
+    }
     glPopMatrix();
 }
 void SceneChara::draw2D()
@@ -174,10 +206,10 @@ void SceneChara::draw2D()
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], "SYM");
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], "aaa");
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], "sss");
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], "suyama");
+    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player[0] + 1);
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player[1] + 1);
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player[2] + 1);
+    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], player[3] + 1);
     ShaderManager::stopShader(SID_GUI);
 }
 

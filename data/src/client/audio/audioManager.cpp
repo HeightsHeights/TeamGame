@@ -9,11 +9,16 @@ std::string SE_NAME[SE_NUMBER] =
     {
         "decision.wav",
         "cursor.wav",
+        "ready.wav",
+        "blow.wav",
+        "soword01.wav",
+        "gun.wav",
+        "explosion.wav",
 };
 
 std::string BGM_NAME[BGM_NUMBER] =
     {
-        "honobono.mp3",
+        "titlebgm.mp3",
         "famima.mp3",
 };
 

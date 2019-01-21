@@ -9,8 +9,8 @@
 //ジョイコンの番号にあった番号を割り振ってください
 typedef enum {
   CT_DECITION_OR_ATTACK = 0,
-  CT_CANCEL = 1,
-  CT_JUMP = 2,
+  CT_JUMP = 1,
+  CT_CANCEL = 3,
   CT_GUARD = 4,
   CT_GRUB = 5,
   CT_PRDGDIRECTION = 6,

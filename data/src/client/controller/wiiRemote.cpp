@@ -61,16 +61,16 @@ void WiiRemote::scanButton(ControllerParam *param)
 
     if (wiimote.ext.nunchuk.keys.z)
     {
-        param->buttonDown[CT_GUARD] = true;
-        param->buttonUp[CT_GUARD] = false;
+        param->buttonDown[CT_JUMP] = true;
+        param->buttonUp[CT_JUMP] = false;
     }
     else
     {
-        param->buttonDown[CT_GUARD] = false;
-        param->buttonUp[CT_GUARD] = true;
+        param->buttonDown[CT_JUMP] = false;
+        param->buttonUp[CT_JUMP] = true;
     }
 
-    if (wiimote.keys.plus)
+    if (wiimote.keys.b)
     {
         param->buttonDown[CT_GRUB] = true;
         param->buttonUp[CT_GRUB] = false;
@@ -81,7 +81,7 @@ void WiiRemote::scanButton(ControllerParam *param)
         param->buttonUp[CT_GRUB] = true;
     }
 
-    if (wiimote.keys.home)
+    if (wiimote.keys.plus)
     {
         param->buttonDown[CT_PAUSE] = true;
         param->buttonUp[CT_PAUSE] = false;

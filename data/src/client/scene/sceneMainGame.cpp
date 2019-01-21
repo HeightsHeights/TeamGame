@@ -18,7 +18,7 @@ bool SceneMainGame::init()
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
 
-   sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/slash.png", 3, 3);
+   sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
 
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
@@ -71,14 +71,17 @@ void SceneMainGame::draw3D()
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
+static int i = 0 ;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
-    // glScalef(1.0f, 2.0f, 1.0f);
     glTranslatef(positionMush.x, 0, positionMush.y);
-    GuiRect dst = GuiRect(0, 0, 100, 100);
-    sprite->draw(i++, &dst, 1.0f, Vector3f(0, 20, 0));
+    glRotated(i++,0,1,0);
+    GuiRect dst = GuiRect(0, 0, 50, 50);
+    sprite->draw(0, &dst, 1.0f,Vector3f(-25, 15, 0));
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
+
+
 }
 void SceneMainGame::draw2D()
 {
@@ -89,6 +92,8 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
     ShaderManager::stopShader(SID_GUI);
+
+    
 }
 
 void SceneMainGame::lookatVector(Vector3f direction)

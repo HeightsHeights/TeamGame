@@ -40,7 +40,7 @@ void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect)
 }
 void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness)
 {
-    draw(srcRect, dstRect, 1.0f, Vector3f_ZERO);
+    draw(srcRect, dstRect, brightness, Vector3f_ZERO);
 }
 void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness, Vector3f pos)
 {

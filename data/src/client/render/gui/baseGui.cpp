@@ -40,6 +40,10 @@ void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect)
 }
 void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness)
 {
+    draw(srcRect, dstRect, 1.0f, Vector3f_ZERO);
+}
+void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness, Vector3f pos)
+{
     if (brightness < 0)
     {
         brightness = 0.0;
@@ -65,10 +69,10 @@ void BaseGui::draw(GuiRect *srcRect, GuiRect *dstRect, float brightness)
     }
 
     const GLfloat vertexData[] = {
-        dstRect->pos.x, dstRect->pos.y, 0.0f,
-        dstRect->pos.x + dstRect->size.x, dstRect->pos.y, 0.0f,
-        dstRect->pos.x, dstRect->pos.y - dstRect->size.y, 0.0f,
-        dstRect->pos.x + dstRect->size.x, dstRect->pos.y - dstRect->size.y, 0.0f};
+        dstRect->pos.x + pos.x, dstRect->pos.y + pos.y, pos.z,
+        dstRect->pos.x + dstRect->size.x + pos.x, dstRect->pos.y + pos.y, pos.z,
+        dstRect->pos.x + pos.x, dstRect->pos.y - dstRect->size.y + pos.y, pos.z,
+        dstRect->pos.x + dstRect->size.x + pos.x, dstRect->pos.y - dstRect->size.y + pos.y, pos.z};
 
     const GLfloat uvData[] = {
         srcRect->pos.x / textureSize.x, srcRect->pos.y / textureSize.y,

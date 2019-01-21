@@ -71,12 +71,12 @@ void SceneMainGame::draw3D()
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
-    ShaderManager::stopShader(SID_BILLBOARD);
+    ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
-    glTranslatef(mushEye.x, 0, mushEye.y);
+    // glScalef(1.0f, 2.0f, 1.0f);
+    glTranslatef(positionMush.x, 0, positionMush.y);
     GuiRect dst = GuiRect(0, 0, 100, 100);
-    sprite->draw(1, &dst, 1.0f, Vector3f(0, 10, 0));
+    sprite->draw(i++, &dst, 1.0f, Vector3f(0, 20, 0));
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
 }

@@ -22,7 +22,7 @@ private:
 
   Vector2f positionMush;
   Vector3f mushEye;
-
+int i;
   GuiSprite *sprite;
 
   StatusDrawer *statusDrawer;

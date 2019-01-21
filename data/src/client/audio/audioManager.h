@@ -11,7 +11,12 @@ typedef enum {
 typedef enum {
   SE_DECISION = 0,
   SE_CURSOR = 1,
-  SE_NUMBER = 2,
+  SE_READY = 2,
+  SE_BLOW = 3,
+  SE_SOWORD = 4,
+  SE_GUN = 5,
+  SE_EXPLOSION = 6,
+  SE_NUMBER = 7,
 } SE_ID;
 
 class AudioManager

@@ -10,6 +10,7 @@
 #include "../config/saver/configSaver.h"
 #include "../config/loader/configLoader.h"
 #include "../audio/audioManager.h"
+#include "../controller/controllerManager.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <fstream>
@@ -28,6 +29,7 @@ std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
         "title/save.png",
         "title/cancel.png",
         "title/reset.png",
+        "title/connect.png",
         "configFrames/configFrame00.png",
         "configFrames/configFrame01.png",
         "configFrames/configFrame02.png",
@@ -90,13 +92,13 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         button = true;
     }
 
-    if (position[num].x > 2)
+    if (position[0].x > 2 || position[1].x > 3)
     {
         position[num].x = 0;
     }
     else if (position[num].x < 0)
     {
-        position[num].x = 2;
+        position[num].x = (num == 0) ? 2: 3;
     }
 
     if (position[1].y > 3)
@@ -148,6 +150,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         {
             subconfig = ConfigLoader().load("cDefaultConfig");
         }
+        else if (position[1].y == 3 && position[1].x == 3 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            // if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
+            // {
+            //     fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
+            // }
+        }
+
 
         if (param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
         {

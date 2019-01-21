@@ -3,8 +3,8 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include <stdio.h>
-#include<string>
-#include<sstream>
+#include <string.h>
+#include <sstream>
 bool SceneChara::init()
 {
     return true;
@@ -48,25 +48,26 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         data.setData(&pos, sizeof(int));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    else if(command == NC_CONNECT)
+    else if (command == NC_CONNECT)
     {
-        // std::string cstr;
-        // std::ostringstream oss;
-        // const char *myname;
-        // const char *name;
-        // NetworkManager::recvData(pos, &myname, sizeof(char));
-        // oss << pos;
-        // cstr = std::string(myname);
-        // name = (oss.str() + cstr).c_str();
-
+        std::string cstr;
+        std::ostringstream oss;
+        char name[MAX_LEN_NAME];
+        const char *myname;
+        NetworkManager::recvData(pos, &name, sizeof(char *));
+        oss << pos;
+        cstr = std::string(name);
+        myname = (oss.str() + cstr).c_str();
+        if (strlen(myname) < MAX_LEN_NAME)
+            strcpy(name, myname);
 
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
-        // data.setData(&name, sizeof(char));
-        data.setData(&pos, sizeof(int));
+        data.setData(&name, sizeof(char *));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    else if(command == NC_START){
+    else if (command == NC_START)
+    {
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
         NetworkManager::sendData(pos, data, data.getDataSize());

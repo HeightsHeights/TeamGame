@@ -9,6 +9,7 @@
 #include "../render/gui/image/guiImageLoader.h"
 #include "../render/gui/text/guiTextLoader.h"
 #define FRAME_WIDTH 80
+#define MAX_LEN_NAME 20
 /******************************************************************************
  * class SceneChara
  * 機能1：
@@ -43,13 +44,13 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector2f position;
-  Vector2f positionMush;
+  Vector2f positionChara;
   bool decision[4];
   bool connect[4];
   bool own;
   bool button;
   float bright;
-  const char *username;
+  const char *player[4];
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];

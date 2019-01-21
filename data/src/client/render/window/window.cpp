@@ -37,7 +37,7 @@ bool WindowManager::initOpenGL(int argc, char *argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    glClearColor(0.0, 1.0, 1.0, 0.0);
+    glClearColor(1.0, 1.0, 1.0, 0.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);

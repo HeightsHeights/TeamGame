@@ -18,7 +18,8 @@ void main(void)
     vec4 a = mul(gl_ProjectionMatrix,mul(gl_ModelViewProjectionMatrix,vec4(0,0,0,1))+vec4(1.0/1.7,1.0,1.0,1.0)* b );
     // gl_Position = gl_ModelViewMatrix * matrix * vec4(vertex, 1.0);
     gl_Position = a;
-    uopo = vec2(position.x/45.0  + uv.x , -position.y/45.0  + uv.y);
+    // uopo = vec2(position.x/45.0  + uv.x , -position.y/45.0  + uv.y);
+    uopo = vec2(uv.x ,uv.y);
     
     vuv = uopo;
 }

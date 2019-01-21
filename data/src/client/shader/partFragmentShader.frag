@@ -6,12 +6,13 @@ uniform float zaz;
 
 void main(void)
 {
-    if(vuv.x < 1.0 && vuv.x >0.0 && vuv.y < 1.0 && vuv.y > 0.0 ){
+    // if(vuv.x < 1.0 && vuv.x >0.0 && vuv.y < 1.0 && vuv.y > 0.0 ){
         color = texture2D(texture, vuv);
-        gl_FragColor.xyz = color.xyz;
-        gl_FragColor.w = 1.0;
-    }
-    else {
-        gl_FragColor = vec4(1.0,0.0,0.0,zaz);
-    }
+        // gl_FragColor.xyz = color.xyz;
+        // gl_FragColor.w = zaz;
+        gl_FragColor = color;
+    // }
+    // else {
+        // gl_FragColor = vec4(1.0,1.0,1.0,zaz);
+    // }
 }

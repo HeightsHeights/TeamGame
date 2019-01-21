@@ -18,7 +18,7 @@ int R = 1000;
 GLfloat position_data[3000];
 GLfloat g_color_buffer_data[3000];
 float x[3000];
-GLfloat z = 0.0;
+GLfloat z = 1.0;
 
 SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
 {
@@ -32,16 +32,16 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
         0, 1, 2,
         2, 1, 3};
 
-    static const GLfloat uv_buffer_date[]{
-        0.45, 0.55,
-        0.55, 0.55,
-        0.45, 0.45,
-        0.55, 0.45};
     // static const GLfloat uv_buffer_date[]{
-    // 0.0, 1.0,
-    // 1.0, 1.0,
-    // 0.0, 0.0,
-    // 1.0, 0.0};
+    //     0.45, 0.55,
+    //     0.55, 0.55,
+    //     0.45, 0.45,
+    //     0.55, 0.45};
+    static const GLfloat uv_buffer_date[]{
+        0.0, 1.0,
+        1.0, 1.0,
+        0.0, 0.0,
+        1.0, 0.0};
 
     for (int i = 0; i < R * 3; i++)
     {
@@ -93,7 +93,7 @@ SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
     glVertexAttribDivisor(2, 1);
     glVertexAttribDivisor(3, 0);
 
-    SDL_Surface *skybox = IMG_Load("data/res/gui/image/google.png");
+    SDL_Surface *skybox = IMG_Load("data/res/gui/image/crystal.png");
     // for (int i = 0; i < 6; i++)
     // {
     glGenTextures(1, &sky);

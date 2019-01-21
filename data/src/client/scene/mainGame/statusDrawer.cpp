@@ -26,6 +26,9 @@ bool StatusDrawer::init()
             "icon",
             "hp",
             "hpback",
+            "atkbuff",
+            "hpbuff",
+            "spbuff",
         };
 
     std::string numbersNameTemplate = "numbers/number_";
@@ -87,12 +90,21 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, unsigned int hp, CHARA_ID cid)
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkbuff, bool hpbuff, bool spbuff)
 {
     if (cid == CHARA_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
+
+        dst = GuiRect(pos.x, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkbuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + UNIT_WIDTH/2, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpbuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + UNIT_WIDTH, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spbuff)? 1.0f : 0.2f);
+        
+        
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
         dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
@@ -103,11 +115,21 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, unsigned int hp, CHARA_ID cid)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
+
+        
+        dst = GuiRect(pos.x, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkbuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + UNIT_WIDTH/2, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpbuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + UNIT_WIDTH, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spbuff)? 1.0f : 0.2f);
+        
+
         float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
         dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
-        dst = GuiRect(pos.x + 490, pos.y, UNIT_WIDTH, UNIT_WIDTH);
+        dst = GuiRect(pos.x + 425, pos.y, UNIT_WIDTH, UNIT_WIDTH);
         image[IMAGE_ICON]->draw(NULL, &dst, 1.0f);
     }
 }

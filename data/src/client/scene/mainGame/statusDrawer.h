@@ -29,7 +29,10 @@ private:
     IMAGE_ICON = 14,
     IMAGE_HP = 15,
     IMAGE_HPBACK = 16,
-    IMAGE_NUMBER = 17,
+    IMAGE_ATKBUFF = 17,
+    IMAGE_HPBUFF = 18,
+    IMAGE_SPBUFF = 19,
+    IMAGE_NUMBER = 20,
   } IMAGE_ID;
 
   GuiImage *image[IMAGE_NUMBER];
@@ -51,10 +54,17 @@ public:
     CHARA_NUMBER = 2,
   } CHARA_ID;
 
+  typedef enum {
+    BUFF_ATK = 0,
+    BUFF_HP = 1,
+    BUFF_SPEED = 2,
+    BUFF_NUMBER = 3,
+  } BUFF_ID;
+  
   StatusDrawer();
   ~StatusDrawer();
 
   bool init();
   void draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name);
-  void drawTeamStatus(Vector2f pos, unsigned int hp, CHARA_ID cid);
+  void drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkbuff, bool hpbuff, bool spbuff);
 };

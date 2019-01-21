@@ -77,6 +77,8 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), 200, StatusDrawer::CHARA_MUSH);
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), 100, StatusDrawer::CHARA_BAMBOO);
     ShaderManager::stopShader(SID_GUI);
 }
 

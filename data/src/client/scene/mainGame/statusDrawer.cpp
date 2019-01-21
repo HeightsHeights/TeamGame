@@ -24,6 +24,8 @@ bool StatusDrawer::init()
             "nameFrames/nameFrameYellow",
             "nameFrames/nameFrameGreen",
             "icon",
+            "hp",
+            "hpback",
         };
 
     std::string numbersNameTemplate = "numbers/number_";
@@ -82,5 +84,30 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
         dst = GuiRect(pos.x + UNIT_WIDTH * (3 - i), pos.y, UNIT_WIDTH, UNIT_WIDTH);
         image[hp % 10]->draw(NULL, &dst, brightness);
         hp = hp / 10;
+    }
+}
+
+void StatusDrawer::drawTeamStatus(Vector2f pos, unsigned int hp, CHARA_ID cid)
+{
+    if (cid == CHARA_MUSH)
+    {
+        GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
+        image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
+        float chp = HP_WIDTH * ((float)hp / MAX_HP);
+        dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
+        image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
+        dst = GuiRect(pos.x - 125, pos.y, UNIT_WIDTH, UNIT_WIDTH);
+        image[IMAGE_ICON]->draw(NULL, &dst, 1.0f);
+    }
+    else
+    {
+        GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
+        image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
+        float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));
+        float chp = HP_WIDTH * ((float)hp / MAX_HP);
+        dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH);
+        image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
+        dst = GuiRect(pos.x + 490, pos.y, UNIT_WIDTH, UNIT_WIDTH);
+        image[IMAGE_ICON]->draw(NULL, &dst, 1.0f);
     }
 }

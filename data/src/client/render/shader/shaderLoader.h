@@ -49,3 +49,10 @@ private:
 
 public:
 };
+class BillBoardShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
+};

@@ -78,3 +78,6 @@ void NTPhongShaderLoader::bindAttributes()
 void GuiShaderLoader::bindAttributes()
 {
 }
+void BillBoardShaderLoader::bindAttributes()
+{
+}

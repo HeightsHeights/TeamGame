@@ -7,6 +7,7 @@
 
 #include "../render/objRawModel/objModelLoader.h"
 #include "./mainGame/statusDrawer.h"
+#include "../render/gui/sprite/guiSpriteLoader.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -21,6 +22,8 @@ private:
 
   Vector2f positionMush;
   Vector3f mushEye;
+int i;
+  GuiSprite *sprite;
 
   StatusDrawer *statusDrawer;
   virtual void draw3D();

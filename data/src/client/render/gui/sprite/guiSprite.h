@@ -15,4 +15,6 @@ public:
   void setSpriteNum(Touple2f spriteMaxNum);
   void draw(const unsigned int spriteNum, GuiRect *dstRect);
   void draw(const unsigned int spriteNum, GuiRect *dstRect, float brightness);
+  void draw(const unsigned int spriteNum, GuiRect *dstRect, Vector3f pos);
+  void draw(const unsigned int spriteNum, GuiRect *dstRect, float brightness, Vector3f pos);
 };

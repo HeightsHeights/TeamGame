@@ -5,6 +5,9 @@
 #include "../../render/gui/sprite/guiSpriteLoader.h"
 
 #define UNIT_WIDTH 50
+#define HP_WIDTH 400
+#define MAX_HP 400
+
 class StatusDrawer
 {
 private:
@@ -24,7 +27,9 @@ private:
     IMAGE_NAME_FRAME_YELLOW = 12,
     IMAGE_NAME_FRAME_GREEN = 13,
     IMAGE_ICON = 14,
-    IMAGE_NUMBER = 15,
+    IMAGE_HP = 15,
+    IMAGE_HPBACK = 16,
+    IMAGE_NUMBER = 17,
   } IMAGE_ID;
 
   GuiImage *image[IMAGE_NUMBER];
@@ -40,9 +45,16 @@ public:
     COLOR_NUMBER = 4,
   } COLOR_ID;
 
+  typedef enum {
+    CHARA_MUSH = 0,
+    CHARA_BAMBOO = 1,
+    CHARA_NUMBER = 2,
+  } CHARA_ID;
+
   StatusDrawer();
   ~StatusDrawer();
 
   bool init();
   void draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name);
+  void drawTeamStatus(Vector2f pos, unsigned int hp, CHARA_ID cid);
 };

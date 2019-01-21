@@ -1,7 +1,10 @@
- varying vec3 outcolor;
+varying vec2 vuv;
+
+uniform sampler2D texture;
+uniform float brightness;
 
 void main(void)
 {
-    gl_FragColor.xyz = outcolor;
-    gl_FragColor.w = 0.6;
+    vec4 color = texture2D(texture, vuv) * vec4(brightness, brightness, brightness, 1.0);;
+    gl_FragColor = color;
 }

@@ -18,6 +18,8 @@ bool SceneMainGame::init()
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
 
+    sprite = GuiSpriteLoader().load("./data/res/image/effects/", 3, 3);
+
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
@@ -68,6 +70,15 @@ void SceneMainGame::draw3D()
     glPopMatrix();
 
     ShaderManager::stopShader(SID_NT_PHONG);
+
+ShaderManager::stopShader(SID_NT_PHONG);
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
+    glTranslatef(mushEye.x, 0, mushEye.y);
+    GuiRect dst = GuiRect(0, 0, 100, 100);
+    sprite->draw(1, &dst,);
+    glPopMatrix();
+ShaderManager::stopShader(SID_NT_PHONG);
 }
 void SceneMainGame::draw2D()
 {

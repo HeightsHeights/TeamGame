@@ -19,7 +19,10 @@ std::string SE_NAME[SE_NUMBER] =
 std::string BGM_NAME[BGM_NUMBER] =
     {
         "titlebgm.mp3",
-        "famima.mp3",
+        "selectbgm.mp3",
+        "mainbgm.mp3",
+        "victory.mp3",
+        "lose.mp3",
 };
 
 BGM AudioManager::bgm[BGM_NUMBER];

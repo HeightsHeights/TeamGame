@@ -49,6 +49,7 @@ private:
   bool connect[4];
   bool own;
   bool button;
+  bool isFirst;
   float bright;
   const char *player0;
   const char *player1;

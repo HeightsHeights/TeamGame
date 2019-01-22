@@ -98,7 +98,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
     }
     else if (position[num].x < 0)
     {
-        position[num].x = (num == 0) ? 2: 3;
+        position[num].x = (num == 0) ? 2 : 3;
     }
 
     if (position[1].y > 3)
@@ -140,6 +140,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         if (position[1].y == 3 && position[1].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             ConfigSaver().save("cPrevConfig", subconfig);
+            config = subconfig;
             configmode = false;
         }
         else if (position[1].y == 3 && position[1].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
@@ -157,7 +158,6 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
             //     fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
             // }
         }
-
 
         if (param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
         {

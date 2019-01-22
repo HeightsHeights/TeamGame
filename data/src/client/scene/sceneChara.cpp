@@ -3,6 +3,7 @@
 #include "../../common/network/networkCommand.h"
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
+#include "../config/loader/configLoader.h"
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
 
@@ -17,12 +18,13 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneChara::init()
 {
     angle = 0;
-    
-    player0 = "0Player";
-    player1 = "1Player";
-    player2 = "2Player";
-    player3 = "3Player";
-    
+    isFirst = false;
+
+    player0 = "Player";
+    player1 = "Player";
+    player2 = "Player";
+    player3 = "Player";
+
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
@@ -61,6 +63,12 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
+    if (!isFirst)
+    {
+        config = ConfigLoader().load("cPrevConfig");
+        isFirst = true;
+    }
+
     if (!own && button == true)
     {
         if (position.y == 0)
@@ -107,7 +115,7 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_CANCEL);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else if(param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
+    else if (param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_FINISH);
@@ -146,7 +154,7 @@ SCENE_ID SceneChara::executeCommand(int command)
     {
         return SI_MAIN;
     }
-    else if(command == NC_FINISH)
+    else if (command == NC_FINISH)
     {
         return SI_NUMBER;
     }
@@ -176,7 +184,7 @@ SCENE_ID SceneChara::executeCommand(int command)
         default:
             break;
         }
-        connect[num] = true;
+         connect[num] = true;
     }
     return SI_CHARASELECT;
 }
@@ -202,7 +210,7 @@ void SceneChara::draw3D()
     ShaderManager::startShader(SID_NT_PHONG);
     glTranslatef(-10, -1, positionChara.y);
     glRotated(angle, 0, 1, 0);
-    if(position.x == 0)
+    if (position.x == 0)
     {
         bamboo->draw();
     }

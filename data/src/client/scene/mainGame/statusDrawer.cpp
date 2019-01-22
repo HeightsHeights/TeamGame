@@ -90,7 +90,7 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkbuff, bool hpbuff, bool spbuff)
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkBuff, bool hpBuff, bool spBuff)
 {
     if (cid == CHARA_MUSH)
     {
@@ -98,11 +98,11 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bo
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
         dst = GuiRect(pos.x, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkbuff)? 1.0f : 0.2f);
+        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkBuff)? 1.0f : 0.2f);
         dst = GuiRect(pos.x + UNIT_WIDTH/2, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpbuff)? 1.0f : 0.2f);
+        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpBuff)? 1.0f : 0.2f);
         dst = GuiRect(pos.x + UNIT_WIDTH, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spbuff)? 1.0f : 0.2f);
+        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spBuff)? 1.0f : 0.2f);
         
         
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
@@ -117,12 +117,12 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bo
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
         
-        dst = GuiRect(pos.x, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkbuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + UNIT_WIDTH/2, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpbuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + UNIT_WIDTH, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spbuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + 325, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkBuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + (325 + UNIT_WIDTH/2), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpBuff)? 1.0f : 0.2f);
+        dst = GuiRect(pos.x + (325 + UNIT_WIDTH), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spBuff)? 1.0f : 0.2f);
         
 
         float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));

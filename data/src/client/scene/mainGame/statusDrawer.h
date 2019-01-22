@@ -66,5 +66,5 @@ public:
 
   bool init();
   void draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name);
-  void drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkbuff, bool hpbuff, bool spbuff);
+  void drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkBuff, bool hpBuff, bool spBuff);
 };

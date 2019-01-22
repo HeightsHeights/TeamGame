@@ -21,6 +21,7 @@ private:
   wiimote_t wiimote = WIIMOTE_INIT;
   virtual void scanDirection(ControllerParam *param);
   virtual void scanButton(ControllerParam *param);
+  int count[12];
 
 public:
   WiiRemote() {}

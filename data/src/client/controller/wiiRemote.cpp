@@ -113,6 +113,38 @@ void WiiRemote::scanButton(ControllerParam *param)
         param->buttonDown[CT_PRDGDIRECTION] = false;
         param->buttonUp[CT_PRDGDIRECTION] = true;
     }
+
+    if (wiimote.keys.home)
+    {
+        param->buttonDown[CT_FINISH] = true;
+        param->buttonUp[CT_FINISH] = false;
+    }
+    else
+    {
+        param->buttonDown[[CT_FINISH] = false;
+        param->buttonUp[[CT_FINISH] = true;
+    }
+
+    for(int i = 0; i < 12; i++){
+        if(param->buttonDown[i] == true){
+            count[i]++;
+        }
+        else{ 
+            count[i] = 0;
+        }
+    }
+
+    for (int i = 0; i < 12; i++)
+    {
+        if (count[i] > 1)
+        {
+            param->buttonState[i] = true;
+        }
+        else
+        {
+            param->buttonState[i] = false;
+        }
+    }
 }
 
 bool WiiRemote::updateEvent()

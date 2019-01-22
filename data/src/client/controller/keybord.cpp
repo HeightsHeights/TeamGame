@@ -124,6 +124,17 @@ void Keybord::scanButton(ControllerParam *param)
         param->buttonUp[CT_JUMP] = true;
     }
 
+    if (keys[SDL_SCANCODE_ESCAPE])
+    {
+        param->buttonDown[CT_FINISH] = true;
+        param->buttonUp[CT_FINISH] = false;
+    }
+    else
+    {
+        param->buttonDown[CT_FINISH] = false;
+        param->buttonUp[CT_FINISH] = true;
+    }
+
     for(int i = 0; i < 12; i++){
         if(param->buttonDown[i] == true){
             count[i]++;

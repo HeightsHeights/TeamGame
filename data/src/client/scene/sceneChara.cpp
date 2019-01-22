@@ -17,10 +17,12 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneChara::init()
 {
     angle = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        player[i] = NULL;
-    }
+    
+    player0 = "0Player";
+    player1 = "1Player";
+    player2 = "2Player";
+    player3 = "3Player";
+    
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     std::string IMAGE_NAME[IMAGE_NUMBER] =
@@ -105,9 +107,14 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_CANCEL);
         NetworkManager::sendData(data, data.getDataSize());
     }
+    else if(param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_FINISH);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
     else
     {
-
         // const char *myname;
         // char name[MAX_LEN_NAME];
         // myname = config->name.c_str();
@@ -139,6 +146,10 @@ SCENE_ID SceneChara::executeCommand(int command)
     {
         return SI_MAIN;
     }
+    else if(command == NC_FINISH)
+    {
+        return SI_NUMBER;
+    }
     else if (command == NC_SERVER_2_CLIENT)
     {
         int num;
@@ -148,19 +159,19 @@ SCENE_ID SceneChara::executeCommand(int command)
         {
         case '0':
             num = 0;
-            player[0] = &name[0];
+            player0 = &name[0];
             break;
         case '1':
             num = 1;
-            player[1] = &name[0];
+            player1 = &name[0];
             break;
         case '2':
             num = 2;
-            player[2] = &name[0];
+            player2 = &name[0];
             break;
         case '3':
             num = 3;
-            player[3] = &name[0];
+            player3 = &name[0];
             break;
         default:
             break;
@@ -206,10 +217,10 @@ void SceneChara::draw2D()
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player[0] + 1);
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player[1] + 1);
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player[2] + 1);
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], player[3] + 1);
+    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player0 + 1);
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player1 + 1);
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player2 + 1);
+    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], player3 + 1);
     ShaderManager::stopShader(SID_GUI);
 }
 

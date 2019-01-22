@@ -50,7 +50,10 @@ private:
   bool own;
   bool button;
   float bright;
-  const char *player[4];
+  const char *player0;
+  const char *player1;
+  const char *player2;
+  const char *player3;
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];

@@ -18,7 +18,8 @@ bool SceneMainGame::init()
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
 
-   sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
+    sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
+    eff = GuiSpriteLoader().load("./data/res/gui/image/effect/walking.png", 3, 2);
 
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
@@ -33,6 +34,8 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
+    if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && effect_permission == 0)
+        effect_permission = 1;
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -44,7 +47,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
 
-    gluLookAt(positionMush.x, 100, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(positionMush.x, 150, 60 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
@@ -71,17 +74,18 @@ void SceneMainGame::draw3D()
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
-static int i = 0 ;
+    static int i = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(positionMush.x, 0, positionMush.y);
-    glRotated(i++,0,1,0);
+    glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
-    sprite->draw(0, &dst, 1.0f,Vector3f(-25, 15, 0));
+    sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
     glPopMatrix();
+
+    if (effect_permission == 1)
+        SceneMainGame::drawParticle();
     ShaderManager::stopShader(SID_BILLBOARD);
-
-
 }
 void SceneMainGame::draw2D()
 {
@@ -94,8 +98,6 @@ void SceneMainGame::draw2D()
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), 200, StatusDrawer::CHARA_MUSH);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), 100, StatusDrawer::CHARA_BAMBOO);
     ShaderManager::stopShader(SID_GUI);
-
-    
 }
 
 void SceneMainGame::lookatVector(Vector3f direction)
@@ -111,4 +113,22 @@ void SceneMainGame::lookatVector(Vector3f direction)
         theta *= -1;
     }
     glRotated(theta, vecY.x, vecY.y, vecY.z);
+}
+
+void SceneMainGame::drawParticle()
+{
+    static int w = 0, z = 0;
+    GuiRect dst = GuiRect(0, 0, 50, 50);
+    eff->draw(0, &dst, 1.0f, Vector3f(mushEye.x - 20, 30, mushEye.y - 10));
+    w++;
+    if (w == 9)
+    {
+        w = 0;
+        z++;
+    }
+    if (z == 5)
+    {
+        z = 0;
+        effect_permission = 0;
+    }
 }

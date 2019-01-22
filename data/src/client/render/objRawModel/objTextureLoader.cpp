@@ -21,7 +21,6 @@ bool ObjTextureLoader::load(std::string fileName, GLuint *texId)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODELVIEW);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-
     glBindTexture(GL_TEXTURE_2D, 0);
     SDL_FreeSurface(surface);
     return true;

@@ -17,17 +17,25 @@
 class SceneMainGame : public BaseScene
 {
 private:
+  typedef enum {
+    EFFECT_PUNCH = 1,
+  } EFFECT_ID;
+
   ObjRawModel *tile;
   ObjRawModel *mush;
 
   Vector2f positionMush;
   Vector3f mushEye;
   GuiSprite *sprite;
+  GuiSprite *eff;
+
+  unsigned int effect_permission;
 
   StatusDrawer *statusDrawer;
   virtual void draw3D();
   virtual void draw2D();
   void lookatVector(Vector3f direction);
+  void drawParticle();
 
 public:
   SceneMainGame() : BaseScene() {}

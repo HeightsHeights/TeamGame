@@ -15,7 +15,7 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
-    tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
+    tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
@@ -48,12 +48,14 @@ void SceneMainGame::draw3D()
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    ShaderManager::startShader(SID_NT_PHONG);
-
+    ShaderManager::startShader(SID_T_PHONG);
     glPushMatrix();
     glScalef(10.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
+    ShaderManager::stopShader(SID_T_PHONG);
+
+    ShaderManager::startShader(SID_NT_PHONG);
 
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);

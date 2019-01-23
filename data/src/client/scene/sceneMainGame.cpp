@@ -15,10 +15,11 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
-    tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
+    skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
+    tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
-
-   sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
+    bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
+    sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
 
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
@@ -39,21 +40,29 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 {
     return SI_MAIN;
 }
+
 void SceneMainGame::draw3D()
 {
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 200);
 
-    gluLookAt(positionMush.x, 100, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+       gluLookAt(positionMush.x, 100, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    ShaderManager::startShader(SID_NT_PHONG);
-
+    ShaderManager::startShader(SID_T_PHONG);
+    glPushMatrix();
+    glScalef(90.0f, 90.0f, 90.0f);
+    skybox->draw();
+    glPopMatrix();
     glPushMatrix();
     glScalef(10.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
+    ShaderManager::stopShader(SID_T_PHONG);
+
+    ShaderManager::startShader(SID_NT_PHONG);
 
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
@@ -64,24 +73,22 @@ void SceneMainGame::draw3D()
     glPopMatrix();
 
     glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
+    glScalef(1.6f, 1.6f, 1.6f);
     glTranslatef(mushEye.x, 0, mushEye.y);
-    mush->draw();
+    bamboo->draw();
     glPopMatrix();
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
-static int i = 0 ;
+    static int i = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(positionMush.x, 0, positionMush.y);
-    glRotated(i++,0,1,0);
+    glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
-    sprite->draw(0, &dst, 1.0f,Vector3f(-25, 15, 0));
+    sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
-
-
 }
 void SceneMainGame::draw2D()
 {
@@ -91,11 +98,9 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200,true,false,true);
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100,false,true,false);
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, true, false, true);
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, false, true, false);
     ShaderManager::stopShader(SID_GUI);
-
-    
 }
 
 void SceneMainGame::lookatVector(Vector3f direction)

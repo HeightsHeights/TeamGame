@@ -10,6 +10,6 @@ void main(void){
     // vPos = gl_Vertex.xyz;
     vNrm = gl_NormalMatrix * normal;
 
-    gl_Position = gl_ModelViewMatrix * gl_Vertex;
+    gl_Position = gl_ModelViewMatrix * vec4(position,1.0);
     vuv = uv;
 }

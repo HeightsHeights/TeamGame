@@ -11,6 +11,11 @@ bool ObjTextureLoader::load(std::string fileName, GLuint *texId)
         fprintf(stderr, "Error --> loadTextureFile(%s)\n", fileName.c_str());
         return false;
     }
+    int Mode = GL_RGB;
+    if (surface->format->BytesPerPixel == 4)
+    {
+        Mode = GL_RGBA;
+    }
 
     glGenTextures(1, texId);
     glBindTexture(GL_TEXTURE_2D, *texId);
@@ -20,7 +25,7 @@ bool ObjTextureLoader::load(std::string fileName, GLuint *texId)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODELVIEW);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, Mode, surface->w, surface->h, 0, Mode, GL_UNSIGNED_BYTE, surface->pixels);
     glBindTexture(GL_TEXTURE_2D, 0);
     SDL_FreeSurface(surface);
     return true;

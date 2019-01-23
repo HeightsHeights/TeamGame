@@ -50,14 +50,16 @@ void SceneMainGame::draw3D()
     gluLookAt(positionMush.x, 150, 60 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-    ShaderManager::startShader(SID_NT_PHONG);
-
+    ShaderManager::startShader(SID_T_PHONG);
     glPushMatrix();
     glScalef(10.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
+    ShaderManager::stopShader(SID_T_PHONG);
 
+    ShaderManager::startShader(SID_NT_PHONG);
+
+    
     glPushMatrix();
     glScalef(1.0f, 2.0f, 1.0f);
     glTranslatef(positionMush.x, 0, positionMush.y);

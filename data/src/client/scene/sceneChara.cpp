@@ -7,6 +7,7 @@
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
 
+Player SceneChara::player[MAX_PLAYER];
 static const SDL_Color black = {0, 0, 0, 0};
 
 SceneChara::SceneChara(WindowManager *window) : BaseScene(window)
@@ -18,12 +19,6 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneChara::init()
 {
     angle = 0;
-    isFirst = false;
-
-    player0 = "Player";
-    player1 = "Player";
-    player2 = "Player";
-    player3 = "Player";
 
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
@@ -55,20 +50,16 @@ bool SceneChara::init()
 
     for (int i = 0; i < COLOR_NUMBER; i++)
     {
+        isFirst[i] = false;
         connect[i] = false;
         decision[i] = false;
+        player[i].name = NULL;
     }
 
     return true;
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
-    if (!isFirst)
-    {
-        config = ConfigLoader().load("cPrevConfig");
-        isFirst = true;
-    }
-
     if (!own && button == true)
     {
         if (position.y == 0)
@@ -123,15 +114,9 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
     }
     else
     {
-        // const char *myname;
-        // char name[MAX_LEN_NAME];
-        // myname = config->name.c_str();
-        // if (strlen(myname) < MAX_LEN_NAME)
-        //     strcpy(name, myname);
-        // DataBlock data;
-        // data.setCommand2DataBlock(NC_CONNECT);
-        // data.setData(&name, sizeof(char *));
-        // NetworkManager::sendData(data, data.getDataSize());
+        DataBlock data;
+        data.setCommand2DataBlock(NC_CONNECT);
+        NetworkManager::sendData(data, data.getDataSize());
     }
 
     return SI_CHARASELECT;
@@ -161,30 +146,15 @@ SCENE_ID SceneChara::executeCommand(int command)
     else if (command == NC_SERVER_2_CLIENT)
     {
         int num;
-        char name[MAX_LEN_NAME];
-        NetworkManager::recvData(&name, sizeof(char *));
-        switch (name[0])
-        {
-        case '0':
-            num = 0;
-            player0 = &name[0];
-            break;
-        case '1':
-            num = 1;
-            player1 = &name[0];
-            break;
-        case '2':
-            num = 2;
-            player2 = &name[0];
-            break;
-        case '3':
-            num = 3;
-            player3 = &name[0];
-            break;
-        default:
-            break;
-        }
-         connect[num] = true;
+        NetworkManager::recvData(&num, sizeof(int));
+        connect[num] = true;
+        NetworkManager::recvData(&player[num].subname, sizeof(char *));
+       
+        player[num].name = &player[num].subname[0];
+        isFirst[num] = true;
+        
+        
+        
     }
     return SI_CHARASELECT;
 }
@@ -225,10 +195,10 @@ void SceneChara::draw2D()
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
     image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player0 + 1);
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player1 + 1);
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player2 + 1);
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3], player3 + 1);
+    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player[0].name);
+    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player[1].name);
+    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player[2].name);
+    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3],player[3].name);
     ShaderManager::stopShader(SID_GUI);
 }
 

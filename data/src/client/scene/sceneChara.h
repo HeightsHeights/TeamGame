@@ -9,7 +9,13 @@
 #include "../render/gui/image/guiImageLoader.h"
 #include "../render/gui/text/guiTextLoader.h"
 #define FRAME_WIDTH 80
-#define MAX_LEN_NAME 20
+#define MAX_LEN_NAME 256
+#define MAX_PLAYER 2
+typedef struct
+{
+  char subname[MAX_LEN_NAME];
+  const char *name;
+} Player;
 /******************************************************************************
  * class SceneChara
  * 機能1：
@@ -49,12 +55,9 @@ private:
   bool connect[4];
   bool own;
   bool button;
-  bool isFirst;
+  bool isFirst[4];
   float bright;
-  const char *player0;
-  const char *player1;
-  const char *player2;
-  const char *player3;
+  static Player player[MAX_PLAYER];
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];
   GuiRect dst[IMAGE_NUMBER];

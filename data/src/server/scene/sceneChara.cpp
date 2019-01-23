@@ -1,10 +1,13 @@
 #include "./sceneChara.h"
 #include "../../common/network/networkCommand.h"
 #include "../../common/network/dataBlock/dataBlock.h"
-#include "../network/networkManager.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <sstream>
+
+Client SceneChara::player[MAX_CLIENTS];
+
 bool SceneChara::init()
 {
     return true;
@@ -50,20 +53,10 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     }
     else if (command == NC_CONNECT)
     {
-        std::string cstr;
-        std::ostringstream oss;
-        char name[MAX_LEN_NAME];
-        const char *myname;
-        NetworkManager::recvData(pos, &name, sizeof(char *));
-        oss << pos;
-        cstr = std::string(name);
-        myname = (oss.str() + cstr).c_str();
-        if (strlen(myname) < MAX_LEN_NAME)
-            strcpy(name, myname);
-
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_2_CLIENT);
-        data.setData(&name, sizeof(char *));
+        data.setData(&pos, sizeof(int));
+        data.setData(&player[pos].name, sizeof(char *));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
     else if(command == NC_FINISH)
@@ -74,6 +67,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     }
     else if (command == NC_START)
     {
+        NetworkManager::recvData(pos, &player[pos].name, sizeof(char *));
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
         NetworkManager::sendData(pos, data, data.getDataSize());

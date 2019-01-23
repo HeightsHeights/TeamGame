@@ -172,8 +172,14 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             // AudioManager::playSE(SE_DECISION);
+            const char *myname;
+            char name[256];
+            myname = config->name.c_str();
+            if (strlen(myname) < 256)
+            strcpy(name, myname);
             DataBlock data;
             data.setCommand2DataBlock(NC_START);
+            data.setData(&name, sizeof(char *));
             NetworkManager::sendData(data, data.getDataSize());
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])

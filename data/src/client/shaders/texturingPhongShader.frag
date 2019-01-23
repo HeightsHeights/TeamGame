@@ -48,5 +48,6 @@ void main(void){
  
         specular = Ks*Ls*specularLight;
     }
-        gl_FragColor = color + vec4 (specular,1.0);
+        gl_FragColor.xyz = color.xyz + specular;
+        gl_FragColor.w = color.w;
 }

@@ -17,8 +17,8 @@ bool SceneMainGame::init()
 {
     tile = ObjModelLoader().load("./data/res/gui/obj/", "tile");
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
-
-   sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
+    bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
+    sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
 
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
@@ -64,24 +64,22 @@ void SceneMainGame::draw3D()
     glPopMatrix();
 
     glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
+    glScalef(1.6f, 1.6f, 1.6f);
     glTranslatef(mushEye.x, 0, mushEye.y);
-    mush->draw();
+    bamboo->draw();
     glPopMatrix();
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
-static int i = 0 ;
+    static int i = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(positionMush.x, 0, positionMush.y);
-    glRotated(i++,0,1,0);
+    glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
-    sprite->draw(0, &dst, 1.0f,Vector3f(-25, 15, 0));
+    sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
-
-
 }
 void SceneMainGame::draw2D()
 {
@@ -91,11 +89,9 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200,true,false,true);
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100,false,true,false);
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, true, false, true);
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, false, true, false);
     ShaderManager::stopShader(SID_GUI);
-
-    
 }
 
 void SceneMainGame::lookatVector(Vector3f direction)

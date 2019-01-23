@@ -19,6 +19,7 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *tile;
   ObjRawModel *mush;
+  ObjRawModel *bamboo;
 
   Vector2f positionMush;
   Vector3f mushEye;

@@ -81,3 +81,6 @@ void GuiShaderLoader::bindAttributes()
 void BillBoardShaderLoader::bindAttributes()
 {
 }
+void TexturingShaderLoader::bindAttributes()
+{
+}

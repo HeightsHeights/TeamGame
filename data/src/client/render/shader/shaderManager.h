@@ -7,7 +7,8 @@ typedef enum {
   SID_NT_PHONG = 1,
   SID_GUI = 2,
   SID_BILLBOARD = 3,
-  SID_NUM = 4,
+  SID_TEXTURING = 4,
+  SID_NUM = 5,
 } SHADER_ID;
 
 /******************************************************************************

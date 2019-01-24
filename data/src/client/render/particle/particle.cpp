@@ -1,5 +1,6 @@
 #include "./particle.h"
 
+#include <algorithm>
 #define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 
 Particle::Particle() {}
@@ -94,7 +95,6 @@ void Particle::generate(unsigned int num)
 void Particle::draw()
 {
     bindVao();
-
     // glBindBuffer(GL_ARRAY_BUFFER, posBufferObject);
     // glBufferSubData(GL_ARRAY_BUFFER, 0, R * 3 * sizeof(GLfloat), position_data);
     // glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
@@ -102,9 +102,13 @@ void Particle::draw()
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0, pData.size());
     unbindVao();
 }
+#include <iostream>
 void Particle::update()
 {
     for (int i = 0; i < pData.size(); i++)
     {
+        std::iter_swap(pData.begin() + i, pData.end());
+        pData.pop_back();
+        pData.shrink_to_fit();
     }
 }

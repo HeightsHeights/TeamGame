@@ -5,7 +5,7 @@
 class PData
 {
 private:
-  unsigned int life;
+  int life;
 
 public:
   Vector3f pos;
@@ -13,5 +13,5 @@ public:
   Vector3f accel;
 
   PData();
-  void damage() { life--; }
+  ~PData();
 };

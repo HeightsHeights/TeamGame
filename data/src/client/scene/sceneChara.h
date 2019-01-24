@@ -15,6 +15,7 @@ typedef struct
 {
   char subname[MAX_LEN_NAME];
   const char *name;
+  Vector2f position;
 } Player;
 /******************************************************************************
  * class SceneChara
@@ -49,14 +50,14 @@ private:
   virtual void drawBackground();
   virtual void draw3D();
   virtual void draw2D();
-  Vector2f position;
+  Vector2f mypos;
+  
   Vector2f positionChara;
-  bool decision[4];
-  bool connect[4];
-  bool own;
+  bool decision[MAX_PLAYER];
+  bool connect[MAX_PLAYER];
   bool button;
-  bool isFirst[4];
   float bright;
+  int count;
   static Player player[MAX_PLAYER];
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];

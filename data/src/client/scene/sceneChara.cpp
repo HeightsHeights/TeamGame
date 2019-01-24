@@ -19,6 +19,7 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneChara::init()
 {
     angle = 0;
+    count = 0;
 
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
@@ -38,7 +39,7 @@ bool SceneChara::init()
 
     dst[IMAGE_BAMBOO] = GuiRect(-475, -150, 200, 50);
     dst[IMAGE_READY] = GuiRect(-150, -225, 300, 100);
-    own = false;
+
     for (int i = 0; i < IMAGE_NUMBER; i++)
     {
         image[i] = GuiImageLoader().load((PNG_DIR_PATH + IMAGE_NAME[i]).c_str());
@@ -50,7 +51,6 @@ bool SceneChara::init()
 
     for (int i = 0; i < COLOR_NUMBER; i++)
     {
-        isFirst[i] = false;
         connect[i] = false;
         decision[i] = false;
         player[i].name = NULL;
@@ -60,13 +60,22 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
-    if (!own && button == true)
+    if (button == true)
     {
-        if (position.y == 0)
+        if (mypos.y == 0)
         {
-            position.x += param.axisL.x;
+            mypos.x += param.axisL.x;
         }
-        position.y += param.axisL.y;
+
+        if(count == MAX_PLAYER/2)
+        {    
+            mypos.y += param.axisL.y;
+        }
+        else
+        {
+            mypos.y = 0;
+        }
+
         button = false;
     }
     if (param.axisL.x == 0 && param.axisL.y == 0)
@@ -74,36 +83,29 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         button = true;
     }
 
-    if (position.x > 1)
+    if (mypos.x > 1)
     {
-        position.x = 0;
+        mypos.x = 0;
     }
-    else if (position.x < 0)
+    else if (mypos.x < 0)
     {
-        position.x = 1;
-    }
-
-    if (position.y > 1)
-    {
-        position.y = 1;
-    }
-    else if (position.y < 0)
-    {
-        position.y = 0;
+        mypos.x = 1;
     }
 
-    if (!own && position.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    if (mypos.y > 1)
     {
-        own = true;
+        mypos.y = 1;
+    }
+    else if (mypos.y < 0)
+    {
+        mypos.y = 0;
+    }
+
+    
+    if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
+    {
         DataBlock data;
         data.setCommand2DataBlock(NC_READY);
-        NetworkManager::sendData(data, data.getDataSize());
-    }
-    else if (own == true && position.y == 1 && param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
-    {
-        own = false;
-        DataBlock data;
-        data.setCommand2DataBlock(NC_CANCEL);
         NetworkManager::sendData(data, data.getDataSize());
     }
     else if (param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
@@ -112,30 +114,25 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else
+    else 
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_CONNECT);
         NetworkManager::sendData(data, data.getDataSize());
     }
+    
+        DataBlock data;
+        data.setCommand2DataBlock(NC_CONTROLLER_INFO);
+        data.setData(&param, sizeof(ControllerParam));
+        NetworkManager::sendData(data, data.getDataSize());
+    
 
     return SI_CHARASELECT;
 }
 SCENE_ID SceneChara::executeCommand(int command)
 {
-    if (command == NC_SERVER_READY)
-    {
-        int num;
-        NetworkManager::recvData(&num, sizeof(int));
-        decision[num] = true;
-    }
-    else if (command == NC_SERVER_CANCEL)
-    {
-        int num;
-        NetworkManager::recvData(&num, sizeof(int));
-        decision[num] = false;
-    }
-    else if (command == NC_SERVER_MAINGAME)
+
+    if (command == NC_SERVER_MAINGAME)
     {
         return SI_MAIN;
     }
@@ -143,18 +140,38 @@ SCENE_ID SceneChara::executeCommand(int command)
     {
         return SI_NUMBER;
     }
+    else if(command == NC_CONTROLLER_INFO)
+    {
+        int num;
+        NetworkManager::recvData(&num,sizeof(int));
+        Vector2f positionData;
+        
+        NetworkManager::recvData(positionData,sizeof(Vector2f));
+        player[num].position.x += positionData.x;
+        if(player[num].position.x > 1){
+            player[num].position.x = 0;
+        }
+        else if(player[num].position.x < 0){
+            player[num].position.x = 1;
+        }
+        
+    }
     else if (command == NC_SERVER_2_CLIENT)
     {
         int num;
         NetworkManager::recvData(&num, sizeof(int));
         connect[num] = true;
         NetworkManager::recvData(&player[num].subname, sizeof(char *));
-       
         player[num].name = &player[num].subname[0];
-        isFirst[num] = true;
-        
-        
-        
+    }
+    
+    count = 0;
+    for(int i = 0; i < MAX_PLAYER; i++)
+    {
+        if(player[i].position.x == 0)
+        {
+            count++;
+        }
     }
     return SI_CHARASELECT;
 }
@@ -180,7 +197,7 @@ void SceneChara::draw3D()
     ShaderManager::startShader(SID_NT_PHONG);
     glTranslatef(-10, -1, positionChara.y);
     glRotated(angle, 0, 1, 0);
-    if (position.x == 0)
+    if (mypos.x == 0)
     {
         bamboo->draw();
     }
@@ -192,13 +209,21 @@ void SceneChara::draw3D()
 }
 void SceneChara::draw2D()
 {
+    float bright;
+    if(count == MAX_PLAYER/2){
+        bright = (mypos.y == 1)? 1.0f : 0.7f;
+    }
+    else
+    {
+        bright = 0.3f;
+    }
+
     ShaderManager::startShader(SID_GUI);
-    image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], (position.y == 1 && !own) ? 1.0f : 0.3f);
-    image[(int)IMAGE_BAMBOO + (int)position.x]->draw(NULL, &dst[IMAGE_BAMBOO], (position.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), COLOR_RED, connect[0], decision[0], player[0].name);
-    drawPlayer(Vector2f(100, 280), COLOR_BLUE, connect[1], decision[1], player[1].name);
-    drawPlayer(Vector2f(100, 160), COLOR_YELLOW, connect[2], decision[2], player[2].name);
-    drawPlayer(Vector2f(100, 40), COLOR_GREEN, connect[3], decision[3],player[3].name);
+    image[(int)IMAGE_BAMBOO + (int)mypos.x]->draw(NULL, &dst[IMAGE_BAMBOO], (mypos.y == 0) ? 1.0f : 0.3f);
+    drawPlayer(Vector2f(100, 400), (player[0].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[0], decision[0], player[0].name);
+    drawPlayer(Vector2f(100, 280), (player[1].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[1], decision[1], player[1].name);
+    // drawPlayer(Vector2f(100, 160), (position[2].x == 0)? COLOR_RED : COLOR_BLUE, connect[2], decision[2], player[2].name);
+    // drawPlayer(Vector2f(100, 40), (position[3].x == 0)? COLOR_RED : COLOR_BLUE, connect[3], decision[3], player[3].name);
     ShaderManager::stopShader(SID_GUI);
 }
 

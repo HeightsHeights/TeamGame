@@ -56,3 +56,10 @@ private:
 
 public:
 };
+class TexturingShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
+};

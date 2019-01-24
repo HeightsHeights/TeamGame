@@ -1,17 +1,19 @@
 #pragma once
 
+#include "../../../common/object/transform.h"
 #include "../../../common/math/vector/vector3f.h"
 
 class PData
 {
 private:
-  unsigned int life;
+  int life;
 
 public:
-  Vector3f pos;
+  Transform transform;
   Vector3f speed;
   Vector3f accel;
 
   PData();
-  void damage() { life--; }
+  PData(Vector3f pos, Vector3f speed, Vector3f accel);
+  ~PData();
 };

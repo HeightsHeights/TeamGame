@@ -102,3 +102,9 @@ void Particle::draw()
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0, pData.size());
     unbindVao();
 }
+void Particle::update()
+{
+    for (int i = 0; i < pData.size(); i++)
+    {
+    }
+}

@@ -36,7 +36,7 @@ private:
   void bindTexture();
   void unbindTexture();
 
-  void upDate();
+  void update();
 
 public:
   Particle();

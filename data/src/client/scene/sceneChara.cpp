@@ -34,7 +34,6 @@ bool SceneChara::init()
             "nameFrames/nameFrameYellow.png",
             "nameFrames/nameFrameGreen.png",
             "nameFrames/nameFramenot.png",
-            "check.png",
         };
 
     dst[IMAGE_BAMBOO] = GuiRect(-475, -150, 200, 50);
@@ -52,7 +51,6 @@ bool SceneChara::init()
     for (int i = 0; i < COLOR_NUMBER; i++)
     {
         connect[i] = false;
-        decision[i] = false;
         player[i].name = NULL;
     }
 
@@ -219,15 +217,16 @@ void SceneChara::draw2D()
     }
 
     ShaderManager::startShader(SID_GUI);
+    image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
     image[(int)IMAGE_BAMBOO + (int)mypos.x]->draw(NULL, &dst[IMAGE_BAMBOO], (mypos.y == 0) ? 1.0f : 0.3f);
-    drawPlayer(Vector2f(100, 400), (player[0].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[0], decision[0], player[0].name);
-    drawPlayer(Vector2f(100, 280), (player[1].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[1], decision[1], player[1].name);
-    // drawPlayer(Vector2f(100, 160), (position[2].x == 0)? COLOR_RED : COLOR_BLUE, connect[2], decision[2], player[2].name);
-    // drawPlayer(Vector2f(100, 40), (position[3].x == 0)? COLOR_RED : COLOR_BLUE, connect[3], decision[3], player[3].name);
+    for(int i = 0; i < MAX_PLAYER; i++)
+    {
+        drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);
+    }
     ShaderManager::stopShader(SID_GUI);
 }
 
-void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, bool ready, const char *name)
+void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *name)
 {
     if (!exit)
     {
@@ -240,9 +239,6 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, bool ready, c
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
         dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, FRAME_WIDTH);
         image[IMAGE_PLAYER_FRAME_0 + cid]->draw(NULL, &dst2, 1.0f);
-
-        dst2 = GuiRect(pos.x - FRAME_WIDTH, pos.y - FRAME_WIDTH * 9 / 8, FRAME_WIDTH, FRAME_WIDTH);
-        image[IMAGE_CHECK]->draw(NULL, &dst2, (ready) ? 1.0f : 0.2f);
 
         GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
         dst2 = GuiRect(pos.x + FRAME_WIDTH * 2 - std::string(name).length() * 15 / 2 + FRAME_WIDTH / 2, pos.y - FRAME_WIDTH * 11 / 9, std::string(name).length() * 30, 60);

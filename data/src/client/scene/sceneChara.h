@@ -36,8 +36,7 @@ private:
     IMAGE_PLAYER_FRAME_2 = 6,
     IMAGE_PLAYER_FRAME_3 = 7,
     IMAGE_NOTPLAYER_FRAME = 8,
-    IMAGE_CHECK = 9,
-    IMAGE_NUMBER = 10,
+    IMAGE_NUMBER = 9,
   } IMAGE_ID;
 
   typedef enum {
@@ -51,12 +50,9 @@ private:
   virtual void draw3D();
   virtual void draw2D();
   Vector2f mypos;
-  
   Vector2f positionChara;
-  bool decision[MAX_PLAYER];
   bool connect[MAX_PLAYER];
   bool button;
-  float bright;
   int count;
   static Player player[MAX_PLAYER];
   unsigned int angle;
@@ -65,7 +61,7 @@ private:
   ObjRawModel *mush;
   ObjRawModel *bamboo;
 
-  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, bool ready, const char *name);
+  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *name);
 
 public:
   SceneChara() : BaseScene() {}

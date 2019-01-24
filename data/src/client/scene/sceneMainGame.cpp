@@ -6,6 +6,7 @@
 #define PNG_FILE_EXTENSION ".png"
 
 static const SDL_Color gRed = {0, 0, 255, 0};
+Gamebuff SceneMainGame::gb[StatusDrawer::CHARA_NUMBER];
 
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
@@ -21,6 +22,14 @@ bool SceneMainGame::init()
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
 
+    for(int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
+    {
+        for(int j = 0; j < BUFF_NUMBER; j++)
+        {
+            gb[i].buff[j] = false;
+        }
+        
+    }
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
@@ -101,8 +110,8 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, true, false, true);
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, false, true, false);
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, gb[StatusDrawer::CHARA_MUSH]);
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, gb[StatusDrawer::CHARA_BAMBOO]);
     ShaderManager::stopShader(SID_GUI);
 }
 

@@ -6,7 +6,6 @@
 #define PNG_FILE_EXTENSION ".png"
 
 static const SDL_Color black = {0, 0, 0, 0};
-
 StatusDrawer::StatusDrawer()
 {
 }
@@ -90,20 +89,18 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkBuff, bool hpBuff, bool spBuff)
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, Gamebuff gb)
 {
     if (cid == CHARA_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
-        dst = GuiRect(pos.x, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkBuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + UNIT_WIDTH/2, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpBuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + UNIT_WIDTH, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spBuff)? 1.0f : 0.2f);
-        
+        for(int i = 0; i < BUFF_NUMBER; i++)
+        {
+            dst = GuiRect(pos.x + (UNIT_WIDTH/2) * i, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i])? 1.0f : 0.2f);
+        }
         
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
         dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
@@ -117,13 +114,11 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bo
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
         
-        dst = GuiRect(pos.x + 325, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_ATKBUFF]->draw(NULL, &dst, (atkBuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + (325 + UNIT_WIDTH/2), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_HPBUFF]->draw(NULL, &dst, (hpBuff)? 1.0f : 0.2f);
-        dst = GuiRect(pos.x + (325 + UNIT_WIDTH), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-        image[IMAGE_SPBUFF]->draw(NULL, &dst, (spBuff)? 1.0f : 0.2f);
-        
+        for(int i = 0; i < BUFF_NUMBER; i++)
+        {
+            dst = GuiRect(pos.x + (325 + (UNIT_WIDTH/2) * i), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i])? 1.0f : 0.2f);
+        }
 
         float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));
         float chp = HP_WIDTH * ((float)hp / MAX_HP);

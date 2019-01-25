@@ -1,5 +1,6 @@
 #include "./sceneBase.h"
 
+GameData BaseScene::gameData[MAX_CLIENTS];
 bool BaseScene::init()
 {
 }

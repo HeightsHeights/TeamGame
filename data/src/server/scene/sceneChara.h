@@ -7,20 +7,24 @@
 #include "../../common/math/vector/vectorSet.h"
 #include "../network/networkManager.h"
 
-#define MAX_PLAYER 2
 /******************************************************************************
  * class SceneChara
  * 機能1：
  * 機能2：
 ******************************************************************************/
 
+typedef struct
+{
+  Vector2f position;
+} Player;
+
 class SceneChara : public BaseScene
 {
 private:
-  bool ready[MAX_PLAYER];
-  bool button[MAX_PLAYER];
-  Vector2f position;
-  static Client player[MAX_CLIENTS];
+  bool ready[MAX_CLIENTS];
+  bool button[MAX_CLIENTS];
+  static Player pl[MAX_CLIENTS];
+
 public:
   SceneChara() : BaseScene() {}
 

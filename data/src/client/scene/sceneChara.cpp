@@ -65,8 +65,8 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
             mypos.x += param.axisL.x;
         }
 
-        if(count == MAX_PLAYER/2)
-        {    
+        if (count == MAX_PLAYER / 2)
+        {
             mypos.y += param.axisL.y;
         }
         else
@@ -99,7 +99,6 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         mypos.y = 0;
     }
 
-    
     if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
         DataBlock data;
@@ -112,18 +111,20 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else 
+    else
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_CONNECT);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    
+
+    if (mypos.y == 0)
+    {
         DataBlock data;
         data.setCommand2DataBlock(NC_CONTROLLER_INFO);
         data.setData(&param, sizeof(ControllerParam));
         NetworkManager::sendData(data, data.getDataSize());
-    
+    }
 
     return SI_CHARASELECT;
 }
@@ -138,21 +139,14 @@ SCENE_ID SceneChara::executeCommand(int command)
     {
         return SI_NUMBER;
     }
-    else if(command == NC_CONTROLLER_INFO)
+    else if (command == NC_CONTROLLER_INFO)
     {
         int num;
-        NetworkManager::recvData(&num,sizeof(int));
+        NetworkManager::recvData(&num, sizeof(int));
         Vector2f positionData;
-        
-        NetworkManager::recvData(positionData,sizeof(Vector2f));
-        player[num].position.x += positionData.x;
-        if(player[num].position.x > 1){
-            player[num].position.x = 0;
-        }
-        else if(player[num].position.x < 0){
-            player[num].position.x = 1;
-        }
-        
+
+        NetworkManager::recvData(positionData, sizeof(Vector2f));
+        player[num].position.x = positionData.x;
     }
     else if (command == NC_SERVER_2_CLIENT)
     {
@@ -162,11 +156,11 @@ SCENE_ID SceneChara::executeCommand(int command)
         NetworkManager::recvData(&player[num].subname, sizeof(char *));
         player[num].name = &player[num].subname[0];
     }
-    
+
     count = 0;
-    for(int i = 0; i < MAX_PLAYER; i++)
+    for (int i = 0; i < MAX_PLAYER; i++)
     {
-        if(player[i].position.x == 0)
+        if (player[i].position.x == 0)
         {
             count++;
         }
@@ -208,8 +202,9 @@ void SceneChara::draw3D()
 void SceneChara::draw2D()
 {
     float bright;
-    if(count == MAX_PLAYER/2){
-        bright = (mypos.y == 1)? 1.0f : 0.7f;
+    if (count == MAX_PLAYER / 2)
+    {
+        bright = (mypos.y == 1) ? 1.0f : 0.7f;
     }
     else
     {
@@ -219,9 +214,9 @@ void SceneChara::draw2D()
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
     image[(int)IMAGE_BAMBOO + (int)mypos.x]->draw(NULL, &dst[IMAGE_BAMBOO], (mypos.y == 0) ? 1.0f : 0.3f);
-    for(int i = 0; i < MAX_PLAYER; i++)
+    for (int i = 0; i < MAX_PLAYER; i++)
     {
-        drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0)? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);
+        drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0) ? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);
     }
     ShaderManager::stopShader(SID_GUI);
 }

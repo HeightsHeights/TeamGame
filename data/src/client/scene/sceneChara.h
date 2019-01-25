@@ -53,6 +53,7 @@ private:
   Vector2f positionChara;
   bool connect[MAX_PLAYER];
   bool button;
+  bool isFirst;
   int count;
   static Player player[MAX_PLAYER];
   unsigned int angle;

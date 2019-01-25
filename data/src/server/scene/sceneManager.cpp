@@ -17,7 +17,7 @@ bool SceneManager::init()
     scenes[SI_MAIN] = new SceneMainGame();
     scenes[SI_CHARASELECT] = new SceneChara();
 
-    for (int i = 0; i < SI_NUMBER; i++)
+    for (int i = SI_LOADING; i < SI_NUMBER; i++)
     {
         if (scenes[i] == NULL)
         {

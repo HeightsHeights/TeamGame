@@ -5,7 +5,7 @@
 #include "../network/networkManager.h"
 #include "../audio/audioManager.h"
 #include "../controller/controllerManager.h"
-#include "../main/threadManager.h"
+#include "../render/gui/sprite/guiSpriteLoader.h"
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
@@ -18,9 +18,26 @@ SceneLoading::SceneLoading(WindowManager *window, ConfigData *config) : BaseScen
 }
 bool SceneLoading::init()
 {
-    count = 0;
-    std::string numbersNameTemplate = "loading/";
-    for (int i = 0; i < ANIME_NUMBER; i++)
+    clockCounter = RingCounter(0, 0, 30 * 2 - 1);
+    loadingCounter = RingCounter(0, 0, 4 * 10 - 1);
+
+    background = GuiImageLoader().load((PNG_DIR_PATH + std::string("configbg") + PNG_FILE_EXTENSION).c_str());
+
+    const std::string loadingMessageName[] = {
+        "Now Loading   ",
+        "Now Loading.  ",
+        "Now Loading.. ",
+        "Now Loading...",
+    };
+
+    const SDL_Color black = {0, 0, 0, 0};
+    for (int i = 0; i < 4; i++)
+    {
+        loadingMessageText[i] = GuiTextLoader().load(FID_NORMAL, loadingMessageName[i].c_str(), black);
+    }
+
+    std::string numbersNameTemplate = "effect/loading/frame-";
+    for (int i = 0; i < 30; i++)
     {
         char numberString[4];
         sprintf(numberString, "%d", i);
@@ -35,33 +52,18 @@ bool SceneLoading::init()
 }
 SCENE_ID SceneLoading::reactController(ControllerParam param)
 {
-#ifndef _UNENABLE_NETWORK
-    if (!NetworkManager::connect())
-    {
-        fprintf(stderr, "Error --> NetworkManager::connect()\n");
-    }
-    else
-    {
-        const char *myname;
-        char name[256];
-        myname = config->name.c_str();
-        if (strlen(myname) < 256)
-            strcpy(name, myname);
-        DataBlock data;
-        data.setCommand2DataBlock(NC_START);
-        data.setData(&name, sizeof(char *));
-        NetworkManager::sendData(data, data.getDataSize());
-    }
-    if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
-    {
-        fprintf(stderr, "Error --> ThreadManager::start()\n");
-    }
-#endif
     return SI_LOADING;
 }
 SCENE_ID SceneLoading::executeCommand(int command)
 {
-    return SI_LOADING;
+    SCENE_ID nextScene = SI_LOADING;
+
+    if (command == NC_MOVE_SCENE)
+    {
+        nextScene = SI_CHARASELECT;
+    }
+
+    return nextScene;
 }
 void SceneLoading::draw3D()
 {
@@ -69,12 +71,16 @@ void SceneLoading::draw3D()
 void SceneLoading::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    image[ANIME_0]->draw(NULL, NULL);
-    count++;
-    if (count > 7)
-    {
-        count = 0;
-    }
-    SDL_Delay(100);
+
+    background->draw(0, NULL);
+
+    GuiRect dst = {-50, 150, 100, 100};
+    image[clockCounter.getCount() / 2]->draw(NULL, &dst);
+    ++clockCounter;
+
+    dst = {-100, 0, 200, 40};
+    loadingMessageText[loadingCounter.getCount() / 10]->draw(NULL, &dst);
+    ++loadingCounter;
+
     ShaderManager::stopShader(SID_GUI);
 }

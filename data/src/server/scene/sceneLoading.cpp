@@ -15,6 +15,7 @@ bool SceneLoading::init()
 SCENE_ID SceneLoading::executeCommand(int command, int pos)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (command == NC_START)
     {
         exit[pos] = true;
@@ -28,6 +29,8 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
         }
     }
 =======
+=======
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
     // if (command == NC_START)
     // {
     //     NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
@@ -41,6 +44,9 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
     //         count++;
     //     }
     // }
+<<<<<<< HEAD
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
+=======
 >>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
 
     // if (count == MAX_CLIENTS)
@@ -48,10 +54,16 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
     //     DataBlock data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         return SI_CHARASELECT;
     }
+=======
+    //     data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
+    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    // }
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
 =======
     //     data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
     //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());

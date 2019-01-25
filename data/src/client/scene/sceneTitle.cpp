@@ -212,7 +212,10 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 SCENE_ID SceneTitle::executeCommand(int command)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
     if (command == NC_MOVE_SCENE)
     {
         return SI_CHARASELECT;

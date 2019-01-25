@@ -58,6 +58,7 @@ bool SceneChara::init()
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (button == true)
     {
         if (mypos.y == 0)
@@ -133,6 +134,8 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         NetworkManager::sendData(data, data.getDataSize());
     }
 =======
+=======
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
     // if (button == true)
     // {
     //     if (mypos.y == 0)
@@ -200,6 +203,9 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
     //     data.setData(&param, sizeof(ControllerParam));
     //     NetworkManager::sendData(data, data.getDataSize());
     // }
+<<<<<<< HEAD
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
+=======
 >>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
 
     return SI_CHARASELECT;

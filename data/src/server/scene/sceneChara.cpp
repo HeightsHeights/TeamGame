@@ -24,6 +24,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     //     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         DataBlock data;
         data.setCommand2DataBlock(NC_SERVER_MAINGAME);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
@@ -45,6 +46,8 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 =======
+=======
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
     //     DataBlock data;
     //     data.setCommand2DataBlock(NC_SERVER_MAINGAME);
     //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
@@ -64,6 +67,9 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     //     data.setCommand2DataBlock(NC_FINISH);
     //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     // }
+<<<<<<< HEAD
+>>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
+=======
 >>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
 
     // if (command == NC_CONTROLLER_INFO)

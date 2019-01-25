@@ -99,24 +99,6 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 #endif
-#ifndef _UNENABLE_NETWORK
-
-    if (!NetworkManager::init(config->serverAddress.c_str()))
-    {
-        fprintf(stderr, "Error --> NetworkManager::init()\n");
-        return false;
-    }
-    if (!NetworkManager::connect())
-    {
-        fprintf(stderr, "Error --> NetworkManager::connect()\n");
-        return false;
-    }
-    if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
-    {
-        fprintf(stderr, "Error --> ThreadManager::start()\n");
-        return false;
-    }
-#endif
 
     if (!ThreadManager::init(&atm))
     {

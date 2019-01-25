@@ -11,6 +11,7 @@
 #include "../config/loader/configLoader.h"
 #include "../audio/audioManager.h"
 #include "../controller/controllerManager.h"
+#include "../main/threadManager.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <fstream>
@@ -174,15 +175,28 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            // AudioManager::playSE(SE_DECISION);
+        // AudioManager::playSE(SE_DECISION);
+#ifndef _UNENABLE_NETWORK
             if (!NetworkManager::init(config->serverAddress.c_str()))
             {
                 fprintf(stderr, "Error --> NetworkManager::init()\n");
             }
             else
             {
-                return SI_LOADING;
+                if (!NetworkManager::connect())
+                {
+                    fprintf(stderr, "Error --> NetworkManager::connect()\n");
+                }
+                else if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
+                {
+                    fprintf(stderr, "Error --> ThreadManager::start()\n");
+                }
+                else
+                {
+                    return SI_LOADING;
+                }
             }
+#endif
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {

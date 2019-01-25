@@ -11,7 +11,6 @@ bool SceneChara::init()
     for (int i = 0; i < MAX_CLIENTS; i++)
     {
         button[i] = false;
-        ready[i] = false;
     }
     return true;
 }

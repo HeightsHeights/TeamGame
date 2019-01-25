@@ -8,6 +8,7 @@
 #include "../../common/controllerParam/controllerParam.h"
 #include "../config/configData.h"
 
+#define MAX_PLAYER 2
 /******************************************************************************
  * class BaseScene
  * 機能1：

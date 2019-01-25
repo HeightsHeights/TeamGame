@@ -16,6 +16,7 @@
 #include <fstream>
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
+#define PNG_FILE_EXTENSION ".png"
 
 static const SDL_Color gRed = {0, 0, 255, 0};
 
@@ -43,12 +44,25 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneTitle::init()
 {
+    std::string numbersNameTemplate = "loading/";
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;
     secount = 0;
     dst[IMAGE_START] = GuiRect(-200, -180, 400, 80);
     dst[IMAGE_TITLE] = GuiRect(-393, 256, 786, 255);
     configmode = false;
+    loading = false;
+    for (int i = 0; i < ANIME_NUMBER; i++)
+    {
+        char numberString[4];
+        sprintf(numberString, "%d", i);
+        std::string imageName = numbersNameTemplate + std::string(numberString);
+        image2[i] = GuiImageLoader().load((PNG_DIR_PATH + imageName + PNG_FILE_EXTENSION).c_str());
+        if (image2[i] == NULL)
+        {
+            return false;
+        }
+    }
     for (int i = 0; i < IMAGE_NUMBER; i++)
     {
         image[i] = GuiImageLoader().load((PNG_DIR_PATH + IMAGE_NAME[i]).c_str());
@@ -176,11 +190,12 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
             char name[256];
             myname = config->name.c_str();
             if (strlen(myname) < 256)
-            strcpy(name, myname);
+                strcpy(name, myname);
             DataBlock data;
             data.setCommand2DataBlock(NC_START);
             data.setData(&name, sizeof(char *));
             NetworkManager::sendData(data, data.getDataSize());
+            loading = true;
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {

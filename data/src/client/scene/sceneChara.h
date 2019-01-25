@@ -10,7 +10,7 @@
 #include "../render/gui/text/guiTextLoader.h"
 #define FRAME_WIDTH 80
 #define MAX_LEN_NAME 256
-#define MAX_PLAYER 2
+
 typedef struct
 {
   char subname[MAX_LEN_NAME];

@@ -88,7 +88,7 @@ void Particle::generate(unsigned int num)
     for (int i = 0; i < num; i++)
     {
         PData object = PData();
-        object.pos = this->emitterPos;
+        object.transform.position = this->emitterPos;
         pData.push_back(object);
     }
 }

@@ -3,3 +3,6 @@
 PData::PData()
 {
 }
+PData::~PData()
+{
+}

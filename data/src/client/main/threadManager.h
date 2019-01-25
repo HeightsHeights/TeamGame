@@ -12,7 +12,7 @@ private:
 public:
   static bool init(void *data);
   static bool start(SDL_ThreadFunction fp, const char *name);
-  static int netWorkThread(void *data);
+  static int networkThread(void *data);
   static int controllerThread(void *data);
   static bool wait();
 };

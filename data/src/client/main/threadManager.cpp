@@ -22,7 +22,7 @@ bool ThreadManager::start(SDL_ThreadFunction fp, const char *name)
     threads.push_back(thread);
     return true;
 }
-int ThreadManager::netWorkThread(void *data)
+int ThreadManager::networkThread(void *data)
 {
     while (SDL_AtomicGet((SDL_atomic_t *)data) > 0)
     {

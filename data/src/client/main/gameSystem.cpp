@@ -86,11 +86,11 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
-    // if (!AudioManager::init())
-    // {
-    //     fprintf(stderr, "Error --> AudioManager::init()\n");
-    //     return false;
-    // }
+        // if (!AudioManager::init())
+        // {
+        //     fprintf(stderr, "Error --> AudioManager::init()\n");
+        //     return false;
+        // }
 
 #ifdef _ENABLE_WII
     if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
@@ -101,7 +101,7 @@ bool GameSystem::init(int argc, char *argv[])
 #endif
 #ifndef _UNENABLE_NETWORK
 
-    if (!NetworkManager::init(config->serverAddress.c_str()))
+    if (NetworkManager::init(config->serverAddress.c_str()))
     {
         fprintf(stderr, "Error --> NetworkManager::init()\n");
         return false;
@@ -111,11 +111,21 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> NetworkManager::connect()\n");
         return false;
     }
+    if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
+    {
+        fprintf(stderr, "Error --> ThreadManager::start()\n");
+        return false;
+    }
 #endif
 
     if (!ThreadManager::init(&atm))
     {
         fprintf(stderr, "Error --> ThreadManager::init()\n");
+        return false;
+    }
+    if (!ThreadManager::start(ThreadManager::controllerThread, "controllerThread"))
+    {
+        fprintf(stderr, "Error --> ThreadManager::start()\n");
         return false;
     }
     return true;

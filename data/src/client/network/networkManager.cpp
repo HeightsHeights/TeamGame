@@ -45,6 +45,10 @@ bool NetworkManager::init(const char *hostName)
         return false;
     }
 
+    if (connector != NULL)
+    {
+        delete connector;
+    }
     connector = new NetConnector(gSocket, server);
     if (connector == NULL)
     {

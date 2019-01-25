@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "./sceneManager.h"
 #include "./sceneTitle.h"
+#include "./sceneLoading.h"
 #include "./sceneMainGame.h"
 #include "./sceneChara.h"
 /* static */
@@ -14,6 +15,7 @@ bool SceneManager::init(WindowManager *window, ConfigData *config)
     sceneId = SI_MAIN;
 
     scenes[SI_TITLE] = new SceneTitle(window, config);
+    scenes[SI_LOADING] = new SceneLoading(window, config);
     scenes[SI_CHARASELECT] = new SceneChara(window, config);
     scenes[SI_MAIN] = new SceneMainGame(window, config);
 

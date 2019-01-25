@@ -3,25 +3,23 @@
 #include "../scene/sceneManager.h"
 #include "../network/networkManager.h"
 
-SDL_Thread *ThreadManager::cThread;
-SDL_Thread *ThreadManager::nThread;
+std::vector<SDL_Thread *> ThreadManager::threads;
+void *ThreadManager::data;
 
 bool ThreadManager::init(void *data)
 {
-    cThread = SDL_CreateThread(controllerThread, "ControllerThread", data);
-    if (cThread == NULL)
+    ThreadManager::data = data;
+    return true;
+}
+bool ThreadManager::start(SDL_ThreadFunction fp, const char *name)
+{
+    SDL_Thread *thread = SDL_CreateThread(fp, name, data);
+    if (thread == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateThread()\n");
         return false;
     }
-#ifndef _UNENABLE_NETWORK
-    nThread = SDL_CreateThread(netWorkThread, "NetworkThread", data);
-    if (nThread == NULL)
-    {
-        fprintf(stderr, "Error --> SDL_CreateThread()\n");
-        return false;
-    }
-#endif
+    threads.push_back(thread);
     return true;
 }
 int ThreadManager::netWorkThread(void *data)
@@ -64,21 +62,17 @@ int ThreadManager::controllerThread(void *data)
 bool ThreadManager::wait()
 {
     bool ret = true;
-    int cThreadReturnValue;
-    SDL_WaitThread(cThread, &cThreadReturnValue);
-    if (cThreadReturnValue < 0)
+    int threadReturnValue;
+
+    for (int i = 0; i < threads.size(); i++)
     {
-        fprintf(stderr, "Error --> ControllerThread is Abend\n");
-        ret = false;
+        SDL_WaitThread(threads[i], &threadReturnValue);
+        if (threadReturnValue < 0)
+        {
+            fprintf(stderr, "Error --> thread[%d] is Abend\n", i);
+            ret = false;
+        }
     }
-#ifndef _UNENABLE_NETWORK
-    int nThreadReturnValue;
-    SDL_WaitThread(nThread, &nThreadReturnValue);
-    if (nThreadReturnValue < 0)
-    {
-        fprintf(stderr, "Error --> NetworkThread is Abend\n");
-        ret = false;
-    }
-#endif
-    return true;
+
+    return ret;
 }

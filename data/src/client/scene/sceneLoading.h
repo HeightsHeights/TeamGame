@@ -29,6 +29,7 @@ private:
   RingCounter clockCounter;
   RingCounter loadingCounter;
 
+  bool isFirst;
   virtual void draw3D();
   virtual void draw2D();
 

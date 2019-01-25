@@ -57,8 +57,6 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (button == true)
     {
         if (mypos.y == 0)
@@ -103,7 +101,7 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
     if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
         DataBlock data;
-        data.setCommand2DataBlock(NC_READY);
+        data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(data, data.getDataSize());
     }
     else if (param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
@@ -112,141 +110,60 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    // else
-    // {
-    //     const char *myname;
-    //     char name[256];
-    //     myname = config->name.c_str();
-    //     if (strlen(myname) < 256)
-    //     strcpy(name, myname);
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_CONNECT);
-    //     data.setData(&name, sizeof(char *));
-    //     NetworkManager::sendData(data, data.getDataSize());
-        
-    // }
+    else
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_CHARA_DATA);
+        NetworkManager::sendData(data, data.getDataSize());
+    }
 
     if (mypos.y == 0)
     {
         DataBlock data;
-        data.setCommand2DataBlock(NC_CONTROLLER_INFO);
+        data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
         data.setData(&param, sizeof(ControllerParam));
         NetworkManager::sendData(data, data.getDataSize());
     }
-=======
-=======
->>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
-    // if (button == true)
-    // {
-    //     if (mypos.y == 0)
-    //     {
-    //         mypos.x += param.axisL.x;
-    //     }
-
-    //     if (count == MAX_PLAYER / 2)
-    //     {
-    //         mypos.y += param.axisL.y;
-    //     }
-    //     else
-    //     {
-    //         mypos.y = 0;
-    //     }
-
-    //     button = false;
-    // }
-    // if (param.axisL.x == 0 && param.axisL.y == 0)
-    // {
-    //     button = true;
-    // }
-
-    // if (mypos.x > 1)
-    // {
-    //     mypos.x = 0;
-    // }
-    // else if (mypos.x < 0)
-    // {
-    //     mypos.x = 1;
-    // }
-
-    // if (mypos.y > 1)
-    // {
-    //     mypos.y = 1;
-    // }
-    // else if (mypos.y < 0)
-    // {
-    //     mypos.y = 0;
-    // }
-
-    // if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_READY);
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
-    // else if (param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_FINISH);
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
-    // else
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_CONNECT);
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
-
-    // if (mypos.y == 0)
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_CONTROLLER_INFO);
-    //     data.setData(&param, sizeof(ControllerParam));
-    //     NetworkManager::sendData(data, data.getDataSize());
-    // }
-<<<<<<< HEAD
->>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
-=======
->>>>>>> 221e370b01f7ab71cd9a8ba40827cb70d3e27222
 
     return SI_CHARASELECT;
 }
 SCENE_ID SceneChara::executeCommand(int command)
 {
 
-    // if (command == NC_MOVE_SCENE)
-    // {
-    //     return SI_MAIN;
-    // }
-    // else if (command == NC_FINISH)
-    // {
-    //     return SI_NUMBER;
-    // }
-    // else if (command == NC_CONTROLLER_INFO)
-    // {
-    //     int num;
-    //     NetworkManager::recvData(&num, sizeof(int));
-    //     Vector2f positionData;
+    if (command == NC_MOVE_SCENE)
+    {
+        return SI_MAIN;
+    }
+    else if (command == NC_FINISH)
+    {
+        return SI_NUMBER;
+    }
+    else if (command == NC_SEND_CONTROLLER_PARAM)
+    {
+        int num;
+        NetworkManager::recvData(&num, sizeof(int));
+        Vector2f positionData;
 
-    //     NetworkManager::recvData(positionData, sizeof(Vector2f));
-    //     player[num].position.x = positionData.x;
-    // }
-    // else if (command == NC_SERVER_2_CLIENT)
-    // {
-    //     int num;
-    //     NetworkManager::recvData(&num, sizeof(int));
-    //     connect[num] = true;
-    //     NetworkManager::recvData(&player[num].subname, sizeof(char *));
-    //     player[num].name = &player[num].subname[0];
-    // }
+        NetworkManager::recvData(positionData, sizeof(Vector2f));
+        player[num].position.x = positionData.x;
+    }
+    else if (command == NC_SEND_NAME)
+    {
+        int num;
+        NetworkManager::recvData(&num, sizeof(int));
+        connect[num] = true;
+        NetworkManager::recvData(&player[num].subname, sizeof(char *));
+        player[num].name = &player[num].subname[0];
+    }
 
-    // count = 0;
-    // for (int i = 0; i < MAX_PLAYER; i++)
-    // {
-    //     if (player[i].position.x == 0)
-    //     {
-    //         count++;
-    //     }
-    // }
+    count = 0;
+    for (int i = 0; i < MAX_PLAYER; i++)
+    {
+        if (player[i].position.x == 0)
+        {
+            count++;
+        }
+    }
     return SI_CHARASELECT;
 }
 

@@ -18,6 +18,7 @@ SceneLoading::SceneLoading(WindowManager *window, ConfigData *config) : BaseScen
 }
 bool SceneLoading::init()
 {
+    isFirst = false;
     clockCounter = RingCounter(0, 0, 30 * 2 - 1);
     loadingCounter = RingCounter(0, 0, 4 * 10 - 1);
 
@@ -52,6 +53,18 @@ bool SceneLoading::init()
 }
 SCENE_ID SceneLoading::reactController(ControllerParam param)
 {
+    if(!isFirst){
+        const char *myname;
+        char name[256];
+        myname = config->name.c_str();
+        if(strlen(myname) < 256)
+            strcpy(name,myname);
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_NAME);
+        data.setData(&name, sizeof(char *));
+        NetworkManager::sendData(data, data.getDataSize());
+        isFirst = true;
+    }
     return SI_LOADING;
 }
 SCENE_ID SceneLoading::executeCommand(int command)

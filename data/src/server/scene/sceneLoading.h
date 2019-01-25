@@ -11,12 +11,13 @@
  * 機能2：
 ******************************************************************************/
 
-class SceneTitle : public BaseScene
+class SceneLoading : public BaseScene
 {
 private:
+  bool exit[MAX_CLIENTS];
 
 public:
-  SceneTitle() : BaseScene() {}
+  SceneLoading() : BaseScene() {}
 
   virtual bool init();
   virtual SCENE_ID executeCommand(int command, int pos);

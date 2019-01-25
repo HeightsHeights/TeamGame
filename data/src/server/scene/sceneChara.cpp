@@ -42,13 +42,6 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    else if (command == NC_START)
-    {
-        NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
-        DataBlock data;
-        data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
-        NetworkManager::sendData(pos, data, data.getDataSize());
-    }
 
     if (command == NC_CONTROLLER_INFO)
     {

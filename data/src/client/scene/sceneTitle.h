@@ -36,19 +36,7 @@ public:
     IMAGE_NUMBER = 12,
   } IMAGE_ID;
 
-  typedef enum {
-    ANIME_0 = 0,
-    ANIME_1 = 1,
-    ANIME_2 = 2,
-    ANIME_3 = 3,
-    ANIME_4 = 4,
-    ANIME_5 = 5,
-    ANIME_6 = 6,
-    ANIME_7 = 7,
-    ANIME_NUMBER = 8,
-  } ANIME_ID;
-
-  typedef enum {
+    typedef enum {
     TEXT_SAVE = 0,
     TEXT_CANCEL = 1,
     TEXT_RESET = 2,
@@ -60,13 +48,10 @@ private:
   Vector2f position[2];
   bool button;
   bool configmode;
-  bool loading;
   GuiText *text[TEXT_NUMBER];
   GuiImage *image[IMAGE_NUMBER];
-  GuiImage *image2[ANIME_NUMBER];
   int num;
   int secount;
-  int loadcount;
   float bright;
   ConfigData *subconfig;
   GuiRect dst[IMAGE_NUMBER];

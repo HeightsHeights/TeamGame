@@ -3,8 +3,6 @@
 #include "./sceneManager.h"
 #include "./sceneTitle.h"
 #include "./sceneMainGame.h"
-#include "./sceneRule.h"
-#include "./sceneTeam.h"
 #include "./sceneChara.h"
 /* static */
 int SceneManager::sceneId;
@@ -16,8 +14,6 @@ bool SceneManager::init(WindowManager *window, ConfigData *config)
     sceneId = SI_MAIN;
 
     scenes[SI_TITLE] = new SceneTitle(window, config);
-    scenes[SI_RULE] = new SceneRule(window, config);
-    scenes[SI_TEAMSELECT] = new SceneTeam(window, config);
     scenes[SI_CHARASELECT] = new SceneChara(window, config);
     scenes[SI_MAIN] = new SceneMainGame(window, config);
 

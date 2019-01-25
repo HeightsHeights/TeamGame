@@ -69,11 +69,12 @@ void SceneLoading::draw3D()
 void SceneLoading::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    image[ANIME_0 + count]->draw(NULL, NULL);
+    image[ANIME_0]->draw(NULL, NULL);
     count++;
     if (count > 7)
     {
         count = 0;
     }
+    SDL_Delay(100);
     ShaderManager::stopShader(SID_GUI);
 }

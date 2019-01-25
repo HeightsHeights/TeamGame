@@ -8,8 +8,19 @@
 #define HP_WIDTH 400
 #define MAX_HP 400
 
+typedef enum {
+    BUFF_ATK = 0,
+    BUFF_HP = 1,
+    BUFF_SPEED = 2,
+    BUFF_NUMBER = 3,
+  } BUFF_ID;
+
+typedef struct{
+  bool buff[BUFF_NUMBER];
+} Gamebuff;
+
 class StatusDrawer
-{
+{ 
 private:
   typedef enum {
     IMAGE_0 = 0,
@@ -34,7 +45,6 @@ private:
     IMAGE_SPBUFF = 19,
     IMAGE_NUMBER = 20,
   } IMAGE_ID;
-
   GuiImage *image[IMAGE_NUMBER];
 
   void cleanUp();
@@ -54,17 +64,10 @@ public:
     CHARA_NUMBER = 2,
   } CHARA_ID;
 
-  typedef enum {
-    BUFF_ATK = 0,
-    BUFF_HP = 1,
-    BUFF_SPEED = 2,
-    BUFF_NUMBER = 3,
-  } BUFF_ID;
-  
   StatusDrawer();
   ~StatusDrawer();
 
   bool init();
   void draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name);
-  void drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, bool atkBuff, bool hpBuff, bool spBuff);
+  void drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, Gamebuff gb);
 };

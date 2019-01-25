@@ -7,7 +7,7 @@
 #include "../../common/math/vector/vectorSet.h"
 #include "../network/networkManager.h"
 
-#define MAX_LEN_NAME 20
+#define MAX_PLAYER 2
 /******************************************************************************
  * class SceneChara
  * 機能1：
@@ -17,7 +17,9 @@
 class SceneChara : public BaseScene
 {
 private:
-  bool ready[2];
+  bool ready[MAX_PLAYER];
+  bool button[MAX_PLAYER];
+  Vector2f position;
   static Client player[MAX_CLIENTS];
 public:
   SceneChara() : BaseScene() {}

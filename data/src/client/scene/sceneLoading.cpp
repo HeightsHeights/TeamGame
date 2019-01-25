@@ -56,7 +56,14 @@ SCENE_ID SceneLoading::reactController(ControllerParam param)
 }
 SCENE_ID SceneLoading::executeCommand(int command)
 {
-    return SI_LOADING;
+    SCENE_ID nextScene = SI_LOADING;
+
+    if (command == NC_MOVE_SCENE)
+    {
+        nextScene = SI_CHARASELECT;
+    }
+
+    return nextScene;
 }
 void SceneLoading::draw3D()
 {

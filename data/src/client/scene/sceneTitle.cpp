@@ -127,7 +127,6 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
     if (configmode)
     {
-
         if (position[1].y == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
             Console().scanString("YourName", subconfig->name.c_str(), &subconfig->name);
@@ -212,7 +211,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 }
 SCENE_ID SceneTitle::executeCommand(int command)
 {
-    if (command == NC_SERVER_CHARASELSECT)
+    if (command == NC_MOVE_SCENE)
     {
         return SI_CHARASELECT;
     }

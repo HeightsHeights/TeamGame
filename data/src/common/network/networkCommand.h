@@ -2,21 +2,10 @@
 #pragma once
 
 typedef enum {
-    NC_CONTROLLER_INFO = 0,
-    NC_SERVER_2_CLIENT = 1,
-    NC_CONNECT = 2,
-    NC_DISCONNECT = 3,
-    NC_START = 4,
-    NC_SINGLE = 5,
-    NC_TEAM = 6,
-    NC_READY = 7,
-    NC_CANCEL = 8,
-    NC_MAINGAME = 9,
-    NC_FINISH = 10,
-    NC_SERVER_CHARASELSECT = 11,
-    NC_SERVER_TEAMSELECT = 12,
-    NC_SERVER_MAINGAME = 13,
-    NC_SERVER_READY = 14,
-    NC_SERVER_CANCEL = 15,
-    NC_NUMBER = 16,
+    NC_MOVE_SCENE = 0,            //シーン移動を送る用
+    NC_SEND_NAME = 1,             //名前を送る命令　送る時
+    NC_SEND_CONTROLLER_PARAM = 2, //コントローラのパラメータを送る時
+    NC_SEND_CHARA_DATA = 3,       //ゲームオブジェクトの情報を送る時
+    NC_FINISH = 4,                //終了
+    NC_NUMBER = 5,
 } NETWORK_COMMAND;

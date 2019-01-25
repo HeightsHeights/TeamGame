@@ -10,26 +10,26 @@ bool SceneLoading::init()
 }
 SCENE_ID SceneLoading::executeCommand(int command, int pos)
 {
-    if (command == NC_START)
-    {
-        NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
-        exit[pos] = true;
-    }
-    int count = 0;
-    for (int i = 0; i < MAX_CLIENTS; i++)
-    {
-        if (exit)
-        {
-            count++;
-        }
-    }
+    // if (command == NC_START)
+    // {
+    //     NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
+    //     exit[pos] = true;
+    // }
+    // int count = 0;
+    // for (int i = 0; i < MAX_CLIENTS; i++)
+    // {
+    //     if (exit)
+    //     {
+    //         count++;
+    //     }
+    // }
 
-    if (count == MAX_CLIENTS)
-    {
-        DataBlock data;
+    // if (count == MAX_CLIENTS)
+    // {
+    //     DataBlock data;
 
-        data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
-        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    }
+    //     data.setCommand2DataBlock(NC_SERVER_CHARASELSECT);
+    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    // }
     return SI_LOADING;
 }

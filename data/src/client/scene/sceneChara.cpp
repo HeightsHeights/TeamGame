@@ -48,12 +48,6 @@ bool SceneChara::init()
         }
     }
 
-    for (int i = 0; i < COLOR_NUMBER; i++)
-    {
-        connect[i] = false;
-        player[i].name = NULL;
-    }
-
     return true;
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
@@ -107,7 +101,7 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
 
     if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
-         // AudioManager::playSE(SE_DECISION);
+        // AudioManager::playSE(SE_DECISION);
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(data, data.getDataSize());

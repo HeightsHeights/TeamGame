@@ -11,6 +11,13 @@ private:
     HAND_NUMBER = 2,
   } HAND_ID;
 
+  typedef enum {
+    ATTACK_HAVENOTHING = 0,
+    ATTACK_SWORD = 1,
+    ATTACK_BARDICHEWITHMATERIAL = 2,
+    ATTACK_THLOW = 3,
+  } ATTACK_ID;
+
   GameObject *mainBody;
   GameObject *hands[HAND_NUMBER];
 

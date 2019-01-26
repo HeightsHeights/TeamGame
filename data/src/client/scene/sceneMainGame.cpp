@@ -18,7 +18,7 @@ bool SceneMainGame::init()
 {
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
-    mush = new Character("./data/res/gui/obj/kinokochara/", "kinokochara", NULL);
+    mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
@@ -63,7 +63,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 500);
 
-    gluLookAt(positionMush.x, 150, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(positionMush.x, 25, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
 
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);

@@ -39,8 +39,16 @@ void Character::draw()
     glRotatef(transform.rotation.y, 0.0f, 1.0f, 0.0f);
     glTranslatef(transform.position.x, transform.position.y, transform.position.z);
 
+    glPushMatrix();
+    glTranslatef(3.5f, 2.0f, 0.0f);
     hands[HAND_RIGHT]->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-3.5f, 2.0f, 0.0f);
     hands[HAND_LEFT]->draw();
+    glPopMatrix();
+
     mainBody->draw();
 
     glPopMatrix();

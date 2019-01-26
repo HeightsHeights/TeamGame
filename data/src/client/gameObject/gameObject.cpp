@@ -19,7 +19,7 @@ GameObject::GameObject(const std::string dirPath, const std::string fileName, Tr
     this->transform.scale = transform->scale;
   }
 
-  model = ObjModelLoader().load("", "");
+  model = ObjModelLoader().load(dirPath, fileName);
 }
 
 void GameObject::draw()

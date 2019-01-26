@@ -18,7 +18,7 @@ bool SceneMainGame::init()
 {
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
-    mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
+    mush = new Character("./data/res/gui/obj/kinokochara/", "kinokochara", NULL);
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
@@ -43,13 +43,13 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
-    // if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
-    // {
-    //     particle_emission = 1;
-    //     trialpart->generate(10);
-    // }
-    // if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
-    //     particle_emission = 0;
+    if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
+    {
+        particle_emission = 1;
+        trialpart->generate(10);
+    }
+    if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
+        particle_emission = 0;
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -83,13 +83,13 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_NT_PHONG);
 
-    glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
-    glTranslatef(positionMush.x, 0, positionMush.y);
+    // glPushMatrix();
+    // glScalef(1.0f, 2.0f, 1.0f);
+    // glTranslatef(positionMush.x, 0, positionMush.y);
 
-    lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    // lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
     mush->draw();
-    glPopMatrix();
+    // glPopMatrix();
 
     glPushMatrix();
     glScalef(1.6f, 1.6f, 1.6f);
@@ -109,11 +109,11 @@ void SceneMainGame::draw3D()
 
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
-    // ShaderManager::startShader(SID_PARTICLE);
-    // glPushMatrix();
-    // trialpart->draw(1.0f);
-    // glPopMatrix();
-    // ShaderManager::stopShader(SID_PARTICLE);
+    ShaderManager::startShader(SID_PARTICLE);
+    glPushMatrix();
+    trialpart->draw(1.0f);
+    glPopMatrix();
+    ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

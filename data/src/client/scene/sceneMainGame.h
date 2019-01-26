@@ -9,6 +9,7 @@
 #include "./mainGame/statusDrawer.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
 #include "../render/particle/particleLoader.h"
+#include "../gameObject/character/character.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -19,7 +20,7 @@ class SceneMainGame : public BaseScene
 {
 private:
   ObjRawModel *tile;
-  ObjRawModel *mush;
+  Character *mush;
   ObjRawModel *bamboo;
   ObjRawModel *skybox;
 

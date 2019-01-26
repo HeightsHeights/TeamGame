@@ -21,14 +21,14 @@ bool SceneMainGame::init()
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
-
-    for(int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
+    trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
+    particle_emission == 0;
+    for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
     {
-        for(int j = 0; j < BUFF_NUMBER; j++)
+        for (int j = 0; j < BUFF_NUMBER; j++)
         {
             gb[i].buff[j] = false;
         }
-        
     }
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
@@ -43,6 +43,13 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
+    if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
+    {
+        particle_emission = 1;
+        trialpart->generate(10);
+    }
+    if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
+        particle_emission = 0;
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -99,8 +106,14 @@ void SceneMainGame::draw3D()
     glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
     sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
+
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
+    ShaderManager::startShader(SID_PARTICLE);
+    // glPushMatrix();
+    trialpart->draw(1.0f);
+    // glPopMatrix();
+    ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

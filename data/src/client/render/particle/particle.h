@@ -12,8 +12,6 @@
 class Particle
 {
 private:
-  Vector3f emitterPos;
-
   GLuint vao;
   GLuint texId;
 
@@ -21,12 +19,11 @@ private:
   GLuint vboVertex;
   GLuint vboUv;
   GLuint vboPos;
-
   Touple2f spriteMaxNum;
 
   std::vector<PData> pData;
 
-  void storeData();
+  void storeData(unsigned int maxnum);
 
   GLuint createArrayBuffer();
 
@@ -39,10 +36,11 @@ private:
   void update();
 
 public:
-  Particle();
-  Particle(GLuint texId);
-  void generate(unsigned int num);
-  void draw();
+  Vector3f emitterPos;
 
+  Particle();
+  Particle(GLuint texId, unsigned int maxnum);
+  void generate(unsigned int num);
+  int draw(float brightness);
   void setSpriteNum(Touple2f spriteMaxNum);
 };

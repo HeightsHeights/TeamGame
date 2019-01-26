@@ -8,6 +8,7 @@
 #include "../render/objRawModel/objModelLoader.h"
 #include "./mainGame/statusDrawer.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
+#include "../render/particle/particleLoader.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -25,9 +26,10 @@ private:
   Vector2f positionMush;
   Vector3f mushEye;
   GuiSprite *sprite;
-
+  Particle *trialpart;
   StatusDrawer *statusDrawer;
 
+  int particle_emission;
   static Gamebuff gb[StatusDrawer::CHARA_NUMBER];
   virtual void draw3D();
   virtual void draw2D();

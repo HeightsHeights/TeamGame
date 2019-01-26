@@ -63,3 +63,10 @@ private:
 
 public:
 };
+class ParticleShaderLoader : public BaseShaderLoader
+{
+private:
+  virtual void bindAttributes();
+
+public:
+};

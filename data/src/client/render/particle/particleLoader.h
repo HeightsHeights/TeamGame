@@ -10,5 +10,5 @@ private:
 
 public:
   ParticleLoader();
-  Particle *load(const char *filePath, const unsigned int horizontallyNum, const unsigned int verticallyNum);
+  Particle *load(const char *filePath, const unsigned int horizontallyNum, const unsigned int verticallyNum, unsigned int maxnum);
 };

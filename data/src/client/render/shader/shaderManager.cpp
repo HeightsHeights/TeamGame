@@ -13,6 +13,7 @@ const std::string SHADER_NAME[SID_NUM] = {
     "guiShader",
     "billBoardShader",
     "texturingShader",
+    "particleShader",
 };
 
 ShaderProgram *ShaderManager::shaders[SID_NUM];
@@ -30,6 +31,7 @@ bool ShaderManager::init()
         new GuiShaderLoader(),
         new BillBoardShaderLoader(),
         new TexturingShaderLoader(),
+        new ParticleShaderLoader(),
     };
 
     for (int i = 0; i < SID_NUM; i++)

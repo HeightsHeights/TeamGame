@@ -84,3 +84,6 @@ void BillBoardShaderLoader::bindAttributes()
 void TexturingShaderLoader::bindAttributes()
 {
 }
+void ParticleShaderLoader::bindAttributes()
+{
+}

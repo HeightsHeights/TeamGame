@@ -6,13 +6,12 @@
 class PData
 {
 private:
-  int life;
 
 public:
   Transform transform;
   Vector3f speed;
   Vector3f accel;
-
+  int life;
   PData();
   PData(Vector3f pos, Vector3f speed, Vector3f accel);
   ~PData();

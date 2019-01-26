@@ -43,13 +43,13 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
-    if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
-    {
-        particle_emission = 1;
-        trialpart->generate(10);
-    }
-    if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
-        particle_emission = 0;
+    // if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
+    // {
+    //     particle_emission = 1;
+    //     trialpart->generate(10);
+    // }
+    // if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
+    //     particle_emission = 0;
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -109,11 +109,11 @@ void SceneMainGame::draw3D()
 
     glPopMatrix();
     ShaderManager::stopShader(SID_BILLBOARD);
-    ShaderManager::startShader(SID_PARTICLE);
+    // ShaderManager::startShader(SID_PARTICLE);
     // glPushMatrix();
-    trialpart->draw(1.0f);
+    // trialpart->draw(1.0f);
     // glPopMatrix();
-    ShaderManager::stopShader(SID_PARTICLE);
+    // ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

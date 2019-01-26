@@ -26,8 +26,8 @@ bool SceneChara::init()
     const std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
-            "bamboo.png",
-            "mushroom.png",
+            "charaselsect/bambooshoot.png",
+            "charaselsect/mushroom.png",
             "ready.png",
             "nameFrames/nameFrameRed.png",
             "nameFrames/nameFrameBlue.png",

@@ -10,10 +10,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-<<<<<<< HEAD:data/res/gui/obj/kinoko.mtl
-=======
-map_Kd test\\TeamGame\\data\\res\\gui\\test\\TeamGame\\data\\AppData\\Local\\Packages\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\TempState\\Downloads\\knk4.bmp
->>>>>>> 9e591e11494e11332dfd8aed13df6165d4760faf:data/res/gui/obj/kinokochara/kinoko.mtl
 
 newmtl Material.002
 Ns 92.156863
@@ -24,10 +20,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-<<<<<<< HEAD:data/res/gui/obj/kinoko.mtl
-=======
-map_Kd test\\TeamGame\\data\\res\\gui\\test\\TeamGame\\data\\AppData\\Local\\Packages\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\TempState\\Downloads\\knk4.bmp
->>>>>>> 9e591e11494e11332dfd8aed13df6165d4760faf:data/res/gui/obj/kinokochara/kinoko.mtl
 
 newmtl Material_NONE
 Ns 92.156863

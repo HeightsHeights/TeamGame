@@ -55,6 +55,7 @@ private:
   bool button;
   bool isFirst;
   int count;
+  int secount;
   static Player player[MAX_PLAYER];
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];

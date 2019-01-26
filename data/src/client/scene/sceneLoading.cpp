@@ -4,6 +4,7 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include "../audio/audioManager.h"
+#include "../config/loader/configLoader.h"
 #include "../controller/controllerManager.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
 
@@ -54,6 +55,7 @@ bool SceneLoading::init()
 SCENE_ID SceneLoading::reactController(ControllerParam param)
 {
     if(!isFirst){
+        config = ConfigLoader().load("cPrevConfig");
         const char *myname;
         char name[256];
         myname = config->name.c_str();

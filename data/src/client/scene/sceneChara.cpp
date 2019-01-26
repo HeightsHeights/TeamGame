@@ -4,7 +4,7 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include "../config/loader/configLoader.h"
-
+#include "../audio/audioManager.h"
 #define PNG_DIR_PATH "./data/res/gui/image/"
 
 Player SceneChara::player[MAX_PLAYER];
@@ -20,9 +20,10 @@ bool SceneChara::init()
 {
     angle = 0;
     count = 0;
+    secount = 0;
     mush = ObjModelLoader().load("./data/res/gui/obj/kinokochara/", "kinokochara");
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
-    std::string IMAGE_NAME[IMAGE_NUMBER] =
+    const std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
             "bamboo.png",
@@ -98,8 +99,15 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         mypos.y = 0;
     }
 
+    // if (secount > mypos.x || secount < mypos[0].x)
+    // {
+    //     secount = mypos.x;
+    //     AudioManager::playSE(SE_CURSOR);
+    // }
+
     if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
+         // AudioManager::playSE(SE_DECISION);
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(data, data.getDataSize());

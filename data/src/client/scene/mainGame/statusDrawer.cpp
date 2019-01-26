@@ -89,42 +89,37 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid,unsigned int hp, Gamebuff gb)
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, Gamebuff gb)
 {
     if (cid == CHARA_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
-        for(int i = 0; i < BUFF_NUMBER; i++)
+        for (int i = 0; i < BUFF_NUMBER; i++)
         {
-            dst = GuiRect(pos.x + (UNIT_WIDTH/2) * i, pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i])? 1.0f : 0.2f);
+            dst = GuiRect(pos.x + (UNIT_WIDTH / 2) * i, pos.y - 55, UNIT_WIDTH / 2, UNIT_WIDTH / 2);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i]) ? 1.0f : 0.2f);
         }
-        
+
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
         dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
-        dst = GuiRect(pos.x - 125, pos.y, UNIT_WIDTH, UNIT_WIDTH);
-        image[IMAGE_ICON]->draw(NULL, &dst, 1.0f);
     }
     else
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
-        
-        for(int i = 0; i < BUFF_NUMBER; i++)
+        for (int i = 0; i < BUFF_NUMBER; i++)
         {
-            dst = GuiRect(pos.x + (325 + (UNIT_WIDTH/2) * i), pos.y - 55, UNIT_WIDTH/2, UNIT_WIDTH/2);
-            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i])? 1.0f : 0.2f);
+            dst = GuiRect(pos.x + (325 + (UNIT_WIDTH / 2) * i), pos.y - 55, UNIT_WIDTH / 2, UNIT_WIDTH / 2);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i]) ? 1.0f : 0.2f);
         }
 
         float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
         dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
-        dst = GuiRect(pos.x + 425, pos.y, UNIT_WIDTH, UNIT_WIDTH);
-        image[IMAGE_ICON]->draw(NULL, &dst, 1.0f);
     }
 }

@@ -21,7 +21,15 @@
 
 static const SDL_Color gRed = {0, 0, 255, 0};
 
-std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
+SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
+{
+}
+SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(window, config)
+{
+}
+bool SceneTitle::init()
+{
+    const std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
     {
         "title/title.png",
         "title/back.png",
@@ -36,16 +44,8 @@ std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
         "configFrames/configFrame01.png",
         "configFrames/configFrame02.png",
 };
-
-SceneTitle::SceneTitle(WindowManager *window) : BaseScene(window)
-{
-}
-SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(window, config)
-{
-}
-bool SceneTitle::init()
-{
-
+    //AudioManager::playBGM(BGM_TITLE);
+    
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;
     secount = 0;
@@ -156,10 +156,12 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         }
         else if (position[1].y == 3 && position[1].x == 3 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            // if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
-            // {
-            //     fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
-            // }
+#ifdef _ENABLE_WII
+            if (!ControllerManager::connectWiiRemote(subconfig->wiiRemoteId.c_str()))
+            {
+                fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
+            }
+#endif
         }
 
         if (param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])
@@ -185,6 +187,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 if (!NetworkManager::connect())
                 {
                     fprintf(stderr, "Error --> NetworkManager::connect()\n");
+                    // AudioManager::playSE(SE_MISS);
                 }
                 else if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
                 {
@@ -192,6 +195,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 }
                 else
                 {
+                    //AudioManager::stopBGM(BGM_TITLE);
                     return SI_LOADING;
                 }
             }

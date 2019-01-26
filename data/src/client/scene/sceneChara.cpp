@@ -51,7 +51,6 @@ bool SceneChara::init()
     for (int i = 0; i < COLOR_NUMBER; i++)
     {
         connect[i] = false;
-        player[i].name = NULL;
     }
 
     return true;

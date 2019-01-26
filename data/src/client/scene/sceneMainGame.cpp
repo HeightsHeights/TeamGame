@@ -43,6 +43,7 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
+    mush->move(positionMush);
     if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
     {
         particle_emission = 1;

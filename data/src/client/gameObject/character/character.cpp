@@ -20,13 +20,15 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
 
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
-        hands[i] = new GameObject("", "", NULL);
+        hands[i] = new GameObject("./data/res/gui/obj/", "hand", NULL);
     }
     mainBody = new GameObject(dirPath, fileName, NULL);
 }
 
-void Character::move()
+void Character::move(Vector2f movepoint)
 {
+    transform.position.x = movepoint.x;
+    transform.position.z = movepoint.y;
 }
 
 void Character::draw()

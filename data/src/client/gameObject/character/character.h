@@ -5,8 +5,7 @@
 class Character
 {
 private:
-  typedef enum
-  {
+  typedef enum {
     HAND_RIGHT = 0,
     HAND_LEFT = 1,
     HAND_NUMBER = 2,
@@ -23,6 +22,6 @@ public:
   Character();
   Character(const std::string dirPath, const std::string fileName, Transform *transform);
 
-  void move();
+  void move(Vector2f movepoint);
   void draw();
 };

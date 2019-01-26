@@ -63,7 +63,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 500);
 
-    gluLookAt(positionMush.x, 25, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(positionMush.x, 150, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
 
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);

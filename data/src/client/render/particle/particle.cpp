@@ -110,7 +110,10 @@ void Particle::generate(unsigned int num)
 int Particle::draw(float brightness)
 {
     if (pData.size() < 1)
+    {
+        pData.shrink_to_fit();
         return 0;
+    }
     if (pData.size() > 20)
         int a = 11;
     GLfloat posData[pData.size() * 3];
@@ -163,7 +166,7 @@ void Particle::update()
             std::iter_swap(pData.begin() + i, pData.end());
             pData.pop_back();
             // if (pData.size() > 0)
-            //     pData.shrink_to_fit();
+            //
         }
     }
 }

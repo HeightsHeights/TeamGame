@@ -36,7 +36,7 @@ bool SceneChara::init()
             "nameFrames/nameFramenot.png",
         };
 
-    dst[IMAGE_BAMBOO] = GuiRect(-475, -150, 200, 50);
+    dst[IMAGE_BAMBOO] = GuiRect(-550, -125, 350, 75);
     dst[IMAGE_READY] = GuiRect(-150, -225, 300, 100);
 
     for (int i = 0; i < IMAGE_NUMBER; i++)

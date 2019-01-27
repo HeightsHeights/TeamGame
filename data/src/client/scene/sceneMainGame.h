@@ -28,6 +28,7 @@ private:
   ObjRawModel *collisionO;
   ObjRawModel *collisionS;
   ObjRawModel *tower;
+  ObjRawModel *object;
 
   Obb obb1;
   Obb obb2;
@@ -37,6 +38,7 @@ private:
   Vector3f mushEye;
   GuiSprite *sprite;
   GuiSprite *clash;
+  GuiSprite *kinokoHPgage;
   Particle *trialpart;
   StatusDrawer *statusDrawer;
 

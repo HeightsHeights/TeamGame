@@ -25,6 +25,7 @@ bool SceneMainGame::init()
     android = ObjModelLoader().load("./data/res/gui/obj/", "test");
 
     particle_emission == 0;
+    atkmode = false;
     for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
     {
         for (int j = 0; j < BUFF_NUMBER; j++)
@@ -45,20 +46,31 @@ bool SceneMainGame::init()
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
-    if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
+    if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)
     {
+        atkmode =true;
+        
         particle_emission = 1;
-        trialpart->generate(100);
+        trialpart->generate(15);
     }
-    if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
-        particle_emission = 0;
+    if(atkmode)
+    {
+        static int atk;   
+        mush->motion(Character::MOTION_ATTACL, atk++);
+        
+        if(atk > 45)
+        {
+            mush->motion(Character::MOTION_NULL, 0);
+            atk = 0;
+            atkmode = false;
+        }
+    }
 
     if (param.buttonDown[CT_GRUB] == true)
     {
         static int time;
         mush->motion(Character::MOTION_THROW, time++);
     }
-    if (param.buttonUp[CT_GRUB] == true)
     {
         mush->motion(Character::MOTION_NULL, 0);
     }

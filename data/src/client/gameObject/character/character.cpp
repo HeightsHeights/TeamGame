@@ -46,6 +46,11 @@ void Character::motion(MOTION_ID id, int time)
 {
     switch (id)
     {
+    case MOTION_ATTACL:
+        weaponSodo(time);
+        //weaponAx(time);
+        //weaponBamboo(time);
+        break;
     case MOTION_THROW:
         weaponThrow(time);
         break;
@@ -102,6 +107,26 @@ void Character::lookatDir(Vector3f direction)
         theta *= -1;
     }
     glRotated(theta, vecY.x, vecY.y, vecY.z);
+}
+
+void Character::weaponSodo(int time)
+{
+    hands[HAND_LEFT]->transform.position += Vector3f(0.0f, 0.1f * (float)cos(270 +(time/10)), 0.1f * (float)sin(270 + (time/10)));
+}
+void Character::weaponAx(int time)
+{
+    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time/10), 0.0f, 0.1f * (float)cos(time/10));
+}
+void Character::weaponBamboo(int time)
+{
+    if(time % 2 == 0)
+    {
+        hands[HAND_LEFT]->transform.position += Vector3f(0.0f, 0.0f, 1.0f);
+    }
+    else
+    {
+        hands[HAND_LEFT]->transform.position -= Vector3f(0.0f, 0.0f, 1.0f);
+    }
 }
 
 void Character::weaponThrow(int time)

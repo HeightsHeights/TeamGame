@@ -21,6 +21,9 @@ private:
 
   void lookatDir(Vector3f direction);
   void weaponThrow(int time);
+  void weaponSodo(int time);
+  void weaponAx(int time);
+  void weaponBamboo(int time);
   void Cancel();
 
 public:

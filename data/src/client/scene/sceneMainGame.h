@@ -66,6 +66,7 @@ private:
   GuiSprite *clash;
   Particle *trialpart;
 
+  TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;
 
   int particle_emission;

@@ -39,8 +39,9 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 SCENE_ID SceneMainGame::dataProcessing()
 {
     SCENE_ID nextScene = SI_MAIN;
-
-    return SI_MAIN;
+    upDate();
+    sendData();
+    return nextScene;
 }
 
 void SceneMainGame::upDate()
@@ -56,4 +57,13 @@ void SceneMainGame::upDate()
 }
 void SceneMainGame::sendData()
 {
+    tStatus[0].hp = 100;
+    for (int i = 0; i < TEAM_NUMBER; i++)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_TEAM_STATUS);
+        data.setData(&i, sizeof(TEAM_ID));
+        data.setData(&tStatus[i], sizeof(TeamStatus));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
 }

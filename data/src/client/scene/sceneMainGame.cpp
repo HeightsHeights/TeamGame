@@ -62,6 +62,11 @@ bool SceneMainGame::init()
     particle_emission == 0;
     atkmode = false;
 
+    for (int i = 0; i < TEAM_NUMBER; i++)
+    {
+        tStatus[i] = TeamStatus();
+    }
+
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
@@ -115,6 +120,12 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     if (command == NC_FINISH)
     {
         nextScene = SI_NUMBER;
+    }
+    else if (command == NC_SEND_TEAM_STATUS)
+    {
+        TEAM_ID id;
+        NetworkManager::recvData(&id, sizeof(TEAM_ID));
+        NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
     return nextScene;
 }
@@ -190,12 +201,12 @@ void SceneMainGame::draw3D()
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(115, 50, -10);
-    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_BAMBOO, TeamStatus(), Vector3f(0, 0, 0));
+    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_BAMBOO, tStatus[TEAM_BAMBOO], Vector3f(0, 0, 0));
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-150, 50, -10);
-    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, TeamStatus(), Vector3f(0, 0, 0));
+    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, tStatus[TEAM_MUSH], Vector3f(0, 0, 0));
     glPopMatrix();
 
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
@@ -214,7 +225,7 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
     statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, TeamStatus());
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, TeamStatus());
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
     ShaderManager::stopShader(SID_GUI);
 }

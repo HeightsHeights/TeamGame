@@ -41,6 +41,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         DataBlock data;
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+        return SI_NUMBER;
     }
 
     if (command == NC_SEND_CONTROLLER_PARAM)

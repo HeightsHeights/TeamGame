@@ -27,15 +27,3 @@ Weapon::Weapon(WEAPON_ID id, Transform *transform)
 
     this->weaponId = id;
 }
-
-void Weapon::draw()
-{
-    glPushMatrix();
-
-    glScalef(transform.scale.x, transform.scale.y, transform.scale.z);
-    glRotatef(transform.rotation.y, 0.0f, 1.0f, 0.0f);
-    glTranslatef(transform.position.x, transform.position.y, transform.position.z);
-
-    weaponsList[weaponId]->draw();
-    glPopMatrix();
-}

@@ -20,6 +20,8 @@ private:
   Vector3f lookingDirection;
 
   void lookatDir(Vector3f direction);
+  void weaponThrow(int time);
+  void Cancel();
 
 public:
   typedef enum {

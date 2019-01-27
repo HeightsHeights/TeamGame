@@ -52,6 +52,16 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     }
     if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
         particle_emission = 0;
+
+    if (param.buttonDown[CT_GRUB] == true)
+    {
+        static int time;
+        mush->motion(Character::MOTION_THROW, time++);
+    }
+    if (param.buttonUp[CT_GRUB] == true)
+    {
+        mush->motion(Character::MOTION_NULL, 0);
+    }
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)

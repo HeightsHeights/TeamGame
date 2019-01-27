@@ -111,6 +111,6 @@ void Character::weaponThrow(int time)
 
 void Character::Cancel()
 {
-    hands[HAND_LEFT]->transform.position = hands[HAND_LEFT]->initTransform.position;
-    hands[HAND_RIGHT]->transform.position = hands[HAND_RIGHT]->initTransform.position;
+    hands[HAND_RIGHT]->clearTransform();
+    hands[HAND_LEFT]->clearTransform();
 }

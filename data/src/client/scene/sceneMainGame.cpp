@@ -202,6 +202,18 @@ void SceneMainGame::draw3D()
     glScalef(10.0f, 10.0f, 10.0f);
     gameObjects.getModelP(OBJECT_BLOCK_NORMAL)->draw();
     glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.0f, 10.0f, 0.0f);
+    glScalef(2.0f, 15.0f, 20.0f);
+    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-140.0f, 20.0f, 0.0f);
+    glScalef(3.0f, 20.0f, 3.0f);
+    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    glPopMatrix();
     // glTranslatef(0.0f, 10.0f, 0.0f);
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();

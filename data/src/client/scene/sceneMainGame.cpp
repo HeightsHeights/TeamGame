@@ -23,13 +23,13 @@ bool SceneMainGame::init()
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
     mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
-    bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot",NULL);
+    bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
-    collisionS = ObjModelLoader().load("./data/res/gui/obj/collider/", "sphere");
+    collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
-castle = ObjModelLoader().load("./data/res/gui/obj/castle/", "redcastle");
+    castle = ObjModelLoader().load("./data/res/gui/obj/castle/", "redcastle");
 
     particle_emission == 0;
     atkmode = false;
@@ -57,17 +57,17 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
     if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)
     {
-        atkmode =true;
-        
+        atkmode = true;
+
         particle_emission = 1;
         trialpart->generate(15);
     }
-    if(atkmode)
+    if (atkmode)
     {
-        static int atk;   
+        static int atk;
         mush->motion(Character::MOTION_ATTACL, atk++);
-        
-        if(atk > 45)
+
+        if (atk > 45)
         {
             mush->motion(Character::MOTION_NULL, 0);
             atk = 0;
@@ -117,12 +117,14 @@ void SceneMainGame::draw3D()
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
-glPushMatrix();
-castle->draw();
-glPopMatrix();
+    glPushMatrix();
+    glScalef(2.0f, 2.0f, 2.0f);
+    castle->draw();
+    glPopMatrix();
     glPushMatrix();
     glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
-    glScalef(sphere.radius, sphere.radius, sphere.radius);
+    glScalef(0.05f, 0.05f, 0.05f);
+    //glScalef(sphere.radius, sphere.radius, sphere.radius);
     collisionS->draw();
     glPopMatrix();
 
@@ -134,7 +136,7 @@ glPopMatrix();
 
     //Charactor
     mush->draw();
-bamboo->draw();
+    bamboo->draw();
     //Weapon
 
     ShaderManager::stopShader(SID_NT_PHONG);

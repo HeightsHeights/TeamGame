@@ -19,4 +19,5 @@ private:
 public:
   static bool init();
   static bool executeCommand(int command, int pos);
+  static bool dataProcessing();
 };

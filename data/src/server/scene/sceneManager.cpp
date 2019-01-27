@@ -43,3 +43,14 @@ bool SceneManager::executeCommand(int command, int pos)
     }
     return endFlag;
 }
+
+bool SceneManager::dataProcessing()
+{
+    bool endFlag = false;
+    sceneId = scenes[sceneId]->dataProcessing();
+    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    {
+        endFlag = true;
+    }
+    return endFlag;
+}

@@ -18,4 +18,5 @@ public:
 
   virtual bool init();
   virtual SCENE_ID executeCommand(int command, int pos);
+  virtual SCENE_ID dataProcessing();
 };

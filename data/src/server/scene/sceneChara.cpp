@@ -78,3 +78,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     }
     return SI_CHARASELECT;
 }
+SCENE_ID SceneChara::dataProcessing()
+{
+    return SI_MAIN;
+}

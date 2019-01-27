@@ -23,12 +23,14 @@ bool SceneMainGame::init()
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
     mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
-    bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
+    bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot",NULL);
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
     collisionS = ObjModelLoader().load("./data/res/gui/obj/collider/", "sphere");
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
+castle = ObjModelLoader().load("./data/res/gui/obj/castle/", "redcastle");
+
     particle_emission == 0;
     atkmode = false;
     for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
@@ -115,7 +117,9 @@ void SceneMainGame::draw3D()
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
-
+glPushMatrix();
+castle->draw();
+glPopMatrix();
     glPushMatrix();
     glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
     glScalef(sphere.radius, sphere.radius, sphere.radius);
@@ -130,7 +134,7 @@ void SceneMainGame::draw3D()
 
     //Charactor
     mush->draw();
-
+bamboo->draw();
     //Weapon
 
     ShaderManager::stopShader(SID_NT_PHONG);

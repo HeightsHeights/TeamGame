@@ -23,10 +23,11 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *tile;
   Character *mush;
-  ObjRawModel *bamboo;
+  Character *bamboo;
   ObjRawModel *skybox;
   ObjRawModel *collisionO;
   ObjRawModel *collisionS;
+ObjRawModel *castle;
 
   Obb obb1;
   Obb obb2;

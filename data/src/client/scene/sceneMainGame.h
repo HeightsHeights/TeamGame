@@ -44,7 +44,6 @@ private:
   static Gamebuff gb[StatusDrawer::CHARA_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
-  void lookatVector(Vector3f direction);
 
 public:
   SceneMainGame() : BaseScene() {}

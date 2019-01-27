@@ -98,26 +98,20 @@ void SceneMainGame::draw3D()
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
+    //skyBox
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
     glScalef(180.0f, 90.0f, 135.0f);
     skybox->draw();
     glPopMatrix();
-
     ShaderManager::stopShader(SID_TEXTURING);
 
+    //Tile
     ShaderManager::startShader(SID_T_PHONG);
-    // glPushMatrix();
-    // glTranslatef(0.0f, 18.0f, 0.0f);
-    // glScalef(16.0f, 16.0f, 16.0f);
-    // android->draw();
-    // glPopMatrix();
-
     glPushMatrix();
     glScalef(20.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
-
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
@@ -134,35 +128,25 @@ void SceneMainGame::draw3D()
     collisionO->draw();
     glPopMatrix();
 
-    // glPushMatrix();
-    // glScalef(1.0f, 2.0f, 1.0f);
-    // glTranslatef(positionMush.x, 0, positionMush.y);
-
-    // lookatVector(mushEye - Vector3f(positionMush.x, 0, positionMush.y));
+    //Charactor
     mush->draw();
-    // glPopMatrix();
 
-    glPushMatrix();
-    // glScalef(1.6f, 1.6f, 1.6f);
-
-    glTranslatef(mushEye.x, 0, mushEye.y);
-
-    //bamboo->draw();
-    glPopMatrix();
+    //Weapon
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
-    static int i = 0;
+    static int rotation = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(positionMush.x, 0, positionMush.y);
-    glRotated(i++, 0, 1, 0);
+    glRotated(rotation++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
     // sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
-
     glPopMatrix();
+
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
+
     ShaderManager::startShader(SID_PARTICLE);
     glPushMatrix();
     trialpart->draw(1.0f);
@@ -180,19 +164,4 @@ void SceneMainGame::draw2D()
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, gb[StatusDrawer::CHARA_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, gb[StatusDrawer::CHARA_BAMBOO]);
     ShaderManager::stopShader(SID_GUI);
-}
-
-void SceneMainGame::lookatVector(Vector3f direction)
-{
-    direction.y = 0;
-
-    Vector3f vecY = Vector3f(0, 1, 0);
-    Vector3f vecZ = Vector3f(0, 0, 1);
-
-    float theta = direction.betweenAngleDegree(vecZ);
-    if (Vector3f::cross(vecZ, direction).y < 0)
-    {
-        theta *= -1;
-    }
-    glRotated(theta, vecY.x, vecY.y, vecY.z);
 }

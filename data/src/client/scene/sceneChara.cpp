@@ -26,15 +26,15 @@ bool SceneChara::init()
     const std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
-            "charaselsect/bambooshoot.png",
             "charaselsect/mushroom.png",
+            "charaselsect/bambooshoot.png",
             "ready.png",
             "charaselsect/namebox1.png",
             "charaselsect/namebox2.png",
             "nameFrames/nameFramenot.png",
         };
 
-    dst[IMAGE_BAMBOO] = GuiRect(-550, -125, 350, 75);
+    dst[IMAGE_MUSHROOM] = GuiRect(-550, -125, 350, 75);
     dst[IMAGE_READY] = GuiRect(-150, -225, 300, 100);
 
     for (int i = 0; i < IMAGE_NUMBER; i++)
@@ -195,11 +195,11 @@ void SceneChara::draw3D()
     glRotated(angle, 0, 1, 0);
     if (mypos.x == 0)
     {
-        bamboo->draw();
+        mush->draw();
     }
     else
     {
-        mush->draw();
+        bamboo->draw();
     }
     glPopMatrix();
 }
@@ -217,7 +217,7 @@ void SceneChara::draw2D()
 
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
-    image[(int)IMAGE_BAMBOO + (int)mypos.x]->draw(NULL, &dst[IMAGE_BAMBOO], (mypos.y == 0) ? 1.0f : 0.3f);
+    image[(int)IMAGE_MUSHROOM + (int)mypos.x]->draw(NULL, &dst[IMAGE_MUSHROOM], (mypos.y == 0) ? 1.0f : 0.3f);
     for (int i = 0; i < MAX_PLAYER; i++)
     {
         drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0) ? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);
@@ -237,7 +237,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *n
     {
         const Vector2f labelSize = Vector2f(480.0f, 60.0f);
         const float unitWord[1] = {
-            30.0f,
+            20.0f,
         };
 
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
@@ -246,7 +246,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *n
 
         float center = pos.x + labelSize.x / 2;
         GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
-        dst2 = GuiRect(center - std::string(name).length() * unitWord[0] / 2, pos.y - 130, std::string(name).length() * unitWord[0], 50.0f);
+        dst2 = GuiRect(center - std::string(name).length() * unitWord[0] / 2, pos.y - 135.0f, std::string(name).length() * unitWord[0], 45.0f);
         nameText->draw(NULL, &dst2, 1.0f);
         delete nameText;
     }

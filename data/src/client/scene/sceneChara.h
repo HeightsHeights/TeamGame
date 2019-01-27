@@ -28,8 +28,8 @@ class SceneChara : public BaseScene
 private:
   typedef enum {
     IMAGE_CONFIGBG = 0,
-    IMAGE_BAMBOO = 1,
-    IMAGE_MUSHROOM = 2,
+    IMAGE_MUSHROOM = 1,
+    IMAGE_BAMBOO = 2,
     IMAGE_READY = 3,
     IMAGE_PLAYER_FRAME_0 = 4,
     IMAGE_PLAYER_FRAME_1 = 5,

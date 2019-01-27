@@ -59,7 +59,6 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
         
         particle_emission = 1;
         trialpart->generate(15);
-<<<<<<< HEAD
     }
     if(atkmode)
     {
@@ -72,8 +71,6 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
             atk = 0;
             atkmode = false;
         }
-=======
->>>>>>> 7d05d8a46cac0ce8db6de9453c8143067e61c6c0
     }
 
     if (param.buttonDown[CT_GRUB] == true)

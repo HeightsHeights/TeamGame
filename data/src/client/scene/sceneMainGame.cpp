@@ -33,6 +33,7 @@ bool SceneMainGame::init()
         "object/",
         "object/",
         "object/",
+        "weapon/",
     };
 
     std::string objName[OBJECT_NUMBER] = {
@@ -45,6 +46,7 @@ bool SceneMainGame::init()
         "block_R",
         "block_B",
         "block",
+        "bomb",
     };
 
     for (int i = 0; i < OBJECT_NUMBER; i++)
@@ -200,6 +202,12 @@ void SceneMainGame::draw3D()
     gameObjects.getModelP(OBJECT_TOWER_B)->draw();
     glPopMatrix();
 
+    glPushMatrix();
+    glTranslatef(10.0f, 0.0f, 30.0f);
+    glScalef(1.0f, 1.0f, 1.0f);
+    gameObjects.getModelP(OBJECT_BOMB)->draw();
+    glPopMatrix();
+
     //Charactor
     mush->draw();
     bamboo->draw();
@@ -216,7 +224,7 @@ void SceneMainGame::draw3D()
 
     glPushMatrix();
     glTranslatef(0.0f, 10.0f, 0.0f);
-    glScalef(2.0f, 15.0f, 20.0f);
+    glScalef(1.6f, 15.0f, 20.0f);
     gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
     glPopMatrix();
 

@@ -31,7 +31,8 @@ public:
     OBJECT_BLOCK_R = 6,
     OBJECT_BLOCK_B = 7,
     OBJECT_BLOCK_NORMAL = 8,
-    OBJECT_NUMBER = 9,
+    OBJECT_BOMB = 9,
+    OBJECT_NUMBER = 10,
   } OBJECT_ID;
 
   class Object

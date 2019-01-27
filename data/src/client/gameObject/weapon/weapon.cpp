@@ -2,29 +2,30 @@
 
 #include "../render/objRawModel/objModelLoader.h"
 
-bool Weapon::initable;
+bool Weapon::initable = true;
 ObjRawModel *Weapon::weaponsList[WEAPON_NUMBER];
 
 Weapon::Weapon()
 {
 }
-Weapon::Weapon(const std::string dirPath, const std::string fileName, Transform *transform)
+Weapon::Weapon(WEAPON_ID id, Transform *transform)
 {
     if (transform == NULL)
     {
-        this->initTransform.position = this->transform.position = Vector3f_ZERO;
-        this->initTransform.rotation = this->transform.rotation = Vector3f_ZERO;
-        this->initTransform.scale = this->transform.scale = Vector3f(1.0f, 1.0f, 1.0f);
+        this->transform = Transform();
     }
     else
     {
-        this->initTransform.position = this->transform.position = transform->position;
-        this->initTransform.rotation = this->transform.rotation = transform->rotation;
-        this->initTransform.scale = this->transform.scale = transform->scale;
+        this->transform = *transform;
+    }
+    this->initTransform = this->transform;
+
+    if (initable)
+    {
+        // 読み込み
     }
 
-    // model = ObjModelLoader().load(dirPath, fileName);
-    // 読み込み書いて
+    this->weaponId = id;
 }
 
 void Weapon::draw()

@@ -1,14 +1,15 @@
 #pragma once
 
+#include "../gameObject.h"
 #include "../render/objRawModel/objRawModel.h"
 #include "../../../common/object/transform.h"
 
-class Weapon
+class Weapon : public GameObject
 {
   public:
     typedef enum {
         WEAPON_SWORD = 0,
-        WEAPON_AX = 1,
+        WEAPON_AXE = 1,
         WEAPON_SPEAR = 2,
         WEAPON_NUMBER = 3,
     } WEAPON_ID;
@@ -18,16 +19,10 @@ class Weapon
     static ObjRawModel *weaponsList[WEAPON_NUMBER];
 
   public:
-    Transform initTransform;
-    Transform transform;
-    Vector3f speed;
-    Vector3f accel;
-
     WEAPON_ID weaponId;
 
     Weapon();
-    Weapon(const std::string dirPath, const std::string fileName, Transform *transform);
+    Weapon(WEAPON_ID id, Transform *transform);
 
     void move(Vector3f moveDirection);
-    void draw();
 };

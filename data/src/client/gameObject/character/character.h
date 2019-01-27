@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../gameObject.h"
+#include "../weapon/weapon.h"
 
 class Character
 {
@@ -14,7 +15,7 @@ private:
   GameObject *mainBody;
   GameObject *hands[HAND_NUMBER];
 
-  GameObject *weapon;
+  Weapon *weapon;
 
   Vector3f lookingDirection;
 

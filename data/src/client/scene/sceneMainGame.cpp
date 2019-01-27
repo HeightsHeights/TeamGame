@@ -62,7 +62,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 void SceneMainGame::draw3D()
 {
 
-    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 500);
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
     gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
 
@@ -71,7 +71,7 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
-    glScalef(180.0f, 90.0f, 90.0f);
+    glScalef(180.0f, 90.0f, 135.0f);
     skybox->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);

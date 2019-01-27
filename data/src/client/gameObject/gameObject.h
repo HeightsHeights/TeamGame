@@ -6,16 +6,14 @@
 class GameObject
 {
 private:
-  ObjRawModel *model;
-
 public:
   Transform initTransform;
   Transform transform;
 
   Vector3f speed;
   Vector3f accel;
-  //here is collider
 
+  //here is collider
   bool haveCollider;
 
   GameObject();
@@ -23,4 +21,7 @@ public:
 
   bool isCollision();
   void draw();
+
+protected:
+  ObjRawModel *model;
 };

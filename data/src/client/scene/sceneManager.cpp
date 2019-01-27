@@ -12,7 +12,7 @@ BaseScene *SceneManager::scenes[SI_NUMBER];
 /* method */
 bool SceneManager::init(WindowManager *window, ConfigData *config)
 {
-    sceneId = SI_MAIN;
+    sceneId = SI_TITLE;
 
     scenes[SI_TITLE] = new SceneTitle(window, config);
     scenes[SI_LOADING] = new SceneLoading(window, config);

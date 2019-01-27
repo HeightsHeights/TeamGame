@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../common/object/transform.h"
+#include "../collider/collider.h"
 
 class GameObject
 {

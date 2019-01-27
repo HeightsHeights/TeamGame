@@ -27,7 +27,7 @@ private:
   ObjRawModel *skybox;
   ObjRawModel *collisionO;
   ObjRawModel *collisionS;
-ObjRawModel *castle;
+  ObjRawModel *tower;
 
   Obb obb1;
   Obb obb2;

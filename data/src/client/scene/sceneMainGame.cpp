@@ -26,10 +26,10 @@ bool SceneMainGame::init()
     bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
-    collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
+    // collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
+    // collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
-    castle = ObjModelLoader().load("./data/res/gui/obj/castle/", "redcastle");
+    tower = ObjModelLoader().load("./data/res/gui/obj/tower/", "redtower");
 
     particle_emission == 0;
     atkmode = false;
@@ -118,20 +118,21 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_NT_PHONG);
     glPushMatrix();
-    glScalef(2.0f, 2.0f, 2.0f);
-    castle->draw();
+    glTranslatef(15.0f, 1.0f, 15.0f);
+    glScalef(0.025f, 0.05f, 0.025f);
+    tower->draw();
     glPopMatrix();
     glPushMatrix();
     glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
     glScalef(0.05f, 0.05f, 0.05f);
     //glScalef(sphere.radius, sphere.radius, sphere.radius);
-    collisionS->draw();
+    // collisionS->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
     glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
-    collisionO->draw();
+    // collisionO->draw();
     glPopMatrix();
 
     //Charactor
@@ -144,10 +145,10 @@ void SceneMainGame::draw3D()
     static int rotation = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
-    glTranslatef(positionMush.x, 0, positionMush.y);
+    glTranslatef(10, 40, 10);
     glRotated(rotation++, 0, 1, 0);
-    GuiRect dst = GuiRect(0, 0, 50, 50);
-    // sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
+    GuiRect dst = GuiRect(0, 0, 25, 25);
+    sprite->draw(0, &dst, 1.0f, Vector3f(0, 0, 0));
     glPopMatrix();
 
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));

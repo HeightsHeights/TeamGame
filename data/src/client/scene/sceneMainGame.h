@@ -31,8 +31,6 @@ private:
   ObjRawModel *object;
 
   Obb obb1;
-  Obb obb2;
-  Sphere sphere;
 
   Vector2f positionMush;
   Vector3f mushEye;

@@ -30,22 +30,22 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneTitle::init()
 {
     const std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
-    {
-        "title/title.png",
-        "title/back.png",
-        "title/start.png",
-        "title/config.png",
-        "title/end.png",
-        "title/save.png",
-        "title/cancel.png",
-        "title/reset.png",
-        "title/connect.png",
-        "configFrames/configFrame00.png",
-        "configFrames/configFrame01.png",
-        "configFrames/configFrame02.png",
-};
+        {
+            "title/title.png",
+            "title/back.png",
+            "title/start.png",
+            "title/config.png",
+            "title/end.png",
+            "title/save.png",
+            "title/cancel.png",
+            "title/reset.png",
+            "title/connect.png",
+            "configFrames/configFrame00.png",
+            "configFrames/configFrame01.png",
+            "configFrames/configFrame02.png",
+        };
     //AudioManager::playBGM(BGM_TITLE);
-    
+
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;
     secount = 0;

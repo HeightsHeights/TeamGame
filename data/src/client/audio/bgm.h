@@ -10,4 +10,6 @@ public:
   void play();
   void stop();
   void volume();
+  void fadeIn(int ms);
+  void fadeOut(int ms);
 };

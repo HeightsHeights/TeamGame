@@ -13,24 +13,24 @@ SE AudioManager::se[SE_NUMBER];
 bool AudioManager::init()
 {
     const std::string BGM_NAME[BGM_NUMBER] =
-    {
-        "titlebgm",
-        "selectbgm",
-        "mainbgm",
-        "victory",
-        "lose",
-};
+        {
+            "titlebgm",
+            "selectbgm",
+            "mainbgm",
+            "victory",
+            "lose",
+        };
     const std::string SE_NAME[SE_NUMBER] =
-    {
-        "decision",
-        "cursor",
-        "ready",
-        "blow",
-        "soword01",
-        "gun",
-        "explosion",
-        "miss",
-};
+        {
+            "decision",
+            "cursor",
+            "ready",
+            "blow",
+            "soword01",
+            "gun",
+            "explosion",
+            "miss",
+        };
     Mix_Init(MIX_INIT_MP3);
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
     {
@@ -87,4 +87,14 @@ void AudioManager::stopSE(SE_ID id)
 void AudioManager::volumeSE(SE_ID id)
 {
     se[id].volume(id);
+}
+
+void AudioManager::fadeInBGM(BGM_ID id, int ms)
+{
+    bgm[id].fadeIn(ms);
+}
+
+void AudioManager::fadeOutBGM(BGM_ID id, int ms)
+{
+    bgm[id].fadeOut(ms);
 }

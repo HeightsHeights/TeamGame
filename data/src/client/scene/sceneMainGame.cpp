@@ -5,9 +5,6 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
-#define MAX_TOWER_HP 999
-#define MAX_CHARA_HP 100
-
 static const SDL_Color gRed = {0, 0, 255, 0};
 Gamebuff SceneMainGame::gb[StatusDrawer::CHARA_NUMBER];
 
@@ -127,18 +124,6 @@ void SceneMainGame::draw3D()
     glTranslatef(15.0f, 1.0f, 15.0f);
     glScalef(0.025f, 0.05f, 0.025f);
     tower->draw();
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
-    glScalef(0.05f, 0.05f, 0.05f);
-    //glScalef(sphere.radius, sphere.radius, sphere.radius);
-    // collisionS->draw();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
-    glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
-    // collisionO->draw();
     glPopMatrix();
 
     //Charactor

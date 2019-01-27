@@ -13,7 +13,7 @@ public:
   Vector3f speed;
   Vector3f accel;
 
-  //here is collider
+  // here is collider
   bool haveCollider;
 
   GameObject();

@@ -37,4 +37,6 @@ public:
   static void stopSE(SE_ID id);
   static void volumeBGM(BGM_ID id);
   static void volumeSE(SE_ID id);
+  static void fadeInBGM(BGM_ID id, int ms);
+  static void fadeOutBGM(BGM_ID id, int ms);
 };

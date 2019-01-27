@@ -147,9 +147,15 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_NT_PHONG);
     glPushMatrix();
-    glTranslatef(15.0f, 1.0f, 15.0f);
-    glScalef(0.025f, 0.05f, 0.025f);
+    glTranslatef(-140.0f, 1.0f, 0.0f);
+    glScalef(0.03f, 0.07f, 0.03f);
     gameObjects.getModelP(OBJECT_TOWER_R)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(125.0f, 1.0f, 0.0f);
+    glScalef(0.03f, 0.07f, 0.03f);
+    gameObjects.getModelP(OBJECT_TOWER_B)->draw();
     glPopMatrix();
 
     //Charactor
@@ -163,9 +169,9 @@ void SceneMainGame::draw3D()
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();
 
-    glTranslatef(-20.0f, 0.0f, 20.0f);
-    glScalef(5.0f, 12.0f, 5.0f); //宝石
-    object->draw();
+    // glTranslatef(-20.0f, 0.0f, 20.0f);
+    // glScalef(5.0f, 12.0f, 5.0f); //宝石
+    // object->draw();
 
     // glScalef(5.0f, 12.0f, 5.0f); //石１
     // object->draw();
@@ -183,10 +189,13 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
-    glTranslatef(5, 40, 10);
-
+    glTranslatef(115, 50, -10);
     statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_BAMBOO, TeamStatus(), Vector3f(0, 0, 0));
+    glPopMatrix();
 
+    glPushMatrix();
+    glTranslatef(-150, 50, -10);
+    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, TeamStatus(), Vector3f(0, 0, 0));
     glPopMatrix();
 
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));

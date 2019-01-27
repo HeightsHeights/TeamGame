@@ -1,5 +1,6 @@
 #include "./character.h"
 #include <math.h>
+#include <iostream>
 Character::Character()
 {
 }

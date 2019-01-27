@@ -237,7 +237,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *n
     {
         const Vector2f labelSize = Vector2f(480.0f, 60.0f);
         const float unitWord[1] = {
-            30.0f,
+            20.0f,
         };
 
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
@@ -246,7 +246,7 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *n
 
         float center = pos.x + labelSize.x / 2;
         GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
-        dst2 = GuiRect(center - std::string(name).length() * unitWord[0] / 2, pos.y - 130, std::string(name).length() * unitWord[0], 50.0f);
+        dst2 = GuiRect(center - std::string(name).length() * unitWord[0] / 2, pos.y - 135.0f, std::string(name).length() * unitWord[0], 45.0f);
         nameText->draw(NULL, &dst2, 1.0f);
         delete nameText;
     }

@@ -23,10 +23,11 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *tile;
   Character *mush;
-  ObjRawModel *bamboo;
+  Character *bamboo;
   ObjRawModel *skybox;
   ObjRawModel *collisionO;
   ObjRawModel *collisionS;
+ObjRawModel *castle;
 
   Obb obb1;
   Obb obb2;
@@ -44,7 +45,6 @@ private:
   static Gamebuff gb[StatusDrawer::CHARA_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
-  void lookatVector(Vector3f direction);
 
 public:
   SceneMainGame() : BaseScene() {}

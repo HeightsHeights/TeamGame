@@ -24,6 +24,10 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
             NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
             nextScene = SI_NUMBER;
         }
+        else
+        {
+            clientsData[pos].controllerParam = paramData;
+        }
     }
     return nextScene;
 }

@@ -7,7 +7,8 @@
 #include "../math/vector/vector2f.h"
 
 //ジョイコンの番号にあった番号を割り振ってください
-typedef enum {
+typedef enum
+{
   CT_DECITION_OR_ATTACK = 0,
   CT_JUMP = 1,
   CT_CANCEL = 3,
@@ -33,4 +34,7 @@ public:
   bool buttonUp[MAX_BUTTON];
   bool buttonDown[MAX_BUTTON];
   bool buttonState[MAX_BUTTON];
+
+  ControllerParam();
+  ControllerParam operator=(ControllerParam other);
 };

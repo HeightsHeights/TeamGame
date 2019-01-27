@@ -28,9 +28,12 @@ bool SceneMainGame::init()
     mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
+    kinokoHPgage = GuiSpriteLoader().load("./data/res/gui/image/main/lifemush.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     // collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
     // collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
+    object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
+
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
     tower = ObjModelLoader().load("./data/res/gui/obj/tower/", "redtower");
 
@@ -143,15 +146,39 @@ void SceneMainGame::draw3D()
     bamboo->draw();
     //Weapon
 
+    //Object
+    glPushMatrix();
+    // glTranslatef(0.0f, 10.0f, 0.0f);
+    // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
+    // object->draw();
+
+    glTranslatef(-20.0f, 0.0f, 20.0f);
+    glScalef(5.0f, 12.0f, 5.0f); //宝石
+    object->draw();
+
+    // glScalef(5.0f, 12.0f, 5.0f); //石１
+    // object->draw();
+
+    // glScalef(8.0f, 12.0f, 8.0f); //石２
+    // object->draw();
+
+    // glScalef(8.0f, 12.0f, 8.0f); //石３
+    // object->draw();
+
+    // glScalef(5.0f, 12.0f, 5.0f); //木
+    // object->draw();
+    glPopMatrix();
     ShaderManager::stopShader(SID_NT_PHONG);
 
     static int rotation = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
     glTranslatef(10, 40, 10);
-    glRotated(rotation++, 0, 1, 0);
-    GuiRect dst = GuiRect(0, 0, 25, 25);
-    sprite->draw(0, &dst, 1.0f, Vector3f(0, 0, 0));
+    // glRotated(rotation++, 0, 1, 0);]
+    // glScalef(0.5f, 0.5f, 0.5f);
+    GuiRect dst = GuiRect(0, 0, 50, 10);
+    // sprite->draw(0, &dst, 1.0f, Vector3f(0, 0, 0));
+    kinokoHPgage->draw(0, &dst, 1.0f, Vector3f(-10, 0, 0));
     glPopMatrix();
 
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));

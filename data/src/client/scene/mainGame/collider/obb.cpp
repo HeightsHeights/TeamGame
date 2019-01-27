@@ -2,6 +2,22 @@
 #include "./sphere.h"
 #include <math.h>
 
+Obb::Obb()
+{
+}
+Obb::Obb(Vector3f center, Touple3f length)
+{
+    this->center = center;
+
+    normalDirect[0] = Vector3f(1.0f, 0.0f, 0.0f);
+    normalDirect[1] = Vector3f(0.0f, 1.0f, 0.0f);
+    normalDirect[1] = Vector3f(0.0f, 0.0f, 1.0f);
+
+    this->length[0] = length.x;
+    this->length[1] = length.y;
+    this->length[2] = length.z;
+}
+
 bool Obb::isCollision(Obb other)
 {
     Vector3f NAe1 = this->normalDirect[0], Ae1 = NAe1 * this->length[0];

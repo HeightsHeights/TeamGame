@@ -157,7 +157,7 @@ void Particle::update()
 
     for (int i = 0; i < pData.size(); i++)
     {
-        pData[i].life -= 100;
+        pData[i].life -= 1;
         if (pData[i].life > 0 && pData[i].transform.position.y >= 0)
         {
             pData[i].accel = Vector3f(0.0f, 0.0098f, 0.0f);

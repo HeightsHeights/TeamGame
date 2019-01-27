@@ -10,6 +10,8 @@
 #include "../render/gui/sprite/guiSpriteLoader.h"
 #include "../render/particle/particleLoader.h"
 #include "../gameObject/character/character.h"
+
+#include "./mainGame/collider/collider.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -23,7 +25,12 @@ private:
   Character *mush;
   ObjRawModel *bamboo;
   ObjRawModel *skybox;
-  ObjRawModel *android;
+  ObjRawModel *collisionO;
+  ObjRawModel *collisionS;
+
+  Obb obb1;
+  Obb obb2;
+  Sphere sphere;
 
   Vector2f positionMush;
   Vector3f mushEye;

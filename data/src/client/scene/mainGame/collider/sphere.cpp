@@ -2,6 +2,15 @@
 
 #include "./sphere.h"
 
+Sphere::Sphere()
+{
+}
+Sphere::Sphere(Vector3f center, float radius)
+{
+    this->center = center;
+    this->radius = radius;
+}
+
 bool Sphere::isCollision(Obb obb)
 {
     return obb.isCollision(*this);

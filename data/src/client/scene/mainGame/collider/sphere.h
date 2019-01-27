@@ -14,6 +14,9 @@ public:
   Vector3f center;
   float radius;
 
+  Sphere();
+  Sphere(Vector3f center, float radius);
+
   bool isCollision(Obb obb);
   bool isCollision(Sphere sphere);
 };

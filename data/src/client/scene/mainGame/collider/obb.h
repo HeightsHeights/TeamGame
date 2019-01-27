@@ -15,6 +15,9 @@ public:
   Vector3f normalDirect[3];
   float length[3];
 
+  Obb();
+  Obb(Vector3f center, Touple3f length);
+
   bool isCollision(Obb other);
   bool isCollision(Sphere sphere);
   float getLenObb2Point(Vector3f point);

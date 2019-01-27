@@ -19,6 +19,7 @@ public:
   GameObject();
   GameObject(const std::string dirPath, const std::string fileName, Transform *transform);
 
+  void clearTransform();
   bool isCollision();
   void draw();
 

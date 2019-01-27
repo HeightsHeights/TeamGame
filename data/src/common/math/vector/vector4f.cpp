@@ -126,6 +126,10 @@ float Vector4f::magnitude()
 Vector4f Vector4f::normalize()
 {
     float m = magnitude();
+    if (m == 0)
+    {
+        return *this;
+    }
     return *this / m;
 }
 /***********************************

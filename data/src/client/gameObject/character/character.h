@@ -11,6 +11,16 @@ private:
     HAND_NUMBER = 2,
   } HAND_ID;
 
+  GameObject *mainBody;
+  GameObject *hands[HAND_NUMBER];
+
+  GameObject *weapons;
+
+  Vector3f lookingDirection;
+
+  void lookatDir(Vector3f direction);
+
+public:
   typedef enum {
     ATTACK_HAVENOTHING = 0,
     ATTACK_SWORD = 1,
@@ -18,17 +28,13 @@ private:
     ATTACK_THLOW = 3,
   } ATTACK_ID;
 
-  GameObject *mainBody;
-  GameObject *hands[HAND_NUMBER];
-
-  GameObject *weapons;
-
-public:
   Transform transform;
+  float speed;
 
   Character();
   Character(const std::string dirPath, const std::string fileName, Transform *transform);
 
-  void move(Vector2f movepoint);
+  void move(Vector3f moveDirection);
+  void motion(ATTACK_ID id, int time);
   void draw();
 };

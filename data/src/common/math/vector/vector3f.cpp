@@ -143,6 +143,10 @@ float Vector3f::magnitude()
 Vector3f Vector3f::normalize()
 {
     float m = magnitude();
+    if (m == 0)
+    {
+        return *this;
+    }
     return *this / m;
 }
 /***********************************

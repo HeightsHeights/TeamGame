@@ -42,8 +42,7 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
-    positionMush += Vector2f(param.axisL.x * 0.1, param.axisL.y * 0.1);
-    mush->move(positionMush);
+    mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
     if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
     {
         particle_emission = 1;
@@ -63,7 +62,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 500);
 
-    gluLookAt(positionMush.x, 150, 30 + positionMush.y, positionMush.x, 0, positionMush.y, 0, 1, 0);
+    gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
 
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
@@ -95,7 +94,7 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glScalef(1.6f, 1.6f, 1.6f);
     glTranslatef(mushEye.x, 0, mushEye.y);
-    bamboo->draw();
+    //bamboo->draw();
     glPopMatrix();
 
     ShaderManager::stopShader(SID_NT_PHONG);

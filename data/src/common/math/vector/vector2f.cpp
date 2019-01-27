@@ -143,6 +143,10 @@ float Vector2f::magnitude()
 Vector2f Vector2f::normalize()
 {
     float m = magnitude();
+    if (m == 0)
+    {
+        return *this;
+    }
     return *this / m;
 }
 /***********************************

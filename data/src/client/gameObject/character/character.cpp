@@ -5,6 +5,8 @@ Character::Character()
 }
 Character::Character(const std::string dirPath, const std::string fileName, Transform *transform)
 {
+    speed = 0.1f;
+
     if (transform == NULL)
     {
         this->transform.position = Vector3f_ZERO;
@@ -25,19 +27,29 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
     mainBody = new GameObject(dirPath, fileName, NULL);
 }
 
-void Character::move(Vector2f movepoint)
+void Character::move(Vector3f moveDirection)
 {
-    transform.position.x = movepoint.x;
-    transform.position.z = movepoint.y;
+    moveDirection = moveDirection.normalize();
+
+    if (moveDirection.x != 0 || moveDirection.y != 0 || moveDirection.z != 0)
+    {
+        lookingDirection = moveDirection;
+    }
+
+    transform.position += moveDirection * speed;
+}
+
+void Character::motion(ATTACK_ID id, int time)
+{
 }
 
 void Character::draw()
 {
     glPushMatrix();
 
-    glScalef(transform.scale.x, transform.scale.y, transform.scale.z);
-    glRotatef(transform.rotation.y, 0.0f, 1.0f, 0.0f);
+    glScalef(transform.scale.x, transform.scale.y * 2, transform.scale.z);
     glTranslatef(transform.position.x, transform.position.y, transform.position.z);
+    lookatDir(lookingDirection);
 
     glPushMatrix();
     glTranslatef(3.5f, 2.0f, 0.0f);
@@ -49,7 +61,24 @@ void Character::draw()
     hands[HAND_LEFT]->draw();
     glPopMatrix();
 
+    glPushMatrix();
     mainBody->draw();
+    glPopMatrix();
 
     glPopMatrix();
+}
+
+void Character::lookatDir(Vector3f direction)
+{
+    direction.y = 0;
+
+    Vector3f vecY = Vector3f(0, 1, 0);
+    Vector3f vecZ = Vector3f(0, 0, 1);
+
+    float theta = direction.betweenAngleDegree(vecZ);
+    if (Vector3f::cross(vecZ, direction).y < 0)
+    {
+        theta *= -1;
+    }
+    glRotated(theta, vecY.x, vecY.y, vecY.z);
 }

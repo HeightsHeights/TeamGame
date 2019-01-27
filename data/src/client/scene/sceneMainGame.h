@@ -40,6 +40,7 @@ private:
   StatusDrawer *statusDrawer;
 
   int particle_emission;
+  bool atkmode;
   static Gamebuff gb[StatusDrawer::CHARA_NUMBER];
   virtual void draw3D();
   virtual void draw2D();

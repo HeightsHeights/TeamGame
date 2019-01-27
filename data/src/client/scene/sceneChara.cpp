@@ -26,15 +26,15 @@ bool SceneChara::init()
     const std::string IMAGE_NAME[IMAGE_NUMBER] =
         {
             "configbg.png",
-            "charaselsect/bambooshoot.png",
             "charaselsect/mushroom.png",
+            "charaselsect/bambooshoot.png",
             "ready.png",
             "charaselsect/namebox1.png",
             "charaselsect/namebox2.png",
             "nameFrames/nameFramenot.png",
         };
 
-    dst[IMAGE_BAMBOO] = GuiRect(-550, -125, 350, 75);
+    dst[IMAGE_MUSHROOM] = GuiRect(-550, -125, 350, 75);
     dst[IMAGE_READY] = GuiRect(-150, -225, 300, 100);
 
     for (int i = 0; i < IMAGE_NUMBER; i++)
@@ -195,11 +195,11 @@ void SceneChara::draw3D()
     glRotated(angle, 0, 1, 0);
     if (mypos.x == 0)
     {
-        bamboo->draw();
+        mush->draw();
     }
     else
     {
-        mush->draw();
+        bamboo->draw();
     }
     glPopMatrix();
 }
@@ -217,7 +217,7 @@ void SceneChara::draw2D()
 
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
-    image[(int)IMAGE_BAMBOO + (int)mypos.x]->draw(NULL, &dst[IMAGE_BAMBOO], (mypos.y == 0) ? 1.0f : 0.3f);
+    image[(int)IMAGE_MUSHROOM + (int)mypos.x]->draw(NULL, &dst[IMAGE_MUSHROOM], (mypos.y == 0) ? 1.0f : 0.3f);
     for (int i = 0; i < MAX_PLAYER; i++)
     {
         drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0) ? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);

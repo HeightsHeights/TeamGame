@@ -28,6 +28,7 @@ private:
   Vector2f positionMush;
   Vector3f mushEye;
   GuiSprite *sprite;
+  GuiSprite *clash;
   Particle *trialpart;
   StatusDrawer *statusDrawer;
 

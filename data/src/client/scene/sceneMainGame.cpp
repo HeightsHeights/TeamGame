@@ -23,7 +23,7 @@ bool SceneMainGame::init()
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     android = ObjModelLoader().load("./data/res/gui/obj/", "test");
-
+    clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
     particle_emission == 0;
     for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
     {
@@ -48,7 +48,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
     {
         particle_emission = 1;
-        trialpart->generate(100);
+        trialpart->generate(15);
     }
     if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
         particle_emission = 0;
@@ -125,9 +125,10 @@ void SceneMainGame::draw3D()
     glTranslatef(positionMush.x, 0, positionMush.y);
     glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
-    sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
+    // sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
 
     glPopMatrix();
+    // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
     ShaderManager::startShader(SID_PARTICLE);
     glPushMatrix();

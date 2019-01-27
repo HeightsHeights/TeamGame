@@ -12,7 +12,7 @@ private:
   int gSocket;
   sockaddr_in server;
 
-  bool isConnected;
+  static bool isConnected;
 
 public:
   NetConnector();

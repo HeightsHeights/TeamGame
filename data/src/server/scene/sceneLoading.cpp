@@ -1,5 +1,4 @@
 #include "./sceneLoading.h"
-#include "../../common/network/networkCommand.h"
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../network/networkManager.h"
 #include "../../common/controllerParam/controllerParam.h"
@@ -31,7 +30,6 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
     if (count == MAX_CLIENTS)
     {
         DataBlock data;
-
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         return SI_CHARASELECT;
@@ -41,5 +39,5 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
 
 SCENE_ID SceneLoading::dataProcessing()
 {
-    return SI_MAIN;
+    return SI_LOADING;
 }

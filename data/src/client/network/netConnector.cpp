@@ -4,6 +4,8 @@
 /******************************************************************************
  * class NetConnector
 ******************************************************************************/
+bool NetConnector::isConnected = false;
+
 NetConnector::NetConnector()
 {
 }
@@ -11,7 +13,6 @@ NetConnector::NetConnector(int gSocket, sockaddr_in server)
 {
     this->gSocket = gSocket;
     this->server = server;
-    isConnected = false;
 }
 bool NetConnector::connectServer()
 {

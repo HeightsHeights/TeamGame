@@ -80,5 +80,5 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
 }
 SCENE_ID SceneChara::dataProcessing()
 {
-    return SI_MAIN;
+    return SI_CHARASELECT;
 }

@@ -3,6 +3,7 @@
 #include "../scene/sceneManager.h"
 #include "../../common/console/console.h"
 #include "../network/networkManager.h"
+#include "./threadManager.h"
 
 bool GameSystem::init(int argc, char *argv[])
 {
@@ -43,6 +44,17 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
+    if (!ThreadManager::init(&atm))
+    {
+        fprintf(stderr, "Error --> ThreadManager::init()\n");
+        return false;
+    }
+    if (!ThreadManager::start(ThreadManager::dataProcessingThread, "dataProcessingThread"))
+    {
+        fprintf(stderr, "Error --> ThreadManager::start()\n");
+        return false;
+    }
+
     return true;
 }
 
@@ -77,6 +89,13 @@ bool GameSystem::gameLoop()
 
 bool GameSystem::terminate()
 {
+    if (!ThreadManager::wait())
+    {
+        fprintf(stderr, "Error --> ThreadManager::wait\n");
+        return false;
+    }
+    fprintf(stderr, "Threads terminated successfully\n");
+
     NetworkManager::closeAll();
     return true;
 }

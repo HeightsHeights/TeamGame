@@ -1,5 +1,8 @@
 #include "./sceneMainGame.h"
 
+#include "../../common/network/dataBlock/dataBlock.h"
+#include "../../common/network/networkCommand.h"
+#include "../network/networkManager.h"
 #include "../render/shader/shaderManager.h"
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
@@ -48,6 +51,11 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
     // sphere.center += Vector3f(param.axisL.x, 0.0f, param.axisL.y) * 0.3;
 
+    DataBlock data;
+    data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
+    data.setData(&param, sizeof(ControllerParam));
+    NetworkManager::sendData(data, data.getDataSize());
+
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
     if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)
     {
@@ -82,7 +90,12 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
 {
-    return SI_MAIN;
+    SCENE_ID nextScene = SI_MAIN;
+    if (command == NC_FINISH)
+    {
+        nextScene = SI_NUMBER;
+    }
+    return nextScene;
 }
 
 void SceneMainGame::draw3D()

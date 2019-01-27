@@ -22,20 +22,19 @@ class SceneMainGame : public BaseScene
 private:
   unsigned int timer;
 
-  TeamStatus status[TEAM_NUMBER];
+  TeamStatus tStatus[TEAM_NUMBER];
 
   Character chara[MAX_CLIENTS];
   GameObject staticObject[MAX_STATIC_OBJECTS];
   GameObject dynamicObject[MAX_DYNAMIC_OBJECTS];
 
+  void upDate();
+  void sendData();
+
 public:
-  SceneMainGame() : BaseScene()
-  {
-  }
+  SceneMainGame() : BaseScene() {}
 
   virtual bool init();
   virtual SCENE_ID executeCommand(int command, int pos);
   virtual SCENE_ID dataProcessing();
 };
-
-//

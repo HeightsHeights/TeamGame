@@ -6,6 +6,11 @@
 
 bool SceneMainGame::init()
 {
+    for (int i = 0; i < TEAM_NUMBER; i++)
+    {
+        tStatus[i] = TeamStatus();
+    }
+
     return true;
 }
 SCENE_ID SceneMainGame::executeCommand(int command, int pos)
@@ -35,6 +40,20 @@ SCENE_ID SceneMainGame::dataProcessing()
 {
     SCENE_ID nextScene = SI_MAIN;
 
-    
     return SI_MAIN;
+}
+
+void SceneMainGame::upDate()
+{
+    for (int i = 0; i < MAX_CLIENTS; i++)
+    {
+        TEAM_ID id = clientsData[i].teamId;
+        chara[i].speed = tStatus[id].buff[BUFF_SPEED] ? 2.0f : 2.0f;
+
+        Vector2f axisL = clientsData[i].controllerParam.axisL;
+        chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
+    }
+}
+void SceneMainGame::sendData()
+{
 }

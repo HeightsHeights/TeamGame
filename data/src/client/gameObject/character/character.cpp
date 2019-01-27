@@ -1,5 +1,5 @@
 #include "./character.h"
-
+#include <math.h>
 Character::Character()
 {
 }
@@ -16,12 +16,14 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
         this->transform = *transform;
     }
 
+    Transform handInitTramsform[HAND_NUMBER] = {
+        Transform(Vector3f(1.5f, 1.5f, 0.0f), Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f)),
+        Transform(Vector3f(-1.5f, 1.5f, 0.0f), Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f)),
+    };
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
-        hands[i] = new GameObject("./data/res/gui/obj/", "hand", NULL);
+        hands[i] = new GameObject("./data/res/gui/obj/", "hand", &handInitTramsform[i]);
     }
-    hands[HAND_RIGHT]->transform.position = Vector3f(1.5f, 1.5f, 0.0f);
-    hands[HAND_LEFT]->transform.position = Vector3f(-1.5f, 1.5f, 0.0f);
     mainBody = new GameObject(dirPath, fileName, NULL);
 
     lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
@@ -42,6 +44,15 @@ void Character::move(Vector3f moveDirection)
 
 void Character::motion(MOTION_ID id, int time)
 {
+    switch (id)
+    {
+    case MOTION_THROW:
+        weaponThrow(time);
+        break;
+    case MOTION_NULL:
+        Cancel();
+        break;
+    }
 }
 
 void Character::draw()
@@ -91,4 +102,15 @@ void Character::lookatDir(Vector3f direction)
         theta *= -1;
     }
     glRotated(theta, vecY.x, vecY.y, vecY.z);
+}
+
+void Character::weaponThrow(int time)
+{
+    hands[HAND_LEFT]->transform.position += Vector3f(0.0, sin(time), cos(time));
+}
+
+void Character::Cancel()
+{
+    hands[HAND_LEFT]->transform.position = hands[HAND_LEFT]->initTransform.position;
+    hands[HAND_RIGHT]->transform.position = hands[HAND_RIGHT]->initTransform.position;
 }

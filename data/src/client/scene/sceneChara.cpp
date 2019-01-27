@@ -29,10 +29,8 @@ bool SceneChara::init()
             "charaselsect/bambooshoot.png",
             "charaselsect/mushroom.png",
             "ready.png",
-            "nameFrames/nameFrameRed.png",
-            "nameFrames/nameFrameBlue.png",
-            "nameFrames/nameFrameYellow.png",
-            "nameFrames/nameFrameGreen.png",
+            "charaselsect/namebox1.png",
+            "charaselsect/namebox2.png",
             "nameFrames/nameFramenot.png",
         };
 
@@ -48,7 +46,7 @@ bool SceneChara::init()
         }
     }
 
-    for (int i = 0; i < COLOR_NUMBER; i++)
+    for (int i = 0; i < MAX_PLAYER; i++)
     {
         connect[i] = false;
     }
@@ -232,17 +230,23 @@ void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *n
     if (!exit)
     {
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
-        dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, FRAME_WIDTH);
+        dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, 100);
         image[IMAGE_NOTPLAYER_FRAME]->draw(NULL, &dst2, 0.5f);
     }
     else
     {
+        const Vector2f labelSize = Vector2f(480.0f, 60.0f);
+        const float unitWord[1] = {
+            30.0f,
+        };
+
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
-        dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, FRAME_WIDTH);
+        dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, 100);
         image[IMAGE_PLAYER_FRAME_0 + cid]->draw(NULL, &dst2, 1.0f);
 
+        float center = pos.x + labelSize.x / 2;
         GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
-        dst2 = GuiRect(pos.x + FRAME_WIDTH * 2 - std::string(name).length() * 15 / 2 + FRAME_WIDTH / 2, pos.y - FRAME_WIDTH * 11 / 9, std::string(name).length() * 30, 60);
+        dst2 = GuiRect(center - std::string(name).length() * unitWord[0] / 2, pos.y - 125, std::string(name).length() * unitWord[0], 60);
         nameText->draw(NULL, &dst2, 1.0f);
         delete nameText;
     }

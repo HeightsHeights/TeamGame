@@ -33,18 +33,14 @@ private:
     IMAGE_READY = 3,
     IMAGE_PLAYER_FRAME_0 = 4,
     IMAGE_PLAYER_FRAME_1 = 5,
-    IMAGE_PLAYER_FRAME_2 = 6,
-    IMAGE_PLAYER_FRAME_3 = 7,
-    IMAGE_NOTPLAYER_FRAME = 8,
-    IMAGE_NUMBER = 9,
+    IMAGE_NOTPLAYER_FRAME = 6,
+    IMAGE_NUMBER = 7,
   } IMAGE_ID;
 
   typedef enum {
     COLOR_RED = 0,
     COLOR_BLUE = 1,
-    COLOR_YELLOW = 2,
-    COLOR_GREEN = 3,
-    COLOR_NUMBER = 4,
+    COLOR_NUMBER = 2,
   } COLOR_ID;
   virtual void drawBackground();
   virtual void draw3D();

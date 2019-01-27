@@ -1,15 +1,24 @@
-// #pragma once
+#pragma once
 
-// #include "./collider.h"
-// #include "../../../../common/math/vector/vectorSet.h"
+#ifndef _COLLIDER_S
+#define _COLLIDER_S
 
-// class Sphere : public Collider
-// {
-// private:
-// public:
-//   Vector3f center;
-//   float radius;
+class Obb;
 
-//   virtual bool isCollision(Obb obb);
-//   virtual bool isCollision(Sphere sphere);
-// };
+#include "../../../../common/math/vector/vectorSet.h"
+
+class Sphere
+{
+private:
+public:
+  Vector3f center;
+  float radius;
+
+  Sphere();
+  Sphere(Vector3f center, float radius);
+
+  bool isCollision(Obb obb);
+  bool isCollision(Sphere sphere);
+};
+
+#endif

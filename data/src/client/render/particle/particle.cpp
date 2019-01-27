@@ -3,7 +3,7 @@
 #include <algorithm>
 #define BUFFER_OFFSET(bytes) ((GLubyte *)NULL + (bytes))
 Particle::Particle() {}
-Particle::Particle(GLuint texId, unsigned int maxnum)
+Particle::Particle(GLuint texId, int maxnum)
 {
     this->texId = texId;
     storeData(maxnum);
@@ -93,7 +93,7 @@ void Particle::storeData(unsigned int maxnum)
     unbindVao();
 }
 
-void Particle::generate(unsigned int num)
+void Particle::generate(int num)
 {
     this->emitterPos = Vector3f(0.0f, 1.0f, 0.0f);
 
@@ -103,7 +103,7 @@ void Particle::generate(unsigned int num)
         object.transform.position = this->emitterPos;
         object.life = 1000;
 
-        object.speed = Vector3f((float)(rand() % 501 - 250) / 500, (float)(rand() % 501) / 200, (float)(rand() % 501 - 250) / 500);
+        object.speed = Vector3f((float)(rand() % 501 - 250) / 500, (float)(rand() % 251) / 200, (float)(rand() % 501 - 250) / 500);
         pData.push_back(object);
     }
 }
@@ -111,11 +111,10 @@ int Particle::draw(float brightness)
 {
     if (pData.size() < 1)
     {
-        pData.shrink_to_fit();
+        if (pData.size() > 0)
+            pData.shrink_to_fit();
         return 0;
     }
-    if (pData.size() > 20)
-        int a = 11;
     GLfloat posData[pData.size() * 3];
     for (int i = 0; i < pData.size(); i++)
     {
@@ -137,6 +136,8 @@ int Particle::draw(float brightness)
 
     bindTexture();
     bindVao();
+    if (pData.size() < 1)
+        printf("dgs");
     glBindBuffer(GL_ARRAY_BUFFER, vboPos);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(posData), posData);
     // glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
@@ -144,7 +145,9 @@ int Particle::draw(float brightness)
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0, pData.size());
     unbindVao();
     unbindTexture();
-    update();
+    if (pData.size() > 0)
+        update();
+
     return 1;
 }
 
@@ -154,7 +157,7 @@ void Particle::update()
 
     for (int i = 0; i < pData.size(); i++)
     {
-        pData[i].life -= 10;
+        pData[i].life -= 1;
         if (pData[i].life > 0 && pData[i].transform.position.y >= 0)
         {
             pData[i].accel = Vector3f(0.0f, 0.0098f, 0.0f);
@@ -165,7 +168,7 @@ void Particle::update()
         {
             std::iter_swap(pData.begin() + i, pData.end());
             pData.pop_back();
-            // if (pData.size() > 0)
+            //
             //
         }
     }

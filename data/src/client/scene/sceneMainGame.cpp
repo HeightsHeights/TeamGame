@@ -16,14 +16,19 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
+    obb1 = Obb(Vector3f(0, 10, 0), Touple3f(3, 3, 3));
+    obb2 = Obb(Vector3f(0, 10, 50), Touple3f(3, 3, 3));
+    sphere = Sphere(Vector3f(0, 10, 0), 3);
+
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
     mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    android = ObjModelLoader().load("./data/res/gui/obj/", "test");
-
+    collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
+    collisionS = ObjModelLoader().load("./data/res/gui/obj/collider/", "sphere");
+    clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
     particle_emission == 0;
     atkmode = false;
     for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
@@ -45,6 +50,8 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
+    sphere.center += Vector3f(param.axisL.x, 0.0f, param.axisL.y) * 0.3;
+
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
     if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)
     {
@@ -52,6 +59,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
         
         particle_emission = 1;
         trialpart->generate(15);
+<<<<<<< HEAD
     }
     if(atkmode)
     {
@@ -64,6 +72,8 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
             atk = 0;
             atkmode = false;
         }
+=======
+>>>>>>> 7d05d8a46cac0ce8db6de9453c8143067e61c6c0
     }
 
     if (param.buttonDown[CT_GRUB] == true)
@@ -96,22 +106,36 @@ void SceneMainGame::draw3D()
     glScalef(180.0f, 90.0f, 135.0f);
     skybox->draw();
     glPopMatrix();
+
     ShaderManager::stopShader(SID_TEXTURING);
 
     ShaderManager::startShader(SID_T_PHONG);
-    glPushMatrix();
-    glTranslatef(0.0f, 18.0f, 0.0f);
-    glScalef(16.0f, 16.0f, 16.0f);
-    android->draw();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(0.0f, 18.0f, 0.0f);
+    // glScalef(16.0f, 16.0f, 16.0f);
+    // android->draw();
+    // glPopMatrix();
 
     glPushMatrix();
     glScalef(20.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
+
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
+
+    glPushMatrix();
+    glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
+    glScalef(sphere.radius, sphere.radius, sphere.radius);
+    collisionS->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
+    glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
+    collisionO->draw();
+    glPopMatrix();
 
     // glPushMatrix();
     // glScalef(1.0f, 2.0f, 1.0f);
@@ -137,9 +161,10 @@ void SceneMainGame::draw3D()
     glTranslatef(positionMush.x, 0, positionMush.y);
     glRotated(i++, 0, 1, 0);
     GuiRect dst = GuiRect(0, 0, 50, 50);
-    sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
+    // sprite->draw(0, &dst, 1.0f, Vector3f(-25, 15, 0));
 
     glPopMatrix();
+    // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
     ShaderManager::startShader(SID_PARTICLE);
     glPushMatrix();

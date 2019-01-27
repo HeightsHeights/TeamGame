@@ -39,8 +39,8 @@ public:
   Vector3f emitterPos;
 
   Particle();
-  Particle(GLuint texId, unsigned int maxnum);
-  void generate(unsigned int num);
+  Particle(GLuint texId, int maxnum);
+  void generate(int num);
   int draw(float brightness);
   void setSpriteNum(Touple2f spriteMaxNum);
 };

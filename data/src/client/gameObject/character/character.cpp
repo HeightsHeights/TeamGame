@@ -131,7 +131,7 @@ void Character::weaponBamboo(int time)
 
 void Character::weaponThrow(int time)
 {
-    hands[HAND_LEFT]->transform.position += Vector3f(0.0, sin(time), cos(time));
+    hands[HAND_LEFT]->transform.position += Vector3f(0.0, (float)sin(time), (float)cos(time));
 }
 
 void Character::Cancel()

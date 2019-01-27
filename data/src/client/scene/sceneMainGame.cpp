@@ -5,6 +5,9 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
+#define MAX_TOWER_HP 999
+#define MAX_CHARA_HP 100
+
 static const SDL_Color gRed = {0, 0, 255, 0};
 Gamebuff SceneMainGame::gb[StatusDrawer::CHARA_NUMBER];
 
@@ -26,8 +29,8 @@ bool SceneMainGame::init()
     bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
-    collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
+    // collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
+    // collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
     castle = ObjModelLoader().load("./data/res/gui/obj/castle/", "redcastle");
 
@@ -121,18 +124,19 @@ void SceneMainGame::draw3D()
     glScalef(2.0f, 2.0f, 2.0f);
     castle->draw();
     glPopMatrix();
-    glPushMatrix();
-    glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
-    glScalef(0.05f, 0.05f, 0.05f);
-    //glScalef(sphere.radius, sphere.radius, sphere.radius);
-    collisionS->draw();
-    glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
-    glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
-    collisionO->draw();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
+    // glScalef(0.05f, 0.05f, 0.05f);
+    // //glScalef(sphere.radius, sphere.radius, sphere.radius);
+    // collisionS->draw();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
+    // glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
+    // collisionO->draw();
+    // glPopMatrix();
 
     //Charactor
     mush->draw();
@@ -163,10 +167,10 @@ void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
 
-    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "suyama");
-    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
-    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
-    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
+    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::CHARA_MUSH, 10, true, "suyama");
+    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::CHARA_BAMBOO, 00, false, "SUYAMA");
+    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::CHARA_MUSH, 888, false, "sym");
+    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::CHARA_BAMBOO, 555, true, "SYM");
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, gb[StatusDrawer::CHARA_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, gb[StatusDrawer::CHARA_BAMBOO]);
     ShaderManager::stopShader(SID_GUI);

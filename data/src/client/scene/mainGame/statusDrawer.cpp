@@ -18,11 +18,8 @@ bool StatusDrawer::init()
 {
     const std::string IMAGE_NAME[StatusDrawer::IMAGE_NUMBER - IMAGE_9 - 1] =
         {
-            "nameFrames/nameFrameRed",
-            "nameFrames/nameFrameBlue",
-            "nameFrames/nameFrameYellow",
-            "nameFrames/nameFrameGreen",
-            "icon",
+            "nameFrames/statusmush",
+            "nameFrames/statusbamboo",
             "main/hp",
             "main/hpback",
             "main/atkbuff",
@@ -60,7 +57,7 @@ bool StatusDrawer::init()
 void StatusDrawer::cleanUp()
 {
 }
-void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive, const char *name)
+void StatusDrawer::draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive, const char *name)
 {
     if (hp > 999)
     {
@@ -68,14 +65,12 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
     }
 
     float brightness = (float)(hp + 50) / 100;
-    GuiRect dst = GuiRect(pos.x, pos.y, UNIT_WIDTH, UNIT_WIDTH);
-    image[IMAGE_ICON]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
 
-    dst = GuiRect(pos.x, pos.y - UNIT_WIDTH * 9 / 8, 4 * UNIT_WIDTH, UNIT_WIDTH);
-    image[IMAGE_NAME_FRAME_RED + cid]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
+    GuiRect dst = GuiRect(pos.x, pos.y - UNIT_WIDTH * 6 / 8, 4 * UNIT_WIDTH, UNIT_WIDTH * 2 + 10);
+    image[IMAGE_NAME_FRAME_MUSH + cid]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
 
     GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
-    dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 15 / 2, pos.y - UNIT_WIDTH * 11 / 8, std::string(name).length() * 15, 30);
+    dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 15 / 2 + 10, pos.y - UNIT_WIDTH * 11 / 8 - 40, std::string(name).length() * 15, 30);
     nameText->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
     delete nameText;
 
@@ -85,7 +80,7 @@ void StatusDrawer::draw(Vector2f pos, COLOR_ID cid, unsigned int hp, bool alive,
         {
             break;
         }
-        dst = GuiRect(pos.x + UNIT_WIDTH * (3 - i), pos.y, UNIT_WIDTH, UNIT_WIDTH);
+        dst = GuiRect(pos.x + 30 * (3 - i) + 80, pos.y - 40, 30, UNIT_WIDTH);
         image[hp % 10]->draw(NULL, &dst, brightness);
         hp = hp / 10;
     }
@@ -95,7 +90,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, G
 {
     if (cid == CHARA_MUSH)
     {
-        GuiRect dst = GuiRect(pos.x , pos.y, HP_WIDTH, UNIT_WIDTH);
+        GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
         float chp = HP_WIDTH * ((float)hp / MAX_HP);
@@ -108,7 +103,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, G
             image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i]) ? 1.0f : 0.2f);
         }
 
-        dst = GuiRect(pos.x - 125, pos.y + UNIT_WIDTH, 560,125);
+        dst = GuiRect(pos.x - 125, pos.y + UNIT_WIDTH, 560, 125);
         image[IMAGE_MUSHHPFRAME]->draw(NULL, &dst, 1.0f);
     }
     else

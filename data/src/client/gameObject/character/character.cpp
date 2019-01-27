@@ -46,7 +46,7 @@ void Character::motion(MOTION_ID id, int time)
 {
     switch (id)
     {
-    case MOTION_ATTACL:
+    case MOTION_ATTACK:
         //weaponSodo(time);
         weaponAx(time);
         //weaponBamboo(time);
@@ -112,15 +112,15 @@ void Character::lookatDir(Vector3f direction)
 
 void Character::weaponSodo(int time)
 {
-    hands[HAND_LEFT]->transform.position += Vector3f(0.0f, 0.1f * (float)cos(270 +(time/10)), 0.1f * (float)sin(270 + (time/10)));
+    hands[HAND_LEFT]->transform.position += Vector3f(0.0f, 0.1f * (float)cos(270 + (time / 10)), 0.1f * (float)sin(270 + (time / 10)));
 }
 void Character::weaponAx(int time)
 {
-    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time/10), 0.0f, 0.1f * (float)cos(time/10));
+    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time / 10), 0.0f, 0.1f * (float)cos(time / 10));
 }
 void Character::weaponBamboo(int time)
 {
-    if(time % 2 == 0)
+    if (time % 2 == 0)
     {
         hands[HAND_LEFT]->transform.position += Vector3f(0.0f, 0.0f, 1.0f);
     }
@@ -131,7 +131,7 @@ void Character::weaponBamboo(int time)
 }
 void Character::weaponHit(int time)
 {
-    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time/10), 0.0f, 0.1f * (float)cos(time/10));
+    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time / 10), 0.0f, 0.1f * (float)cos(time / 10));
 }
 
 void Character::weaponThrow(int time)

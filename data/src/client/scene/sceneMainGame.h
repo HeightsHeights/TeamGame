@@ -32,8 +32,6 @@ private:
 
   Obb obb1;
 
-  Vector2f positionMush;
-  Vector3f mushEye;
   GuiSprite *sprite;
   GuiSprite *clash;
   GuiSprite *kinokoHPgage;
@@ -42,7 +40,6 @@ private:
 
   int particle_emission;
   bool atkmode;
-  static Gamebuff gb[StatusDrawer::CHARA_NUMBER];
   virtual void draw3D();
   virtual void draw2D();
 

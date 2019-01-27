@@ -3,27 +3,16 @@
 #include "../../render/gui/image/guiImageLoader.h"
 #include "../../render/gui/text/guiTextLoader.h"
 #include "../../render/gui/sprite/guiSpriteLoader.h"
+#include "../../../common/gameData/teamStatus.h"
 
 #define UNIT_WIDTH 50
 #define HP_WIDTH 400
-#define MAX_HP 400
-
-typedef enum {
-  BUFF_ATK = 0,
-  BUFF_HP = 1,
-  BUFF_SPEED = 2,
-  BUFF_NUMBER = 3,
-} BUFF_ID;
-
-typedef struct
-{
-  bool buff[BUFF_NUMBER];
-} Gamebuff;
 
 class StatusDrawer
 {
 private:
-  typedef enum {
+  typedef enum
+  {
     IMAGE_0 = 0,
     IMAGE_1 = 1,
     IMAGE_2 = 2,
@@ -50,7 +39,8 @@ private:
   void cleanUp();
 
 public:
-  typedef enum {
+  typedef enum
+  {
     CHARA_MUSH = 0,
     CHARA_BAMBOO = 1,
     CHARA_NUMBER = 2,
@@ -61,5 +51,6 @@ public:
 
   bool init();
   void draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive, const char *name);
-  void drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, Gamebuff gb);
+  void drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status);
+  void drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status, Vector3f loc);
 };

@@ -6,7 +6,8 @@
 class Character
 {
 private:
-  typedef enum {
+  typedef enum
+  {
     HAND_RIGHT = 0,
     HAND_LEFT = 1,
     HAND_NUMBER = 2,
@@ -28,9 +29,10 @@ private:
   void Cancel();
 
 public:
-  typedef enum {
+  typedef enum
+  {
     MOTION_NULL = 0,
-    MOTION_ATTACL = 1,
+    MOTION_ATTACK = 1,
     MOTION_THROW = 2,
     MOTION_NUMBER = 3,
   } MOTION_ID;

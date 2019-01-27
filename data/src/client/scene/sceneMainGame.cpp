@@ -6,7 +6,6 @@
 #define PNG_FILE_EXTENSION ".png"
 
 static const SDL_Color gRed = {0, 0, 255, 0};
-Gamebuff SceneMainGame::gb[StatusDrawer::CHARA_NUMBER];
 
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
@@ -36,20 +35,12 @@ bool SceneMainGame::init()
 
     particle_emission == 0;
     atkmode = false;
-    for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
-    {
-        for (int j = 0; j < BUFF_NUMBER; j++)
-        {
-            gb[i].buff[j] = false;
-        }
-    }
+
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
         return false;
     }
-
-    mushEye = Vector3f(1, 0, 1);
 
     return true;
 }
@@ -68,7 +59,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     if (atkmode)
     {
         static int atk;
-        mush->motion(Character::MOTION_ATTACL, atk++);
+        mush->motion(Character::MOTION_ATTACK, atk++);
 
         if (atk > 45)
         {
@@ -86,6 +77,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     {
         mush->motion(Character::MOTION_NULL, 0);
     }
+
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -155,15 +147,12 @@ void SceneMainGame::draw3D()
     glPopMatrix();
     ShaderManager::stopShader(SID_NT_PHONG);
 
-    static int rotation = 0;
     ShaderManager::startShader(SID_BILLBOARD);
     glPushMatrix();
-    glTranslatef(10, 40, 10);
-    // glRotated(rotation++, 0, 1, 0);]
-    // glScalef(0.5f, 0.5f, 0.5f);
-    GuiRect dst = GuiRect(0, 0, 50, 10);
-    // sprite->draw(0, &dst, 1.0f, Vector3f(0, 0, 0));
-    kinokoHPgage->draw(0, &dst, 1.0f, Vector3f(-10, 0, 0));
+    glTranslatef(5, 40, 10);
+
+    statusDrawer->drawTeamStatus(Vector2f(0, 0), StatusDrawer::CHARA_BAMBOO, TeamStatus(), Vector3f(0, 0, 0));
+
     glPopMatrix();
 
     // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
@@ -178,12 +167,11 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-
     statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::CHARA_MUSH, 10, true, "suyama");
     statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::CHARA_BAMBOO, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), StatusDrawer::CHARA_MUSH, 888, false, "sym");
     statusDrawer->draw(Vector2f(275, -200), StatusDrawer::CHARA_BAMBOO, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, gb[StatusDrawer::CHARA_MUSH]);
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, gb[StatusDrawer::CHARA_BAMBOO]);
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, TeamStatus());
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, TeamStatus());
     ShaderManager::stopShader(SID_GUI);
 }

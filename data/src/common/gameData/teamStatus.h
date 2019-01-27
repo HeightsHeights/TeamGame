@@ -2,7 +2,8 @@
 
 #define MAX_TEAM_HP 999
 
-typedef enum {
+typedef enum
+{
     BUFF_ATK = 0,
     BUFF_HP = 1,
     BUFF_SPEED = 2,

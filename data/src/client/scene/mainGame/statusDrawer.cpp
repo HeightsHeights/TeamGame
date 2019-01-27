@@ -86,21 +86,21 @@ void StatusDrawer::draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, Gamebuff gb)
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status)
 {
     if (cid == CHARA_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
-        float chp = HP_WIDTH * ((float)hp / MAX_HP);
+        float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP);
         dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
 
         for (int i = 0; i < BUFF_NUMBER; i++)
         {
             dst = GuiRect(pos.x + 5 + 30 * i, pos.y - 45, UNIT_WIDTH / 2, UNIT_WIDTH / 2);
-            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i]) ? 1.0f : 0.2f);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (status.buff[i]) ? 1.0f : 0.2f);
         }
 
         dst = GuiRect(pos.x - 125, pos.y + UNIT_WIDTH, 560, 125);
@@ -111,17 +111,65 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, unsigned int hp, G
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
-        float cpos = HP_WIDTH * (1 - ((float)hp / MAX_HP));
-        float chp = HP_WIDTH * ((float)hp / MAX_HP);
+        float cpos = HP_WIDTH * (1 - ((float)status.hp / MAX_TEAM_HP));
+        float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP);
         dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
 
         for (int i = 0; i < BUFF_NUMBER; i++)
         {
             dst = GuiRect(pos.x + (310 + 30 * i), pos.y - 45, UNIT_WIDTH / 2, UNIT_WIDTH / 2);
-            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (gb.buff[i]) ? 1.0f : 0.2f);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (status.buff[i]) ? 1.0f : 0.2f);
         }
         dst = GuiRect(pos.x - 35, pos.y + UNIT_WIDTH, 560, 125);
         image[IMAGE_BAMBOOHPFRAME]->draw(NULL, &dst, 1.0f);
+    }
+}
+
+void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status, Vector3f loc)
+{
+    float SIZE = 0.1f;
+    if (cid == CHARA_MUSH)
+    {
+        GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH * SIZE, UNIT_WIDTH * SIZE);
+        image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f, loc);
+
+        loc.z -= 0.1f;
+        float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP) * SIZE;
+        dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH * SIZE);
+        image[IMAGE_HP]->draw(NULL, &dst, 1.0f, loc);
+
+        loc.z -= 0.1f;
+        for (int i = 0; i < BUFF_NUMBER; i++)
+        {
+            dst = GuiRect(pos.x + (5 + 30 * i) * SIZE, pos.y - 45 * SIZE, UNIT_WIDTH / 2 * SIZE, UNIT_WIDTH / 2 * SIZE);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (status.buff[i]) ? 1.0f : 0.2f, loc);
+        }
+
+        loc.z -= 0.1f;
+        dst = GuiRect(pos.x - 125 * SIZE, pos.y + UNIT_WIDTH * SIZE, 560 * SIZE, 125 * SIZE);
+        image[IMAGE_MUSHHPFRAME]->draw(NULL, &dst, 1.0f, loc);
+    }
+    else
+    {
+        GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH * SIZE, UNIT_WIDTH * SIZE);
+        image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f, loc);
+
+        loc.z -= 0.1f;
+        float cpos = HP_WIDTH * (1 - ((float)status.hp / MAX_TEAM_HP)) * SIZE;
+        float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP) * SIZE;
+        dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH * SIZE);
+        image[IMAGE_HP]->draw(NULL, &dst, 1.0f, loc);
+
+        loc.z -= 0.1f;
+        for (int i = 0; i < BUFF_NUMBER; i++)
+        {
+            dst = GuiRect(pos.x + (310 + 30 * i) * SIZE, pos.y - 45 * SIZE, UNIT_WIDTH / 2 * SIZE, UNIT_WIDTH / 2 * SIZE);
+            image[IMAGE_ATKBUFF + i]->draw(NULL, &dst, (status.buff[i]) ? 1.0f : 0.2f, loc);
+        }
+
+        loc.z -= 0.1f;
+        dst = GuiRect(pos.x - 35 * SIZE, pos.y + UNIT_WIDTH * SIZE, 560 * SIZE, 125 * SIZE);
+        image[IMAGE_BAMBOOHPFRAME]->draw(NULL, &dst, 1.0f, loc);
     }
 }

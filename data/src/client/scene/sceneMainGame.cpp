@@ -34,6 +34,7 @@ bool SceneMainGame::init()
         "object/",
         "object/",
         "weapon/",
+        "jewelry/",
     };
 
     std::string objName[OBJECT_NUMBER] = {
@@ -47,6 +48,7 @@ bool SceneMainGame::init()
         "block_B",
         "block",
         "bomb",
+        "ruby",
     };
 
     for (int i = 0; i < OBJECT_NUMBER; i++)
@@ -202,19 +204,12 @@ void SceneMainGame::draw3D()
     gameObjects.getModelP(OBJECT_TOWER_B)->draw();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(10.0f, 0.0f, 30.0f);
-    glScalef(1.0f, 1.0f, 1.0f);
-    gameObjects.getModelP(OBJECT_BOMB)->draw();
-    glPopMatrix();
-
     //Charactor
     mush->draw();
     bamboo->draw();
     //Weapon
 
     //Object
-    glPushMatrix();
 
     glPushMatrix();
     glTranslatef(0.0, 10.0, 0.0);
@@ -237,9 +232,16 @@ void SceneMainGame::draw3D()
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();
 
-    // glTranslatef(-20.0f, 0.0f, 20.0f);
-    // glScalef(5.0f, 12.0f, 5.0f); //宝石
-    // object->draw();
+    glPushMatrix();
+    glTranslatef(10.0f, 10.0f, 30.0f);
+    glScalef(3.0f, 3.0f, 3.0f);
+    gameObjects.getModelP(OBJECT_BOMB)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(16.0f, 0.0f, 31.0f);
+    glScalef(8.5f, 13.0f, 8.5f); //宝石
+    gameObjects.getModelP(OBJECT_RUBY)->draw();
 
     // glScalef(5.0f, 12.0f, 5.0f); //石１
     // object->draw();

@@ -7,7 +7,7 @@ bool SceneLoading::init()
 {
     for (int i = 0; i < MAX_CLIENTS; i++)
     {
-        exit[i] = false;
+        exist[i] = false;
     }
     return true;
 }
@@ -16,12 +16,12 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
     if (command == NC_SEND_NAME)
     {
         NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
-        exit[pos] = true;
+        exist[pos] = true;
     }
     int count = 0;
     for (int i = 0; i < MAX_CLIENTS; i++)
     {
-        if (exit[i])
+        if (exist[i])
         {
             count++;
         }

@@ -11,7 +11,6 @@
 #include "../render/particle/particleLoader.h"
 #include "../gameObject/character/character.h"
 
-#include "./mainGame/collider/collider.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -20,26 +19,65 @@
 
 class SceneMainGame : public BaseScene
 {
+
+public:
+  typedef enum
+  {
+    OBJECT_SKYBOX = 0,
+    OBJECT_TILE = 1,
+    OBJECT_TOWER_R = 2,
+    OBJECT_TOWER_B = 3,
+    OBJECT_DEBUG_OBB = 4,
+    OBJECT_DEBUG_SPHERE = 5,
+    OBJECT_NUMBER = 6,
+  } OBJECT_ID;
+
+  class Object
+  {
+  private:
+    static ObjRawModel **models;
+    static bool initable;
+
+  public:
+    Object() {}
+    Object(ObjRawModel **models)
+    {
+      if (initable)
+      {
+        Object::models = models;
+        initable = false;
+      }
+    }
+
+    ObjRawModel *getModelP(OBJECT_ID id) { return *(models + id); }
+    SceneMainGame::OBJECT_ID id;
+    Transform transform;
+  };
+
 private:
-  ObjRawModel *tile;
   Character *mush;
   Character *bamboo;
+
+  ObjRawModel *objects[OBJECT_NUMBER];
+
+  Object gameObjects;
+
   ObjRawModel *skybox;
+  ObjRawModel *tile;
+  ObjRawModel *tower;
   ObjRawModel *collisionO;
   ObjRawModel *collisionS;
-  ObjRawModel *tower;
+
   ObjRawModel *object;
 
-  Obb obb1;
-
-  GuiSprite *sprite;
   GuiSprite *clash;
-  GuiSprite *kinokoHPgage;
   Particle *trialpart;
+
   StatusDrawer *statusDrawer;
 
   int particle_emission;
   bool atkmode;
+
   virtual void draw3D();
   virtual void draw2D();
 

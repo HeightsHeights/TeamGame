@@ -8,7 +8,12 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
-static const SDL_Color gRed = {0, 0, 255, 0};
+#define OBJ_DIR_PATH "./data/res/gui/obj/"
+
+// static const SDL_Color gRed = {0, 0, 255, 0};
+
+ObjRawModel **SceneMainGame::Object::models;
+bool SceneMainGame::Object::initable = true;
 
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
@@ -18,23 +23,41 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
-    obb1 = Obb(Vector3f(0, 10, 0), Touple3f(3, 3, 3));
-    // obb2 = Obb(Vector3f(0, 10, 50), Touple3f(3, 3, 3));
-    // sphere = Sphere(Vector3f(0, 10, 0), 3);
+    const std::string objFileDir[OBJECT_NUMBER] = {
+        "cube/",
+        "map/",
+        "tower/",
+        "tower/",
+        "collider/",
+        "collider/",
+    };
 
-    skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
-    tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
+    std::string objName[OBJECT_NUMBER] = {
+        "cube",
+        "map",
+        "redtower",
+        "bluetower",
+        "obb",
+        "sphere",
+    };
+
+    for (int i = 0; i < OBJECT_NUMBER; i++)
+    {
+        objects[i] = ObjModelLoader().load(OBJ_DIR_PATH + objFileDir[i], objName[i]);
+        if (objects[i] == NULL)
+        {
+            return false;
+        }
+    }
+
+    gameObjects = Object(&objects[0]);
+
     mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
-    sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
-    kinokoHPgage = GuiSpriteLoader().load("./data/res/gui/image/main/lifemush.png", 1, 1);
-    trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    // collisionO = ObjModelLoader().load("./data/res/gui/obj/collider/", "obb");
-    // collisionS = ObjModelLoader().load("./data/res/gui/obj/obs/", "pillar");
-    object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
 
+    object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
+    trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
-    tower = ObjModelLoader().load("./data/res/gui/obj/tower/", "redtower");
 
     particle_emission == 0;
     atkmode = false;
@@ -49,8 +72,6 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
-    // sphere.center += Vector3f(param.axisL.x, 0.0f, param.axisL.y) * 0.3;
-
     DataBlock data;
     data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
     data.setData(&param, sizeof(ControllerParam));
@@ -112,7 +133,7 @@ void SceneMainGame::draw3D()
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
     glScalef(180.0f, 90.0f, 135.0f);
-    skybox->draw();
+    gameObjects.getModelP(OBJECT_SKYBOX)->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);
 
@@ -120,7 +141,7 @@ void SceneMainGame::draw3D()
     ShaderManager::startShader(SID_T_PHONG);
     glPushMatrix();
     glScalef(20.0f, 1.0f, 10.0f);
-    tile->draw();
+    gameObjects.getModelP(OBJECT_TILE)->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_T_PHONG);
 
@@ -128,7 +149,7 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glTranslatef(15.0f, 1.0f, 15.0f);
     glScalef(0.025f, 0.05f, 0.025f);
-    tower->draw();
+    gameObjects.getModelP(OBJECT_TOWER_R)->draw();
     glPopMatrix();
 
     //Charactor

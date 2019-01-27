@@ -14,7 +14,7 @@
 class SceneLoading : public BaseScene
 {
 private:
-  bool exit[MAX_CLIENTS];
+  bool exist[MAX_CLIENTS];
 
 public:
   SceneLoading() : BaseScene() {}

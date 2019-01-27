@@ -15,7 +15,7 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
 {
     if (command == NC_SEND_NAME)
     {
-        NetworkManager::recvData(pos, &gameData[pos].name, sizeof(char *));
+        NetworkManager::recvData(pos, clientsData[pos].name, sizeof(char *));
         exist[pos] = true;
     }
     int count = 0;

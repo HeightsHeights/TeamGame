@@ -20,7 +20,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
     {
         for (int i = 0; i < MAX_CLIENTS; i++)
         {
-            gameData[i].tid = (pl[i].position.x == 0) ? TEAM_MUSH : TEAM_BAMBOO;
+            clientsData[i].teamId = (pl[i].position.x == 0) ? TEAM_MUSH : TEAM_BAMBOO;
         }
 
         DataBlock data;
@@ -33,7 +33,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         DataBlock data;
         data.setCommand2DataBlock(NC_SEND_NAME);
         data.setData(&pos, sizeof(int));
-        data.setData(&gameData[pos].name, sizeof(char *));
+        data.setData(&clientsData[pos].name, sizeof(char *));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
     else if (command == NC_FINISH)

@@ -57,7 +57,7 @@ bool StatusDrawer::init()
 void StatusDrawer::cleanUp()
 {
 }
-void StatusDrawer::draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive, const char *name)
+void StatusDrawer::draw(Vector2f pos, TEAM_ID id, unsigned int hp, bool alive, const char *name)
 {
     if (hp > 999)
     {
@@ -67,7 +67,7 @@ void StatusDrawer::draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive,
     float brightness = (float)(hp + 50) / 100;
 
     GuiRect dst = GuiRect(pos.x, pos.y - UNIT_WIDTH * 6 / 8, 4 * UNIT_WIDTH, UNIT_WIDTH * 2 + 10);
-    image[IMAGE_NAME_FRAME_MUSH + cid]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
+    image[IMAGE_NAME_FRAME_MUSH + id]->draw(NULL, &dst, (alive) ? 1.0f : 0.5f);
 
     GuiText *nameText = GuiTextLoader().load(FID_NORMAL, name, black);
     dst = GuiRect(pos.x + UNIT_WIDTH * 2 - std::string(name).length() * 15 / 2 + 10, pos.y - UNIT_WIDTH * 11 / 8 - 40, std::string(name).length() * 15, 30);
@@ -86,9 +86,9 @@ void StatusDrawer::draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive,
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status)
+void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status)
 {
-    if (cid == CHARA_MUSH)
+    if (id == TEAM_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH, UNIT_WIDTH);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
@@ -126,10 +126,10 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status)
     }
 }
 
-void StatusDrawer::drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status, Vector3f loc)
+void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc)
 {
     float SIZE = 0.1f;
-    if (cid == CHARA_MUSH)
+    if (id == TEAM_MUSH)
     {
         GuiRect dst = GuiRect(pos.x, pos.y, HP_WIDTH * SIZE, UNIT_WIDTH * SIZE);
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f, loc);

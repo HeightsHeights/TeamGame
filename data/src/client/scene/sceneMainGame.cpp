@@ -185,7 +185,7 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glTranslatef(5, 40, 10);
 
-    statusDrawer->drawTeamStatus(Vector2f(0, 0), StatusDrawer::CHARA_BAMBOO, TeamStatus(), Vector3f(0, 0, 0));
+    statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_BAMBOO, TeamStatus(), Vector3f(0, 0, 0));
 
     glPopMatrix();
 
@@ -201,11 +201,11 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::CHARA_MUSH, 10, true, "suyama");
-    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::CHARA_BAMBOO, 00, false, "SUYAMA");
-    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::CHARA_MUSH, 888, false, "sym");
-    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::CHARA_BAMBOO, 555, true, "SYM");
-    statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, TeamStatus());
-    statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, TeamStatus());
+    statusDrawer->draw(Vector2f(-475, -200), TEAM_MUSH, 10, true, "suyama");
+    statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
+    statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
+    statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
+    statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, TeamStatus());
+    statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, TeamStatus());
     ShaderManager::stopShader(SID_GUI);
 }

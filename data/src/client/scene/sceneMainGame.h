@@ -59,14 +59,7 @@ private:
   Character *bamboo;
 
   ObjRawModel *objects[OBJECT_NUMBER];
-
   Object gameObjects;
-
-  ObjRawModel *skybox;
-  ObjRawModel *tile;
-  ObjRawModel *tower;
-  ObjRawModel *collisionO;
-  ObjRawModel *collisionS;
 
   ObjRawModel *object;
 

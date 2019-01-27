@@ -4,6 +4,7 @@
 #include "../../render/gui/text/guiTextLoader.h"
 #include "../../render/gui/sprite/guiSpriteLoader.h"
 #include "../../../common/gameData/teamStatus.h"
+#include "../../../common/gameData/teamData.h"
 
 #define UNIT_WIDTH 50
 #define HP_WIDTH 400
@@ -39,18 +40,11 @@ private:
   void cleanUp();
 
 public:
-  typedef enum
-  {
-    CHARA_MUSH = 0,
-    CHARA_BAMBOO = 1,
-    CHARA_NUMBER = 2,
-  } CHARA_ID;
-
   StatusDrawer();
   ~StatusDrawer();
 
   bool init();
-  void draw(Vector2f pos, CHARA_ID cid, unsigned int hp, bool alive, const char *name);
-  void drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status);
-  void drawTeamStatus(Vector2f pos, CHARA_ID cid, TeamStatus status, Vector3f loc);
+  void draw(Vector2f pos, TEAM_ID id, unsigned int hp, bool alive, const char *name);
+  void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status);
+  void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc);
 };

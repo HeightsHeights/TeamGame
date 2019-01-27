@@ -30,22 +30,22 @@ SceneTitle::SceneTitle(WindowManager *window, ConfigData *config) : BaseScene(wi
 bool SceneTitle::init()
 {
     const std::string IMAGE_NAME[SceneTitle::IMAGE_NUMBER] =
-    {
-        "title/title.png",
-        "title/back.png",
-        "title/start.png",
-        "title/config.png",
-        "title/end.png",
-        "title/save.png",
-        "title/cancel.png",
-        "title/reset.png",
-        "title/connect.png",
-        "configFrames/configFrame00.png",
-        "configFrames/configFrame01.png",
-        "configFrames/configFrame02.png",
-};
-    //AudioManager::playBGM(BGM_TITLE);
-    
+        {
+            "title/title.png",
+            "title/back.png",
+            "title/start.png",
+            "title/config.png",
+            "title/end.png",
+            "title/save.png",
+            "title/cancel.png",
+            "title/reset.png",
+            "title/connect.png",
+            "configFrames/configFrame00.png",
+            "configFrames/configFrame01.png",
+            "configFrames/configFrame02.png",
+        };
+    AudioManager::playBGM(BGM_TITLE);
+
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;
     secount = 0;
@@ -75,7 +75,6 @@ bool SceneTitle::init()
     }
 
     configPos = Vector2f(0, 440);
-
     return true;
 }
 SCENE_ID SceneTitle::reactController(ControllerParam param)
@@ -119,11 +118,11 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         position[1].x = 0;
     }
 
-    // if (secount > position[0].x || secount < position[0].x)
-    // {
-    //     secount = position[0].x;
-    //     AudioManager::playSE(SE_CURSOR);
-    // }
+    if (secount > position[0].x || secount < position[0].x)
+    {
+        secount = position[0].x;
+        AudioManager::playSE(SE_CURSOR);
+    }
 
     if (configmode)
     {
@@ -176,7 +175,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
 
         if (position[0].x == 0 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-        // AudioManager::playSE(SE_DECISION);
+            AudioManager::playSE(SE_DECISION);
 #ifndef _UNENABLE_NETWORK
             if (!NetworkManager::init(config->serverAddress.c_str()))
             {
@@ -187,7 +186,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 if (!NetworkManager::connect())
                 {
                     fprintf(stderr, "Error --> NetworkManager::connect()\n");
-                    // AudioManager::playSE(SE_MISS);
+                    AudioManager::playSE(SE_MISS);
                 }
                 else if (!ThreadManager::start(ThreadManager::networkThread, "networkThread"))
                 {
@@ -195,7 +194,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 }
                 else
                 {
-                    //AudioManager::stopBGM(BGM_TITLE);
+                    AudioManager::stopBGM(BGM_TITLE);
                     return SI_LOADING;
                 }
             }
@@ -203,7 +202,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         }
         else if (position[0].x == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
-            // AudioManager::playSE(SE_DECISION);
+            AudioManager::playSE(SE_DECISION);
             configmode = true;
         }
         else if (position[0].x == 2 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])

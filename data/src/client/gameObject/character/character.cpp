@@ -24,6 +24,8 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
     {
         hands[i] = new GameObject("./data/res/gui/obj/", "hand", NULL);
     }
+    hands[HAND_RIGHT]->transform.position = Vector3f(1.5f, 1.5f, 0.0f);
+    hands[HAND_LEFT]->transform.position = Vector3f(-1.5f, 1.5f, 0.0f);
     mainBody = new GameObject(dirPath, fileName, NULL);
 }
 
@@ -52,16 +54,17 @@ void Character::draw()
     lookatDir(lookingDirection);
 
     glPushMatrix();
-    glTranslatef(3.5f, 2.0f, 0.0f);
+    glTranslatef(hands[HAND_RIGHT]->transform.position.x, hands[HAND_RIGHT]->transform.position.y, hands[HAND_RIGHT]->transform.position.z);
     hands[HAND_RIGHT]->draw();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-3.5f, 2.0f, 0.0f);
+    glTranslatef(hands[HAND_LEFT]->transform.position.x, hands[HAND_LEFT]->transform.position.y, hands[HAND_LEFT]->transform.position.z);
     hands[HAND_LEFT]->draw();
     glPopMatrix();
 
     glPushMatrix();
+    glTranslatef(mainBody->transform.position.x, mainBody->transform.position.y, mainBody->transform.position.z);
     mainBody->draw();
     glPopMatrix();
 

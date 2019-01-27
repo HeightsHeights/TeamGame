@@ -12,6 +12,8 @@ public:
   Vector3f speed;
   Vector3f accel;
 
+  //id
+
   // here is collider
   bool haveCollider;
 

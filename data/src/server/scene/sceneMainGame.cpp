@@ -33,5 +33,8 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 }
 SCENE_ID SceneMainGame::dataProcessing()
 {
+    SCENE_ID nextScene = SI_MAIN;
+
+    
     return SI_MAIN;
 }

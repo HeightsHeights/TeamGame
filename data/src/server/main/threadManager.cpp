@@ -25,6 +25,11 @@ int ThreadManager::dataProcessingThread(void *data)
 {
     while (SDL_AtomicGet((SDL_atomic_t *)data) > 0)
     {
+        if (SceneManager::dataProcessing())
+        {
+            SDL_AtomicDecRef((SDL_atomic_t *)data);
+        }
+        SDL_Delay(4);
     }
     return 1;
 }

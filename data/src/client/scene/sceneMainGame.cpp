@@ -17,8 +17,8 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 bool SceneMainGame::init()
 {
     obb1 = Obb(Vector3f(0, 10, 0), Touple3f(3, 3, 3));
-    obb2 = Obb(Vector3f(0, 10, 50), Touple3f(3, 3, 3));
-    sphere = Sphere(Vector3f(0, 10, 0), 3);
+    // obb2 = Obb(Vector3f(0, 10, 50), Touple3f(3, 3, 3));
+    // sphere = Sphere(Vector3f(0, 10, 0), 3);
 
     skybox = ObjModelLoader().load("./data/res/gui/obj/cube/", "cube");
     tile = ObjModelLoader().load("./data/res/gui/obj/map/", "map");
@@ -55,7 +55,7 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
-    sphere.center += Vector3f(param.axisL.x, 0.0f, param.axisL.y) * 0.3;
+    // sphere.center += Vector3f(param.axisL.x, 0.0f, param.axisL.y) * 0.3;
 
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
     if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)

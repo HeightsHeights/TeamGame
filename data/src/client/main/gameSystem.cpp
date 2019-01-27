@@ -74,6 +74,12 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
+    if (!AudioManager::init())
+    {
+        fprintf(stderr, "Error --> AudioManager::init()\n");
+        return false;
+    }
+
     if (!SceneManager::init(window, config))
     {
         fprintf(stderr, "Error --> SceneManager::init()\n");
@@ -85,12 +91,6 @@ bool GameSystem::init(int argc, char *argv[])
         fprintf(stderr, "Error --> ControllerManager::init()\n");
         return false;
     }
-
-    // if (!AudioManager::init())
-    // {
-    //     fprintf(stderr, "Error --> AudioManager::init()\n");
-    //     return false;
-    // }
 
 #ifdef _ENABLE_WII
     if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))

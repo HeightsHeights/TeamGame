@@ -8,16 +8,13 @@ GameObject::GameObject(const std::string dirPath, const std::string fileName, Tr
 {
   if (transform == NULL)
   {
-    this->initTransform.position = this->transform.position = Vector3f_ZERO;
-    this->initTransform.rotation = this->transform.rotation = Vector3f_ZERO;
-    this->initTransform.scale = this->transform.scale = Vector3f(1.0f, 1.0f, 1.0f);
+    this->transform = Transform();
   }
   else
   {
-    this->initTransform.position = this->transform.position = transform->position;
-    this->initTransform.rotation = this->transform.rotation = transform->rotation;
-    this->initTransform.scale = this->transform.scale = transform->scale;
+    this->transform = *transform;
   }
+  this->initTransform = this->transform;
 
   model = ObjModelLoader().load(dirPath, fileName);
 }

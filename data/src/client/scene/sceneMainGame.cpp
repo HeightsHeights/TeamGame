@@ -30,6 +30,9 @@ bool SceneMainGame::init()
         "tower/",
         "collider/",
         "collider/",
+        "object/",
+        "object/",
+        "object/",
     };
 
     std::string objName[OBJECT_NUMBER] = {
@@ -39,6 +42,9 @@ bool SceneMainGame::init()
         "bluetower",
         "obb",
         "sphere",
+        "block_R",
+        "block_B",
+        "block",
     };
 
     for (int i = 0; i < OBJECT_NUMBER; i++)
@@ -143,6 +149,31 @@ void SceneMainGame::draw3D()
     glScalef(20.0f, 1.0f, 10.0f);
     gameObjects.getModelP(OBJECT_TILE)->draw();
     glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-100.0, 10.0, 40);
+    glScalef(10.0f, 10.0f, 10.0f);
+    gameObjects.getModelP(OBJECT_BLOCK_R)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-65.0, 10.0, -40);
+    glScalef(10.0f, 10.0f, 10.0f);
+    gameObjects.getModelP(OBJECT_BLOCK_R)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(85.0, 10.0, -40);
+    glScalef(10.0f, 10.0f, 10.0f);
+    gameObjects.getModelP(OBJECT_BLOCK_B)->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(50.0, 10.0, 40);
+    glScalef(10.0f, 10.0f, 10.0f);
+    gameObjects.getModelP(OBJECT_BLOCK_B)->draw();
+    glPopMatrix();
+
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
@@ -165,6 +196,12 @@ void SceneMainGame::draw3D()
 
     //Object
     glPushMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.0, 10.0, 0.0);
+    glScalef(10.0f, 10.0f, 10.0f);
+    gameObjects.getModelP(OBJECT_BLOCK_NORMAL)->draw();
+    glPopMatrix();
     // glTranslatef(0.0f, 10.0f, 0.0f);
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();

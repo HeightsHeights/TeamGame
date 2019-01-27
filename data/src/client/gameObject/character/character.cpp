@@ -9,15 +9,11 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
 
     if (transform == NULL)
     {
-        this->transform.position = Vector3f_ZERO;
-        this->transform.rotation = Vector3f_ZERO;
-        this->transform.scale = Vector3f(1.0f, 1.0f, 1.0f);
+        this->transform = Transform();
     }
     else
     {
-        this->transform.position = transform->position;
-        this->transform.rotation = transform->rotation;
-        this->transform.scale = transform->scale;
+        this->transform = *transform;
     }
 
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
@@ -44,7 +40,7 @@ void Character::move(Vector3f moveDirection)
     transform.position += moveDirection * speed;
 }
 
-void Character::motion(ATTACK_ID id, int time)
+void Character::motion(MOTION_ID id, int time)
 {
 }
 

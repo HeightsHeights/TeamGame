@@ -11,6 +11,7 @@ NetConnector::NetConnector(int gSocket, sockaddr_in server)
 {
     this->gSocket = gSocket;
     this->server = server;
+    isConnected = false;
 }
 bool NetConnector::connectServer()
 {
@@ -21,10 +22,14 @@ bool NetConnector::connectServer()
         return false;
     }
     fprintf(stderr, "connected\n");
+    isConnected = true;
     return true;
 }
 void NetConnector::disconnectServer()
 {
-    printf("...Connection closed\n");
-    close(gSocket);
+    if (isConnected)
+    {
+        printf("...Connection closed\n");
+        close(gSocket);
+    }
 }

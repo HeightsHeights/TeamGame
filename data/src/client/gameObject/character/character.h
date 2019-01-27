@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../gameObject.h"
+#include "../weapon/weapon.h"
 
 class Character
 {
@@ -14,8 +15,7 @@ private:
   GameObject *mainBody;
   GameObject *hands[HAND_NUMBER];
 
-  GameObject *weaponsList;
-  GameObject *weapon;
+  Weapon *weapon;
 
   Vector3f lookingDirection;
 
@@ -23,11 +23,11 @@ private:
 
 public:
   typedef enum {
-    ATTACK_HAVENOTHING = 0,
-    ATTACK_SWORD = 1,
-    ATTACK_BARDICHEWITHMATERIAL = 2,
-    ATTACK_THLOW = 3,
-  } ATTACK_ID;
+    MOTION_NULL = 0,
+    MOTION_ATTACL = 1,
+    MOTION_THROW = 2,
+    MOTION_NUMBER = 3,
+  } MOTION_ID;
 
   Transform transform;
   float speed;
@@ -36,6 +36,6 @@ public:
   Character(const std::string dirPath, const std::string fileName, Transform *transform);
 
   void move(Vector3f moveDirection);
-  void motion(ATTACK_ID id, int time);
+  void motion(MOTION_ID id, int time);
   void draw();
 };

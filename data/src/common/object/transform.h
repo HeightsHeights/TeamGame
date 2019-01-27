@@ -4,9 +4,13 @@
 
 class Transform
 {
-  private:
-  public:
-    Vector3f position;
-    Vector3f rotation;
-    Vector3f scale;
+private:
+public:
+  Vector3f position;
+  Vector3f rotation;
+  Vector3f scale;
+
+  Transform();
+  Transform(Vector3f position, Vector3f rotation, Vector3f scale);
+  Transform operator=(Transform obj);
 };

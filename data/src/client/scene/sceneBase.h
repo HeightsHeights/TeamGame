@@ -7,6 +7,7 @@
 #include "../../common/scene/sceneId.h"
 #include "../../common/controllerParam/controllerParam.h"
 #include "../config/configData.h"
+#include "./mainGame/playerData.h"
 
 #define MAX_PLAYER 2
 /******************************************************************************
@@ -35,4 +36,5 @@ public:
 
 protected:
   ConfigData *config;
+  PlayerData players[MAX_PLAYER];
 };

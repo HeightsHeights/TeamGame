@@ -14,7 +14,8 @@ private:
   GameObject *mainBody;
   GameObject *hands[HAND_NUMBER];
 
-  GameObject *weapons;
+  GameObject *weaponsList;
+  GameObject *weapon;
 
   Vector3f lookingDirection;
 

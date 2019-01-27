@@ -5,14 +5,22 @@
 
 class GameObject
 {
-  private:
-    ObjRawModel *model;
+private:
+  ObjRawModel *model;
 
-  public:
-    Transform transform;
-    //here is collider
+public:
+  Transform initTransform;
+  Transform transform;
 
-    GameObject();
-    GameObject(const std::string dirPath, const std::string fileName, Transform *transform);
-    void draw();
+  Vector3f speed;
+  Vector3f accel;
+  //here is collider
+
+  bool haveCollider;
+
+  GameObject();
+  GameObject(const std::string dirPath, const std::string fileName, Transform *transform);
+
+  bool isCollision();
+  void draw();
 };

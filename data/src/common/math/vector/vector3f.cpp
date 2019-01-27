@@ -118,7 +118,22 @@ Vector3f Vector3f::operator-()
 {
     return *this * -1;
 }
-
+bool Vector3f::operator==(Vector3f obj)
+{
+    if (this->x == obj.x && this->y == obj.y && this->z == obj.z)
+    {
+        return true;
+    }
+    return false;
+}
+bool Vector3f::operator!=(Vector3f obj)
+{
+    if (this->x != obj.x || this->y != obj.y || this->z != obj.z)
+    {
+        return true;
+    }
+    return false;
+}
 //メソッド/////////////////////////////////////////////////////////////////////
 /***********************************
  * 引数：なし

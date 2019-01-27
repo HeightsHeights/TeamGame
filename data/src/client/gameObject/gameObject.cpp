@@ -8,15 +8,15 @@ GameObject::GameObject(const std::string dirPath, const std::string fileName, Tr
 {
   if (transform == NULL)
   {
-    this->transform.position = Vector3f_ZERO;
-    this->transform.rotation = Vector3f_ZERO;
-    this->transform.scale = Vector3f(1.0f, 1.0f, 1.0f);
+    this->initTransform.position = this->transform.position = Vector3f_ZERO;
+    this->initTransform.rotation = this->transform.rotation = Vector3f_ZERO;
+    this->initTransform.scale = this->transform.scale = Vector3f(1.0f, 1.0f, 1.0f);
   }
   else
   {
-    this->transform.position = transform->position;
-    this->transform.rotation = transform->rotation;
-    this->transform.scale = transform->scale;
+    this->initTransform.position = this->transform.position = transform->position;
+    this->initTransform.rotation = this->transform.rotation = transform->rotation;
+    this->initTransform.scale = this->transform.scale = transform->scale;
   }
 
   model = ObjModelLoader().load(dirPath, fileName);

@@ -28,6 +28,8 @@ public:
   Vector3f operator/=(float scalar);
   Vector3f operator+();
   Vector3f operator-();
+  bool operator==(Vector3f obj);
+  bool operator!=(Vector3f obj);
 
   //メソッド
   float magnitudeSquared();

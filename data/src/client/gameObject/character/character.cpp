@@ -27,13 +27,16 @@ Character::Character(const std::string dirPath, const std::string fileName, Tran
     hands[HAND_RIGHT]->transform.position = Vector3f(1.5f, 1.5f, 0.0f);
     hands[HAND_LEFT]->transform.position = Vector3f(-1.5f, 1.5f, 0.0f);
     mainBody = new GameObject(dirPath, fileName, NULL);
+
+    lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
+    weapon = NULL;
 }
 
 void Character::move(Vector3f moveDirection)
 {
     moveDirection = moveDirection.normalize();
 
-    if (moveDirection.x != 0 || moveDirection.y != 0 || moveDirection.z != 0)
+    if (moveDirection != Vector3f_ZERO)
     {
         lookingDirection = moveDirection;
     }
@@ -67,6 +70,14 @@ void Character::draw()
     glTranslatef(mainBody->transform.position.x, mainBody->transform.position.y, mainBody->transform.position.z);
     mainBody->draw();
     glPopMatrix();
+
+    if (weapon != NULL)
+    {
+        glPushMatrix();
+        glTranslatef(weapon->transform.position.x, weapon->transform.position.y, weapon->transform.position.z);
+        mainBody->draw();
+        glPopMatrix();
+    }
 
     glPopMatrix();
 }

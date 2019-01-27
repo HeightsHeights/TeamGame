@@ -19,6 +19,13 @@ GameObject::GameObject(const std::string dirPath, const std::string fileName, Tr
   model = ObjModelLoader().load(dirPath, fileName);
 }
 
+void GameObject::clearTransform()
+{
+  this->transform = this->initTransform;
+}
+bool GameObject::isCollision()
+{
+}
 void GameObject::draw()
 {
   glPushMatrix();

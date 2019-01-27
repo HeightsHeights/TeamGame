@@ -125,21 +125,6 @@ void SceneMainGame::draw3D()
     glScalef(0.025f, 0.05f, 0.025f);
     tower->draw();
     glPopMatrix();
-<<<<<<< HEAD
-
-    // glPushMatrix();
-    // glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
-    // glScalef(0.05f, 0.05f, 0.05f);
-    // //glScalef(sphere.radius, sphere.radius, sphere.radius);
-    // collisionS->draw();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(obb2.center.x, obb2.center.y, obb2.center.z);
-    // glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
-    // collisionO->draw();
-    // glPopMatrix();
-=======
     glPushMatrix();
     glTranslatef(sphere.center.x, sphere.center.y, sphere.center.z);
     glScalef(0.05f, 0.05f, 0.05f);
@@ -152,7 +137,6 @@ void SceneMainGame::draw3D()
     glScalef(obb2.length[0], obb2.length[1], obb2.length[2]);
     // collisionO->draw();
     glPopMatrix();
->>>>>>> 78fbc69f2e654acda0a489fc5ddd58a42a2ee757
 
     //Charactor
     mush->draw();

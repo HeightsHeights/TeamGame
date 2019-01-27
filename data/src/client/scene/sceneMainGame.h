@@ -21,15 +21,17 @@ class SceneMainGame : public BaseScene
 {
 
 public:
-  typedef enum
-  {
+  typedef enum {
     OBJECT_SKYBOX = 0,
     OBJECT_TILE = 1,
     OBJECT_TOWER_R = 2,
     OBJECT_TOWER_B = 3,
     OBJECT_DEBUG_OBB = 4,
     OBJECT_DEBUG_SPHERE = 5,
-    OBJECT_NUMBER = 6,
+    OBJECT_BLOCK_R = 6,
+    OBJECT_BLOCK_B = 7,
+    OBJECT_BLOCK_NORMAL = 8,
+    OBJECT_NUMBER = 9,
   } OBJECT_ID;
 
   class Object

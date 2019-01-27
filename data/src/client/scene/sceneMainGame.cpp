@@ -22,6 +22,8 @@ bool SceneMainGame::init()
     bamboo = ObjModelLoader().load("./data/res/gui/obj/bambooshootchara/", "bambooshootchara");
     sprite = GuiSpriteLoader().load("./data/res/gui/image/effect/magic_R.png", 1, 1);
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
+    android = ObjModelLoader().load("./data/res/gui/obj/", "test");
+
     particle_emission == 0;
     for (int i = 0; i < StatusDrawer::CHARA_NUMBER; i++)
     {
@@ -46,7 +48,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     if (param.buttonDown[CT_DECITION_OR_ATTACK] == true && particle_emission == 0)
     {
         particle_emission = 1;
-        trialpart->generate(10);
+        trialpart->generate(100);
     }
     if (param.buttonUp[CT_DECITION_OR_ATTACK] == true)
         particle_emission = 0;
@@ -69,14 +71,20 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
-    glScalef(90.0f, 90.0f, 90.0f);
+    glScalef(180.0f, 90.0f, 90.0f);
     skybox->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);
 
     ShaderManager::startShader(SID_T_PHONG);
     glPushMatrix();
-    glScalef(10.0f, 1.0f, 10.0f);
+    glTranslatef(0.0f, 18.0f, 0.0f);
+    glScalef(16.0f, 16.0f, 16.0f);
+    android->draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(20.0f, 1.0f, 10.0f);
     tile->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_T_PHONG);
@@ -92,8 +100,10 @@ void SceneMainGame::draw3D()
     // glPopMatrix();
 
     glPushMatrix();
-    glScalef(1.6f, 1.6f, 1.6f);
+    // glScalef(1.6f, 1.6f, 1.6f);
+
     glTranslatef(mushEye.x, 0, mushEye.y);
+
     //bamboo->draw();
     glPopMatrix();
 

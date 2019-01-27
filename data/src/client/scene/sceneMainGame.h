@@ -23,6 +23,7 @@ private:
   Character *mush;
   ObjRawModel *bamboo;
   ObjRawModel *skybox;
+  ObjRawModel *android;
 
   Vector2f positionMush;
   Vector3f mushEye;

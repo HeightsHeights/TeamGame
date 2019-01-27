@@ -47,9 +47,10 @@ void Character::motion(MOTION_ID id, int time)
     switch (id)
     {
     case MOTION_ATTACL:
-        weaponSodo(time);
-        //weaponAx(time);
+        //weaponSodo(time);
+        weaponAx(time);
         //weaponBamboo(time);
+        //weaponHit(time);
         break;
     case MOTION_THROW:
         weaponThrow(time);
@@ -127,6 +128,10 @@ void Character::weaponBamboo(int time)
     {
         hands[HAND_LEFT]->transform.position -= Vector3f(0.0f, 0.0f, 1.0f);
     }
+}
+void Character::weaponHit(int time)
+{
+    hands[HAND_LEFT]->transform.position += Vector3f(0.1f * (float)sin(time/10), 0.0f, 0.1f * (float)cos(time/10));
 }
 
 void Character::weaponThrow(int time)

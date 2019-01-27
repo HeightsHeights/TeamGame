@@ -24,6 +24,7 @@ private:
   void weaponSodo(int time);
   void weaponAx(int time);
   void weaponBamboo(int time);
+  void weaponHit(int time);
   void Cancel();
 
 public:

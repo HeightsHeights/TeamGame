@@ -21,13 +21,13 @@ bool ThreadManager::start(SDL_ThreadFunction fp, const char *name)
     threads.push_back(thread);
     return true;
 }
-// int ThreadManager::dataProcessingThread(void *data)
-// {
-//     while (SDL_AtomicGet((SDL_atomic_t *)data) > 0)
-//     {
-//     }
-//     return 1;
-// }
+int ThreadManager::dataProcessingThread(void *data)
+{
+    while (SDL_AtomicGet((SDL_atomic_t *)data) > 0)
+    {
+    }
+    return 1;
+}
 
 bool ThreadManager::wait()
 {

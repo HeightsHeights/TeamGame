@@ -6,7 +6,7 @@
 #include <stdio.h>
 bool SceneLoading::init()
 {
-    for(int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_CLIENTS; i++)
     {
         exit[i] = false;
     }
@@ -37,4 +37,9 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
         return SI_CHARASELECT;
     }
     return SI_LOADING;
+}
+
+SCENE_ID SceneLoading::dataProcessing()
+{
+    return SI_MAIN;
 }

@@ -62,8 +62,8 @@ int ThreadManager::controllerThread(void *data)
 bool ThreadManager::wait()
 {
     bool ret = true;
-    int threadReturnValue;
 
+    int threadReturnValue;
     for (int i = 0; i < threads.size(); i++)
     {
         SDL_WaitThread(threads[i], &threadReturnValue);

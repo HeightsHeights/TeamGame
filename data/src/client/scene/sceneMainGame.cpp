@@ -5,6 +5,9 @@
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
 
+#define MAX_TOWER_HP 999
+#define MAX_CHARA_HP 100
+
 static const SDL_Color gRed = {0, 0, 255, 0};
 Gamebuff SceneMainGame::gb[StatusDrawer::CHARA_NUMBER];
 
@@ -191,10 +194,10 @@ void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
 
-    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::COLOR_RED, 10, true, "suyama");
-    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::COLOR_BLUE, 00, false, "SUYAMA");
-    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::COLOR_YELLOW, 44, true, "sym");
-    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::COLOR_GREEN, 555, true, "SYM");
+    statusDrawer->draw(Vector2f(-475, -200), StatusDrawer::CHARA_MUSH, 10, true, "suyama");
+    statusDrawer->draw(Vector2f(-225, -200), StatusDrawer::CHARA_BAMBOO, 00, false, "SUYAMA");
+    statusDrawer->draw(Vector2f(25, -200), StatusDrawer::CHARA_MUSH, 888, false, "sym");
+    statusDrawer->draw(Vector2f(275, -200), StatusDrawer::CHARA_BAMBOO, 555, true, "SYM");
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), StatusDrawer::CHARA_MUSH, 200, gb[StatusDrawer::CHARA_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), StatusDrawer::CHARA_BAMBOO, 100, gb[StatusDrawer::CHARA_BAMBOO]);
     ShaderManager::stopShader(SID_GUI);

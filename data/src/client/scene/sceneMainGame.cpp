@@ -145,10 +145,6 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
 
-    if (command == drawcll)
-    {
-        NetworkManager::recvData(&id, )
-    }
     return nextScene;
 }
 
@@ -282,16 +278,16 @@ void SceneMainGame::draw3D()
     glTranslatef(-150, 50, -10);
     statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, tStatus[TEAM_MUSH], Vector3f(0, 0, 0));
     glPopMatrix();
-    if (explosioon_emission == 1)
-    {
-        static int w;
-        if (w > 8)
-            w = 0;
-        GuiRect dst = {0, 0, 100, 100};
-        explosion->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
-        if (w == 8)
-            explosioon_emission = 0;
-    }
+    // if (explosioon_emission == 1)
+    // {
+    //     static int w;
+    //     if (w > 8)
+    //         w = 0;
+    //     GuiRect dst = {0, 0, 100, 100};
+    //     explosion->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
+    //     if (w == 8)
+    //         explosioon_emission = 0;
+    // }
     // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
 

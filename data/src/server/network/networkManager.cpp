@@ -28,7 +28,7 @@ void NetworkManager::setMask(int maxFd)
 
 bool NetworkManager::init()
 {
-    gClientNum = 2;
+    gClientNum = MAX_CLIENTS;
     struct sockaddr_in server;
     int dstSocket;
     int val = 1;

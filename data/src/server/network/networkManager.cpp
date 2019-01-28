@@ -12,7 +12,7 @@ int NetworkManager::srcSocket;
 fd_set NetworkManager::gMask;
 int NetworkManager::gWidth;
 int NetworkManager::gClientNum;
-Client NetworkManager::gClients[MAX_CLIENTS];
+Client NetworkManager::gClients[MAX_PLAYERS];
 NetConnector *NetworkManager::connector;
 
 void NetworkManager::setMask(int maxFd)
@@ -80,7 +80,7 @@ bool NetworkManager::init()
 int NetworkManager::connect()
 {
     int dstSocket;
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         if ((dstSocket = accept(srcSocket, NULL, NULL)) == -1)
         {

@@ -2,8 +2,8 @@
 #pragma once
 
 #include "./netConnector.h"
+#include "../../common/gameData/clientNum.h"
 
-#define MAX_CLIENTS 4
 #define ALL_CLIENTS -1
 
 typedef struct
@@ -23,7 +23,7 @@ private:
   static fd_set gMask;
   static int gWidth;
   static int gClientNum;
-  static Client gClients[MAX_CLIENTS];
+  static Client gClients[MAX_PLAYERS];
   static NetConnector *connector;
   static void setMask(int maxFd);
 

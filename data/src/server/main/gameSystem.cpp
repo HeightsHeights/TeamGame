@@ -11,16 +11,16 @@ bool GameSystem::init(int argc, char *argv[])
     /* コマンド引数確認 */
     if (argc == 1)
     {
-        num = MAX_CLIENTS;
+        num = MAX_PLAYERS;
     }
     else if (argc != 2)
     {
         fprintf(stderr, "Usage: number of clients\n");
         return false;
     }
-    else if ((num = atoi(argv[1])) < 0 || num > MAX_CLIENTS)
+    else if ((num = atoi(argv[1])) < 0 || num > MAX_PLAYERS)
     {
-        fprintf(stderr, "clients limit = %d \n", MAX_CLIENTS);
+        fprintf(stderr, "clients limit = %d \n", MAX_PLAYERS);
         return false;
     }
 

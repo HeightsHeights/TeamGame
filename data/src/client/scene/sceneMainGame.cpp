@@ -67,7 +67,8 @@ bool SceneMainGame::init()
 
     object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    clash = GuiSpriteLoader().load("./data/res/gui/image/effect/clash.png", 1, 1);
+    explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
+    falleff = GuiSpriteLoader().load("./data/res/gui/image/effect/death.png", 8, 1);
 
     particle_emission == 0;
     atkmode = false;
@@ -98,7 +99,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
         atkmode = true;
 
         particle_emission = 1;
-        trialpart->generate(15);
+        // trialpart->generate(15);
     }
     if (atkmode)
     {
@@ -217,30 +218,33 @@ void SceneMainGame::draw3D()
     gameObjects.getModelP(OBJECT_BLOCK_NORMAL)->draw();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(0.0f, 10.0f, 0.0f);
-    glScalef(1.6f, 15.0f, 20.0f);
-    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    glPopMatrix();
+    //壁当たり判定
+    // glPushMatrix();
+    // glTranslatef(0.0f, 10.0f, 0.0f);
+    // glScalef(1.6f, 15.0f, 20.0f);
+    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-140.0f, 20.0f, 0.0f);
-    glScalef(3.0f, 20.0f, 3.0f);
-    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    glPopMatrix();
+    //タワー当たり判定
+    // glPushMatrix();
+    // glTranslatef(-140.0f, 20.0f, 0.0f);
+    // glScalef(3.0f, 20.0f, 3.0f);
+    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    // glPopMatrix();
+
     // glTranslatef(0.0f, 10.0f, 0.0f);
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();
 
     glPushMatrix();
     glTranslatef(10.0f, 10.0f, 30.0f);
-    glScalef(3.0f, 3.0f, 3.0f);
+    glScalef(2.0f, 2.0f, 2.0f);
     gameObjects.getModelP(OBJECT_BOMB)->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(16.0f, 0.0f, 31.0f);
-    glScalef(8.5f, 13.0f, 8.5f); //宝石
+    glScalef(5.6f, 8.7f, 5.6f); //宝石
     gameObjects.getModelP(OBJECT_RUBY)->draw();
 
     // glScalef(5.0f, 12.0f, 5.0f); //石１
@@ -267,15 +271,19 @@ void SceneMainGame::draw3D()
     glTranslatef(-150, 50, -10);
     statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, tStatus[TEAM_MUSH], Vector3f(0, 0, 0));
     glPopMatrix();
-
-    // clash->draw(0, &dst, 1.0f, Vector3f(-50, 50, 0));
+    static int w;
+    if (w > 8)
+        w = 0;
+    GuiRect dst = {0, 0, 100, 100};
+    explosion->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
+    // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
 
-    ShaderManager::startShader(SID_PARTICLE);
-    glPushMatrix();
-    trialpart->draw(1.0f);
-    glPopMatrix();
-    ShaderManager::stopShader(SID_PARTICLE);
+    // ShaderManager::startShader(SID_PARTICLE);
+    // glPushMatrix();
+    // trialpart->draw(1.0f);
+    // glPopMatrix();
+    // ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

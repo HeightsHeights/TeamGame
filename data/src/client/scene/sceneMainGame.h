@@ -67,7 +67,8 @@ private:
 
   ObjRawModel *object;
 
-  GuiSprite *clash;
+  GuiSprite *explosion;
+  GuiSprite *falleff;
   Particle *trialpart;
 
   TeamStatus tStatus[TEAM_NUMBER];

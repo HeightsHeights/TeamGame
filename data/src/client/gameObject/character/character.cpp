@@ -65,7 +65,7 @@ void Character::draw()
 {
     glPushMatrix();
 
-    glScalef(transform.scale.x, transform.scale.y * 2, transform.scale.z);
+    glScalef(transform.scale.x * 1.5, transform.scale.y * 3, transform.scale.z * 1.5);
     glTranslatef(transform.position.x, transform.position.y, transform.position.z);
     lookatDir(lookingDirection);
 

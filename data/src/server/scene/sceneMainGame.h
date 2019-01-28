@@ -8,7 +8,7 @@
 #include "../gameObject/gameObject.h"
 #include "../gameObject/character/character.h"
 
-#define MAX_STATIC_OBJECTS 20
+#define MAX_STATIC_OBJECTS 8
 #define MAX_DYNAMIC_OBJECTS 100
 
 /******************************************************************************

@@ -6,9 +6,24 @@
 
 bool SceneMainGame::init()
 {
+    Vector3f collider[] = {
+        Obb(), //床
+        Obb(), //壁
+        Obb(), //壁
+        Obb(), //壁
+        Obb(), //壁
+        Obb(), //壁
+        Obb(), //塔
+        Obb(), //塔
+    };
+
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         tStatus[i] = TeamStatus();
+    }
+
+    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
+    {
     }
 
     return true;
@@ -52,12 +67,13 @@ void SceneMainGame::upDate()
         chara[i].speed = tStatus[id].buff[BUFF_SPEED] ? 2.0f : 2.0f;
 
         Vector2f axisL = clientsData[i].controllerParam.axisL;
+
         chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
     }
 }
+
 void SceneMainGame::sendData()
 {
-    tStatus[0].hp = 100;
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         DataBlock data;

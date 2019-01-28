@@ -4,6 +4,8 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../../common/controllerParam/controllerParam.h"
 
+#include "../../common/gameData/gameData.h"
+
 bool SceneMainGame::init()
 {
     Vector3f collider[] = {
@@ -62,13 +64,30 @@ SCENE_ID SceneMainGame::dataProcessing()
 void SceneMainGame::upDate()
 {
     for (int i = 0; i < MAX_CLIENTS; i++)
+
     {
+        bool isCollision = false;
         TEAM_ID id = clientsData[i].teamId;
         chara[i].speed = tStatus[id].buff[BUFF_SPEED] ? 2.0f : 2.0f;
 
         Vector2f axisL = clientsData[i].controllerParam.axisL;
 
-        chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
+        CharaCollider[i].center += Vector3f(axisL.x, 0.0f, axisL.y);
+        for (int j = 1; j < MAX_STATIC_OBJECTS; j++)
+        {
+            if (CharaCollider[i].isCollision(staticCollider[j]))
+            {
+                isCollision = true;
+            }
+        }
+        if (!isCollision)
+        {
+            chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
+        }
+        else
+        {
+            CharaCollider[i].center -= Vector3f(axisL.x, 0.0f, axisL.y);
+        }
     }
 }
 
@@ -80,6 +99,15 @@ void SceneMainGame::sendData()
         data.setCommand2DataBlock(NC_SEND_TEAM_STATUS);
         data.setData(&i, sizeof(TEAM_ID));
         data.setData(&tStatus[i], sizeof(TeamStatus));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
+
+    for (int i = 0; i < MAX_CLIENTS; i++)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
+        data.setData(&i, sizeof(int));
+        data.setData(&chara, sizeof(Chara));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 }

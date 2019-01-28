@@ -13,6 +13,8 @@ public:
 
   bool isAlive;
   unsigned int hp;
+  unsigned int spawingTime;
+  
   Transform initTransform;
   Transform transform;
 

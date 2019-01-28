@@ -7,14 +7,14 @@
 bool SceneMainGame::init()
 {
     Vector3f collider[] = {
-        Obb(), //床
-        Obb(), //壁
-        Obb(), //壁
-        Obb(), //壁
-        Obb(), //壁
-        Obb(), //壁
-        Obb(), //塔
-        Obb(), //塔
+        Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
+        Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁
+        Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10)), //壁
+        Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10)),     //壁
+        Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10)),  //壁
+        Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10)),   //壁
+        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
+        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
     };
 
     for (int i = 0; i < TEAM_NUMBER; i++)

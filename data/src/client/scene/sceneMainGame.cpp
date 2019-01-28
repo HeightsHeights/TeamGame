@@ -10,7 +10,7 @@
 
 #define OBJ_DIR_PATH "./data/res/gui/obj/"
 
-// static const SDL_Color gRed = {0, 0, 255, 0};
+static const SDL_Color gRed = {0, 0, 255, 0};
 
 ObjRawModel **SceneMainGame::Object::models;
 bool SceneMainGame::Object::initable = true;
@@ -59,6 +59,12 @@ bool SceneMainGame::init()
             return false;
         }
     }
+
+    text[0] = GuiTextLoader().load(FID_NORMAL, "3", gRed);
+    text[1] = GuiTextLoader().load(FID_NORMAL, "2", gRed);
+    text[2] = GuiTextLoader().load(FID_NORMAL, "1", gRed);
+    text[3] = GuiTextLoader().load(FID_NORMAL, "LOSE", gRed);
+    text[4] = GuiTextLoader().load(FID_NORMAL, "WIN", gRed);
 
     gameObjects = Object(&objects[0]);
 
@@ -288,11 +294,18 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
+    dst[0] = GuiRect(-50.0f, 50.0f, 50.0f, 50.0f);
+    // text[0]->draw(NULL, &dst[0], 1.0f);
+    // text[1]->draw(NULL, &dst[0], 1.0f);
+    // text[2]->draw(NULL, &dst[0], 1.0f);
     statusDrawer->draw(Vector2f(-475, -200), TEAM_MUSH, 10, true, "suyama");
     statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
     statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
     statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
+    dst[1] = GuiRect(-50.0f, 50.0f, 50.0f, 50.0f);
+    // text[3]->draw(NULL, &dst[1], 1.0f);
+    // text[4]->draw(NULL, &dst[1], 1.0f);
     ShaderManager::stopShader(SID_GUI);
 }

@@ -77,7 +77,7 @@ private:
   TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;
 
-  int particle_emission;
+  int explosioon_emission;
   bool atkmode;
 
   virtual void draw3D();

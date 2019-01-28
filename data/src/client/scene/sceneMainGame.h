@@ -20,8 +20,6 @@
 class SceneMainGame : public BaseScene
 {
 private:
-  GuiText *text[7];
-  GuiRect dst[2];
 
 public:
   typedef enum {

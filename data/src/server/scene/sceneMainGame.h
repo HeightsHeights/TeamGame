@@ -8,6 +8,8 @@
 #include "../gameObject/gameObject.h"
 #include "../gameObject/character/character.h"
 
+#include "../../common/gameData/clientNum.h"
+
 #include "../../common/gameData/charaStatus.h"
 
 #define MAX_STATIC_OBJECTS 8
@@ -26,10 +28,11 @@ private:
 
   TeamStatus tStatus[TEAM_NUMBER];
 
-  Character chara[MAX_CLIENTS];
+  Character chara[MAX_PLAYERS];
+  CharaStatus cStatus[MAX_PLAYERS];
 
   Obb staticCollider[MAX_STATIC_OBJECTS];
-  Obb CharaCollider[MAX_CLIENTS];
+  Obb CharaCollider[MAX_PLAYERS];
 
   // GameObject staticObject[MAX_STATIC_OBJECTS];
   // GameObject dynamicObject[MAX_DYNAMIC_OBJECTS];

@@ -4,11 +4,11 @@
 #include "../../common/controllerParam/controllerParam.h"
 #include <stdio.h>
 
-Player SceneChara::pl[MAX_CLIENTS];
+Player SceneChara::pl[MAX_PLAYERS];
 
 bool SceneChara::init()
 {
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         button[i] = false;
     }
@@ -18,7 +18,7 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
 {
     if (command == NC_MOVE_SCENE)
     {
-        for (int i = 0; i < MAX_CLIENTS; i++)
+        for (int i = 0; i < MAX_PLAYERS; i++)
         {
             clientsData[i].teamId = (pl[i].position.x == 0) ? TEAM_MUSH : TEAM_BAMBOO;
         }

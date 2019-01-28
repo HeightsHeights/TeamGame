@@ -4,11 +4,11 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../../common/controllerParam/controllerParam.h"
 
-#include "../../common/gameData/gameData.h"
+#include "../../common/gameData/charaStatus.h"
 
 bool SceneMainGame::init()
 {
-    Vector3f collider[] = {
+    Obb collider[] = {
         Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
         Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁
         Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10)), //壁
@@ -19,13 +19,18 @@ bool SceneMainGame::init()
         Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
     };
 
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        staticCollider[i].center = collider[i].center;
+        for (int j = 0; j < 3; j++)
+        {
+            staticCollider[i].length[j] = collider[i].length[j];
+        }
+    }
+
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         tStatus[i] = TeamStatus();
-    }
-
-    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
-    {
     }
 
     return true;
@@ -63,7 +68,7 @@ SCENE_ID SceneMainGame::dataProcessing()
 
 void SceneMainGame::upDate()
 {
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
 
     {
         bool isCollision = false;
@@ -83,6 +88,7 @@ void SceneMainGame::upDate()
         if (!isCollision)
         {
             chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
+            cStatus[i].transform = chara[i].transform;
         }
         else
         {
@@ -102,12 +108,12 @@ void SceneMainGame::sendData()
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
         data.setData(&i, sizeof(int));
-        data.setData(&chara, sizeof(Chara));
+        data.setData(&cStatus[i], sizeof(CharaStatus));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 }

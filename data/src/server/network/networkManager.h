@@ -3,7 +3,7 @@
 
 #include "./netConnector.h"
 
-#define MAX_CLIENTS 2
+#define MAX_CLIENTS 4
 #define ALL_CLIENTS -1
 
 typedef struct

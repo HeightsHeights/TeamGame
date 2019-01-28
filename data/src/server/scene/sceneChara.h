@@ -21,8 +21,8 @@ typedef struct
 class SceneChara : public BaseScene
 {
 private:
-  bool button[MAX_CLIENTS];
-  static Player pl[MAX_CLIENTS];
+  bool button[MAX_PLAYERS];
+  static Player pl[MAX_PLAYERS];
 
 public:
   SceneChara() : BaseScene() {}

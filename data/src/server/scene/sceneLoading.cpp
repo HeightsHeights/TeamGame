@@ -5,7 +5,7 @@
 #include <stdio.h>
 bool SceneLoading::init()
 {
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         exist[i] = false;
     }
@@ -19,7 +19,7 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
         exist[pos] = true;
     }
     int count = 0;
-    for (int i = 0; i < MAX_CLIENTS; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         if (exist[i])
         {
@@ -27,7 +27,7 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
         }
     }
 
-    if (count == MAX_CLIENTS)
+    if (count == MAX_PLAYERS)
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);

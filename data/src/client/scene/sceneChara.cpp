@@ -7,7 +7,7 @@
 #include "../audio/audioManager.h"
 #define PNG_DIR_PATH "./data/res/gui/image/"
 
-Player SceneChara::player[MAX_PLAYER];
+Player SceneChara::player[MAX_PLAYERS];
 static const SDL_Color black = {0, 0, 0, 0};
 
 SceneChara::SceneChara(WindowManager *window) : BaseScene(window)
@@ -46,7 +46,7 @@ bool SceneChara::init()
         }
     }
 
-    for (int i = 0; i < MAX_PLAYER; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         connect[i] = false;
     }
@@ -62,7 +62,7 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
             mypos.x += param.axisL.x;
         }
 
-        if (count == MAX_PLAYER / 2)
+        if (count == MAX_PLAYERS / 2)
         {
             mypos.y += param.axisL.y;
         }
@@ -162,7 +162,7 @@ SCENE_ID SceneChara::executeCommand(int command)
     }
 
     count = 0;
-    for (int i = 0; i < MAX_PLAYER; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         if (player[i].position.x == 0)
         {
@@ -206,7 +206,7 @@ void SceneChara::draw3D()
 void SceneChara::draw2D()
 {
     float bright;
-    if (count == MAX_PLAYER / 2)
+    if (count == MAX_PLAYERS / 2)
     {
         bright = (mypos.y == 1) ? 1.0f : 0.7f;
     }
@@ -218,7 +218,7 @@ void SceneChara::draw2D()
     ShaderManager::startShader(SID_GUI);
     image[IMAGE_READY]->draw(NULL, &dst[IMAGE_READY], bright);
     image[(int)IMAGE_MUSHROOM + (int)mypos.x]->draw(NULL, &dst[IMAGE_MUSHROOM], (mypos.y == 0) ? 1.0f : 0.3f);
-    for (int i = 0; i < MAX_PLAYER; i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         drawPlayer(Vector2f(100, 400 - 120 * i), (player[i].position.x == 0) ? COLOR_RED : COLOR_BLUE, connect[i], player[i].name);
     }

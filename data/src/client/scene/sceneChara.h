@@ -26,8 +26,7 @@ typedef struct
 class SceneChara : public BaseScene
 {
 private:
-  typedef enum
-  {
+  typedef enum {
     IMAGE_CONFIGBG = 0,
     IMAGE_MUSHROOM = 1,
     IMAGE_BAMBOO = 2,
@@ -38,8 +37,7 @@ private:
     IMAGE_NUMBER = 7,
   } IMAGE_ID;
 
-  typedef enum
-  {
+  typedef enum {
     COLOR_RED = 0,
     COLOR_BLUE = 1,
     COLOR_NUMBER = 2,
@@ -50,12 +48,12 @@ private:
 
   Vector2f mypos;
   Vector2f positionChara;
-  bool connect[MAX_PLAYER];
+  bool connect[MAX_PLAYERS];
   bool button;
   bool isFirst;
   int count;
   int secount;
-  static Player player[MAX_PLAYER];
+  static Player player[MAX_PLAYERS];
 
   unsigned int angle;
   GuiImage *image[IMAGE_NUMBER];

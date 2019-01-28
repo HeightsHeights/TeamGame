@@ -9,7 +9,7 @@
 #include "../config/configData.h"
 #include "./mainGame/playerData.h"
 
-#define MAX_PLAYER 2
+#include "../../common/gameData/clientNum.h"
 /******************************************************************************
  * class BaseScene
  * 機能1：
@@ -36,5 +36,5 @@ public:
 
 protected:
   ConfigData *config;
-  PlayerData players[MAX_PLAYER];
+  PlayerData players[MAX_PLAYERS];
 };

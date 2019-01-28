@@ -7,9 +7,9 @@
 #include "../../common/scene/sceneId.h"
 #include "../../common/math/vector/vectorSet.h"
 
-#include "../data/clientData.h"
+#include "../../common/gameData/clientNum.h"
 
-#define MAX_CLIENTS 2
+#include "../data/clientData.h"
 /******************************************************************************
  * class BaseScene
  * 機能1：
@@ -27,5 +27,5 @@ public:
   virtual SCENE_ID dataProcessing();
 
 protected:
-  static ClientData clientsData[MAX_CLIENTS];
+  static ClientData clientsData[MAX_PLAYERS];
 };

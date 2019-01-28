@@ -76,7 +76,7 @@ bool SceneMainGame::init()
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
     falleff = GuiSpriteLoader().load("./data/res/gui/image/effect/death.png", 8, 1);
 
-    particle_emission == 0;
+    explosioon_emission == 0;
     atkmode = false;
 
     for (int i = 0; i < TEAM_NUMBER; i++)
@@ -100,11 +100,11 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     NetworkManager::sendData(data, data.getDataSize());
 
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
-    if (param.buttonDown[CT_DECITION_OR_ATTACK] && particle_emission == 0)
+    if (param.buttonDown[CT_DECITION_OR_ATTACK] && explosioon_emission == 0)
     {
         atkmode = true;
 
-        particle_emission = 1;
+        explosioon_emission = 1;
         // trialpart->generate(15);
     }
     if (atkmode)
@@ -145,10 +145,10 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
 
-    if (command == drawcll)
-    {
-        NetworkManager::recvData(&id, )
-    }
+    // if (command == drawcll)
+    // {
+    //     NetworkManager::recvData(&id, )
+    // }
     return nextScene;
 }
 

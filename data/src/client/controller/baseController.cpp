@@ -20,6 +20,12 @@ ControllerParam BaseController::readStateController()
     //ボタンの状態を入力する
     scanButton(&param);
 
+    if (scanEndFlag())
+    {
+        param.buttonDown[CT_FINISH] = true;
+        param.buttonState[CT_FINISH] = true;
+    }
+
     return param;
 }
 

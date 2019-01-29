@@ -109,7 +109,7 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else if (param.buttonDown[CT_FINISH] && !param.buttonState[CT_FINISH])
+    else if (param.buttonDown[CT_FINISH])
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_FINISH);

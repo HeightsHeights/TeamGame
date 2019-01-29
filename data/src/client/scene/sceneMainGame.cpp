@@ -84,6 +84,8 @@ bool SceneMainGame::init()
         return false;
     }
 
+    gResult = GameResult();
+
     return true;
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
@@ -137,6 +139,10 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         TEAM_ID id;
         NetworkManager::recvData(&id, sizeof(TEAM_ID));
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
+    }
+    else if(command == NC_SEND_RESULT_DATA)
+    {
+        NetworkManager::recvData(&gResult, sizeof(GameResult));
     }
 
     // if (command == drawcll)
@@ -293,7 +299,7 @@ void SceneMainGame::draw3D()
     // glPushMatrix();
     // trialpart->draw(1.0f);
     // glPopMatrix();
-    // ShaderManager::stopShader(SID_PARTICLE);
+    // ShaderManager::stopShader(SID_PARTICLE); 
 }
 void SceneMainGame::draw2D()
 {
@@ -304,5 +310,6 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
+    statusDrawer->drawResult(gResult);
     ShaderManager::stopShader(SID_GUI);
 }

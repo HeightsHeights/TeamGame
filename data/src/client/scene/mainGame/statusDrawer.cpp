@@ -27,6 +27,8 @@ bool StatusDrawer::init()
             "main/spbuff",
             "main/lifemush",
             "main/lifebamboo",
+            "result/win",
+            "result/lose",
         };
 
     std::string numbersNameTemplate = "numbers/number_";
@@ -171,5 +173,16 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, V
         loc.z -= 0.1f;
         dst = GuiRect(pos.x - 35 * SIZE, pos.y + UNIT_WIDTH * SIZE, 560 * SIZE, 125 * SIZE);
         image[IMAGE_BAMBOOHPFRAME]->draw(NULL, &dst, 1.0f, loc);
+    }
+}
+
+void StatusDrawer::drawResult(GameResult gRes)
+{
+    for(int i = 0; i < RESULT_NUMBER; i++)
+    {
+        if(gRes.result[i])
+        {
+            image[(i == RESULT_WIN) ? IMAGE_WIN : IMAGE_LOSE]->draw(NULL, NULL, 1.0f);
+        }
     }
 }

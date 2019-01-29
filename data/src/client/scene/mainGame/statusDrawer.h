@@ -5,6 +5,7 @@
 #include "../../render/gui/sprite/guiSpriteLoader.h"
 #include "../../../common/gameData/teamStatus.h"
 #include "../../../common/gameData/teamData.h"
+#include "../../../common/gameData/resultData.h"
 
 #define UNIT_WIDTH 50
 #define HP_WIDTH 400
@@ -33,7 +34,9 @@ private:
     IMAGE_SPBUFF = 16,
     IMAGE_MUSHHPFRAME = 17,
     IMAGE_BAMBOOHPFRAME = 18,
-    IMAGE_NUMBER = 19,
+    IMAGE_WIN = 19,
+    IMAGE_LOSE =20,
+    IMAGE_NUMBER = 21,
   } IMAGE_ID;
   GuiImage *image[IMAGE_NUMBER];
 
@@ -47,4 +50,5 @@ public:
   void draw(Vector2f pos, TEAM_ID id, unsigned int hp, bool alive, const char *name);
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status);
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc);
+  void drawResult(GameResult gRes);
 };

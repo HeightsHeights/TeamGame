@@ -26,12 +26,16 @@ bool SceneMainGame::init()
         {
             staticCollider[i].length[j] = collider[i].length[j];
         }
+
+        gResult[i] = GameResult();
     }
 
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         tStatus[i] = TeamStatus();
     }
+
+
 
     return true;
 }
@@ -115,5 +119,24 @@ void SceneMainGame::sendData()
         data.setData(&i, sizeof(int));
         data.setData(&cStatus[i], sizeof(CharaStatus));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
+
+    for(int i = 0; i < MAX_PLAYERS; i++){
+        if(tStatus[TEAM_MUSH].hp <= 0)
+        {
+            gResult[i].result[(clientsData[i].teamId == TEAM_MUSH) ? RESULT_LOSE : RESULT_WIN] = true;
+            DataBlock data;
+            data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
+            data.setData(&gResult[i], sizeof(GameResult));
+            NetworkManager::sendData(i, data, data.getDataSize());
+        }
+        else if(tStatus[TEAM_BAMBOO].hp <= 0)
+        {
+            gResult[i].result[(clientsData[i].teamId == TEAM_MUSH) ? RESULT_WIN : RESULT_LOSE] = true;
+            DataBlock data;
+            data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
+            data.setData(&gResult[i], sizeof(GameResult));
+            NetworkManager::sendData(i, data, data.getDataSize());
+        }
     }
 }

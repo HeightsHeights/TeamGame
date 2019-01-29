@@ -74,7 +74,7 @@ private:
 
   TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;
-
+  GameResult gResult;
   int explosioon_emission;
   bool atkmode;
 

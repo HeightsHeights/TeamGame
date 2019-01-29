@@ -9,6 +9,7 @@
 #include "../gameObject/character/character.h"
 
 #include "../../common/gameData/clientNum.h"
+#include "../../common/gameData/resultData.h"
 
 #include "../../common/gameData/charaStatus.h"
 
@@ -30,6 +31,8 @@ private:
 
   Character chara[MAX_PLAYERS];
   CharaStatus cStatus[MAX_PLAYERS];
+
+  GameResult gResult[MAX_PLAYERS];
 
   Obb staticCollider[MAX_STATIC_OBJECTS];
   Obb CharaCollider[MAX_PLAYERS];

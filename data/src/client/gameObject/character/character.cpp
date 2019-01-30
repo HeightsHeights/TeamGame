@@ -47,13 +47,16 @@ void Character::motion(MOTION_ID id, int time)
     switch (id)
     {
     case MOTION_ATTACK:
-        //weaponSodo(time);
-        weaponAx(time);
+        weaponSodo(time);
+        // weaponAx(time);
         //weaponBamboo(time);
-        //weaponHit(time);
+        // weaponHit(time);
         break;
     case MOTION_THROW:
         weaponThrow(time);
+        break;
+    case MOTION_GRUB:
+        weaponGrub(time);
         break;
     case MOTION_NULL:
         Cancel();
@@ -137,6 +140,15 @@ void Character::weaponHit(int time)
 void Character::weaponThrow(int time)
 {
     hands[HAND_LEFT]->transform.position += Vector3f(0.0, (float)sin(time), (float)cos(time));
+}
+
+void Character::weaponGrub(int time)
+{
+    if (time < 90)
+    {
+        hands[HAND_LEFT]->transform.position += Vector3f(0.02, -0.1f * (float)sin(time), (float)cos(time));
+        hands[HAND_RIGHT]->transform.position += Vector3f(-0.02, -0.1f * (float)sin(time), (float)cos(time));
+    }
 }
 
 void Character::Cancel()

@@ -20,7 +20,6 @@
 class SceneMainGame : public BaseScene
 {
 private:
-
 public:
   typedef enum {
     OBJECT_SKYBOX = 0,
@@ -77,7 +76,7 @@ private:
   GameResult gResult;
   int explosioon_emission;
   bool atkmode;
-
+  Vector3f lookMove;
   virtual void draw3D();
   virtual void draw2D();
 

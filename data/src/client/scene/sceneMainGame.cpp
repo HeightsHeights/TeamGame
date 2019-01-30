@@ -101,8 +101,11 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
         atkmode = true;
 
         explosioon_emission = 1;
-        // trialpart->generate(15);
+        trialpart->generate(15);
     }
+
+    if (param.buttonUp[CT_DECITION_OR_ATTACK])
+        explosioon_emission = 0;
     if (atkmode)
     {
         static int atk;
@@ -119,11 +122,14 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     if (param.buttonDown[CT_GRUB] == true)
     {
         static int time;
-        mush->motion(Character::MOTION_THROW, time++);
+        if (time > 90)
+            time = 0;
+        mush->motion(Character::MOTION_GRUB, time++);
     }
-    // {
-    //     mush->motion(Character::MOTION_NULL, 0);
-    // }
+    else
+    {
+        mush->motion(Character::MOTION_NULL, 0);
+    }
 
     return SI_MAIN;
 }
@@ -140,10 +146,14 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&id, sizeof(TEAM_ID));
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
-    else if(command == NC_SEND_RESULT_DATA)
+    else if (command == NC_SEND_RESULT_DATA)
     {
         NetworkManager::recvData(&gResult, sizeof(GameResult));
     }
+    // else if(command ==NC_SEND_CHARA_DATA)
+    // {
+    //     NetworkManager::recvData();
+    // }
 
     // if (command == drawcll)
     // {
@@ -156,9 +166,15 @@ void SceneMainGame::draw3D()
 {
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
-
-    gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
-
+    if (mush->transform.position.x > -110 && mush->transform.position.x < 110 && mush->transform.position.z < 40)
+    {
+        gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
+        lookMove = mush->transform.position;
+    }
+    else
+    {
+        gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
+    }
     float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
@@ -295,11 +311,11 @@ void SceneMainGame::draw3D()
     // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
 
-    // ShaderManager::startShader(SID_PARTICLE);
-    // glPushMatrix();
-    // trialpart->draw(1.0f);
-    // glPopMatrix();
-    // ShaderManager::stopShader(SID_PARTICLE); 
+    ShaderManager::startShader(SID_PARTICLE);
+    glPushMatrix();
+    trialpart->draw(1.0f);
+    glPopMatrix();
+    ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

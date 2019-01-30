@@ -6,8 +6,7 @@
 class Character
 {
 private:
-  typedef enum
-  {
+  typedef enum {
     HAND_RIGHT = 0,
     HAND_LEFT = 1,
     HAND_NUMBER = 2,
@@ -26,15 +25,16 @@ private:
   void weaponAx(int time);
   void weaponBamboo(int time);
   void weaponHit(int time);
+  void weaponGrub(int time);
   void Cancel();
 
 public:
-  typedef enum
-  {
+  typedef enum {
     MOTION_NULL = 0,
     MOTION_ATTACK = 1,
     MOTION_THROW = 2,
-    MOTION_NUMBER = 3,
+    MOTION_GRUB = 3,
+    MOTION_NUMBER = 4,
   } MOTION_ID;
 
   Transform transform;

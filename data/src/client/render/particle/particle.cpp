@@ -61,6 +61,9 @@ void Particle::storeData(unsigned int maxnum)
 
     GLfloat posData[maxnum * 3];
 
+    for (int i = 0; i < maxnum * 3; i++)
+        posData[i] = 0;
+
     glGenVertexArrays(1, &vao);
     bindVao();
     glGenBuffers(1, &vboIndex);

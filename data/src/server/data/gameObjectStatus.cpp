@@ -4,7 +4,7 @@
 GameObjectStatus::GameObjectStatus()
 {
 }
-GameObjectStatus::GameObjectStatus(Transform *transform)
+GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
 {
   if (transform == NULL)
   {
@@ -13,6 +13,10 @@ GameObjectStatus::GameObjectStatus(Transform *transform)
   else
   {
     this->transform = *transform;
+  }
+  if (collider == NULL)
+  {
+    //this->collider = collider;
   }
   this->initTransform = this->transform;
 }

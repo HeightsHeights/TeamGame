@@ -16,11 +16,11 @@ public:
 
   //id
 
-  // here is collider
   bool haveCollider;
+  Collider collider;
 
   GameObjectStatus();
-  GameObjectStatus(Transform *transform);
+  GameObjectStatus(Transform *transform, Collider *collider);
 
   void clearTransform();
 };

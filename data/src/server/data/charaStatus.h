@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./gameObjectStatus.h"
 #include "../../common/gameData/cCharaData.h"
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
@@ -9,8 +10,14 @@
 class CharaStatus
 {
 private:
+  GameObjectStatus *mainBody;
+  GameObjectStatus *hands[HAND_NUMBER];
+
+  GameObjectStatus *weapon;
+
 public:
   CharaStatus();
+  CharaStatus(Transform *transform);
 
   bool isAlive;
   unsigned int hp;
@@ -18,12 +25,11 @@ public:
 
   Transform initTransform;
   Transform transform;
+  Vector3f lookingDirection;
 
-  int speedValue;
+  float speedValue;
   Vector3f speed;
   Vector3f accel;
-
-  Vector3f lookingDirection;
 
   CCharaData getDataForClient();
   void clearTransform();

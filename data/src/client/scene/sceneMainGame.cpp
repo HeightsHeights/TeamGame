@@ -324,6 +324,9 @@ void SceneMainGame::draw2D()
     statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
-    statusDrawer->drawResult(RESULT_NULL);
+    if (false)
+    {
+        statusDrawer->drawResult(RESULT_NULL);
+    }
     ShaderManager::stopShader(SID_GUI);
 }

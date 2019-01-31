@@ -41,9 +41,10 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 
     if (command == NC_SEND_CONTROLLER_PARAM)
     {
-        NetworkManager::recvData(pos, &clientsData[pos].controllerParam, sizeof(ControllerParam));
+        ControllerParam* pController =  &clientsData[pos].controllerParam;
+        NetworkManager::recvData(pos, pController, sizeof(ControllerParam));
 
-        if (clientsData[pos].controllerParam.buttonDown[CT_FINISH])
+        if (pController->buttonDown[CT_FINISH])
         {
             DataBlock data;
             data.setCommand2DataBlock(NC_FINISH);

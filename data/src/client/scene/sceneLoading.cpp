@@ -54,13 +54,14 @@ bool SceneLoading::init()
 }
 SCENE_ID SceneLoading::reactController(ControllerParam param)
 {
-    if(!isFirst){
+    if (!isFirst)
+    {
         config = ConfigLoader().load("cPrevConfig");
         const char *myname;
         char name[256];
         myname = config->name.c_str();
-        if(strlen(myname) < 256)
-            strcpy(name,myname);
+        if (strlen(myname) < 256)
+            strcpy(name, myname);
         DataBlock data;
         data.setCommand2DataBlock(NC_SEND_NAME);
         data.setData(&name, sizeof(char *));
@@ -77,6 +78,10 @@ SCENE_ID SceneLoading::executeCommand(int command)
     {
         nextScene = SI_CHARASELECT;
     }
+    else if (command == NS_SEND_ID)
+    {
+        NetworkManager::recvData(&myId, sizeof(int));
+        }
 
     return nextScene;
 }

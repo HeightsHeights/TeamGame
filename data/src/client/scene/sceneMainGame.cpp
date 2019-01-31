@@ -176,7 +176,8 @@ void SceneMainGame::draw3D()
     {
         gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
     }
-    float lightPos[] = {0, 100, 0, 1};
+    float lightPos[] = {0, 1000, 300, 1};
+    // float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     //skyBox
@@ -270,11 +271,11 @@ void SceneMainGame::draw3D()
     // gameObjects.getModelP(OBJECT_DEBUG_SPHERE)->draw();
     // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(10.0f, 9.0f, 40.0f);
-    glScalef(3.0f, 10.0f, 3.0f);
-    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(10.0f, 9.0f, 40.0f);
+    // glScalef(3.0f, 10.0f, 3.0f);
+    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    // glPopMatrix();
 
     // glPushMatrix();
     // glTranslatef(10.0f, 10.0f, 30.0f);
@@ -298,7 +299,7 @@ void SceneMainGame::draw3D()
 
     // glScalef(5.0f, 12.0f, 5.0f); //木
     // object->draw();
-    glPopMatrix();
+    // glPopMatrix();
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);

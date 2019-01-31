@@ -39,7 +39,7 @@ bool SceneMainGame::init()
 
     std::string objName[OBJECT_NUMBER] = {
         "cube",
-        "map",
+        "led",
         "redtower",
         "bluetower",
         "obb",
@@ -62,8 +62,8 @@ bool SceneMainGame::init()
 
     gameObjects = Object(&objects[0]);
 
-    mush = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
-    bamboo = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
+    bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
+    mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
 
     object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
@@ -121,7 +121,10 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     {
         static int time;
         if (time > 90)
+        {
             time = 0;
+            mush->motion(Character::MOTION_NULL, 0);
+        }
         mush->motion(Character::MOTION_GRUB, time++);
     }
     else
@@ -261,16 +264,28 @@ void SceneMainGame::draw3D()
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();
 
-    glPushMatrix();
-    glTranslatef(10.0f, 10.0f, 30.0f);
-    glScalef(2.0f, 2.0f, 2.0f);
-    gameObjects.getModelP(OBJECT_BOMB)->draw();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(10.0f, 9.0f, 40.0f);
+    // glScalef(3.0f, 3.0f, 3.0f);
+    // gameObjects.getModelP(OBJECT_DEBUG_SPHERE)->draw();
+    // glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(16.0f, 0.0f, 31.0f);
-    glScalef(5.6f, 8.7f, 5.6f); //宝石
-    gameObjects.getModelP(OBJECT_RUBY)->draw();
+    glTranslatef(10.0f, 9.0f, 40.0f);
+    glScalef(3.0f, 10.0f, 3.0f);
+    gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
+    glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(10.0f, 10.0f, 30.0f);
+    // glScalef(2.0f, 2.0f, 2.0f);
+    // gameObjects.getModelP(OBJECT_BOMB)->draw();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(16.0f, 0.0f, 31.0f);
+    // glScalef(5.6f, 8.7f, 5.6f); //宝石
+    // gameObjects.getModelP(OBJECT_RUBY)->draw();
 
     // glScalef(5.0f, 12.0f, 5.0f); //石１
     // object->draw();

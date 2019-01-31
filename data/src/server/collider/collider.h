@@ -6,9 +6,13 @@
 
 class Collider
 {
-  private:
-  public:
-    std::vector<Obb> obbs;
-    std::vector<Sphere> spheres;
-    static bool isCollision(Collider x, Collider y);
+private:
+public:
+  Collider();
+  Collider(Obb obb);
+  Collider(Sphere sphere);
+
+  std::vector<Obb> obbs;
+  std::vector<Sphere> spheres;
+  static bool isCollision(Collider x, Collider y);
 };

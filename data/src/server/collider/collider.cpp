@@ -1,6 +1,18 @@
 
 #include "./collider.h"
 
+Collider::Collider()
+{
+}
+Collider::Collider(Obb obb)
+{
+    obbs.push_back(obb);
+}
+Collider::Collider(Sphere sphere)
+{
+    spheres.push_back(sphere);
+}
+
 bool Collider::isCollision(Collider x, Collider y)
 {
     for (int i = 0; i < x.obbs.size(); i++)

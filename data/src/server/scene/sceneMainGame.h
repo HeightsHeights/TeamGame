@@ -5,9 +5,7 @@
 ******************************************************************************/
 #include "./sceneBase.h"
 #include "../../common/gameData/teamStatus.h"
-
 #include "../../common/gameData/clientNum.h"
-
 #include "../data/gameObjectStatus.h"
 #include "../data/charaStatus.h"
 
@@ -24,6 +22,8 @@ class SceneMainGame : public BaseScene
 {
 private:
   unsigned int timer;
+
+  CharaStatus cStatus[MAX_PLAYERS];
 
   TeamStatus tStatus[TEAM_NUMBER];
 

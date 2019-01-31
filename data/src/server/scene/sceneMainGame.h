@@ -29,13 +29,13 @@ private:
 
   TeamStatus tStatus[TEAM_NUMBER];
 
-  Character chara[MAX_PLAYERS];
-  CharaStatus cStatus[MAX_PLAYERS];
+  // Character chara[MAX_PLAYERS];
+  // CharaStatus cStatus[MAX_PLAYERS];
 
   GameResult gResult[MAX_PLAYERS];
 
-  Obb staticCollider[MAX_STATIC_OBJECTS];
-  Obb CharaCollider[MAX_PLAYERS];
+  // Obb staticCollider[MAX_STATIC_OBJECTS];
+  // Obb CharaCollider[MAX_PLAYERS];
 
   // GameObject staticObject[MAX_STATIC_OBJECTS];
   // GameObject dynamicObject[MAX_DYNAMIC_OBJECTS];

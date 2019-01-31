@@ -7,9 +7,10 @@ typedef enum {
   OBJECT_NUMBER = 1,
 } OBJECT_ID;
 
-class CObject
+class CObjectData
 {
 private:
 public:
+  CObjectData();
   Transform transform;
 };

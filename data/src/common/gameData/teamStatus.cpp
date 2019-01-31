@@ -7,4 +7,5 @@ TeamStatus::TeamStatus()
     {
         buff[i] = false;
     }
+    result = RESULT_NULL;
 }

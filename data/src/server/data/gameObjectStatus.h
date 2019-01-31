@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../../common/gameData/cObjectData.h"
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
 
-class GameObject
+class GameObjectStatus
 {
 private:
 public:
@@ -18,11 +19,8 @@ public:
   // here is collider
   bool haveCollider;
 
-  GameObject();
-  GameObject(Transform *transform);
+  GameObjectStatus();
+  GameObjectStatus(Transform *transform);
 
   void clearTransform();
-  bool isCollision();
-
-protected:
 };

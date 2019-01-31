@@ -1,5 +1,7 @@
 #pragma once
 
+#include "./resultData.h"
+
 #define MAX_TEAM_HP 999
 
 typedef enum {
@@ -17,4 +19,5 @@ class TeamStatus
 
     unsigned int hp;
     bool buff[BUFF_NUMBER];
+    RESULT_ID result;
 };

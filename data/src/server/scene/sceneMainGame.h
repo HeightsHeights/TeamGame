@@ -5,12 +5,10 @@
 ******************************************************************************/
 #include "./sceneBase.h"
 #include "../../common/gameData/teamStatus.h"
-#include "../gameObject/gameObject.h"
-#include "../gameObject/character/character.h"
 
 #include "../../common/gameData/clientNum.h"
-#include "../../common/gameData/resultData.h"
 
+#include "../data/gameObjectStatus.h"
 #include "../data/charaStatus.h"
 
 #define MAX_STATIC_OBJECTS 8
@@ -28,17 +26,6 @@ private:
   unsigned int timer;
 
   TeamStatus tStatus[TEAM_NUMBER];
-
-  // Character chara[MAX_PLAYERS];
-  // CharaStatus cStatus[MAX_PLAYERS];
-
-  GameResult gResult[MAX_PLAYERS];
-
-  // Obb staticCollider[MAX_STATIC_OBJECTS];
-  // Obb CharaCollider[MAX_PLAYERS];
-
-  // GameObject staticObject[MAX_STATIC_OBJECTS];
-  // GameObject dynamicObject[MAX_DYNAMIC_OBJECTS];
 
   void upDate();
   void sendData();

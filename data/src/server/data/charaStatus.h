@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../common/gameData/cCharaData.h"
-#include "../../common/math/vector/vector3f.h"
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
 
@@ -27,4 +26,5 @@ public:
   Vector3f lookingDirection;
 
   CCharaData getDataForClient();
+  void clearTransform();
 };

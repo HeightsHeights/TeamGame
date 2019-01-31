@@ -176,13 +176,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, V
     }
 }
 
-void StatusDrawer::drawResult(GameResult gRes)
+void StatusDrawer::drawResult(RESULT_ID result)
 {
-    for(int i = 0; i < RESULT_NUMBER; i++)
-    {
-        if(gRes.result[i])
-        {
-            image[(i == RESULT_WIN) ? IMAGE_WIN : IMAGE_LOSE]->draw(NULL, NULL, 1.0f);
-        }
-    }
+    image[(result == RESULT_WIN) ? IMAGE_WIN : IMAGE_LOSE]->draw(NULL, NULL, 1.0f);
 }

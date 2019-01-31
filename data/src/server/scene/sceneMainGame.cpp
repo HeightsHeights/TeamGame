@@ -24,8 +24,6 @@ bool SceneMainGame::init()
     //     {
     //         staticCollider[i].length[j] = collider[i].length[j];
     //     }
-
-    //     gResult[i] = GameResult();
     // }
 
     for (int i = 0; i < TEAM_NUMBER; i++)
@@ -41,7 +39,7 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 
     if (command == NC_SEND_CONTROLLER_PARAM)
     {
-        ControllerParam* pController =  &clientsData[pos].controllerParam;
+        ControllerParam *pController = &clientsData[pos].controllerParam;
         NetworkManager::recvData(pos, pController, sizeof(ControllerParam));
 
         if (pController->buttonDown[CT_FINISH])

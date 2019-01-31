@@ -1,10 +1,10 @@
-#include "./gameObject.h"
+#include "./gameObjectStatus.h"
 #include <iostream>
 
-GameObject::GameObject()
+GameObjectStatus::GameObjectStatus()
 {
 }
-GameObject::GameObject(Transform *transform)
+GameObjectStatus::GameObjectStatus(Transform *transform)
 {
   if (transform == NULL)
   {
@@ -17,10 +17,7 @@ GameObject::GameObject(Transform *transform)
   this->initTransform = this->transform;
 }
 
-void GameObject::clearTransform()
+void GameObjectStatus::clearTransform()
 {
   this->transform = this->initTransform;
-}
-bool GameObject::isCollision()
-{
 }

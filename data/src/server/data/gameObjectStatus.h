@@ -3,6 +3,7 @@
 #include "../../common/gameData/cObjectData.h"
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
+#include <iostream>
 
 class GameObjectStatus
 {

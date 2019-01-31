@@ -178,5 +178,9 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, V
 
 void StatusDrawer::drawResult(RESULT_ID result)
 {
+    if (result == RESULT_NULL)
+    {
+        return;
+    }
     image[(result == RESULT_WIN) ? IMAGE_WIN : IMAGE_LOSE]->draw(NULL, NULL, 1.0f);
 }

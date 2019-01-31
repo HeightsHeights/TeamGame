@@ -23,4 +23,5 @@ public:
   GameObjectStatus(Transform *transform, Collider *collider);
 
   void clearTransform();
+  CObjectData getClientData();
 };

@@ -17,14 +17,23 @@ CharaStatus::CharaStatus(Transform *transform)
         this->transform = *transform;
     }
 
-    mainBody = new GameObjectStatus(NULL, NULL);
+    Collider mainCollider(Obb(Vector3f(0, 0, 0), Touple3f(0, 0, 0)));
+    mainBody = new GameObjectStatus(NULL, &mainCollider);
+
+    float handSize = 1.5f;
+    Vector3f handPos[HAND_NUMBER] = {
+        Vector3f(1.5f, 1.5f, 0.0f),
+        Vector3f(-1.5f, 1.5f, 0.0f),
+    };
+
     Transform handInitTramsform[HAND_NUMBER] = {
-        Transform(Vector3f(1.5f, 1.5f, 0.0f), Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f)),
-        Transform(Vector3f(-1.5f, 1.5f, 0.0f), Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f)),
+        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
+        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
     };
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
-        hands[i] = new GameObjectStatus(&handInitTramsform[i], NULL);
+        Collider handCollider(Sphere(Vector3f(1.5f, 1.5f, 0.0f), handSize));
+        hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
     }
 
     lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);

@@ -16,7 +16,7 @@ GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
   }
   if (collider == NULL)
   {
-    //this->collider = collider;
+    this->collider = *collider;
   }
   this->initTransform = this->transform;
 }
@@ -24,4 +24,8 @@ GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
 void GameObjectStatus::clearTransform()
 {
   this->transform = this->initTransform;
+}
+
+CObjectData GameObjectStatus::getClientData()
+{
 }

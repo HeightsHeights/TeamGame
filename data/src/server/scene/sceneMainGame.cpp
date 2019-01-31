@@ -6,6 +6,9 @@
 
 bool SceneMainGame::init()
 {
+
+
+
     // Obb collider[] = {
     //     Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
     //     Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁

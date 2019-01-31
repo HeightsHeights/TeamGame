@@ -1,5 +1,4 @@
 #include "./gameObjectStatus.h"
-#include <iostream>
 
 GameObjectStatus::GameObjectStatus()
 {
@@ -14,11 +13,12 @@ GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
   {
     this->transform = *transform;
   }
-  if (collider == NULL)
+  this->initTransform = this->transform;
+
+  if (collider != NULL)
   {
     this->collider = *collider;
   }
-  this->initTransform = this->transform;
 }
 
 void GameObjectStatus::clearTransform()

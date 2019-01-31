@@ -6,25 +6,33 @@
 
 bool SceneMainGame::init()
 {
-    Obb collider[] = {
-        Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
-        Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁
-        Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10)), //壁
-        Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10)),     //壁
-        Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10)),  //壁
-        Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10)),   //壁
-        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
-        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
+    Collider colliders[] = {
+        Collider(Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100))),     //床
+        Collider(Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10))), //壁
+        Collider(Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10))), //壁
+        Collider(Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10))),     //壁
+        Collider(Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10))),  //壁
+        Collider(Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10))),   //壁
+        Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
+        Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
     };
 
-    // for (int i = 0; i < MAX_PLAYERS; i++)
-    // {
-    //     staticCollider[i].center = collider[i].center;
-    //     for (int j = 0; j < 3; j++)
-    //     {
-    //         staticCollider[i].length[j] = collider[i].length[j];
-    //     }
-    // }
+    OBJECT_ID ids[] = {
+        OBJECT_TILE,
+        OBJECT_WALL,
+        OBJECT_WALL,
+        OBJECT_WALL,
+        OBJECT_WALL,
+        OBJECT_WALL,
+        OBJECT_TOWER,
+        OBJECT_TOWER,
+    };
+
+    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
+    {
+        staticObjectStatus[i] = GameObjectStatus(NULL, &colliders[i]);
+        staticObjectStatus[i].id = ids[i];
+    }
 
     for (int i = 0; i < TEAM_NUMBER; i++)
     {

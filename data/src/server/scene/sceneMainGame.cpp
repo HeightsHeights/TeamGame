@@ -6,19 +6,16 @@
 
 bool SceneMainGame::init()
 {
-
-
-
-    // Obb collider[] = {
-    //     Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
-    //     Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁
-    //     Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10)), //壁
-    //     Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10)),     //壁
-    //     Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10)),  //壁
-    //     Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10)),   //壁
-    //     Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
-    //     Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
-    // };
+    Obb collider[] = {
+        Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100)),     //床
+        Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10)), //壁
+        Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10)), //壁
+        Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10)),     //壁
+        Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10)),  //壁
+        Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10)),   //壁
+        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
+        Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3)),    //塔
+    };
 
     // for (int i = 0; i < MAX_PLAYERS; i++)
     // {
@@ -103,33 +100,22 @@ void SceneMainGame::sendData()
         data.setData(&tStatus[i], sizeof(TeamStatus));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-
-    // for (int i = 0; i < MAX_PLAYERS; i++)
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
-    //     data.setData(&i, sizeof(int));
-    //     data.setData(&cStatus[i], sizeof(CharaStatus));
-    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    // }
-
-    // for (int i = 0; i < MAX_PLAYERS; i++)
-    // {
-    //     if (tStatus[TEAM_MUSH].hp <= 0)
-    //     {
-    //         gResult[i].result[(clientsData[i].teamId == TEAM_MUSH) ? RESULT_LOSE : RESULT_WIN] = true;
-    //         DataBlock data;
-    //         data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
-    //         data.setData(&gResult[i], sizeof(GameResult));
-    //         NetworkManager::sendData(i, data, data.getDataSize());
-    //     }
-    //     else if (tStatus[TEAM_BAMBOO].hp <= 0)
-    //     {
-    //         gResult[i].result[(clientsData[i].teamId == TEAM_MUSH) ? RESULT_WIN : RESULT_LOSE] = true;
-    //         DataBlock data;
-    //         data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
-    //         data.setData(&gResult[i], sizeof(GameResult));
-    //         NetworkManager::sendData(i, data, data.getDataSize());
-    //     }
-    // }
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_CHARA_DATA);
+        data.setData(&i, sizeof(int));
+        CCharaData charaData = cStatus[i].getDataForClient();
+        data.setData(&charaData, sizeof(CCharaData));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
+        data.setData(&i, sizeof(int));
+        CObjectData objectData = dynamicObjectStatus[i].getDataForClient();
+        data.setData(&objectData, sizeof(CObjectData));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    }
 }

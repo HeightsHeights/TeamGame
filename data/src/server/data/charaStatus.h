@@ -31,6 +31,6 @@ public:
   Vector3f speed;
   Vector3f accel;
 
-  CCharaData getDataForClient();
   void clearTransform();
+  CCharaData getDataForClient();
 };

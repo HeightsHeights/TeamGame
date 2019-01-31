@@ -26,6 +26,7 @@ void GameObjectStatus::clearTransform()
   this->transform = this->initTransform;
 }
 
-CObjectData GameObjectStatus::getClientData()
+CObjectData GameObjectStatus::getDataForClient()
 {
+  return CObjectData();
 }

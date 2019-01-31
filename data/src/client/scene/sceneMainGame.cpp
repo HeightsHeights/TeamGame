@@ -147,6 +147,20 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&id, sizeof(TEAM_ID));
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
+    else if (command == NC_SEND_CHARA_DATA)
+    {
+        int id;
+        NetworkManager::recvData(&id, sizeof(int));
+        CCharaData data;
+        NetworkManager::recvData(&data, sizeof(CCharaData));
+    }
+    else if (command == NC_SEND_OBJECT_DATA)
+    {
+        int id;
+        NetworkManager::recvData(&id, sizeof(int));
+        CObjectData data;
+        NetworkManager::recvData(&data, sizeof(CObjectData));
+    }
     else if (command == NC_SEND_RESULT_DATA)
     {
         // NetworkManager::recvData(&gResult, sizeof(GameResult));

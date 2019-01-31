@@ -14,7 +14,7 @@ public:
   Vector3f speed;
   Vector3f accel;
 
-  //id
+  OBJECT_ID objectId;
 
   bool haveCollider;
   Collider collider;
@@ -23,5 +23,5 @@ public:
   GameObjectStatus(Transform *transform, Collider *collider);
 
   void clearTransform();
-  CObjectData getClientData();
+  CObjectData getDataForClient();
 };

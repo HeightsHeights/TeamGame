@@ -11,6 +11,9 @@
 #include "../render/particle/particleLoader.h"
 #include "../gameObject/character/character.h"
 
+#include "../../../common/gameData/cObjectData.h"
+#include "../../../common/gameData/cCharaData.h"
+
 /******************************************************************************
  * class SceneMainGame
  * 機能1：

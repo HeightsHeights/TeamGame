@@ -42,4 +42,5 @@ CharaStatus::CharaStatus(Transform *transform)
 
 CCharaData CharaStatus::getDataForClient()
 {
+    return CCharaData();
 }

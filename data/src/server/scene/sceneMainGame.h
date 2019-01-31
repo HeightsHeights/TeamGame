@@ -9,9 +9,6 @@
 #include "../data/gameObjectStatus.h"
 #include "../data/charaStatus.h"
 
-#define MAX_STATIC_OBJECTS 8
-#define MAX_DYNAMIC_OBJECTS 100
-
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -24,6 +21,9 @@ private:
   unsigned int timer;
 
   CharaStatus cStatus[MAX_PLAYERS];
+
+  GameObjectStatus staticObjectStatus[MAX_STATIC_OBJECTS];
+  GameObjectStatus dynamicObjectStatus[MAX_STATIC_OBJECTS];
 
   TeamStatus tStatus[TEAM_NUMBER];
 

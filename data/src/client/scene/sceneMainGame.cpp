@@ -166,7 +166,7 @@ void SceneMainGame::draw3D()
 {
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
-    if (mush->transform.position.x > -110 && mush->transform.position.x < 110 && mush->transform.position.z < 40)
+    if (mush->transform.position.x > -110 && mush->transform.position.x < 110 && mush->transform.position.z < 50)
     {
         gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
         lookMove = mush->transform.position;
@@ -181,7 +181,7 @@ void SceneMainGame::draw3D()
     //skyBox
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
-    glScalef(180.0f, 90.0f, 135.0f);
+    glScalef(185.0f, 90.0f, 140.0f);
     gameObjects.getModelP(OBJECT_SKYBOX)->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);

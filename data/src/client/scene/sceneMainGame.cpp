@@ -165,15 +165,6 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     {
         // NetworkManager::recvData(&gResult, sizeof(GameResult));
     }
-    // else if(command ==NC_SEND_CHARA_DATA)
-    // {
-    //     NetworkManager::recvData();
-    // }
-
-    // if (command == drawcll)
-    // {
-    //     NetworkManager::recvData(&id, )
-    // }
     return nextScene;
 }
 
@@ -261,35 +252,9 @@ void SceneMainGame::draw3D()
     gameObjects.getModelP(OBJECT_BLOCK_NORMAL)->draw();
     glPopMatrix();
 
-    //壁当たり判定
-    // glPushMatrix();
-    // glTranslatef(0.0f, 10.0f, 0.0f);
-    // glScalef(1.6f, 15.0f, 20.0f);
-    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    // glPopMatrix();
-
-    //タワー当たり判定
-    // glPushMatrix();
-    // glTranslatef(-140.0f, 20.0f, 0.0f);
-    // glScalef(3.0f, 20.0f, 3.0f);
-    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    // glPopMatrix();
-
     // glTranslatef(0.0f, 10.0f, 0.0f);
     // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
     // object->draw();
-
-    // glPushMatrix();
-    // glTranslatef(10.0f, 9.0f, 40.0f);
-    // glScalef(3.0f, 3.0f, 3.0f);
-    // gameObjects.getModelP(OBJECT_DEBUG_SPHERE)->draw();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(10.0f, 9.0f, 40.0f);
-    // glScalef(3.0f, 10.0f, 3.0f);
-    // gameObjects.getModelP(OBJECT_DEBUG_OBB)->draw();
-    // glPopMatrix();
 
     // glPushMatrix();
     // glTranslatef(10.0f, 10.0f, 30.0f);

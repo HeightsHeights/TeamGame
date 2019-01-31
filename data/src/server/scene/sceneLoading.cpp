@@ -29,6 +29,13 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
 
     if (count == MAX_PLAYERS)
     {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            DataBlock data;
+            data.setCommand2DataBlock(NS_SEND_ID);
+            data.setData(&i, sizeof(int));
+            NetworkManager::sendData(pos, &data, data.getDataSize());
+        }
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());

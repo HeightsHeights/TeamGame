@@ -11,7 +11,7 @@
 #include "../../common/gameData/clientNum.h"
 #include "../../common/gameData/resultData.h"
 
-#include "../../common/gameData/charaStatus.h"
+#include "../data/charaStatus.h"
 
 #define MAX_STATIC_OBJECTS 8
 #define MAX_DYNAMIC_OBJECTS 100

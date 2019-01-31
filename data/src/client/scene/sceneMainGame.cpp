@@ -101,7 +101,7 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
         atkmode = true;
 
         explosioon_emission = 1;
-        trialpart->generate(15);
+        //trialpart->generate(15);
     }
 
     if (param.buttonUp[CT_DECITION_OR_ATTACK])
@@ -311,11 +311,11 @@ void SceneMainGame::draw3D()
     // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
     ShaderManager::stopShader(SID_BILLBOARD);
 
-    ShaderManager::startShader(SID_PARTICLE);
-    glPushMatrix();
-    trialpart->draw(1.0f);
-    glPopMatrix();
-    ShaderManager::stopShader(SID_PARTICLE);
+    // ShaderManager::startShader(SID_PARTICLE);
+    // glPushMatrix();
+    // trialpart->draw(1.0f);
+    // glPopMatrix();
+    // ShaderManager::stopShader(SID_PARTICLE);
 }
 void SceneMainGame::draw2D()
 {

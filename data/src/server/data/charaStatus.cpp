@@ -17,7 +17,7 @@ CharaStatus::CharaStatus(Transform *transform)
         this->transform = *transform;
     }
 
-    Collider mainCollider(Obb(Vector3f(0, 0, 0), Touple3f(0, 0, 0)));
+    Collider mainCollider(Obb(Vector3f(0, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
 
     float handSize = 1.5f;
@@ -32,7 +32,7 @@ CharaStatus::CharaStatus(Transform *transform)
     };
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
-        Collider handCollider(Sphere(Vector3f(1.5f, 1.5f, 0.0f), handSize));
+        Collider handCollider(Sphere(handPos[HAND_NUMBER], handSize));
         hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
     }
 

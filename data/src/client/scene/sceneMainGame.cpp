@@ -62,21 +62,32 @@ bool SceneMainGame::init()
             return false;
         }
     }
-
     Transform staticObjectTranforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(185.0f, 90.0f, 140.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
+        Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+        Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+        Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
     };
     const OBJECT_ID staticObjectIds[] = {
         OBJECT_SKYBOX,
         OBJECT_TILE,
+        OBJECT_TOWER_R,
+        OBJECT_TOWER_B,
+        OBJECT_WALL_R,
+        OBJECT_WALL_R,
+        OBJECT_WALL_B,
+        OBJECT_WALL_B,
+        OBJECT_WALL_NORMAL,
     };
     for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
     {
-        staticObjectData[i] = CObjectData(OBJECT_TILE, &staticObjectTranforms[i]);
+        staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
     }
-
     // bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     // mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
 
@@ -179,70 +190,34 @@ void SceneMainGame::draw3D()
 
     //skyBox
     ShaderManager::startShader(SID_TEXTURING);
-    glPushMatrix();
-    glScalef(185.0f, 90.0f, 140.0f);
-    objects[OBJECT_SKYBOX]->draw();
-    glPopMatrix();
+    objectDrawer->drawObject(staticObjectData[OBJECT_SKYBOX]);
     ShaderManager::stopShader(SID_TEXTURING);
 
     //Tile
     ShaderManager::startShader(SID_T_PHONG);
-    glPushMatrix();
-    glScalef(20.0f, 1.0f, 10.0f);
-    objects[OBJECT_TILE]->draw();
-    glPopMatrix();
+    objectDrawer->drawObject(staticObjectData[OBJECT_TILE]);
 
-    glPushMatrix();
-    glTranslatef(-100.0, 10.0, 40);
-    glScalef(10.0f, 10.0f, 10.0f);
-    objects[OBJECT_WALL_R]->draw();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-65.0, 10.0, -40);
-    glScalef(10.0f, 10.0f, 10.0f);
-    objects[OBJECT_WALL_R]->draw();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(85.0, 10.0, -40);
-    glScalef(10.0f, 10.0f, 10.0f);
-    objects[OBJECT_WALL_B]->draw();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(50.0, 10.0, 40);
-    glScalef(10.0f, 10.0f, 10.0f);
-    objects[OBJECT_WALL_B]->draw();
-    glPopMatrix();
+    //色付き壁
+    for (int i = 4; i < 8; i++)
+    {
+        objectDrawer->drawObject(staticObjectData[i]);
+    }
 
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
-    glPushMatrix();
-    glTranslatef(-140.0f, 1.0f, 0.0f);
-    glScalef(0.03f, 0.07f, 0.03f);
-    objects[OBJECT_TOWER_R]->draw();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(125.0f, 1.0f, 0.0f);
-    glScalef(0.03f, 0.07f, 0.03f);
-    objects[OBJECT_TOWER_B]->draw();
-    glPopMatrix();
+    //タワー
+    for (int i = 2; i < 4; i++)
+    {
+        objectDrawer->drawObject(staticObjectData[i]);
+    }
+    //中央壁
+    objectDrawer->drawObject(staticObjectData[8]);
 
     //Charactor
     // mush->draw();
     // bamboo->draw();
     //Weapon
-
-    //Object
-
-    glPushMatrix();
-    glTranslatef(0.0, 10.0, 0.0);
-    glScalef(10.0f, 10.0f, 10.0f);
-    objects[OBJECT_WALL_NORMAL]->draw();
-    glPopMatrix();
 
     ShaderManager::stopShader(SID_NT_PHONG);
 

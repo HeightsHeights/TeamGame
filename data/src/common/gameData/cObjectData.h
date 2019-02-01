@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../../common/object/transform.h"
 
-#define MAX_STATIC_OBJECTS 8
+#define MAX_STATIC_OBJECTS 10
 #define MAX_DYNAMIC_OBJECTS 100
 
 typedef enum {

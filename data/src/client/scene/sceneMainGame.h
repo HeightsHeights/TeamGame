@@ -31,8 +31,8 @@ private:
   Particle *trialpart;
 
   CCharaData charaData[MAX_PLAYERS];
-  CCharaData staticObjectData[MAX_STATIC_OBJECTS];
-  CCharaData dynamicObjectData[MAX_DYNAMIC_OBJECTS];
+  CObjectData staticObjectData[MAX_STATIC_OBJECTS];
+  CObjectData dynamicObjectData[MAX_DYNAMIC_OBJECTS];
   ObjectDrawer *objectDrawer;
 
   TeamStatus tStatus[TEAM_NUMBER];

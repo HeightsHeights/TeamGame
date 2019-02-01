@@ -8,9 +8,9 @@ CharaStatus::CharaStatus()
     this->hp = MAX_CHARA_HP;
     speedValue = 0.1f;
 
-    this->transform = Transform();
+    this->transform = Transform(Vector3f(10.0f, 0, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
 
-    Collider mainCollider(Obb(Vector3f(0, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
+    Collider mainCollider(Obb(Vector3f(10.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
     mainBody->objectId = OBJECT_MUSH;
 
@@ -47,7 +47,7 @@ CharaStatus::CharaStatus(Transform *transform)
         this->transform = *transform;
     }
 
-    Collider mainCollider(Obb(Vector3f(0, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
+    Collider mainCollider(Obb(Vector3f(0.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
     mainBody->objectId = OBJECT_MUSH;
 
@@ -82,19 +82,34 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
     return true;
 }
 
-void CharaStatus::move(Vector3f moveDirection)
+void CharaStatus::move(Vector3f moveDir)
 {
     //当たり判定を動かす
+    Collider tmpCollider = this->mainBody->collider;
+    tmpCollider.move(moveDir * speedValue);
     //見る
-    //大丈夫なら更新
-    transform.position += moveDirection * speedValue;
+    if (!checkWall(tmpCollider))
+    {
+        //大丈夫なら更新
+        transform.position += moveDir * speedValue;
+        this->mainBody->collider = tmpCollider;
+    }
 }
 
-bool checkGround()
+bool CharaStatus::checkGround(Collider collider)
 {
+    return true;
 }
-bool checkWall()
+bool CharaStatus::checkWall(Collider collider)
 {
+    for (int i = SOBJECT_TOWER_R; i < SOBJECT_NUMBER; i++)
+    {
+        if (Collider::isCollision(collider, staticObjects[i].collider))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 CCharaData CharaStatus::getDataForClient()

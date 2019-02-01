@@ -4,6 +4,8 @@
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../../common/controllerParam/controllerParam.h"
 
+#include <stdio.h>
+
 bool SceneMainGame::init()
 {
     Collider colliders[] = {
@@ -28,10 +30,15 @@ bool SceneMainGame::init()
         OBJECT_WALL_NORMAL,
     };
 
-    for (int i = 0; i < SOBJECT_NUMBER - SOBJECT_TILE; i++)
+    for (int i = 0; i < SOBJECT_NUMBER - 1; i++)
     {
         staticObjectStatus[i] = GameObjectStatus(NULL, &colliders[i]);
         staticObjectStatus[i].objectId = ids[i];
+    }
+    if (!CharaStatus::init(&staticObjectStatus[0]))
+    {
+        fprintf(stderr, "Error --> CharaStatus::init()\n");
+        return false;
     }
 
     for (int i = 0; i < TEAM_NUMBER; i++)

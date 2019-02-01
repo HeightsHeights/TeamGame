@@ -51,3 +51,14 @@ bool Collider::isCollision(Collider x, Collider y)
     }
     return false;
 }
+void Collider::move(Vector3f moveDir)
+{
+    for (int i = 0; i < this->obbs.size(); i++)
+    {
+        this->obbs[i].center += moveDir;
+    }
+    for (int i = 0; i < this->spheres.size(); i++)
+    {
+        this->spheres[i].center += moveDir;
+    }
+}

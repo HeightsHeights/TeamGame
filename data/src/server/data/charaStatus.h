@@ -16,8 +16,8 @@ private:
   GameObjectStatus *hands[HAND_NUMBER];
   GameObjectStatus *weapon;
 
-  bool checkGround();
-  bool checkWall();
+  bool checkGround(Collider collider);
+  bool checkWall(Collider collider);
 
 public:
   CharaStatus();
@@ -37,6 +37,6 @@ public:
   static bool init(GameObjectStatus *staticObjects);
 
   void clearTransform();
-  void move(Vector3f moveDirection);
+  void move(Vector3f moveDir);
   CCharaData getDataForClient();
 };

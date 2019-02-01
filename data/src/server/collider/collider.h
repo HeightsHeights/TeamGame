@@ -15,4 +15,5 @@ public:
   std::vector<Obb> obbs;
   std::vector<Sphere> spheres;
   static bool isCollision(Collider x, Collider y);
+  void move(Vector3f moveDir);
 };

@@ -34,7 +34,7 @@ SCENE_ID SceneLoading::executeCommand(int command, int pos)
             DataBlock data;
             data.setCommand2DataBlock(NS_SEND_ID);
             data.setData(&i, sizeof(int));
-            NetworkManager::sendData(pos, &data, data.getDataSize());
+            NetworkManager::sendData(i, &data, data.getDataSize());
         }
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);

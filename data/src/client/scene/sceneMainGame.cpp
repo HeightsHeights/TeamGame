@@ -201,7 +201,7 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glTranslatef(50.0, 10.0, 40);
     glScalef(10.0f, 10.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_BLOCK_B)->draw();
+    objects[OBJECT_WALL_B]->draw();
     glPopMatrix();
 
     ShaderManager::stopShader(SID_T_PHONG);
@@ -210,18 +210,18 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glTranslatef(-140.0f, 1.0f, 0.0f);
     glScalef(0.03f, 0.07f, 0.03f);
-    // gameObjects.getModelP(OBJECT_TOWER_R)->draw();
+    objects[OBJECT_TOWER_R]->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(125.0f, 1.0f, 0.0f);
     glScalef(0.03f, 0.07f, 0.03f);
-    // gameObjects.getModelP(OBJECT_TOWER_B)->draw();
+    objects[OBJECT_TOWER_B]->draw();
     glPopMatrix();
 
     //Charactor
-    mush->draw();
-    bamboo->draw();
+    // mush->draw();
+    // bamboo->draw();
     //Weapon
 
     //Object
@@ -229,36 +229,9 @@ void SceneMainGame::draw3D()
     glPushMatrix();
     glTranslatef(0.0, 10.0, 0.0);
     glScalef(10.0f, 10.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_BLOCK_NORMAL)->draw();
+    objects[OBJECT_WALL_NORMAL]->draw();
     glPopMatrix();
 
-    // glTranslatef(0.0f, 10.0f, 0.0f);
-    // glScalef(10.0f, 12.0f, 10.0f); //クリスタル
-    // object->draw();
-
-    // glPushMatrix();
-    // glTranslatef(10.0f, 10.0f, 30.0f);
-    // glScalef(2.0f, 2.0f, 2.0f);
-    // gameObjects.getModelP(OBJECT_BOMB)->draw();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(16.0f, 0.0f, 31.0f);
-    // glScalef(5.6f, 8.7f, 5.6f); //宝石
-    // gameObjects.getModelP(OBJECT_RUBY)->draw();
-
-    // glScalef(5.0f, 12.0f, 5.0f); //石１
-    // object->draw();
-
-    // glScalef(8.0f, 12.0f, 8.0f); //石２
-    // object->draw();
-
-    // glScalef(8.0f, 12.0f, 8.0f); //石３
-    // object->draw();
-
-    // glScalef(5.0f, 12.0f, 5.0f); //木
-    // object->draw();
-    // glPopMatrix();
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);

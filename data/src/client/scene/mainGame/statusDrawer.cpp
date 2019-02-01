@@ -96,7 +96,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status)
         image[IMAGE_HPBACK]->draw(NULL, &dst, 0.0f);
 
         float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP);
-        dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH);
+        dst = GuiRect(pos.x, pos.y, chp, UNIT_WIDTH - 5.0f);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
 
         for (int i = 0; i < BUFF_NUMBER; i++)
@@ -115,7 +115,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status)
 
         float cpos = HP_WIDTH * (1 - ((float)status.hp / MAX_TEAM_HP));
         float chp = HP_WIDTH * ((float)status.hp / MAX_TEAM_HP);
-        dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH);
+        dst = GuiRect(pos.x + cpos, pos.y, chp, UNIT_WIDTH - 5.0f);
         image[IMAGE_HP]->draw(NULL, &dst, 1.0f);
 
         for (int i = 0; i < BUFF_NUMBER; i++)

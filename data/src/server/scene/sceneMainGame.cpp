@@ -14,18 +14,18 @@ bool SceneMainGame::init()
         Collider(Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10))),  //壁
         Collider(Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10))),   //壁
         Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
-        Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
+        Collider(Obb(Vector3f(140, 20, 0), Touple3f(3, 20, 3))),     //塔
     };
 
     OBJECT_ID ids[] = {
         OBJECT_TILE,
-        // OBJECT_WALL,
-        // OBJECT_WALL,
-        // OBJECT_WALL,
-        // OBJECT_WALL,
-        // OBJECT_WALL,
-        // OBJECT_TOWER,
-        // OBJECT_TOWER,
+        OBJECT_WALL_R,
+        OBJECT_WALL_R,
+        OBJECT_WALL_NORMAL,
+        OBJECT_WALL_B,
+        OBJECT_WALL_B,
+        OBJECT_TOWER_R,
+        OBJECT_TOWER_B,
     };
 
     for (int i = 0; i < MAX_STATIC_OBJECTS; i++)

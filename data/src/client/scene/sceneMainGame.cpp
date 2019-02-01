@@ -63,7 +63,6 @@ bool SceneMainGame::init()
         }
     }
     Transform staticObjectTranforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f)),
         Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
         Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
         Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
@@ -72,9 +71,9 @@ bool SceneMainGame::init()
         Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
         Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
         Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f)),
     };
     const OBJECT_ID staticObjectIds[] = {
-        OBJECT_SKYBOX,
         OBJECT_TILE,
         OBJECT_TOWER_R,
         OBJECT_TOWER_B,
@@ -83,6 +82,7 @@ bool SceneMainGame::init()
         OBJECT_WALL_B,
         OBJECT_WALL_B,
         OBJECT_WALL_NORMAL,
+        OBJECT_SKYBOX,
     };
     for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
@@ -189,15 +189,15 @@ void SceneMainGame::draw3D()
 
     //skyBox
     ShaderManager::startShader(SID_TEXTURING);
-    objectDrawer->drawObject(staticObjectData[OBJECT_SKYBOX]);
+    objectDrawer->drawObject(staticObjectData[8]);
     ShaderManager::stopShader(SID_TEXTURING);
 
     //Tile
     ShaderManager::startShader(SID_T_PHONG);
-    objectDrawer->drawObject(staticObjectData[OBJECT_TILE]);
+    objectDrawer->drawObject(staticObjectData[0]);
 
     //色付き壁
-    for (int i = 4; i < 8; i++)
+    for (int i = 3; i < 7; i++)
     {
         objectDrawer->drawObject(staticObjectData[i]);
     }
@@ -206,12 +206,12 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_NT_PHONG);
     //タワー
-    for (int i = 2; i < 4; i++)
+    for (int i = 1; i < 3; i++)
     {
         objectDrawer->drawObject(staticObjectData[i]);
     }
     //中央壁
-    objectDrawer->drawObject(staticObjectData[8]);
+    objectDrawer->drawObject(staticObjectData[7]);
 
     //Charactor
     for (int i = 0; i < MAX_PLAYERS; i++)

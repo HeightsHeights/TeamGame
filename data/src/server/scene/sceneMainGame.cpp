@@ -28,7 +28,7 @@ bool SceneMainGame::init()
         OBJECT_TOWER_B,
     };
 
-    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
+    for (int i = 0; i < SOBJECT_NUMBER - SOBJECT_TILE; i++)
     {
         staticObjectStatus[i] = GameObjectStatus(NULL, &colliders[i]);
         staticObjectStatus[i].objectId = ids[i];

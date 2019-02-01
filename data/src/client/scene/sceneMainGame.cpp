@@ -84,7 +84,7 @@ bool SceneMainGame::init()
         OBJECT_WALL_B,
         OBJECT_WALL_NORMAL,
     };
-    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
+    for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
         staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
     }

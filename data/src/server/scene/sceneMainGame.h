@@ -22,8 +22,8 @@ private:
 
   CharaStatus cStatus[MAX_PLAYERS];
 
-  GameObjectStatus staticObjectStatus[MAX_STATIC_OBJECTS];
-  GameObjectStatus dynamicObjectStatus[MAX_STATIC_OBJECTS];
+  GameObjectStatus staticObjectStatus[SOBJECT_NUMBER];
+  GameObjectStatus dynamicObjectStatus[MAX_DYNAMIC_OBJECTS];
 
   TeamStatus tStatus[TEAM_NUMBER];
 

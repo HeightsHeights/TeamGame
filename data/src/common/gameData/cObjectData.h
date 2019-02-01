@@ -3,7 +3,6 @@
 #include <iostream>
 #include "../../common/object/transform.h"
 
-#define MAX_STATIC_OBJECTS 10
 #define MAX_DYNAMIC_OBJECTS 100
 
 typedef enum {
@@ -25,6 +24,19 @@ typedef enum {
   OBJECT_DEBUG_SPHERE = 15, //
   OBJECT_NUMBER = 16,       //
 } OBJECT_ID;
+
+typedef enum {
+  SOBJECT_SKYBOX = 0,
+  SOBJECT_TILE = 1,
+  SOBJECT_TOWER_R = 2,
+  SOBJECT_TOWER_B = 3,
+  SOBJECT_WALL_R1 = 4,
+  SOBJECT_WALL_R2 = 5,
+  SOBJECT_WALL_B1 = 6,
+  SOBJECT_WALL_B2 = 7,
+  SOBJECT_WALL_NORMAL = 8,
+  SOBJECT_NUMBER = 9,
+} STATIC_OBJECT_ID;
 
 class CObjectData
 {

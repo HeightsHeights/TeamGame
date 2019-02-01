@@ -31,7 +31,7 @@ private:
   Particle *trialpart;
 
   CCharaData charaData[MAX_PLAYERS];
-  CObjectData staticObjectData[MAX_STATIC_OBJECTS];
+  CObjectData staticObjectData[SOBJECT_NUMBER];
   CObjectData dynamicObjectData[MAX_DYNAMIC_OBJECTS];
   ObjectDrawer *objectDrawer;
 

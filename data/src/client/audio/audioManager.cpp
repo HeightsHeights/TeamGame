@@ -15,10 +15,8 @@ bool AudioManager::init()
     const std::string BGM_NAME[BGM_NUMBER] =
         {
             "titlebgm",
-            "selectbgm",
             "mainbgm",
             "victory",
-            "lose",
         };
     const std::string SE_NAME[SE_NUMBER] =
         {

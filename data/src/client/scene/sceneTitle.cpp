@@ -44,7 +44,7 @@ bool SceneTitle::init()
             "configFrames/configFrame01.png",
             "configFrames/configFrame02.png",
         };
-    // AudioManager::playBGM(BGM_TITLE);
+    // AudioManager::playBGM(BGM_TITLE_OR_SELECT);
 
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;
@@ -194,7 +194,7 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 }
                 else
                 {
-                    AudioManager::stopBGM(BGM_TITLE);
+                    AudioManager::stopBGM(BGM_TITLE_OR_SELECT);
                     return SI_LOADING;
                 }
             }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "../../common/object/transform.h"
 
 #define MAX_STATIC_OBJECTS 8
@@ -30,6 +31,9 @@ class CObjectData
 private:
 public:
   CObjectData();
+  CObjectData(OBJECT_ID id);
+  CObjectData(OBJECT_ID id, Transform *transform);
+
   OBJECT_ID objectId;
   Transform transform;
 };

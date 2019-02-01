@@ -35,7 +35,7 @@ public:
   void drawWindow();
 
 protected:
-  int myId;
+  static int myId;
   ConfigData *config;
   PlayerData players[MAX_PLAYERS];
 };

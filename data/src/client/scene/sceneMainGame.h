@@ -21,9 +21,6 @@
 class SceneMainGame : public BaseScene
 {
 private:
-  // Character *mush;
-  // Character *bamboo;
-
   ObjRawModel *objects[OBJECT_NUMBER];
 
   GuiSprite *explosion;

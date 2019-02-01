@@ -214,8 +214,10 @@ void SceneMainGame::draw3D()
     objectDrawer->drawObject(staticObjectData[8]);
 
     //Charactor
-    // mush->draw();
-    // bamboo->draw();
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        objectDrawer->drawChara(charaData[i]);
+    }
     //Weapon
 
     ShaderManager::stopShader(SID_NT_PHONG);

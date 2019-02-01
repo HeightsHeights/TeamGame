@@ -147,18 +147,20 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 void SceneMainGame::draw3D()
 {
 
-    // gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
-    // if (mush->transform.position.x > -110 && mush->transform.position.x < 110 && mush->transform.position.z < 50)
-    // {
-    //     gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
-    //     lookMove = mush->transform.position;
-    // }
-    // else
-    // {
-    //     gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
-    // }
+    gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
+
+    Vector3f *pMyCharaPos = &charaData[myId].transform.position;
+    if (pMyCharaPos->x > -110 && pMyCharaPos->x < 110 && pMyCharaPos->z < 50)
+    {
+        gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);
+        lookMove = *pMyCharaPos;
+    }
+    else
+    {
+        gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
+    }
+
     float lightPos[] = {0, 1000, 300, 1};
-    // float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     //skyBox

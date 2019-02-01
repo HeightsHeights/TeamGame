@@ -158,8 +158,8 @@ SCENE_ID SceneChara::executeCommand(int command)
         int num;
         NetworkManager::recvData(&num, sizeof(int));
         connect[num] = true;
-        NetworkManager::recvData(&player[num].subname, sizeof(char *));
-        player[num].name = &player[num].subname[0];
+        NetworkManager::recvData(&BaseScene::players[num].name, sizeof(char *));
+        SceneChara::player[num].name = &BaseScene::players[num].name[0];
     }
 
     count = 0;

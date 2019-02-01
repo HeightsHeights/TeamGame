@@ -5,6 +5,7 @@ GameObjectStatus *CharaStatus::staticObjects;
 
 CharaStatus::CharaStatus()
 {
+    this->hp = MAX_CHARA_HP;
     speedValue = 0.1f;
 
     this->transform = Transform();

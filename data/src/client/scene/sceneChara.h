@@ -13,7 +13,6 @@
 
 typedef struct
 {
-  char subname[MAX_LEN_NAME];
   const char *name;
   Vector2f position;
 } Player;

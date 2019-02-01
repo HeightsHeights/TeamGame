@@ -57,11 +57,13 @@ SCENE_ID SceneLoading::reactController(ControllerParam param)
     if (!isFirst)
     {
         config = ConfigLoader().load("cPrevConfig");
-        const char *myname;
+
         char name[256];
-        myname = config->name.c_str();
-        if (strlen(myname) < 256)
-            strcpy(name, myname);
+        if (config->name.length() < 256)
+        {
+            strcpy(name, config->name.c_str());
+        }
+
         DataBlock data;
         data.setCommand2DataBlock(NC_SEND_NAME);
         data.setData(&name, sizeof(char *));

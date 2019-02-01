@@ -254,10 +254,15 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    statusDrawer->draw(Vector2f(-475, -200), TEAM_MUSH, 10, true, "suyama");
-    statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
-    statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
-    statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
+
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        statusDrawer->draw(Vector2f(-475 + 250 * i, -200), TEAM_MUSH, charaData[i].hp, true, BaseScene::players[i].name);
+    }
+    // statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
+    // statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
+    // statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
+
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
     statusDrawer->drawResult(RESULT_NULL);

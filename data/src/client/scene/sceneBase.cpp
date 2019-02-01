@@ -2,6 +2,8 @@
 
 #include <GL/gl.h>
 int BaseScene::myId = 0;
+PlayerData BaseScene::players[MAX_PLAYERS];
+
 BaseScene::BaseScene(WindowManager *window)
 {
     this->window = window;

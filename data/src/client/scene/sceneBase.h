@@ -36,6 +36,7 @@ public:
 
 protected:
   static int myId;
+  static PlayerData players[MAX_PLAYERS];
+
   ConfigData *config;
-  PlayerData players[MAX_PLAYERS];
 };

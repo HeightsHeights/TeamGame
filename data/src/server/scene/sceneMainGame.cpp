@@ -72,29 +72,8 @@ void SceneMainGame::upDate()
 {
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
-        // bool isCollision = false;
-        // TEAM_ID id = clientsData[i].teamId;
-        // chara[i].speed = tStatus[id].buff[BUFF_SPEED] ? 2.0f : 2.0f;
-
-        // Vector2f axisL = clientsData[i].controllerParam.axisL;
-
-        // CharaCollider[i].center += Vector3f(axisL.x, 0.0f, axisL.y);
-        // for (int j = 1; j < MAX_STATIC_OBJECTS; j++)
-        // {
-        //     if (CharaCollider[i].isCollision(staticCollider[j]))
-        //     {
-        //         isCollision = true;
-        //     }
-        // }
-        // if (!isCollision)
-        // {
-        //     chara[i].move(Vector3f(axisL.x, 0.0f, axisL.y));
-        //     cStatus[i].transform = chara[i].transform;
-        // }
-        // else
-        // {
-        //     CharaCollider[i].center -= Vector3f(axisL.x, 0.0f, axisL.y);
-        // }
+        Vector2f controllerVec = clientsData[i].controllerParam.axisL;
+        cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
     }
 }
 
@@ -117,13 +96,13 @@ void SceneMainGame::sendData()
         data.setData(&charaData, sizeof(CCharaData));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
-    {
-        DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
-        data.setData(&i, sizeof(int));
-        CObjectData objectData = dynamicObjectStatus[i].getDataForClient();
-        data.setData(&objectData, sizeof(CObjectData));
-        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    }
+    // for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    // {
+    //     DataBlock data;
+    //     data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
+    //     data.setData(&i, sizeof(int));
+    //     CObjectData objectData = dynamicObjectStatus[i].getDataForClient();
+    //     data.setData(&objectData, sizeof(CObjectData));
+    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+    // }
 }

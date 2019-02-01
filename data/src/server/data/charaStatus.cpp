@@ -1,8 +1,37 @@
 #include "./charaStatus.h"
 #include <iostream>
 
+GameObjectStatus *CharaStatus::staticObjects;
+
 CharaStatus::CharaStatus()
 {
+    speedValue = 0.1f;
+
+    this->transform = Transform();
+
+    Collider mainCollider(Obb(Vector3f(0, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
+    mainBody = new GameObjectStatus(NULL, &mainCollider);
+    mainBody->objectId = OBJECT_MUSH;
+
+    float handSize = 1.5f;
+    Vector3f handPos[HAND_NUMBER] = {
+        Vector3f(1.5f, 1.5f, 0.0f),
+        Vector3f(-1.5f, 1.5f, 0.0f),
+    };
+
+    Transform handInitTramsform[HAND_NUMBER] = {
+        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
+        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
+    };
+    for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
+    {
+        Collider handCollider(Sphere(handPos[HAND_NUMBER], handSize));
+        hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
+        hands[i]->objectId = OBJECT_CHARA_HAND;
+    }
+
+    lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
+    weapon = NULL;
 }
 CharaStatus::CharaStatus(Transform *transform)
 {
@@ -19,6 +48,7 @@ CharaStatus::CharaStatus(Transform *transform)
 
     Collider mainCollider(Obb(Vector3f(0, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
+    mainBody->objectId = OBJECT_MUSH;
 
     float handSize = 1.5f;
     Vector3f handPos[HAND_NUMBER] = {
@@ -34,13 +64,51 @@ CharaStatus::CharaStatus(Transform *transform)
     {
         Collider handCollider(Sphere(handPos[HAND_NUMBER], handSize));
         hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
+        hands[i]->objectId = OBJECT_CHARA_HAND;
     }
 
     lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
     weapon = NULL;
 }
 
+bool CharaStatus::init(GameObjectStatus *staticObjects)
+{
+    if (staticObjects == NULL)
+    {
+        return false;
+    }
+    CharaStatus::staticObjects = staticObjects;
+    return true;
+}
+
+void CharaStatus::move(Vector3f moveDirection)
+{
+    //当たり判定を動かす
+    //見る
+    //大丈夫なら更新
+    transform.position += moveDirection * speedValue;
+}
+
+bool checkGround()
+{
+}
+bool checkWall()
+{
+}
+
 CCharaData CharaStatus::getDataForClient()
 {
-    return CCharaData();
+    CCharaData ret;
+    ret.hp = this->hp;
+    ret.spawningTime = this->spawningTime;
+    ret.transform = this->transform;
+    ret.lookingDirection = this->lookingDirection;
+
+    ret.mainBodyData = this->mainBody->getDataForClient();
+    for (int i = 0; i < HAND_NUMBER; i++)
+    {
+        ret.handData[i] = this->hands[i]->getDataForClient();
+    }
+
+    return ret;
 }

@@ -1,6 +1,7 @@
 #include "./sceneBase.h"
 
 ClientData BaseScene::clientsData[MAX_PLAYERS];
+
 bool BaseScene::init()
 {
 }

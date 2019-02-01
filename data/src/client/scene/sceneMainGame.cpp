@@ -152,8 +152,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     {
         int id;
         NetworkManager::recvData(&id, sizeof(int));
-        CCharaData data;
-        NetworkManager::recvData(&data, sizeof(CCharaData));
+        NetworkManager::recvData(&charaData[id], sizeof(CCharaData));
     }
     else if (command == NC_SEND_OBJECT_DATA)
     {

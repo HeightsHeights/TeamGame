@@ -5,6 +5,7 @@ GameObjectStatus::GameObjectStatus()
 }
 GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
 {
+  this->objectId = OBJECT_NUMBER;
   if (transform == NULL)
   {
     this->transform = Transform();
@@ -28,5 +29,5 @@ void GameObjectStatus::clearTransform()
 
 CObjectData GameObjectStatus::getDataForClient()
 {
-  return CObjectData();
+  return CObjectData(this->objectId, &this->transform);
 }

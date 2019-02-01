@@ -10,18 +10,21 @@
 class CharaStatus
 {
 private:
+  static GameObjectStatus *staticObjects;
+
   GameObjectStatus *mainBody;
   GameObjectStatus *hands[HAND_NUMBER];
-
   GameObjectStatus *weapon;
+
+  bool checkGround();
+  bool checkWall();
 
 public:
   CharaStatus();
   CharaStatus(Transform *transform);
 
-  bool isAlive;
   unsigned int hp;
-  unsigned int spawingTime;
+  unsigned int spawningTime;
 
   Transform initTransform;
   Transform transform;
@@ -31,6 +34,9 @@ public:
   Vector3f speed;
   Vector3f accel;
 
+  static bool init(GameObjectStatus *staticObjects);
+
   void clearTransform();
+  void move(Vector3f moveDirection);
   CCharaData getDataForClient();
 };

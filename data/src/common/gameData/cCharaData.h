@@ -16,7 +16,7 @@ private:
 public:
   CCharaData();
   unsigned int hp;
-  unsigned int spawingTime;
+  unsigned int spawningTime;
   Transform transform;
 
   CObjectData mainBodyData;

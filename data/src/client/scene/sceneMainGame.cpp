@@ -149,7 +149,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
-    Vector3f *pMyCharaPos = &charaData[myId].transform.position;
+       Vector3f *pMyCharaPos = &charaData[myId].transform.position;
     if (pMyCharaPos->x > -110 && pMyCharaPos->x < 110 && pMyCharaPos->z < 50)
     {
         gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);

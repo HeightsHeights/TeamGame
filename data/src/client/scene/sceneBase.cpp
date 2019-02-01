@@ -3,10 +3,12 @@
 #include <GL/gl.h>
 BaseScene::BaseScene(WindowManager *window)
 {
+    this->myId = 0;
     this->window = window;
 }
 BaseScene::BaseScene(WindowManager *window, ConfigData *config)
 {
+    this->myId = 0;
     this->window = window;
     this->config = config;
 }

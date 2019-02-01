@@ -10,10 +10,10 @@
 
 #define OBJ_DIR_PATH "./data/res/gui/obj/"
 
-static const SDL_Color gRed = {0, 0, 255, 0};
+// static const SDL_Color gRed = {0, 0, 255, 0};
 
-ObjRawModel **SceneMainGame::Object::models;
-bool SceneMainGame::Object::initable = true;
+// // ObjRawModel **SceneMainGame::Object::models;
+// // bool SceneMainGame::Object::initable = true;
 
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
@@ -36,8 +36,7 @@ bool SceneMainGame::init()
         "weapon/",
         "jewelry/",
     };
-
-    std::string objName[OBJECT_NUMBER] = {
+    const std::string objName[OBJECT_NUMBER] = {
         "cube",
         "led",
         "redtower",
@@ -50,7 +49,6 @@ bool SceneMainGame::init()
         "bomb",
         "ruby",
     };
-
     for (int i = 0; i < OBJECT_NUMBER; i++)
     {
         objects[i] = ObjModelLoader().load(OBJ_DIR_PATH + objFileDir[i], objName[i]);
@@ -60,18 +58,12 @@ bool SceneMainGame::init()
         }
     }
 
-    gameObjects = Object(&objects[0]);
-
     bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
 
-    object = ObjModelLoader().load("./data/res/gui/obj/jewelry/", "sapphire");
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
     falleff = GuiSpriteLoader().load("./data/res/gui/image/effect/death.png", 8, 1);
-
-    explosioon_emission == 0;
-    atkmode = false;
 
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
@@ -94,28 +86,6 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     NetworkManager::sendData(data, data.getDataSize());
 
     mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
-    if (param.buttonDown[CT_DECITION_OR_ATTACK] && explosioon_emission == 0)
-    {
-        atkmode = true;
-
-        explosioon_emission = 1;
-        //trialpart->generate(15);
-    }
-
-    if (param.buttonUp[CT_DECITION_OR_ATTACK])
-        explosioon_emission = 0;
-    if (atkmode)
-    {
-        static int atk;
-        mush->motion(Character::MOTION_ATTACK, atk++);
-
-        if (atk > 45)
-        {
-            mush->motion(Character::MOTION_NULL, 0);
-            atk = 0;
-            atkmode = false;
-        }
-    }
 
     if (param.buttonDown[CT_GRUB] == true)
     {

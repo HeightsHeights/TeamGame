@@ -31,7 +31,7 @@ bool SceneMainGame::init()
     for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
     {
         staticObjectStatus[i] = GameObjectStatus(NULL, &colliders[i]);
-        staticObjectStatus[i].id = ids[i];
+        staticObjectStatus[i].objectId = ids[i];
     }
 
     for (int i = 0; i < TEAM_NUMBER; i++)

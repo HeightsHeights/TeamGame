@@ -11,8 +11,8 @@
 #include "../render/particle/particleLoader.h"
 #include "../gameObject/character/character.h"
 
-#include "../../../common/gameData/cObjectData.h"
-#include "../../../common/gameData/cCharaData.h"
+#include "../../common/gameData/cObjectData.h"
+#include "../../common/gameData/cCharaData.h"
 
 /******************************************************************************
  * class SceneMainGame
@@ -23,52 +23,10 @@
 class SceneMainGame : public BaseScene
 {
 private:
-public:
-  typedef enum {
-    OBJECT_SKYBOX = 0,
-    OBJECT_TILE = 1,
-    OBJECT_TOWER_R = 2,
-    OBJECT_TOWER_B = 3,
-    OBJECT_DEBUG_OBB = 4,
-    OBJECT_DEBUG_SPHERE = 5,
-    OBJECT_BLOCK_R = 6,
-    OBJECT_BLOCK_B = 7,
-    OBJECT_BLOCK_NORMAL = 8,
-    OBJECT_BOMB = 9,
-    OBJECT_RUBY = 10,
-    OBJECT_NUMBER = 11,
-  } OBJECT_ID;
-
-  class Object
-  {
-  private:
-    static ObjRawModel **models;
-    static bool initable;
-
-  public:
-    Object() {}
-    Object(ObjRawModel **models)
-    {
-      if (initable)
-      {
-        Object::models = models;
-        initable = false;
-      }
-    }
-
-    ObjRawModel *getModelP(OBJECT_ID id) { return *(models + id); }
-    SceneMainGame::OBJECT_ID id;
-    Transform transform;
-  };
-
-private:
   Character *mush;
   Character *bamboo;
 
   ObjRawModel *objects[OBJECT_NUMBER];
-  Object gameObjects;
-
-  ObjRawModel *object;
 
   GuiSprite *explosion;
   GuiSprite *falleff;
@@ -76,8 +34,7 @@ private:
 
   TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;
-  int explosioon_emission;
-  bool atkmode;
+
   Vector3f lookMove;
   virtual void draw3D();
   virtual void draw2D();

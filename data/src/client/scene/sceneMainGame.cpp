@@ -63,6 +63,20 @@ bool SceneMainGame::init()
         }
     }
 
+    Transform staticObjectTranforms[] = {
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(120.0f, 1.0f, 100.0f)),
+    };
+    const OBJECT_ID staticObjectIds[] = {
+        OBJECT_SKYBOX,
+        OBJECT_TILE,
+    };
+    for (int i = 0; i < MAX_STATIC_OBJECTS; i++)
+    {
+        staticObjectData[i] = CObjectData(OBJECT_TILE, &staticObjectTranforms[i]);
+    }
+
     // bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     // mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
 
@@ -149,7 +163,7 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
-       Vector3f *pMyCharaPos = &charaData[myId].transform.position;
+    Vector3f *pMyCharaPos = &charaData[myId].transform.position;
     if (pMyCharaPos->x > -110 && pMyCharaPos->x < 110 && pMyCharaPos->z < 50)
     {
         gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);

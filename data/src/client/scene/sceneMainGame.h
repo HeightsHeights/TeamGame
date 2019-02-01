@@ -9,10 +9,8 @@
 #include "./mainGame/statusDrawer.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
 #include "../render/particle/particleLoader.h"
-#include "../gameObject/character/character.h"
 
-#include "../../common/gameData/cObjectData.h"
-#include "../../common/gameData/cCharaData.h"
+#include "./mainGame/objectDrawer.h"
 
 /******************************************************************************
  * class SceneMainGame
@@ -23,14 +21,19 @@
 class SceneMainGame : public BaseScene
 {
 private:
-  Character *mush;
-  Character *bamboo;
+  // Character *mush;
+  // Character *bamboo;
 
   ObjRawModel *objects[OBJECT_NUMBER];
 
   GuiSprite *explosion;
   GuiSprite *falleff;
   Particle *trialpart;
+
+  CCharaData charaData[MAX_PLAYERS];
+  CObjectData staticObjectData[MAX_STATIC_OBJECTS];
+  CObjectData dynamicObjectData[MAX_DYNAMIC_OBJECTS];
+  ObjectDrawer *objectDrawer;
 
   TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;

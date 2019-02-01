@@ -81,7 +81,7 @@ SCENE_ID SceneLoading::executeCommand(int command)
     else if (command == NS_SEND_ID)
     {
         NetworkManager::recvData(&myId, sizeof(int));
-        }
+    }
 
     return nextScene;
 }

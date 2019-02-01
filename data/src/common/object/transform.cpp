@@ -10,11 +10,3 @@ Transform::Transform(Vector3f position, Vector3f rotation, Vector3f scale)
     this->rotation = rotation;
     this->scale = scale;
 }
-
-Transform Transform::operator=(Transform obj)
-{
-    this->position = obj.position;
-    this->rotation = obj.rotation;
-    this->scale = obj.scale;
-    return *this;
-}

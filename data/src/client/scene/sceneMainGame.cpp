@@ -10,11 +10,6 @@
 
 #define OBJ_DIR_PATH "./data/res/gui/obj/"
 
-// static const SDL_Color gRed = {0, 0, 255, 0};
-
-// // ObjRawModel **SceneMainGame::Object::models;
-// // bool SceneMainGame::Object::initable = true;
-
 SceneMainGame::SceneMainGame(WindowManager *window) : BaseScene(window)
 {
 }
@@ -68,8 +63,8 @@ bool SceneMainGame::init()
         }
     }
 
-    bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
-    mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
+    // bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
+    // mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
 
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
@@ -80,6 +75,7 @@ bool SceneMainGame::init()
         tStatus[i] = TeamStatus();
     }
 
+    objectDrawer = new ObjectDrawer(&objects[0]);
     statusDrawer = new StatusDrawer();
     if (!statusDrawer->init())
     {
@@ -95,22 +91,22 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     data.setData(&param, sizeof(ControllerParam));
     NetworkManager::sendData(data, data.getDataSize());
 
-    mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
+    // mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
 
-    if (param.buttonDown[CT_GRUB] == true)
-    {
-        static int time;
-        if (time > 90)
-        {
-            time = 0;
-            mush->motion(Character::MOTION_NULL, 0);
-        }
-        mush->motion(Character::MOTION_GRUB, time++);
-    }
-    else
-    {
-        mush->motion(Character::MOTION_NULL, 0);
-    }
+    // if (param.buttonDown[CT_GRUB] == true)
+    // {
+    //     static int time;
+    //     if (time > 90)
+    //     {
+    //         time = 0;
+    //         mush->motion(Character::MOTION_NULL, 0);
+    //     }
+    //     mush->motion(Character::MOTION_GRUB, time++);
+    // }
+    // else
+    // {
+    //     mush->motion(Character::MOTION_NULL, 0);
+    // }
 
     return SI_MAIN;
 }
@@ -152,17 +148,19 @@ void SceneMainGame::draw3D()
 {
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
-    if (mush->transform.position.x > -110 && mush->transform.position.x < 110 && mush->transform.position.z < 50)
+
+       Vector3f *pMyCharaPos = &charaData[myId].transform.position;
+    if (pMyCharaPos->x > -110 && pMyCharaPos->x < 110 && pMyCharaPos->z < 50)
     {
-        gluLookAt(mush->transform.position.x, 150, 100 + mush->transform.position.z, mush->transform.position.x, 0, mush->transform.position.z, 0, 1, 0);
-        lookMove = mush->transform.position;
+        gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);
+        lookMove = *pMyCharaPos;
     }
     else
     {
         gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
     }
+
     float lightPos[] = {0, 1000, 300, 1};
-    // float lightPos[] = {0, 100, 0, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     //skyBox

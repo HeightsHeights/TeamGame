@@ -182,5 +182,5 @@ void StatusDrawer::drawResult(RESULT_ID result)
     {
         return;
     }
-    image[(result == RESULT_WIN) ? IMAGE_WIN : IMAGE_LOSE]->draw(NULL, NULL, 1.0f);
+    image[(result == RESULT_MUSH_WIN) ? IMAGE_MUSH_WIN : IMAGE_BAMBOO_WIN]->draw(NULL, NULL, 1.0f);
 }

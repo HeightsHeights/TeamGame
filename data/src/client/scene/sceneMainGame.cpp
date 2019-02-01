@@ -63,7 +63,7 @@ bool SceneMainGame::init()
         }
     }
     Transform staticObjectTranforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(185.0f, 90.0f, 140.0f)),
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f)),
         Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
         Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
         Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
@@ -174,7 +174,7 @@ void SceneMainGame::draw3D()
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
     Vector3f *pMyCharaPos = &charaData[myId].transform.position;
-    if (pMyCharaPos->x > -110 && pMyCharaPos->x < 110 && pMyCharaPos->z < 50)
+    if (pMyCharaPos->x > -150 && pMyCharaPos->x < 150 && pMyCharaPos->z < 75)
     {
         gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);
         lookMove = *pMyCharaPos;

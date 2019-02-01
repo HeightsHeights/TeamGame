@@ -194,7 +194,6 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
                 }
                 else
                 {
-                    AudioManager::stopBGM(BGM_TITLE_OR_SELECT);
                     return SI_LOADING;
                 }
             }

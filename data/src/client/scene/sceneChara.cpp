@@ -28,7 +28,7 @@ bool SceneChara::init()
             "configbg.png",
             "charaselsect/mushroom.png",
             "charaselsect/bambooshoot.png",
-            "ready.png",
+            "charaselsect/ready.png",
             "charaselsect/namebox1.png",
             "charaselsect/namebox2.png",
             "nameFrames/nameFramenot.png",
@@ -137,6 +137,7 @@ SCENE_ID SceneChara::executeCommand(int command)
 
     if (command == NC_MOVE_SCENE)
     {
+        AudioManager::stopBGM(BGM_TITLE_OR_SELECT);
         return SI_MAIN;
     }
     else if (command == NC_FINISH)

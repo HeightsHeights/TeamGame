@@ -8,24 +8,24 @@ bool SceneMainGame::init()
 {
     Collider colliders[] = {
         Collider(Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100))),     //床
-        Collider(Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10))), //壁
-        Collider(Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10))), //壁
-        Collider(Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10))),     //壁
-        Collider(Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10))),  //壁
-        Collider(Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10))),   //壁
         Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
         Collider(Obb(Vector3f(140, 20, 0), Touple3f(3, 20, 3))),     //塔
+        Collider(Obb(Vector3f(-100, 10, 40), Touple3f(10, 10, 10))), //壁
+        Collider(Obb(Vector3f(-65, 10, -40), Touple3f(10, 10, 10))), //壁
+        Collider(Obb(Vector3f(85, 10, -40), Touple3f(10, 10, 10))),  //壁
+        Collider(Obb(Vector3f(50, 10, 40), Touple3f(10, 10, 10))),   //壁
+        Collider(Obb(Vector3f(0, 10, 0), Touple3f(10, 10, 10))),     //壁
     };
 
     OBJECT_ID ids[] = {
         OBJECT_TILE,
-        OBJECT_WALL_R,
-        OBJECT_WALL_R,
-        OBJECT_WALL_NORMAL,
-        OBJECT_WALL_B,
-        OBJECT_WALL_B,
         OBJECT_TOWER_R,
         OBJECT_TOWER_B,
+        OBJECT_WALL_R,
+        OBJECT_WALL_R,
+        OBJECT_WALL_B,
+        OBJECT_WALL_B,
+        OBJECT_WALL_NORMAL,
     };
 
     for (int i = 0; i < SOBJECT_NUMBER - SOBJECT_TILE; i++)

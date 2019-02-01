@@ -28,26 +28,36 @@ bool SceneMainGame::init()
         "map/",
         "tower/",
         "tower/",
-        "collider/",
-        "collider/",
         "object/",
         "object/",
         "object/",
         "weapon/",
         "jewelry/",
+        "jewelry/",
+        "jewelry/",
+        "kinokochara/",
+        "bambooshootchara/",
+        "kinokochara/",
+        "collider/",
+        "collider/",
     };
     const std::string objName[OBJECT_NUMBER] = {
         "cube",
         "led",
         "redtower",
         "bluetower",
-        "obb",
-        "sphere",
         "block_R",
         "block_B",
         "block",
         "bomb",
         "ruby",
+        "sapphire",
+        "emerald",
+        "kinoko",
+        "bambooshoot",
+        "hand",
+        "obb",
+        "sphere",
     };
     for (int i = 0; i < OBJECT_NUMBER; i++)
     {
@@ -159,7 +169,7 @@ void SceneMainGame::draw3D()
     ShaderManager::startShader(SID_TEXTURING);
     glPushMatrix();
     glScalef(185.0f, 90.0f, 140.0f);
-    // gameObjects.getModelP(OBJECT_SKYBOX)->draw();
+    objects[OBJECT_SKYBOX]->draw();
     glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);
 
@@ -167,25 +177,25 @@ void SceneMainGame::draw3D()
     ShaderManager::startShader(SID_T_PHONG);
     glPushMatrix();
     glScalef(20.0f, 1.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_TILE)->draw();
+    objects[OBJECT_TILE]->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-100.0, 10.0, 40);
     glScalef(10.0f, 10.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_BLOCK_R)->draw();
+    objects[OBJECT_WALL_R]->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-65.0, 10.0, -40);
     glScalef(10.0f, 10.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_BLOCK_R)->draw();
+    objects[OBJECT_WALL_R]->draw();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(85.0, 10.0, -40);
     glScalef(10.0f, 10.0f, 10.0f);
-    // gameObjects.getModelP(OBJECT_BLOCK_B)->draw();
+    objects[OBJECT_WALL_B]->draw();
     glPopMatrix();
 
     glPushMatrix();

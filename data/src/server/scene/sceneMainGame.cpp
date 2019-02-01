@@ -19,13 +19,13 @@ bool SceneMainGame::init()
 
     OBJECT_ID ids[] = {
         OBJECT_TILE,
-        OBJECT_WALL,
-        OBJECT_WALL,
-        OBJECT_WALL,
-        OBJECT_WALL,
-        OBJECT_WALL,
-        OBJECT_TOWER,
-        OBJECT_TOWER,
+        // OBJECT_WALL,
+        // OBJECT_WALL,
+        // OBJECT_WALL,
+        // OBJECT_WALL,
+        // OBJECT_WALL,
+        // OBJECT_TOWER,
+        // OBJECT_TOWER,
     };
 
     for (int i = 0; i < MAX_STATIC_OBJECTS; i++)

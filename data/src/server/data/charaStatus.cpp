@@ -10,6 +10,8 @@ CharaStatus::CharaStatus()
 }
 CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
 {
+    this->atkMode = false;
+    this->haveWeapon = false;
     this->teamId = id;
     this->hp = MAX_CHARA_HP;
     this->spawningTime = 0;
@@ -65,13 +67,14 @@ void CharaStatus::move(Vector3f moveDir)
 
     //当たり判定を動かす
     Collider tmpCollider = this->mainBody->collider;
-    tmpCollider.move(moveDir * speedValue);
+
     //見る
 
     if (!checkGround(tmpCollider))
     {
         transform.position.y -= 0.1;
-        this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
+        this->mainBody->collider.move(Vector3f(0.0f, -0.1f, 0.0f));
+
         if (transform.position.y < -20 && this->hp != 0)
         {
             this->hp = 0;
@@ -83,6 +86,7 @@ void CharaStatus::move(Vector3f moveDir)
         if (!checkWall(tmpCollider))
         {
             //大丈夫なら更新
+            tmpCollider.move(moveDir * speedValue);
             transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
             if (moveDir != Vector3f_ZERO)

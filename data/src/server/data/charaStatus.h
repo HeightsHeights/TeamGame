@@ -36,6 +36,9 @@ public:
   Vector3f speed;
   Vector3f accel;
 
+  bool atkMode;
+  bool haveWeapon;
+
   static bool init(GameObjectStatus *staticObjects);
 
   void move(Vector3f moveDir);

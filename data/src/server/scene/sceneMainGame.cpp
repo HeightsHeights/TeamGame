@@ -50,10 +50,6 @@ bool SceneMainGame::init()
         fprintf(stderr, "Error --> CharaStatus::init()\n");
         return false;
     }
-    for (int i = 0; i < MAX_PLAYERS; i++)
-    {
-        clientsData[i].atkMode = false;
-    }
 
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
@@ -105,14 +101,14 @@ void SceneMainGame::upDate()
 
         //moving
         charaMovingProcces(i);
-        if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[i].atkMode == false)
-        {
-            clientsData[i].atkMode = true;
-        }
-        if (clientsData[i].atkMode == true)
-        {
-            clientsData[i].atkMode = cStatus[i].attack();
-        }
+        // if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && !cStatus[i].atkMode)
+        // {
+        //     cStatus[i].atkMode = true;
+        // }
+        // if (!cStatus[i].atkMode)
+        // {
+        //     cStatus[i].atkMode = cStatus[i].attack();
+        // }
         // if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB])
         // {
         //     cStatus[i].weaponThrow(clientsData[i].haveWeapon);
@@ -180,7 +176,7 @@ void SceneMainGame::charaSpawningProcces(int id)
     pChara->spawningTime--;
     if (pChara->spawningTime == 0)
     {
-        pChara->setPos((pChara->teamId == TEAM_MUSH) ? Vector3f(-20.0f, 10.0f, 0.0f) : Vector3f(20.0f, 10.0f, 0.0f));
+        pChara->setPos((pChara->teamId == TEAM_MUSH) ? Vector3f(-20.0f, 0.0f, 0.0f) : Vector3f(20.0f, 0.0f, 0.0f));
         pChara->hp = MAX_CHARA_HP;
     }
 }
@@ -188,13 +184,13 @@ void SceneMainGame::charaMovingProcces(int id)
 {
     Vector2f controllerVec = clientsData[id].controllerParam.axisL;
 
-    if (clientsData[id].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[id].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[id].atkMode == false)
+    if (clientsData[id].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[id].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && !cStatus[id].atkMode)
     {
-        clientsData[id].atkMode = true;
+        cStatus[id].atkMode = true;
     }
-    if (clientsData[id].atkMode == true)
+    if (cStatus[id].atkMode)
     {
-        clientsData[id].atkMode = cStatus[id].attack();
+        cStatus[id].atkMode = cStatus[id].attack();
     }
     cStatus[id].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
 }

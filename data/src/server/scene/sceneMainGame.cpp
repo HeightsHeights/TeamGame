@@ -97,7 +97,7 @@ void SceneMainGame::sendData()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_CHARA_DATA);
+        data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
         data.setData(&i, sizeof(int));
         CCharaData charaData = cStatus[i].getDataForClient();
         data.setData(&charaData, sizeof(CCharaData));

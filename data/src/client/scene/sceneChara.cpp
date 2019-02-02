@@ -18,6 +18,7 @@ SceneChara::SceneChara(WindowManager *window, ConfigData *config) : BaseScene(wi
 }
 bool SceneChara::init()
 {
+    isFirst = true;
     angle = 0;
     count = 0;
     secount = 0;
@@ -55,6 +56,15 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::reactController(ControllerParam param)
 {
+    if (isFirst)
+    {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            SceneChara::player[i].name = &BaseScene::players[i].name[0];
+            connect[i] = true;
+            isFirst = false;
+        }
+    }
     if (button == true)
     {
         if (mypos.y == 0)
@@ -115,12 +125,6 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(data, data.getDataSize());
     }
-    else
-    {
-        DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_CHARA_DATA);
-        NetworkManager::sendData(data, data.getDataSize());
-    }
 
     if (mypos.y == 0)
     {
@@ -134,15 +138,15 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
 }
 SCENE_ID SceneChara::executeCommand(int command)
 {
-
+    SCENE_ID nextScene = SI_CHARASELECT;
     if (command == NC_MOVE_SCENE)
     {
         AudioManager::stopBGM(BGM_TITLE_OR_SELECT);
-        return SI_MAIN;
+        nextScene = SI_MAIN;
     }
     else if (command == NC_FINISH)
     {
-        return SI_NUMBER;
+        nextScene = SI_NUMBER;
     }
     else if (command == NC_SEND_CONTROLLER_PARAM)
     {
@@ -153,14 +157,6 @@ SCENE_ID SceneChara::executeCommand(int command)
         NetworkManager::recvData(positionData, sizeof(Vector2f));
         player[num].position.x = positionData.x;
     }
-    else if (command == NC_SEND_NAME)
-    {
-        int num;
-        NetworkManager::recvData(&num, sizeof(int));
-        connect[num] = true;
-        NetworkManager::recvData(&BaseScene::players[num].name, sizeof(char *));
-        SceneChara::player[num].name = &BaseScene::players[num].name[0];
-    }
 
     count = 0;
     for (int i = 0; i < MAX_PLAYERS; i++)
@@ -170,7 +166,8 @@ SCENE_ID SceneChara::executeCommand(int command)
             count++;
         }
     }
-    return SI_CHARASELECT;
+
+    return nextScene;
 }
 
 void SceneChara::drawBackground()
@@ -188,10 +185,10 @@ void SceneChara::draw3D()
     gluLookAt(-5, 4, 30 + positionChara.y, positionChara.x, 0, positionChara.y, 0, 1, 0);
     float lightPos[] = {-100, 50, 150, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    glPushMatrix();
-    glScalef(1.0f, 2.0f, 1.0f);
 
     ShaderManager::startShader(SID_NT_PHONG);
+    glPushMatrix();
+    glScalef(1.0f, 2.0f, 1.0f);
     glTranslatef(-10, -1, positionChara.y);
     glRotated(angle, 0, 1, 0);
     if (mypos.x == 0)
@@ -203,6 +200,7 @@ void SceneChara::draw3D()
         bamboo->draw();
     }
     glPopMatrix();
+    ShaderManager::stopShader(SID_NT_PHONG);
 }
 void SceneChara::draw2D()
 {
@@ -226,9 +224,9 @@ void SceneChara::draw2D()
     ShaderManager::stopShader(SID_GUI);
 }
 
-void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *name)
+void SceneChara::drawPlayer(Vector2f pos, COLOR_ID cid, bool exist, const char *name)
 {
-    if (!exit)
+    if (!exist)
     {
         GuiRect dst2 = GuiRect(pos.x, pos.y, FRAME_WIDTH, FRAME_WIDTH);
         dst2 = GuiRect(pos.x, pos.y - FRAME_WIDTH * 9 / 8, 6 * FRAME_WIDTH, 100);

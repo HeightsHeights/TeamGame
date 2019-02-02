@@ -28,14 +28,6 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         return SI_MAIN;
     }
-    else if (command == NC_SEND_CHARA_DATA)
-    {
-        DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_NAME);
-        data.setData(&pos, sizeof(int));
-        data.setData(&clientsData[pos].name, sizeof(char *));
-        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    }
     else if (command == NC_FINISH)
     {
         DataBlock data;

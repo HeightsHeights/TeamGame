@@ -84,16 +84,17 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
 
 void CharaStatus::move(Vector3f moveDir)
 {
-    //当たり判定を動かす
-    Collider tmpCollider = this->mainBody->collider;
-    tmpCollider.move(moveDir * speedValue);
-    //見る
-    if (!checkWall(tmpCollider))
-    {
-        //大丈夫なら更新
-        transform.position += moveDir * speedValue;
-        this->mainBody->collider = tmpCollider;
-    }
+    // //当たり判定を動かす
+    // Collider tmpCollider = this->mainBody->collider;
+    // tmpCollider.move(moveDir * speedValue);
+    // //見る
+    // if (!checkWall(tmpCollider))
+    // {
+    //     //大丈夫なら更新
+    //     transform.position += moveDir * speedValue;
+    //     this->mainBody->collider = tmpCollider;
+    // }
+    transform.position += moveDir * speedValue;
 }
 
 bool CharaStatus::checkGround(Collider collider)

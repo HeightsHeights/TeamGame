@@ -169,7 +169,7 @@ bool WiiRemote::scanEndFlag()
     {
         return true;
     }
-    if (wiimote.keys.a && wiimote.keys.b && wiimote.ext.nunchuk.keys.c && wiimote.ext.nunchuk.keys.c)
+    if (wiimote.keys.home)
     {
         return true;
     }

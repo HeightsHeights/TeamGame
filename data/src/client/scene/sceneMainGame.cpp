@@ -220,7 +220,7 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
-        objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
+        // objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
     //Weapon
 

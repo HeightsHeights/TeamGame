@@ -43,7 +43,7 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
         hands[i]->objectId = OBJECT_CHARA_HAND;
     }
 
-    lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
+    lookingDirection = (id == TEAM_MUSH) ? Vector3f(1.0f, 0.0f, 0.0f) : Vector3f(-1.0f, 0.0f, 0.0f);
     weapon = NULL;
 }
 
@@ -59,16 +59,23 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
 
 void CharaStatus::move(Vector3f moveDir)
 {
+
     //当たり判定を動かす
     Collider tmpCollider = this->mainBody->collider;
     tmpCollider.move(moveDir * speedValue);
     //見る
+
     if (!checkWall(tmpCollider))
     {
         //大丈夫なら更新
         transform.position += moveDir * speedValue;
         this->mainBody->collider = tmpCollider;
+        if (moveDir != Vector3f_ZERO)
+        {
+            lookingDirection = moveDir.normalize();
+        }
     }
+
     if (checkGround(tmpCollider) == false)
     {
         transform.position.y -= 0.1;

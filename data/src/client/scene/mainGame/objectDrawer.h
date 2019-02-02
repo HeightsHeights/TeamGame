@@ -12,6 +12,7 @@ public:
   ObjectDrawer();
   ObjectDrawer(ObjRawModel **pObjects);
 
+  void lookatDir(Vector3f direction);
   void drawChara(CCharaData chara);
   void drawObject(CObjectData object);
   void drawCollider(CColliderData collider);

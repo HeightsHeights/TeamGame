@@ -13,7 +13,7 @@ void ObjectDrawer::drawChara(CCharaData chara)
     glPushMatrix();
     glScalef(chara.transform.scale.x, chara.transform.scale.y, chara.transform.scale.z);
     glTranslatef(chara.transform.position.x, chara.transform.position.y, chara.transform.position.z);
-    // lookatDir(lookingDirection);
+    lookatDir(chara.lookingDirection);
 
     glPushMatrix();
     Transform *pMainBodyTransform = &chara.mainBodyData.transform;
@@ -35,6 +35,21 @@ void ObjectDrawer::drawChara(CCharaData chara)
     // weapon
 
     glPopMatrix();
+}
+
+void ObjectDrawer::lookatDir(Vector3f direction)
+{
+    direction.y = 0;
+
+    Vector3f vecY = Vector3f(0, 1, 0);
+    Vector3f vecZ = Vector3f(0, 0, 1);
+
+    float theta = direction.betweenAngleDegree(vecZ);
+    if (Vector3f::cross(vecZ, direction).y < 0)
+    {
+        theta *= -1;
+    }
+    glRotated(theta, vecY.x, vecY.y, vecY.z);
 }
 void ObjectDrawer::drawObject(CObjectData object)
 {

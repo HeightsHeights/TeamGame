@@ -1,7 +1,7 @@
 #include "./charaStatus.h"
 #include <iostream>
 
-#define SPAWNING_RATIO 200
+#define SPAWNING_RATIO 300
 
 GameObjectStatus *CharaStatus::staticObjects;
 
@@ -62,6 +62,7 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
 
 void CharaStatus::move(Vector3f moveDir)
 {
+
     //当たり判定を動かす
     Collider tmpCollider = this->mainBody->collider;
     tmpCollider.move(moveDir * speedValue);
@@ -90,48 +91,13 @@ void CharaStatus::move(Vector3f moveDir)
             }
         }
     }
-
     // transform.position += moveDir * speedValue;
 }
-<<<<<<< HEAD
 void CharaStatus::setPos(Vector3f pos)
 {
     this->transform.position = pos;
     this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
 }
-=======
-
-bool CharaStatus::attack()
-{
-    this->hands[HAND_LEFT]->speed.z = 0.5f;
-    this->hands[HAND_LEFT]->transform.position += this->hands[HAND_LEFT]->speed;
-    if (this->hands[HAND_LEFT]->transform.position.z > 8.0)
-    {
-        this->hands[HAND_LEFT]->speed.z = 0;
-        this->hands[HAND_LEFT]->clearTransform();
-        return false;
-    }
-    return true;
-}
-
-// void CharaStatus::weaponThrow(bool haveWeapon)
-// {
-
-//     Collider tmpCollider = this->mainBody->collider;
-//     if (haveWeapon == false)
-//     {
-//         if () //武器と拾うところの当たり判定
-//             haveWeapon == true;
-//     }
-//     else
-//     {
-//         //投げる動作
-//         haveWeapon = false;
-//     }
-//     return;
-// }
-
->>>>>>> f47974cdc239b938c8f83c87d99ece6139e53434
 bool CharaStatus::checkGround(Collider collider)
 {
     return Collider::isCollision(collider, staticObjects[SOBJECT_TILE].collider);

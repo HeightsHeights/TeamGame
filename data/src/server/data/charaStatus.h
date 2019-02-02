@@ -39,11 +39,8 @@ public:
   static bool init(GameObjectStatus *staticObjects);
 
   void move(Vector3f moveDir);
-<<<<<<< HEAD
   void setPos(Vector3f pos);
-=======
   bool attack();
   void weaponThrow(bool haveWeapon);
->>>>>>> f47974cdc239b938c8f83c87d99ece6139e53434
   CCharaData getDataForClient();
 };

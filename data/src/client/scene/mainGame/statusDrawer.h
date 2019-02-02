@@ -6,6 +6,7 @@
 #include "../../render/gui/sprite/guiSpriteLoader.h"
 #include "../../../common/gameData/teamStatus.h"
 #include "../../../common/gameData/teamData.h"
+#include "../../../common/gameData/signalId.h"
 
 #define UNIT_WIDTH 50
 #define HP_WIDTH 400
@@ -33,10 +34,12 @@ private:
     IMAGE_SPBUFF = 16,
     IMAGE_MUSHHPFRAME = 17,
     IMAGE_BAMBOOHPFRAME = 18,
-    IMAGE_MUSH_WIN = 19,
-    IMAGE_BAMBOO_WIN = 20,
-    IMAGE_YOU_ARE_DEAD = 21,
-    IMAGE_NUMBER = 22,
+    IMAGE_READY = 19,
+    IMAGE_GO = 20,
+    IMAGE_MUSH_WIN = 21,
+    IMAGE_BAMBOO_WIN = 22,
+    IMAGE_YOU_ARE_DEAD = 23,
+    IMAGE_NUMBER = 24,
   } IMAGE_ID;
   GuiImage *image[IMAGE_NUMBER];
 
@@ -52,4 +55,5 @@ public:
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc);
   void drawResult(RESULT_ID result);
   void drawDeadMessage(float size, unsigned int spawningTime);
+  void drawReadySignal(SIGNAL_ID id);
 };

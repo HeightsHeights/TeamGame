@@ -278,5 +278,6 @@ void SceneMainGame::draw2D()
     {
         statusDrawer->drawDeadMessage(1.0f, charaData[myId].spawningTime);
     }
+    statusDrawer->drawReadySignal(SIGNAL_NULL);
     ShaderManager::stopShader(SID_GUI);
 }

@@ -221,15 +221,15 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
-        objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
+        // objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
     //Weapon
 
     //Collider
-    for (int i = SOBJECT_TOWER_R; i < SOBJECT_NUMBER; i++)
-    {
-        objectDrawer->drawCollider(staticObjectData[i].collider);
-    }
+    // for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
+    // {
+    //     objectDrawer->drawCollider(staticObjectData[i].collider);
+    // }
 
     ShaderManager::stopShader(SID_NT_PHONG);
 
@@ -268,7 +268,7 @@ void SceneMainGame::draw2D()
 
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
-        statusDrawer->draw(Vector2f(-475 + 250 * i, -200), TEAM_MUSH, charaData[i].hp, true, BaseScene::players[i].name);
+        statusDrawer->draw(Vector2f(-475 + 250 * i, -200), TEAM_MUSH, charaData[i].hp, (charaData[i].hp == 0) ? false : true, BaseScene::players[i].name);
     }
 
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);

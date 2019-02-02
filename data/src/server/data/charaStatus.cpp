@@ -8,9 +8,9 @@ CharaStatus::CharaStatus()
     this->hp = MAX_CHARA_HP;
     speedValue = 0.1f;
 
-    this->transform = Transform(Vector3f(10.0f, 0, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
+    this->transform = Transform(Vector3f(20.0f, 0, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
 
-    Collider mainCollider(Obb(Vector3f(10.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
+    Collider mainCollider(Obb(Vector3f(20.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
     mainBody->objectId = OBJECT_MUSH;
 
@@ -84,17 +84,17 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
 
 void CharaStatus::move(Vector3f moveDir)
 {
-    // //当たり判定を動かす
-    // Collider tmpCollider = this->mainBody->collider;
-    // tmpCollider.move(moveDir * speedValue);
-    // //見る
-    // if (!checkWall(tmpCollider))
-    // {
-    //     //大丈夫なら更新
-    //     transform.position += moveDir * speedValue;
-    //     this->mainBody->collider = tmpCollider;
-    // }
-    transform.position += moveDir * speedValue;
+    //当たり判定を動かす
+    Collider tmpCollider = this->mainBody->collider;
+    tmpCollider.move(moveDir * speedValue);
+    //見る
+    if (!checkWall(tmpCollider))
+    {
+        //大丈夫なら更新
+        transform.position += moveDir * speedValue;
+        this->mainBody->collider = tmpCollider;
+    }
+    // transform.position += moveDir * speedValue;
 }
 
 bool CharaStatus::checkGround(Collider collider)

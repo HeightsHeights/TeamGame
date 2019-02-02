@@ -27,6 +27,7 @@ private:
   GuiSprite *falleff;
   Particle *trialpart;
 
+  CObjectData skybox;
   CCharaData charaData[MAX_PLAYERS];
   CObjectData staticObjectData[SOBJECT_NUMBER];
   CObjectData dynamicObjectData[MAX_DYNAMIC_OBJECTS];

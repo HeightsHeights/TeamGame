@@ -62,47 +62,48 @@ bool SceneMainGame::init()
             return false;
         }
     }
-    Transform staticColliderTransforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
-        Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-        Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-        Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    };
 
-    Transform staticObjectTranforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
-        Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-        Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-        Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    };
-    const OBJECT_ID staticObjectIds[] = {
-        OBJECT_TILE,
-        OBJECT_TOWER_R,
-        OBJECT_TOWER_B,
-        OBJECT_WALL_R,
-        OBJECT_WALL_R,
-        OBJECT_WALL_B,
-        OBJECT_WALL_B,
-        OBJECT_WALL_NORMAL,
-    };
-    for (int i = 0; i < SOBJECT_NUMBER; i++)
-    {
-        staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
-        if (staticObjectIds[i] != OBJECT_SKYBOX)
-        {
-            staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
-        }
-    }
-    // bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
-    // mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
+    Transform skyboxTransform = Transform(Vector3f(), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f));
+    CObjectData skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
+
+    // Transform staticColliderTransforms[] = {
+    //     Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
+    //     Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+    //     Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+    //     Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    //     Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    //     Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    //     Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    //     Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    // };
+    // Transform staticObjectTranforms[] = {
+    //     Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
+    //     Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+    //     Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+    //     Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    //     Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    //     Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    //     Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    //     Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    // };
+    // const OBJECT_ID staticObjectIds[] = {
+    //     OBJECT_TILE,
+    //     OBJECT_TOWER_R,
+    //     OBJECT_TOWER_B,
+    //     OBJECT_WALL_R,
+    //     OBJECT_WALL_R,
+    //     OBJECT_WALL_B,
+    //     OBJECT_WALL_B,
+    //     OBJECT_WALL_NORMAL,
+    // };
+    // for (int i = 0; i < SOBJECT_NUMBER; i++)
+    // {
+    //     staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
+    //     if (staticObjectIds[i] != OBJECT_SKYBOX)
+    //     {
+    //         staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
+    //     }
+    // }
 
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
@@ -152,9 +153,17 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     else if (command == NC_SEND_OBJECT_DATA)
     {
         int id;
-        NetworkManager::recvData(&id, sizeof(int));
+        OBJECT_TYPE type;
         CObjectData data;
+
+        NetworkManager::recvData(&id, sizeof(int));
+        NetworkManager::recvData(&type, sizeof(OBJECT_TYPE));
         NetworkManager::recvData(&data, sizeof(CObjectData));
+
+        if (type == OBJECT_TYPE_STATIC)
+        {
+            staticObjectData[id] = data;
+        }
     }
     else if (command == NC_SEND_RESULT_DATA)
     {
@@ -182,12 +191,9 @@ void SceneMainGame::draw3D()
     float lightPos[] = {0, 1000, 300, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    //skyBox
+    //skybox
     ShaderManager::startShader(SID_TEXTURING);
-    glPushMatrix();
-    glScalef(220.0f, 90.0f, 170.0f);
-    objects[0]->draw();
-    glPopMatrix();
+    objectDrawer->drawObject(skybox);
     ShaderManager::stopShader(SID_TEXTURING);
 
     //Tile
@@ -195,7 +201,7 @@ void SceneMainGame::draw3D()
     objectDrawer->drawObject(staticObjectData[0]);
 
     //色付き壁
-    for (int i = 3; i < 7; i++)
+    for (int i = SOBJECT_WALL_R1; i <= SOBJECT_WALL_NORMAL; i++)
     {
         objectDrawer->drawObject(staticObjectData[i]);
     }
@@ -204,7 +210,7 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_NT_PHONG);
     //タワー
-    for (int i = 1; i < 3; i++)
+    for (int i = SOBJECT_TOWER_R; i <= SOBJECT_TOWER_B; i++)
     {
         objectDrawer->drawObject(staticObjectData[i]);
     }
@@ -215,10 +221,12 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
+        objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
     //Weapon
 
-    for (int i = 0; i < SOBJECT_NUMBER - 1; i++)
+    //Collider
+    for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
         objectDrawer->drawCollider(staticObjectData[i].collider);
     }

@@ -7,6 +7,12 @@
 #define MAX_DYNAMIC_OBJECTS 100
 
 typedef enum {
+  OBJECT_TYPE_STATIC = 0,
+  OBJECT_TYPE_DYNAMIC = 1,
+  OBJECT_TYPE_NUMBER = 2,
+} OBJECT_TYPE;
+
+typedef enum {
   OBJECT_SKYBOX = 0,        //<-staticObject
   OBJECT_TILE = 1,          //
   OBJECT_TOWER_R = 2,       //

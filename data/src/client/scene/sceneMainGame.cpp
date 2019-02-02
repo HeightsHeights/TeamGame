@@ -18,6 +18,7 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
+
     const std::string objFileDir[OBJECT_NUMBER] = {
         "cube/",
         "map/",
@@ -273,5 +274,6 @@ void SceneMainGame::draw2D()
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
     statusDrawer->drawResult(RESULT_NULL);
+    statusDrawer->drawDeadMessage(0, 3);
     ShaderManager::stopShader(SID_GUI);
 }

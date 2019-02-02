@@ -9,7 +9,7 @@
 #include "./mainGame/statusDrawer.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
 #include "../render/particle/particleLoader.h"
-
+#include "../../common/math/ringCounter/ringCounter.h"
 #include "./mainGame/objectDrawer.h"
 
 /******************************************************************************
@@ -37,6 +37,7 @@ private:
   StatusDrawer *statusDrawer;
 
   Vector3f lookMove;
+
   virtual void draw3D();
   virtual void draw2D();
 

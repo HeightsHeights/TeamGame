@@ -226,7 +226,7 @@ void SceneMainGame::draw3D()
     //Weapon
 
     //Collider
-    for (int i = SOBJECT_TOWER_R; i < SOBJECT_NUMBER; i++)
+    for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
     {
         objectDrawer->drawCollider(staticObjectData[i].collider);
     }

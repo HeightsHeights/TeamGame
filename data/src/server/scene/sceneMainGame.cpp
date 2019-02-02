@@ -9,7 +9,7 @@
 bool SceneMainGame::init()
 {
     Collider staticColliders[] = {
-        Collider(Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100))),    //床
+        Collider(Obb(Vector3f(-7, 0, 0), Touple3f(143, 0, 72))),    //床
         Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),   //塔
         Collider(Obb(Vector3f(125, 20, 0), Touple3f(3, 20, 3))),    //塔
         Collider(Obb(Vector3f(-100, 10, 40), Touple3f(2, 10, 20))), //壁

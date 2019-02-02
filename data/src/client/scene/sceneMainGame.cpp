@@ -221,15 +221,15 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
-        objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
+        // objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
     //Weapon
 
     //Collider
-    for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
-    {
-        objectDrawer->drawCollider(staticObjectData[i].collider);
-    }
+    // for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
+    // {
+    //     objectDrawer->drawCollider(staticObjectData[i].collider);
+    // }
 
     ShaderManager::stopShader(SID_NT_PHONG);
 

@@ -5,38 +5,12 @@ GameObjectStatus *CharaStatus::staticObjects;
 
 CharaStatus::CharaStatus()
 {
-    this->hp = MAX_CHARA_HP;
-    speedValue = 0.1f;
-
-    this->transform = Transform(Vector3f(20.0f, 0, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
-
-    Collider mainCollider(Obb(Vector3f(20.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
-    mainBody = new GameObjectStatus(NULL, &mainCollider);
-    mainBody->objectId = OBJECT_MUSH;
-
-    float handSize = 1.5f;
-    Vector3f handPos[HAND_NUMBER] = {
-        Vector3f(1.5f, 1.5f, 0.0f),
-        Vector3f(-1.5f, 1.5f, 0.0f),
-    };
-
-    Transform handInitTramsform[HAND_NUMBER] = {
-        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
-        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
-    };
-    for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
-    {
-        Collider handCollider(Sphere(handPos[HAND_NUMBER], handSize));
-        hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
-        hands[i]->objectId = OBJECT_CHARA_HAND;
-    }
-
-    lookingDirection = Vector3f(1.0f, 0.0f, 0.0f);
-    weapon = NULL;
 }
-CharaStatus::CharaStatus(Transform *transform)
+CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
 {
-    speedValue = 0.1f;
+    this->teamId = id;
+    this->hp = MAX_CHARA_HP;
+    this->speedValue = 0.1f;
 
     if (transform == NULL)
     {
@@ -47,9 +21,10 @@ CharaStatus::CharaStatus(Transform *transform)
         this->transform = *transform;
     }
 
-    Collider mainCollider(Obb(Vector3f(0.0f, 10.0f, 0), Touple3f(3.0f, 10.0f, 3.0f)));
+    Collider mainCollider(Obb(this->transform.position, Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
-    mainBody->objectId = OBJECT_MUSH;
+
+    mainBody->objectId = (id == TEAM_MUSH) ? OBJECT_MUSH : OBJECT_BAMBOO;
 
     float handSize = 1.5f;
     Vector3f handPos[HAND_NUMBER] = {
@@ -116,6 +91,7 @@ bool CharaStatus::checkWall(Collider collider)
 CCharaData CharaStatus::getDataForClient()
 {
     CCharaData ret;
+    ret.teamId = this->teamId;
     ret.hp = this->hp;
     ret.spawningTime = this->spawningTime;
     ret.transform = this->transform;

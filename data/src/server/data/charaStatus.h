@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./gameObjectStatus.h"
+
 #include "../../common/gameData/cCharaData.h"
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
@@ -21,7 +22,9 @@ private:
 
 public:
   CharaStatus();
-  CharaStatus(Transform *transform);
+  CharaStatus(TEAM_ID id, Transform *transform);
+
+  TEAM_ID teamId;
 
   unsigned int hp;
   unsigned int spawningTime;

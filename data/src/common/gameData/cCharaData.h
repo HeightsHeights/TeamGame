@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./teamData.h"
 #include "../../common/math/vector/vector3f.h"
 #include "../../common/object/transform.h"
 #include "./cObjectData.h"
@@ -15,6 +16,8 @@ class CCharaData
 private:
 public:
   CCharaData();
+  TEAM_ID teamId;
+
   unsigned int hp;
   unsigned int spawningTime;
   Transform transform;

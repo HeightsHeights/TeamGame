@@ -27,6 +27,8 @@ private:
 
   TeamStatus tStatus[TEAM_NUMBER];
 
+  bool gameInitable;
+
   void upDate();
   void sendData();
 

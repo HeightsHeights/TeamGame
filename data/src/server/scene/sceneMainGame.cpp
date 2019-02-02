@@ -8,6 +8,7 @@
 
 bool SceneMainGame::init()
 {
+    gameInitable = true;
     Collider staticColliders[] = {
         Collider(Obb(Vector3f(0, 0, 0), Touple3f(180, 0, 100))),    //床
         Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),   //塔
@@ -84,6 +85,14 @@ SCENE_ID SceneMainGame::dataProcessing()
 
 void SceneMainGame::upDate()
 {
+    if (gameInitable)
+    {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            Transform charaTransform = Transform(Vector3f(20.0f, 10.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
+            cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
+        }
+    }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         Vector2f controllerVec = clientsData[i].controllerParam.axisL;
@@ -93,6 +102,13 @@ void SceneMainGame::upDate()
 
 void SceneMainGame::sendData()
 {
+    if (gameInitable)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_MOVE_SCENE);
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+        gameInitable = false;
+    }
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         DataBlock data;

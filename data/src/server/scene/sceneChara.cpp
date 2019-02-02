@@ -16,24 +16,21 @@ bool SceneChara::init()
 }
 SCENE_ID SceneChara::executeCommand(int command, int pos)
 {
+    SCENE_ID nextScene = SI_CHARASELECT;
     if (command == NC_MOVE_SCENE)
     {
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
             clientsData[i].teamId = (pl[i].position.x == 0) ? TEAM_MUSH : TEAM_BAMBOO;
         }
-
-        DataBlock data;
-        data.setCommand2DataBlock(NC_MOVE_SCENE);
-        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-        return SI_MAIN;
+        nextScene = SI_MAIN;
     }
     else if (command == NC_FINISH)
     {
         DataBlock data;
         data.setCommand2DataBlock(NC_FINISH);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-        return SI_NUMBER;
+        nextScene = SI_NUMBER;
     }
 
     if (command == NC_SEND_CONTROLLER_PARAM)
@@ -62,13 +59,12 @@ SCENE_ID SceneChara::executeCommand(int command, int pos)
         }
 
         DataBlock data;
-
         data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
         data.setData(&pos, sizeof(int));
         data.setData(pl[pos].position, sizeof(Vector2f));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
-    return SI_CHARASELECT;
+    return nextScene;
 }
 SCENE_ID SceneChara::dataProcessing()
 {

@@ -268,7 +268,8 @@ void SceneMainGame::draw2D()
 
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
-        statusDrawer->draw(Vector2f(-475 + 250 * i, -200), TEAM_MUSH, charaData[i].hp, (charaData[i].hp == 0) ? false : true, BaseScene::players[i].name);
+        CCharaData *pChara = &charaData[i];
+        statusDrawer->draw(Vector2f(-475 + 250 * i, -200), pChara->teamId, pChara->hp, (pChara->hp == 0) ? false : true, BaseScene::players[i].name);
     }
 
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);

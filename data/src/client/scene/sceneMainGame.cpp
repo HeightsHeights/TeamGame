@@ -62,6 +62,17 @@ bool SceneMainGame::init()
             return false;
         }
     }
+    Transform staticColliderTransforms[] = {
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
+        Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+        Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+        Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    };
+
     Transform staticObjectTranforms[] = {
         Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
         Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
@@ -85,6 +96,10 @@ bool SceneMainGame::init()
     for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
         staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
+        if (staticObjectIds[i] != OBJECT_SKYBOX)
+        {
+            staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
+        }
     }
     // bamboo = new Character("./data/res/gui/obj/kinokochara/", "kinoko", NULL);
     // mush = new Character("./data/res/gui/obj/bambooshootchara/", "bambooshoot", NULL);
@@ -113,24 +128,6 @@ SCENE_ID SceneMainGame::reactController(ControllerParam param)
     data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
     data.setData(&param, sizeof(ControllerParam));
     NetworkManager::sendData(data, data.getDataSize());
-
-    // mush->move(Vector3f(param.axisL.x, 0.0f, param.axisL.y));
-
-    // if (param.buttonDown[CT_GRUB] == true)
-    // {
-    //     static int time;
-    //     if (time > 90)
-    //     {
-    //         time = 0;
-    //         mush->motion(Character::MOTION_NULL, 0);
-    //     }
-    //     mush->motion(Character::MOTION_GRUB, time++);
-    // }
-    // else
-    // {
-    //     mush->motion(Character::MOTION_NULL, 0);
-    // }
-
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)
@@ -146,7 +143,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&id, sizeof(TEAM_ID));
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
-    else if (command == NC_SEND_CHARA_DATA)
+    else if (command == NC_SEND_RESULT_DATA)
     {
         int id;
         NetworkManager::recvData(&id, sizeof(int));
@@ -221,6 +218,11 @@ void SceneMainGame::draw3D()
     }
     //Weapon
 
+    for (int i = 0; i < SOBJECT_NUMBER - 1; i++)
+    {
+        objectDrawer->drawCollider(staticObjectData[i].collider);
+    }
+
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);
@@ -260,9 +262,6 @@ void SceneMainGame::draw2D()
     {
         statusDrawer->draw(Vector2f(-475 + 250 * i, -200), TEAM_MUSH, charaData[i].hp, true, BaseScene::players[i].name);
     }
-    // statusDrawer->draw(Vector2f(-225, -200), TEAM_BAMBOO, 00, false, "SUYAMA");
-    // statusDrawer->draw(Vector2f(25, -200), TEAM_MUSH, 888, false, "sym");
-    // statusDrawer->draw(Vector2f(275, -200), TEAM_BAMBOO, 555, true, "SYM");
 
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);

@@ -60,7 +60,7 @@ private:
   ObjRawModel *mush;
   ObjRawModel *bamboo;
 
-  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exit, const char *name);
+  void drawPlayer(Vector2f pos, COLOR_ID cid, bool exist, const char *name);
 
 public:
   SceneChara() : BaseScene() {}

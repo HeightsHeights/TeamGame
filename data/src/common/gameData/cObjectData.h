@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "../../common/object/transform.h"
+#include "./cColliderData.h"
 
 #define MAX_DYNAMIC_OBJECTS 100
 
@@ -47,4 +48,5 @@ public:
 
   OBJECT_ID objectId;
   Transform transform;
+  CColliderData collider;
 };

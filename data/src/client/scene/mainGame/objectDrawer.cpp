@@ -38,8 +38,21 @@ void ObjectDrawer::drawChara(CCharaData chara)
 void ObjectDrawer::drawObject(CObjectData object)
 {
     glPushMatrix();
-    glTranslatef(object.transform.position.x, object.transform.position.y, object.transform.position.z);
-    glScalef(object.transform.scale.x, object.transform.scale.y, object.transform.scale.z);
+    Transform *pObjectTransform = &object.transform;
+    glTranslatef(pObjectTransform->position.x, pObjectTransform->position.y, pObjectTransform->position.z);
+    glScalef(pObjectTransform->scale.x, pObjectTransform->scale.y, pObjectTransform->scale.z);
     pObjects[object.objectId]->draw();
+    glPopMatrix();
+}
+
+void ObjectDrawer::drawCollider(CColliderData collider)
+{
+    glPushMatrix();
+    Transform *pColliderTransform = &collider.transform;
+    glTranslatef(pColliderTransform->position.x, pColliderTransform->position.y, pColliderTransform->position.z);
+    glScalef(pColliderTransform->scale.x, pColliderTransform->scale.y, pColliderTransform->scale.z);
+
+    OBJECT_ID id = (collider.id == COLLIDER_OBB) ? OBJECT_DEBUG_OBB : OBJECT_DEBUG_SPHERE;
+    pObjects[id]->draw();
     glPopMatrix();
 }

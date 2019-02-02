@@ -5,43 +5,43 @@
 #include <stdio.h>
 bool SceneLoading::init()
 {
-    for (int i = 0; i < MAX_PLAYERS; i++)
-    {
-        exist[i] = false;
-    }
+    numRecieveName = 0;
     return true;
 }
 SCENE_ID SceneLoading::executeCommand(int command, int pos)
 {
+    SCENE_ID nextScene = SI_LOADING;
     if (command == NC_SEND_NAME)
     {
         NetworkManager::recvData(pos, clientsData[pos].name, sizeof(char *));
-        exist[pos] = true;
-    }
-    int count = 0;
-    for (int i = 0; i < MAX_PLAYERS; i++)
-    {
-        if (exist[i])
-        {
-            count++;
-        }
+        numRecieveName++;
     }
 
-    if (count == MAX_PLAYERS)
+    if (numRecieveName == MAX_PLAYERS)
     {
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
             DataBlock data;
-            data.setCommand2DataBlock(NS_SEND_ID);
+            data.setCommand2DataBlock(NC_SEND_ID);
             data.setData(&i, sizeof(int));
             NetworkManager::sendData(i, &data, data.getDataSize());
         }
+
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            DataBlock data;
+            data.setCommand2DataBlock(NC_SEND_NAME);
+            data.setData(&i, sizeof(int));
+            data.setData(&clientsData[i].name, sizeof(char *));
+            NetworkManager::sendData(ALL_CLIENTS, &data, data.getDataSize());
+        }
+
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-        return SI_CHARASELECT;
+        nextScene = SI_CHARASELECT;
     }
-    return SI_LOADING;
+    return nextScene;
 }
 
 SCENE_ID SceneLoading::dataProcessing()

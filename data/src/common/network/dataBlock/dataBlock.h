@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_DATA_SIZE 256
+#define MAX_DATA_SIZE 512
 
 class DataBlock
 {

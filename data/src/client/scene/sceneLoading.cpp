@@ -19,7 +19,7 @@ SceneLoading::SceneLoading(WindowManager *window, ConfigData *config) : BaseScen
 }
 bool SceneLoading::init()
 {
-    isFirst = false;
+    isFirst = true;
     clockCounter = RingCounter(0, 0, 30 * 2 - 1);
     loadingCounter = RingCounter(0, 0, 4 * 10 - 1);
 
@@ -54,7 +54,7 @@ bool SceneLoading::init()
 }
 SCENE_ID SceneLoading::reactController(ControllerParam param)
 {
-    if (!isFirst)
+    if (isFirst)
     {
         config = ConfigLoader().load("cPrevConfig");
 
@@ -68,7 +68,7 @@ SCENE_ID SceneLoading::reactController(ControllerParam param)
         data.setCommand2DataBlock(NC_SEND_NAME);
         data.setData(&name, sizeof(char *));
         NetworkManager::sendData(data, data.getDataSize());
-        isFirst = true;
+        isFirst = false;
     }
     return SI_LOADING;
 }
@@ -80,9 +80,15 @@ SCENE_ID SceneLoading::executeCommand(int command)
     {
         nextScene = SI_CHARASELECT;
     }
-    else if (command == NS_SEND_ID)
+    else if (command == NC_SEND_ID)
     {
         NetworkManager::recvData(&myId, sizeof(int));
+    }
+    else if (command == NC_SEND_NAME)
+    {
+        int num;
+        NetworkManager::recvData(&num, sizeof(int));
+        NetworkManager::recvData(&BaseScene::players[num].name, sizeof(char *));
     }
 
     return nextScene;

@@ -15,25 +15,11 @@ void ObjectDrawer::drawChara(CCharaData chara)
     glTranslatef(chara.transform.position.x, chara.transform.position.y, chara.transform.position.z);
     lookatDir(chara.lookingDirection);
 
-    glPushMatrix();
-    Transform *pMainBodyTransform = &chara.mainBodyData.transform;
-    glTranslatef(pMainBodyTransform->position.x, pMainBodyTransform->position.y, pMainBodyTransform->position.z);
-    glScalef(pMainBodyTransform->scale.x, pMainBodyTransform->scale.y, pMainBodyTransform->scale.z);
-    pObjects[chara.mainBodyData.objectId]->draw();
-    glPopMatrix();
-
     drawObject(chara.mainBodyData);
 
     for (int i = 0; i < HAND_NUMBER; i++)
     {
         drawObject(chara.handData[i]);
-
-        // glPushMatrix();
-        // Transform *pHandTransform = &chara.handData[i].transform;
-        // glTranslatef(pHandTransform->position.x, pHandTransform->position.y, pHandTransform->position.z);
-        // glScalef(pHandTransform->scale.x, pHandTransform->scale.y, pHandTransform->scale.z);
-        // pObjects[chara.handData[i].objectId]->draw();
-        // glPopMatrix();
     }
 
     // weapon

@@ -25,10 +25,10 @@ void ObjectDrawer::drawChara(CCharaData chara)
     for (int i = 0; i < HAND_NUMBER; i++)
     {
         glPushMatrix();
-        Transform *pHandTransform = &chara.handData[HAND_RIGHT].transform;
+        Transform *pHandTransform = &chara.handData[i].transform;
         glTranslatef(pHandTransform->position.x, pHandTransform->position.y, pHandTransform->position.z);
         glScalef(pHandTransform->scale.x, pHandTransform->scale.y, pHandTransform->scale.z);
-        pObjects[chara.handData[HAND_RIGHT].objectId]->draw();
+        pObjects[chara.handData[i].objectId]->draw();
         glPopMatrix();
     }
 

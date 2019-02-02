@@ -28,13 +28,13 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
 
     float handSize = 1.5f;
     Vector3f handPos[HAND_NUMBER] = {
-        Vector3f(1.5f, 1.5f, 0.0f),
-        Vector3f(-1.5f, 1.5f, 0.0f),
+        Vector3f(2.5f, 1.5f, 0.0f),
+        Vector3f(-2.5f, 1.5f, 0.0f),
     };
 
     Transform handInitTramsform[HAND_NUMBER] = {
         Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
-        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
+        Transform(handPos[HAND_LEFT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
     };
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {

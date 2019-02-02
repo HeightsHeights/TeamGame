@@ -5,9 +5,11 @@
 
 class ClientData
 {
-  private:
-  public:
-    TEAM_ID teamId;
-    char name[256];
-    ControllerParam controllerParam;
+private:
+public:
+  TEAM_ID teamId;
+  char name[256];
+  bool atkMode;
+  bool haveWeapon;
+  ControllerParam controllerParam;
 };

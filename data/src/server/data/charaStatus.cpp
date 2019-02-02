@@ -1,5 +1,6 @@
 #include "./charaStatus.h"
 #include <iostream>
+#include <math.h>
 
 #define SPAWNING_RATIO 300
 
@@ -38,8 +39,8 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
     };
 
     Transform handInitTramsform[HAND_NUMBER] = {
-        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
         Transform(handPos[HAND_LEFT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
+        Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
     };
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
@@ -73,7 +74,7 @@ void CharaStatus::move(Vector3f moveDir)
     if (!checkGround(tmpCollider))
     {
         transform.position.y -= 0.1;
-        this->mainBody->collider.move(Vector3f(0.0f, -0.1f, 0.0f));
+        this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
 
         if (transform.position.y < -20 && this->hp != 0)
         {
@@ -116,22 +117,28 @@ bool CharaStatus::attack()
     return true;
 }
 
-// void CharaStatus::weaponThrow(bool haveWeapon)
-// {
-
-//     Collider tmpCollider = this->mainBody->collider;
-//     if (haveWeapon == false)
-//     {
-//         if () //武器と拾うところの当たり判定
-//             haveWeapon == true;
-//     }
-//     else
-//     {
-//         //投げる動作
-//         haveWeapon = false;
-//     }
-//     return;
-// }
+void CharaStatus::weaponThrow(bool haveWeapon)
+{
+    static int ang;
+    //     Collider tmpCollider = this->mainBody->collider;
+    if (haveWeapon == false)
+    {
+        //         if () //武器と拾うところの当たり判定
+        this->hands[HAND_RIGHT]->transform.position.y += 2.0f;
+        this->haveWeapon = true;
+    }
+    else
+    {
+        this->hands[HAND_RIGHT]->transform.position += Vector3f(0.0f, (float)sin(++ang) * 2.0f / 2.0f, (float)cos(ang) * 2.0f / 2.0f); //投げる動作
+        if (ang > 15)
+        {
+            this->hands[HAND_RIGHT]->clearTransform();
+            ang = 0;
+            this->haveWeapon = false;
+        }
+    }
+    //     return;
+}
 
 bool CharaStatus::checkGround(Collider collider)
 {

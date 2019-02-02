@@ -109,10 +109,10 @@ void SceneMainGame::upDate()
         // {
         //     cStatus[i].atkMode = cStatus[i].attack();
         // }
-        // if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB])
-        // {
-        //     cStatus[i].weaponThrow(clientsData[i].haveWeapon);
-        // }
+        if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB] || cStatus[i].haveWeapon == true)
+        {
+            cStatus[i].weaponThrow(cStatus[i].haveWeapon);
+        }
     }
 }
 

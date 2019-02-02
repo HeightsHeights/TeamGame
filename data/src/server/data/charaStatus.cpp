@@ -98,6 +98,29 @@ void CharaStatus::setPos(Vector3f pos)
     this->transform.position = pos;
     this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
 }
+<<<<<<< HEAD
+=======
+
+int a = 0;
+
+// void CharaStatus::weaponThrow(bool haveWeapon)
+// {
+
+//     Collider tmpCollider = this->mainBody->collider;
+//     if (haveWeapon == false)
+//     {
+//         if () //武器と拾うところの当たり判定
+//             haveWeapon == true;
+//     }
+//     else
+//     {
+//         //投げる動作
+//         haveWeapon = false;
+//     }
+//     return;
+// }
+
+>>>>>>> 279ab4be1156ee0d3e1fed47fc769cb91fb63bf9
 bool CharaStatus::checkGround(Collider collider)
 {
     return Collider::isCollision(collider, staticObjects[SOBJECT_TILE].collider);

@@ -28,6 +28,7 @@ bool AudioManager::init()
             "gun",
             "explosion",
             "miss",
+            "whistle",
         };
     Mix_Init(MIX_INIT_MP3);
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)

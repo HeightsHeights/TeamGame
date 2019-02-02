@@ -11,39 +11,39 @@
 ******************************************************************************/
 void WiiRemote::scanDirection(ControllerParam *param)
 {
-    if (wiimote.keys.up)
-    {
-        param->axisR.y += -1;
-    }
-    if (wiimote.keys.down)
-    {
-        param->axisR.y += 1;
-    }
     if (wiimote.keys.left)
     {
-        param->axisR.x += -1;
+        param->axisL.y += -1;
     }
     if (wiimote.keys.right)
     {
-        param->axisR.x += 1;
+        param->axisL.y += 1;
+    }
+    if (wiimote.keys.up)
+    {
+        param->axisL.x += -1;
+    }
+    if (wiimote.keys.down)
+    {
+        param->axisL.x += 1;
     }
 
-    if (wiimote.ext.nunchuk.joyy < 93)
-    {
-        param->axisL.y = 1;
-    }
-    else if (wiimote.ext.nunchuk.joyy > 153)
-    {
-        param->axisL.y = -1;
-    }
-    if (wiimote.ext.nunchuk.joyx < 93)
-    {
-        param->axisL.x = -1;
-    }
-    else if (wiimote.ext.nunchuk.joyx > 153)
-    {
-        param->axisL.x = 1;
-    }
+    // if (wiimote.ext.nunchuk.joyy < 93)
+    // {
+    //     param->axisL.y = 1;
+    // }
+    // else if (wiimote.ext.nunchuk.joyy > 153)
+    // {
+    //     param->axisL.y = -1;
+    // }
+    // if (wiimote.ext.nunchuk.joyx < 93)
+    // {
+    //     param->axisL.x = -1;
+    // }
+    // else if (wiimote.ext.nunchuk.joyx > 153)
+    // {
+    //     param->axisL.x = 1;
+    // }
 }
 
 void WiiRemote::scanButton(ControllerParam *param)

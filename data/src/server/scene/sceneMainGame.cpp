@@ -88,7 +88,7 @@ void SceneMainGame::upDate()
     {
         Vector2f controllerVec = clientsData[i].controllerParam.axisL;
         cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
-    }
+        }
 }
 
 void SceneMainGame::sendData()

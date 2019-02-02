@@ -94,12 +94,19 @@ void CharaStatus::move(Vector3f moveDir)
         transform.position += moveDir * speedValue;
         this->mainBody->collider = tmpCollider;
     }
+    if (checkGround(tmpCollider) == false)
+    {
+        transform.position.y -= 0.1;
+        this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
+        if (transform.position.y < -20)
+            this->hp = 0;
+    }
     // transform.position += moveDir * speedValue;
 }
 
 bool CharaStatus::checkGround(Collider collider)
 {
-    return true;
+    return Collider::isCollision(collider, staticObjects[SOBJECT_TILE].collider);
 }
 bool CharaStatus::checkWall(Collider collider)
 {

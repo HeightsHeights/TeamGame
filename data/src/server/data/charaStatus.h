@@ -42,5 +42,6 @@ public:
   void clearTransform();
   void move(Vector3f moveDir);
   bool attack();
+  void weaponThrow(bool haveWeapon);
   CCharaData getDataForClient();
 };

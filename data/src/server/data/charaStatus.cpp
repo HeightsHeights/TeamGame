@@ -88,11 +88,9 @@ void CharaStatus::move(Vector3f moveDir)
 
 bool CharaStatus::attack()
 {
-    Collider tmpCollider = this->hands[HAND_LEFT]->collider;
-    this->hands[HAND_LEFT]->speed.z = 0.3f;
+    this->hands[HAND_LEFT]->speed.z = 0.5f;
     this->hands[HAND_LEFT]->transform.position += this->hands[HAND_LEFT]->speed;
-    this->hands[HAND_LEFT]->collider = tmpCollider;
-    if (this->hands[HAND_LEFT]->transform.position.z > 5.0)
+    if (this->hands[HAND_LEFT]->transform.position.z > 8.0)
     {
         this->hands[HAND_LEFT]->speed.z = 0;
         this->hands[HAND_LEFT]->clearTransform();
@@ -100,6 +98,23 @@ bool CharaStatus::attack()
     }
     return true;
 }
+
+// void CharaStatus::weaponThrow(bool haveWeapon)
+// {
+
+//     Collider tmpCollider = this->mainBody->collider;
+//     if (haveWeapon == false)
+//     {
+//         if () //武器と拾うところの当たり判定
+//             haveWeapon == true;
+//     }
+//     else
+//     {
+//         //投げる動作
+//         haveWeapon = false;
+//     }
+//     return;
+// }
 
 bool CharaStatus::checkGround(Collider collider)
 {

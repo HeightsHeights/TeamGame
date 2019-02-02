@@ -50,6 +50,11 @@ bool SceneMainGame::init()
         fprintf(stderr, "Error --> CharaStatus::init()\n");
         return false;
     }
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        clientsData[i].atkMode = false;
+    }
+
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
         tStatus[i] = TeamStatus();
@@ -96,7 +101,7 @@ void SceneMainGame::upDate()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         Vector2f controllerVec = clientsData[i].controllerParam.axisL;
-        if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK])
+        if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[i].atkMode == false)
         {
             clientsData[i].atkMode = true;
         }
@@ -104,6 +109,12 @@ void SceneMainGame::upDate()
         {
             clientsData[i].atkMode = cStatus[i].attack();
         }
+
+        // if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB])
+        // {
+        //     cStatus[i].weaponThrow(clientsData[i].haveWeapon);
+        // }
+
         cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
     }
 }

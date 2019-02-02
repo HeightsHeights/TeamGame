@@ -66,44 +66,44 @@ bool SceneMainGame::init()
     Transform skyboxTransform = Transform(Vector3f(), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f));
     skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
 
-    // Transform staticColliderTransforms[] = {
-    //     Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
-    //     Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-    //     Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-    //     Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    //     Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    //     Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    //     Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    //     Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    // };
-    // Transform staticObjectTranforms[] = {
-    //     Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
-    //     Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-    //     Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-    //     Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    //     Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    //     Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    //     Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    //     Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    // };
-    // const OBJECT_ID staticObjectIds[] = {
-    //     OBJECT_TILE,
-    //     OBJECT_TOWER_R,
-    //     OBJECT_TOWER_B,
-    //     OBJECT_WALL_R,
-    //     OBJECT_WALL_R,
-    //     OBJECT_WALL_B,
-    //     OBJECT_WALL_B,
-    //     OBJECT_WALL_NORMAL,
-    // };
-    // for (int i = 0; i < SOBJECT_NUMBER; i++)
-    // {
-    //     staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
-    //     if (staticObjectIds[i] != OBJECT_SKYBOX)
-    //     {
-    //         staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
-    //     }
-    // }
+    Transform staticColliderTransforms[] = {
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
+        Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+        Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
+        Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
+        Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
+    };
+    Transform staticObjectTranforms[] = {
+        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
+        Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+        Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
+        Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+        Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
+    };
+    const OBJECT_ID staticObjectIds[] = {
+        OBJECT_TILE,
+        OBJECT_TOWER_R,
+        OBJECT_TOWER_B,
+        OBJECT_WALL_R,
+        OBJECT_WALL_R,
+        OBJECT_WALL_B,
+        OBJECT_WALL_B,
+        OBJECT_WALL_NORMAL,
+    };
+    for (int i = 0; i < SOBJECT_NUMBER; i++)
+    {
+        staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
+        if (staticObjectIds[i] != OBJECT_SKYBOX)
+        {
+            staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
+        }
+    }
 
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
@@ -187,7 +187,6 @@ void SceneMainGame::draw3D()
     {
         gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
     }
-
     float lightPos[] = {0, 1000, 300, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
@@ -221,15 +220,15 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
-        // objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
+        objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
     //Weapon
 
     //Collider
-    // for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
-    // {
-    //     objectDrawer->drawCollider(staticObjectData[i].collider);
-    // }
+    for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
+    {
+        objectDrawer->drawCollider(staticObjectData[i].collider);
+    }
 
     ShaderManager::stopShader(SID_NT_PHONG);
 

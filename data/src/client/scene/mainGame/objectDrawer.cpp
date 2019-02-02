@@ -18,6 +18,7 @@ void ObjectDrawer::drawChara(CCharaData chara)
     glPushMatrix();
     Transform *pMainBodyTransform = &chara.mainBodyData.transform;
     glTranslatef(pMainBodyTransform->position.x, pMainBodyTransform->position.y, pMainBodyTransform->position.z);
+    glScalef(pMainBodyTransform->scale.x, pMainBodyTransform->scale.y, pMainBodyTransform->scale.z);
     pObjects[chara.mainBodyData.objectId]->draw();
     glPopMatrix();
 

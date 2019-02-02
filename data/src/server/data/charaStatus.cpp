@@ -21,7 +21,7 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
         this->transform = *transform;
     }
 
-    Collider mainCollider(Obb(this->transform.position, Touple3f(3.0f, 10.0f, 3.0f)));
+    Collider mainCollider(Obb(this->transform.position + Vector3f(0.0f, 10.0f, 0.0f), Touple3f(3.0f, 10.0f, 3.0f)));
     mainBody = new GameObjectStatus(NULL, &mainCollider);
 
     mainBody->objectId = (id == TEAM_MUSH) ? OBJECT_MUSH : OBJECT_BAMBOO;

@@ -89,7 +89,7 @@ void SceneMainGame::upDate()
     {
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
-            Transform charaTransform = Transform(Vector3f(20.0f, 10.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
+            Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
         }
     }
@@ -97,7 +97,7 @@ void SceneMainGame::upDate()
     {
         Vector2f controllerVec = clientsData[i].controllerParam.axisL;
         cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
-        }
+    }
 }
 
 void SceneMainGame::sendData()

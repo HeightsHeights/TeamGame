@@ -22,14 +22,18 @@ void ObjectDrawer::drawChara(CCharaData chara)
     pObjects[chara.mainBodyData.objectId]->draw();
     glPopMatrix();
 
+    drawObject(chara.mainBodyData);
+
     for (int i = 0; i < HAND_NUMBER; i++)
     {
-        glPushMatrix();
-        Transform *pHandTransform = &chara.handData[i].transform;
-        glTranslatef(pHandTransform->position.x, pHandTransform->position.y, pHandTransform->position.z);
-        glScalef(pHandTransform->scale.x, pHandTransform->scale.y, pHandTransform->scale.z);
-        pObjects[chara.handData[i].objectId]->draw();
-        glPopMatrix();
+        drawObject(chara.handData[i]);
+
+        // glPushMatrix();
+        // Transform *pHandTransform = &chara.handData[i].transform;
+        // glTranslatef(pHandTransform->position.x, pHandTransform->position.y, pHandTransform->position.z);
+        // glScalef(pHandTransform->scale.x, pHandTransform->scale.y, pHandTransform->scale.z);
+        // pObjects[chara.handData[i].objectId]->draw();
+        // glPopMatrix();
     }
 
     // weapon

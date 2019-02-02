@@ -105,7 +105,14 @@ void SceneMainGame::upDate()
 
         //moving
         charaMovingProcces(i);
-
+        if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[i].atkMode == false)
+        {
+            clientsData[i].atkMode = true;
+        }
+        if (clientsData[i].atkMode == true)
+        {
+            clientsData[i].atkMode = cStatus[i].attack();
+        }
         // if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB])
         // {
         //     cStatus[i].weaponThrow(clientsData[i].haveWeapon);
@@ -180,13 +187,6 @@ void SceneMainGame::charaSpawningProcces(int id)
 void SceneMainGame::charaMovingProcces(int id)
 {
     Vector2f controllerVec = clientsData[id].controllerParam.axisL;
-    if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[i].atkMode == false)
-    {
-        clientsData[i].atkMode = true;
-    }
-    if (clientsData[i].atkMode == true)
-    {
-        clientsData[i].atkMode = cStatus[i].attack();
-    }
+
     cStatus[id].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
 }

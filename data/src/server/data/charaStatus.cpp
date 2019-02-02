@@ -99,6 +99,19 @@ void CharaStatus::setPos(Vector3f pos)
     this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
 }
 
+bool CharaStatus::attack()
+{
+    this->hands[HAND_LEFT]->speed.z = 0.5f;
+    this->hands[HAND_LEFT]->transform.position += this->hands[HAND_LEFT]->speed;
+    if (this->hands[HAND_LEFT]->transform.position.z > 8.0)
+    {
+        this->hands[HAND_LEFT]->speed.z = 0;
+        this->hands[HAND_LEFT]->clearTransform();
+        return false;
+    }
+    return true;
+}
+
 // void CharaStatus::weaponThrow(bool haveWeapon)
 // {
 

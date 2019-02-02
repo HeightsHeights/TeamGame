@@ -27,6 +27,8 @@ bool StatusDrawer::init()
             "main/spbuff",
             "main/lifemush",
             "main/lifebamboo",
+            "readySignals/ready",
+            "readySignals/go",
             "result/win",
             "result/lose",
             "dead/youAreDead",
@@ -197,4 +199,27 @@ void StatusDrawer::drawDeadMessage(float size, unsigned int spawningTime)
 
     dst = GuiRect(-480 * size, 120 * size, 480 * 2 * size, 120 * size);
     image[IMAGE_YOU_ARE_DEAD]->draw(NULL, &dst);
+}
+void StatusDrawer::drawReadySignal(SIGNAL_ID id)
+{
+    const float signalUnit = 100;
+    float signalSize;
+    IMAGE_ID imageId;
+
+    if (id == SIGNAL_READY)
+    {
+        signalSize = 5;
+        imageId = IMAGE_READY;
+    }
+    else if (id == SIGNAL_GO)
+    {
+        signalSize = 3;
+        imageId = IMAGE_GO;
+    }
+    else
+    {
+        return;
+    }
+    GuiRect dst = GuiRect(-signalUnit * signalSize / 2, signalUnit / 2, signalUnit * signalSize, signalUnit);
+    image[imageId]->draw(NULL, &dst);
 }

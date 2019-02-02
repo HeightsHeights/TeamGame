@@ -89,11 +89,11 @@ void CharaStatus::move(Vector3f moveDir)
             //大丈夫なら更新
             transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
-            if (moveDir != Vector3f_ZERO)
-            {
-                lookingDirection = moveDir.normalize();
-            }
         }
+    }
+    if (moveDir != Vector3f_ZERO)
+    {
+        lookingDirection = moveDir.normalize();
     }
     // transform.position += moveDir * speedValue;
 }

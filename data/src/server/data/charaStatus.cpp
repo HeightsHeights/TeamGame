@@ -84,17 +84,17 @@ void CharaStatus::move(Vector3f moveDir)
     }
     else
     {
-        tmpCollider.move(moveDir * speedValue);
         if (!checkWall(tmpCollider))
         {
             //大丈夫なら更新
+            tmpCollider.move(moveDir * speedValue);
             transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
+            if (moveDir != Vector3f_ZERO)
+            {
+                lookingDirection = moveDir.normalize();
+            }
         }
-    }
-    if (moveDir != Vector3f_ZERO)
-    {
-        lookingDirection = moveDir.normalize();
     }
     // transform.position += moveDir * speedValue;
 }
@@ -117,28 +117,28 @@ bool CharaStatus::attack()
     return true;
 }
 
-void CharaStatus::weaponThrow(bool haveWeapon)
-{
-    static int ang;
-    //     Collider tmpCollider = this->mainBody->collider;
-    if (haveWeapon == false)
-    {
-        //         if () //武器と拾うところの当たり判定
-        this->hands[HAND_RIGHT]->transform.position.y += 2.0f;
-        this->haveWeapon = true;
-    }
-    else
-    {
-        this->hands[HAND_RIGHT]->transform.position += Vector3f(0.0f, (float)sin(++ang) * 2.0f / 2.0f, (float)cos(ang) * 2.0f / 2.0f); //投げる動作
-        if (ang > 15)
-        {
-            this->hands[HAND_RIGHT]->clearTransform();
-            ang = 0;
-            this->haveWeapon = false;
-        }
-    }
-    //     return;
-}
+// void CharaStatus::weaponThrow(bool haveWeapon)
+// {
+// static int ang;
+//     Collider tmpCollider = this->mainBody->collider;
+// if (haveWeapon == false)
+// {
+//         if () //武器と拾うところの当たり判定
+//     this->hands[HAND_RIGHT]->transform.position.y += 2.0f;
+//     this->haveWeapon = true;
+// }
+// else
+// {
+//     this->hands[HAND_RIGHT]->transform.position += Vector3f(0.0f, (float)sin(++ang) * 2.0f / 2.0f, (float)cos(ang) * 2.0f / 2.0f); //投げる動作
+//     if (ang > 15)
+//     {
+//         this->hands[HAND_RIGHT]->clearTransform();
+//         ang = 0;
+//         this->haveWeapon = false;
+//     }
+// }
+//     return;
+// }
 
 bool CharaStatus::checkGround(Collider collider)
 {

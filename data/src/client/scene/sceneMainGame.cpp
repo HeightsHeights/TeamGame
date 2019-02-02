@@ -64,7 +64,7 @@ bool SceneMainGame::init()
     }
 
     Transform skyboxTransform = Transform(Vector3f(), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f));
-    CObjectData skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
+    skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
 
     // Transform staticColliderTransforms[] = {
     //     Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
@@ -226,7 +226,7 @@ void SceneMainGame::draw3D()
     //Weapon
 
     //Collider
-    for (int i = 0; i < SOBJECT_NUMBER; i++)
+    for (int i = SOBJECT_TOWER_R; i < SOBJECT_NUMBER; i++)
     {
         objectDrawer->drawCollider(staticObjectData[i].collider);
     }

@@ -11,7 +11,7 @@ Obb::Obb(Vector3f center, Touple3f length)
 
     normalDirect[0] = Vector3f(1.0f, 0.0f, 0.0f);
     normalDirect[1] = Vector3f(0.0f, 1.0f, 0.0f);
-    normalDirect[1] = Vector3f(0.0f, 0.0f, 1.0f);
+    normalDirect[2] = Vector3f(0.0f, 0.0f, 1.0f);
 
     this->length[0] = length.x;
     this->length[1] = length.y;

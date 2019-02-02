@@ -1,6 +1,8 @@
 #include "./charaStatus.h"
 #include <iostream>
 
+#define SPAWNING_RATIO 200
+
 GameObjectStatus *CharaStatus::staticObjects;
 
 CharaStatus::CharaStatus()
@@ -10,6 +12,7 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
 {
     this->teamId = id;
     this->hp = MAX_CHARA_HP;
+    this->spawningTime = 0;
     this->speedValue = 0.1f;
 
     if (transform == NULL)
@@ -65,27 +68,36 @@ void CharaStatus::move(Vector3f moveDir)
     tmpCollider.move(moveDir * speedValue);
     //見る
 
-    if (!checkWall(tmpCollider))
-    {
-        //大丈夫なら更新
-        transform.position += moveDir * speedValue;
-        this->mainBody->collider = tmpCollider;
-        if (moveDir != Vector3f_ZERO)
-        {
-            lookingDirection = moveDir.normalize();
-        }
-    }
-
-    if (checkGround(tmpCollider) == false)
+    if (!checkGround(tmpCollider))
     {
         transform.position.y -= 0.1;
         this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
-        if (transform.position.y < -20)
+        if (transform.position.y < -20 && this->hp != 0)
+        {
             this->hp = 0;
+            this->spawningTime = 10 * SPAWNING_RATIO - 1;
+        }
+    }
+    else
+    {
+        if (!checkWall(tmpCollider))
+        {
+            //大丈夫なら更新
+            transform.position += moveDir * speedValue;
+            this->mainBody->collider = tmpCollider;
+            if (moveDir != Vector3f_ZERO)
+            {
+                lookingDirection = moveDir.normalize();
+            }
+        }
     }
     // transform.position += moveDir * speedValue;
 }
-
+void CharaStatus::setPos(Vector3f pos)
+{
+    this->transform.position = pos;
+    this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
+}
 bool CharaStatus::checkGround(Collider collider)
 {
     return Collider::isCollision(collider, staticObjects[SOBJECT_TILE].collider);
@@ -107,7 +119,7 @@ CCharaData CharaStatus::getDataForClient()
     CCharaData ret;
     ret.teamId = this->teamId;
     ret.hp = this->hp;
-    ret.spawningTime = this->spawningTime;
+    ret.spawningTime = this->spawningTime / SPAWNING_RATIO;
     ret.transform = this->transform;
     ret.lookingDirection = this->lookingDirection;
 

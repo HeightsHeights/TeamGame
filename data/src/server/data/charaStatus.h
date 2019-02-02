@@ -29,7 +29,6 @@ public:
   unsigned int hp;
   unsigned int spawningTime;
 
-  Transform initTransform;
   Transform transform;
   Vector3f lookingDirection;
 
@@ -39,7 +38,7 @@ public:
 
   static bool init(GameObjectStatus *staticObjects);
 
-  void clearTransform();
   void move(Vector3f moveDir);
+  void setPos(Vector3f pos);
   CCharaData getDataForClient();
 };

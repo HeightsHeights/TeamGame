@@ -62,3 +62,15 @@ void Collider::move(Vector3f moveDir)
         this->spheres[i].center += moveDir;
     }
 }
+
+void Collider::setPos(Vector3f pos)
+{
+    for (int i = 0; i < this->obbs.size(); i++)
+    {
+        this->obbs[i].center = pos;
+    }
+    for (int i = 0; i < this->spheres.size(); i++)
+    {
+        this->spheres[i].center = pos;
+    }
+}

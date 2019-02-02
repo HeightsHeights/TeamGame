@@ -32,6 +32,9 @@ private:
   void upDate();
   void sendData();
 
+  void charaSpawningProcces(int id);
+  void charaMovingProcces(int id);
+
 public:
   SceneMainGame() : BaseScene() {}
 

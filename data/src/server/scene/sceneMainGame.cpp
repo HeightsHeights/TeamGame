@@ -95,8 +95,11 @@ void SceneMainGame::upDate()
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
-        Vector2f controllerVec = clientsData[i].controllerParam.axisL;
-        cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
+        //spawning
+        charaSpawningProcces(i);
+
+        //moving
+        charaMovingProcces(i);
     }
 }
 
@@ -148,4 +151,24 @@ void SceneMainGame::sendData()
     //     data.setData(&objectData, sizeof(CObjectData));
     //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     // }
+}
+
+void SceneMainGame::charaSpawningProcces(int id)
+{
+    CharaStatus *pChara = &cStatus[id];
+    if (pChara->spawningTime <= 0)
+    {
+        return;
+    }
+    pChara->spawningTime--;
+    if (pChara->spawningTime == 0)
+    {
+        pChara->setPos((pChara->teamId == TEAM_MUSH) ? Vector3f(-20.0f, 10.0f, 0.0f) : Vector3f(20.0f, 10.0f, 0.0f));
+        pChara->hp = MAX_CHARA_HP;
+    }
+}
+void SceneMainGame::charaMovingProcces(int id)
+{
+    Vector2f controllerVec = clientsData[id].controllerParam.axisL;
+    cStatus[id].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
 }

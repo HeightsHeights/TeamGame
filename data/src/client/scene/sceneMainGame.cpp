@@ -274,6 +274,6 @@ void SceneMainGame::draw2D()
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
     statusDrawer->drawResult(RESULT_NULL);
-    statusDrawer->drawDeadMessage(0, 3);
+    statusDrawer->drawDeadMessage(1.0f, charaData[myId].spawningTime);
     ShaderManager::stopShader(SID_GUI);
 }

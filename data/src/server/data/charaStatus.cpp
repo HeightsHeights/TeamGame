@@ -83,10 +83,10 @@ void CharaStatus::move(Vector3f moveDir)
     }
     else
     {
+        tmpCollider.move(moveDir * speedValue);
         if (!checkWall(tmpCollider))
         {
             //大丈夫なら更新
-            tmpCollider.move(moveDir * speedValue);
             transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
             if (moveDir != Vector3f_ZERO)

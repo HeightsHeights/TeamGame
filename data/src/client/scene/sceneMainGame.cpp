@@ -71,7 +71,6 @@ bool SceneMainGame::init()
         Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
         Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
         Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f)),
     };
     const OBJECT_ID staticObjectIds[] = {
         OBJECT_TILE,
@@ -82,7 +81,6 @@ bool SceneMainGame::init()
         OBJECT_WALL_B,
         OBJECT_WALL_B,
         OBJECT_WALL_NORMAL,
-        OBJECT_SKYBOX,
     };
     for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
@@ -189,7 +187,10 @@ void SceneMainGame::draw3D()
 
     //skyBox
     ShaderManager::startShader(SID_TEXTURING);
-    objectDrawer->drawObject(staticObjectData[8]);
+    glPushMatrix();
+    glScalef(220.0f, 90.0f, 170.0f);
+    objects[0]->draw();
+    glPopMatrix();
     ShaderManager::stopShader(SID_TEXTURING);
 
     //Tile

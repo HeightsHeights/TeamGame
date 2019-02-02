@@ -187,6 +187,17 @@ void SceneMainGame::charaSpawningProcces(int id)
 void SceneMainGame::charaMovingProcces(int id)
 {
     Vector2f controllerVec = clientsData[id].controllerParam.axisL;
+<<<<<<< HEAD
 
+=======
+    if (clientsData[id].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[id].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && clientsData[id].atkMode == false)
+    {
+        clientsData[id].atkMode = true;
+    }
+    if (clientsData[id].atkMode == true)
+    {
+        clientsData[id].atkMode = cStatus[id].attack();
+    }
+>>>>>>> 9981b840d45afdb27731794dd7fcf3d0cb536e7e
     cStatus[id].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
 }

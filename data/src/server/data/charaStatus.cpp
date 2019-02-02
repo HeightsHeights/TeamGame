@@ -59,7 +59,6 @@ bool CharaStatus::init(GameObjectStatus *staticObjects)
 
 void CharaStatus::move(Vector3f moveDir)
 {
-
     //当たり判定を動かす
     Collider tmpCollider = this->mainBody->collider;
     tmpCollider.move(moveDir * speedValue);
@@ -83,7 +82,23 @@ void CharaStatus::move(Vector3f moveDir)
         if (transform.position.y < -20)
             this->hp = 0;
     }
+
     // transform.position += moveDir * speedValue;
+}
+
+bool CharaStatus::attack()
+{
+    Collider tmpCollider = this->hands[HAND_LEFT]->collider;
+    this->hands[HAND_LEFT]->speed.z = 0.3f;
+    this->hands[HAND_LEFT]->transform.position += this->hands[HAND_LEFT]->speed;
+    this->hands[HAND_LEFT]->collider = tmpCollider;
+    if (this->hands[HAND_LEFT]->transform.position.z > 5.0)
+    {
+        this->hands[HAND_LEFT]->speed.z = 0;
+        this->hands[HAND_LEFT]->clearTransform();
+        return false;
+    }
+    return true;
 }
 
 bool CharaStatus::checkGround(Collider collider)

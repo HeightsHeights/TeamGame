@@ -41,5 +41,6 @@ public:
 
   void clearTransform();
   void move(Vector3f moveDir);
+  bool attack();
   CCharaData getDataForClient();
 };

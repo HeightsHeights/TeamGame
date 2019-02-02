@@ -96,6 +96,14 @@ void SceneMainGame::upDate()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         Vector2f controllerVec = clientsData[i].controllerParam.axisL;
+        if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK])
+        {
+            clientsData[i].atkMode = true;
+        }
+        if (clientsData[i].atkMode == true)
+        {
+            clientsData[i].atkMode = cStatus[i].attack();
+        }
         cStatus[i].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
     }
 }

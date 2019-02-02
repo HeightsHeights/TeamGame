@@ -99,6 +99,8 @@ bool CharaStatus::attack()
     return true;
 }
 
+int a = 0;
+
 // void CharaStatus::weaponThrow(bool haveWeapon)
 // {
 

@@ -29,6 +29,7 @@ bool StatusDrawer::init()
             "main/lifebamboo",
             "result/win",
             "result/lose",
+            "dead/youAreDead",
         };
 
     std::string numbersNameTemplate = "numbers/number_";
@@ -183,4 +184,17 @@ void StatusDrawer::drawResult(RESULT_ID result)
         return;
     }
     image[(result == RESULT_MUSH_WIN) ? IMAGE_MUSH_WIN : IMAGE_BAMBOO_WIN]->draw(NULL, NULL, 1.0f);
+}
+void StatusDrawer::drawDeadMessage(float size, unsigned int spawningTime)
+{
+    GuiRect dst = GuiRect(-100 * size, 0, 200 * size, 20 * size);
+
+    char string[256];
+    sprintf(string, "Next Spawning... %d", spawningTime);
+    GuiText *spawnText = GuiTextLoader().load(FID_NORMAL, string, black);
+    spawnText->draw(NULL, &dst);
+    delete spawnText;
+
+    dst = GuiRect(-480 * size, 120 * size, 480 * 2 * size, 120 * size);
+    image[IMAGE_YOU_ARE_DEAD]->draw(NULL, &dst);
 }

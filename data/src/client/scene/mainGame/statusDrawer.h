@@ -35,7 +35,8 @@ private:
     IMAGE_BAMBOOHPFRAME = 18,
     IMAGE_MUSH_WIN = 19,
     IMAGE_BAMBOO_WIN = 20,
-    IMAGE_NUMBER = 21,
+    IMAGE_YOU_ARE_DEAD = 21,
+    IMAGE_NUMBER = 22,
   } IMAGE_ID;
   GuiImage *image[IMAGE_NUMBER];
 
@@ -50,4 +51,5 @@ public:
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status);
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc);
   void drawResult(RESULT_ID result);
+  void drawDeadMessage(float size, unsigned int spawningTime);
 };

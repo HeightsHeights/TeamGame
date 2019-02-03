@@ -56,7 +56,7 @@ public:
   void draw(Vector2f pos, TEAM_ID id, unsigned int hp, bool alive, const char *name);
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status);
   void drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, Vector3f loc);
-  void drawResult(RESULT_ID result, Vector2f pos);
+  void drawResult(RESULT_ID result);
   void drawDeadMessage(float size, unsigned int spawningTime);
   void drawReadySignal(SIGNAL_ID id, Vector2f pos);
 };

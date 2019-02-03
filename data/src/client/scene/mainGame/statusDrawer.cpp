@@ -181,7 +181,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, V
     }
 }
 
-void StatusDrawer::drawResult(RESULT_ID result, Vector2f pos)
+void StatusDrawer::drawResult(RESULT_ID result)
 {
     if (result == RESULT_NULL)
     {
@@ -228,7 +228,7 @@ void StatusDrawer::drawReadySignal(SIGNAL_ID id, Vector2f pos)
 
         signalSize = 6;
         imageId = IMAGE_WINNER;
-        }
+    }
     else
     {
         return;

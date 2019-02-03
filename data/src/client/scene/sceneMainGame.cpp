@@ -69,8 +69,8 @@ bool SceneMainGame::init()
         "block",
         "bomb",
         "ruby",
-        "sapphire",
         "emerald",
+        "sapphire",
         "kinoko",
         "bambooshoot",
         "hand",
@@ -90,8 +90,6 @@ bool SceneMainGame::init()
     skybox = CObjectData(OBJECT_SKYBOX, true, &skyboxTransform);
 
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
-    explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
-    falleff = GuiSpriteLoader().load("./data/res/gui/image/effect/death.png", 8, 1);
 
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
@@ -242,14 +240,14 @@ void SceneMainGame::draw3D()
     // {
     //     objectDrawer->drawCollider(staticObjectData[i].collider);
     // }
-    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
-    {
-        if (!dynamicObjectData[i].exist)
-        {
-            continue;
-        }
-        objectDrawer->drawCollider(dynamicObjectData[i].collider);
-    }
+    // for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    // {
+    //     if (!dynamicObjectData[i].exist)
+    //     {
+    //         continue;
+    //     }
+    //     objectDrawer->drawCollider(dynamicObjectData[i].collider);
+    // }
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);
@@ -263,17 +261,6 @@ void SceneMainGame::draw3D()
     glTranslatef(-150, 50, -10);
     statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_MUSH, tStatus[TEAM_MUSH], Vector3f(0, 0, 0));
     glPopMatrix();
-    // if (explosioon_emission == 1)
-    // {
-    //     static int w;
-    //     if (w > 8)
-    //         w = 0;
-    //     GuiRect dst = {0, 0, 100, 100};
-    //     explosion->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
-    //     if (w == 8)
-    //         explosioon_emission = 0;
-    // }
-    // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
 
     for (int i = 0; i < MAX_EFFECT; i++)
     {
@@ -310,7 +297,7 @@ void SceneMainGame::draw2D()
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
     if (signal == SIGNAL_WINNER)
     {
-        statusDrawer->drawResult(result, Vector2f_ZERO);
+        statusDrawer->drawResult(result);
         statusDrawer->drawReadySignal(signal, Vector2f_ZERO);
     }
     if (charaData[myId].hp == 0)

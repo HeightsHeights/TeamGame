@@ -91,7 +91,7 @@ SCENE_ID SceneMainGame::upDate()
         itemSpawner = ItemSpawner(&dynamicObjectStatus[0]);
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
-            Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
+            Transform charaTransform = Transform((clientsData[i].teamId == TEAM_MUSH) ? Vector3f(-60.0f, 0.0f, 0.0f) : Vector3f(60.0f, 0.0f, 0.0f), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
 
             timer = 1000;
@@ -154,12 +154,7 @@ SCENE_ID SceneMainGame::upDate()
                     {
                         if (cStatus[i].damage(10, bombCollider))
                         {
-                            DataBlock data;
-                            data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
-                            EFFECT_ID id = EFFECT_DEAD;
-                            data.setData(&id, sizeof(EFFECT_ID));
-                            data.setData(cStatus[i].transform.position, sizeof(Vector3f));
-                            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+                            sendEffect(EFFECT_DEAD, cStatus[i].transform.position);
                         }
                     }
                 }
@@ -181,12 +176,21 @@ SCENE_ID SceneMainGame::upDate()
 
                 //effect
                 //当たり判定処理
-                DataBlock data;
-                data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
-                EFFECT_ID id = EFFECT_BOMB;
-                data.setData(&id, sizeof(EFFECT_ID));
-                data.setData(&pObject->transform.position, sizeof(Vector3f));
-                NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+                sendEffect(EFFECT_BOMB, pObject->transform.position);
+            }
+            else if (OBJECT_JEWEL_R <= pObject->objectId && pObject->objectId <= OBJECT_JEWEL_B)
+            {
+                for (int i = 0; i < TEAM_NUMBER; i++)
+                {
+                    if (Collider::isCollision(pObject->collider, staticObjectStatus[SOBJECT_TOWER_R + i].collider))
+                    {
+                        sendEffect(EFFECT_UP, pObject->transform.position);
+                        pObject->killObject();
+                        setBuff((TEAM_ID)i, (BUFF_ID)(pObject->objectId - OBJECT_JEWEL_R));
+
+                        break;
+                    }
+                }
             }
         }
     }
@@ -203,6 +207,10 @@ SCENE_ID SceneMainGame::upDate()
         {
             charaGrabbingProcess(i);
         }
+    }
+    for (int i = 0; i < TEAM_NUMBER; i++)
+    {
+        buffProcess(i);
     }
 
     return nextScene;
@@ -295,6 +303,14 @@ void SceneMainGame::sendResult(RESULT_ID resultData)
     data.setData(&resultData, sizeof(RESULT_ID));
     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
 }
+void SceneMainGame::sendEffect(EFFECT_ID effect, Vector3f pos)
+{
+    DataBlock data;
+    data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
+    data.setData(&effect, sizeof(EFFECT_ID));
+    data.setData(&pos, sizeof(Vector3f));
+    NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+}
 void SceneMainGame::charaSpawningProcess(int id)
 {
     CharaStatus *pChara = &cStatus[id];
@@ -352,4 +368,80 @@ bool SceneMainGame::towerDamageProcess(int id, Collider collider, unsigned int d
         }
     }
     return false;
+}
+void SceneMainGame::buffProcess(int id)
+{
+    for (int i = 0; i < BUFF_NUMBER; i++)
+    {
+        unsigned int *pTimer = &tStatus[id].buffTimer[i];
+        bool *pBuff = &tStatus[id].buff[i];
+        if (!(*pBuff))
+        {
+            continue;
+        }
+
+        tStatus[id].buffTimer[i]--;
+
+        if (*pTimer == 0)
+        {
+            resetBuff((TEAM_ID)id, (BUFF_ID)i);
+        }
+    }
+}
+
+void SceneMainGame::setBuff(TEAM_ID teamId, BUFF_ID buffId)
+{
+    unsigned int time;
+    if (buffId == BUFF_ATK)
+    {
+        time = 4000;
+        if (!tStatus[teamId].buff[buffId])
+        {
+            return;
+        }
+    }
+    else if (buffId == BUFF_HP)
+    {
+        time = 500;
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            if (teamId == cStatus[i].teamId)
+            {
+                cStatus[i].hp = MAX_CHARA_HP;
+            }
+        }
+    }
+    else if (buffId == BUFF_SPEED)
+    {
+        time = 3000;
+        if (!tStatus[teamId].buff[buffId])
+        {
+            for (int i = 0; i < MAX_PLAYERS; i++)
+            {
+                if (teamId == cStatus[i].teamId)
+                {
+                    cStatus[i].speedValue *= 2;
+                }
+            }
+        }
+    }
+    tStatus[teamId].buff[buffId] = true;
+    tStatus[teamId].buffTimer[buffId] = time;
+}
+void SceneMainGame::resetBuff(TEAM_ID teamId, BUFF_ID buffId)
+{
+    if (buffId == BUFF_ATK)
+    {
+    }
+    else if (buffId == BUFF_SPEED)
+    {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            if (teamId == cStatus[i].teamId)
+            {
+                cStatus[i].speedValue /= 2;
+            }
+        }
+    }
+    tStatus[teamId].buff[buffId] = false;
 }

@@ -26,8 +26,6 @@ private:
   ObjRawModel *objects[OBJECT_NUMBER];
 
   GuiSprite *sprites[EFFECT_NUMBER];
-  GuiSprite *explosion;
-  GuiSprite *falleff;
   Particle *trialpart;
 
   CObjectData skybox;

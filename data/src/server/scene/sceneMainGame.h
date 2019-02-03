@@ -45,6 +45,7 @@ private:
   void sendData();
   void sendSignal(SIGNAL_ID signal);
   void sendResult(RESULT_ID resultData);
+  void sendEffect(EFFECT_ID effect, Vector3f pos);
 
   void charaSpawningProcess(int id);
   void charaMovingProcess(int id);
@@ -53,6 +54,10 @@ private:
 
   void objectMovingProcess(int id);
   bool towerDamageProcess(int id, Collider collider, unsigned int damageValue);
+
+  void buffProcess(int id);
+  void setBuff(TEAM_ID teamId, BUFF_ID buffId);
+  void resetBuff(TEAM_ID teamId, BUFF_ID buffId);
 
 public:
   SceneMainGame() : BaseScene() {}

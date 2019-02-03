@@ -70,7 +70,7 @@ void WiiRemote::scanButton(ControllerParam *param)
     //     param->buttonUp[CT_JUMP] = true;
     // }
 
-    if (wiimote.keys.minus)
+    if (wiimote.keys.two)
     {
         param->buttonDown[CT_GRUB] = true;
         param->buttonUp[CT_GRUB] = false;
@@ -92,7 +92,7 @@ void WiiRemote::scanButton(ControllerParam *param)
         param->buttonUp[CT_PAUSE] = true;
     }
 
-    if (wiimote.keys.two)
+    if (wiimote.keys.b)
     {
         param->buttonDown[CT_CANCEL] = true;
         param->buttonUp[CT_CANCEL] = false;

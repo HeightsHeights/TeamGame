@@ -11,18 +11,24 @@ ObjectDrawer::ObjectDrawer(ObjRawModel **pObjects)
 void ObjectDrawer::drawChara(CCharaData chara)
 {
     glPushMatrix();
-    glScalef(chara.transform.scale.x, chara.transform.scale.y, chara.transform.scale.z);
-    glTranslatef(chara.transform.position.x, chara.transform.position.y, chara.transform.position.z);
+    Transform *pCharaTransform = &chara.transform;
+    glScalef(pCharaTransform->scale.x, pCharaTransform->scale.y, pCharaTransform->scale.z);
+    glTranslatef(pCharaTransform->position.x, pCharaTransform->position.y, pCharaTransform->position.z);
     lookatDir(chara.lookingDirection);
 
     drawObject(chara.mainBodyData);
 
+    //手
     for (int i = 0; i < HAND_NUMBER; i++)
     {
         drawObject(chara.handData[i]);
     }
 
     // weapon
+    if (chara.haveWeapon)
+    {
+        drawObject(chara.weaponData);
+    }
 
     glPopMatrix();
 }
@@ -43,6 +49,10 @@ void ObjectDrawer::lookatDir(Vector3f direction)
 }
 void ObjectDrawer::drawObject(CObjectData object)
 {
+    if (!object.exist)
+    {
+        return;
+    }
     glPushMatrix();
     Transform *pObjectTransform = &object.transform;
     glTranslatef(pObjectTransform->position.x, pObjectTransform->position.y, pObjectTransform->position.z);

@@ -37,7 +37,6 @@ public:
   Vector3f accel;
 
   bool atkMode;
-  bool haveWeapon;
 
   static bool init(GameObjectStatus *staticObjects);
 
@@ -45,5 +44,7 @@ public:
   void setPos(Vector3f pos);
   bool attack();
   void weaponThrow(bool haveWeapon);
+  void grab(GameObjectStatus *dynamicObjects);
+
   CCharaData getDataForClient();
 };

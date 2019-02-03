@@ -38,6 +38,7 @@ private:
 
   Vector3f lookMove;
 
+  void cameraMove();
   virtual void draw3D();
   virtual void draw2D();
 

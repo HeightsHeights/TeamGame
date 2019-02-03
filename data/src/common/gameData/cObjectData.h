@@ -49,9 +49,10 @@ class CObjectData
 private:
 public:
   CObjectData();
-  CObjectData(OBJECT_ID id);
-  CObjectData(OBJECT_ID id, Transform *transform);
+  CObjectData(OBJECT_ID id, bool exist);
+  CObjectData(OBJECT_ID id, bool exist, Transform *transform);
 
+  bool exist;
   OBJECT_ID objectId;
   Transform transform;
   CColliderData collider;

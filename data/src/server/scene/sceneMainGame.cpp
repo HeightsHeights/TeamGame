@@ -42,8 +42,7 @@ bool SceneMainGame::init()
 
     for (int i = 0; i < SOBJECT_NUMBER; i++)
     {
-        staticObjectStatus[i] = GameObjectStatus(&staticObjectTranforms[i], &staticColliders[i]);
-        staticObjectStatus[i].objectId = ids[i];
+        staticObjectStatus[i] = GameObjectStatus(ids[i], &staticObjectTranforms[i], &staticColliders[i]);
     }
     if (!CharaStatus::init(&staticObjectStatus[0]))
     {
@@ -92,15 +91,23 @@ void SceneMainGame::upDate()
         {
             Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
+
+            Vector3f tmpPos(-20.0f, 5.0f, 0.0f);
+            Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(1.5f, 1.5f, 1.5f));
+            Collider tmpCollider(Sphere(tmpPos, 3));
+            dynamicObjectStatus[0] = GameObjectStatus(OBJECT_BOMB, &tmpTransform, &tmpCollider);
         }
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         //spawning
-        charaSpawningProcces(i);
+        charaSpawningProcess(i);
 
         //moving
-        charaMovingProcces(i);
+        charaMovingProcess(i);
+
+        //grabbing
+        charaGrabbingProcess(i);
         // if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && !cStatus[i].atkMode)
         // {
         //     cStatus[i].atkMode = true;
@@ -154,19 +161,26 @@ void SceneMainGame::sendData()
         data.setData(&objectData, sizeof(CObjectData));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        if (!dynamicObjectStatus[i].isUpdated)
+        {
+            continue;
+        }
+        OBJECT_TYPE type = OBJECT_TYPE_DYNAMIC;
+        CObjectData objectData = dynamicObjectStatus[i].getDataForClient();
 
-    // for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
-    // {
-    //     DataBlock data;
-    //     data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
-    //     data.setData(&i, sizeof(int));
-    //     CObjectData objectData = dynamicObjectStatus[i].getDataForClient();
-    //     data.setData(&objectData, sizeof(CObjectData));
-    //     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    // }
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_OBJECT_DATA);
+        data.setData(&i, sizeof(int));
+        data.setData(&type, sizeof(OBJECT_TYPE));
+        data.setData(&objectData, sizeof(CObjectData));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+        dynamicObjectStatus[i].isUpdated = false;
+    }
 }
 
-void SceneMainGame::charaSpawningProcces(int id)
+void SceneMainGame::charaSpawningProcess(int id)
 {
     CharaStatus *pChara = &cStatus[id];
     if (pChara->spawningTime <= 0)
@@ -180,7 +194,7 @@ void SceneMainGame::charaSpawningProcces(int id)
         pChara->hp = MAX_CHARA_HP;
     }
 }
-void SceneMainGame::charaMovingProcces(int id)
+void SceneMainGame::charaMovingProcess(int id)
 {
     Vector2f controllerVec = clientsData[id].controllerParam.axisL;
 
@@ -193,4 +207,11 @@ void SceneMainGame::charaMovingProcces(int id)
         cStatus[id].atkMode = cStatus[id].attack();
     }
     cStatus[id].move(Vector3f(controllerVec.x, 0.0f, controllerVec.y));
+}
+void SceneMainGame::charaGrabbingProcess(int id)
+{
+    if (clientsData[id].controllerParam.buttonDown[CT_GRUB])
+    {
+        cStatus[id].grab(&dynamicObjectStatus[0]);
+    }
 }

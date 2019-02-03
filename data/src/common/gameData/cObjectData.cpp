@@ -2,14 +2,17 @@
 
 CObjectData::CObjectData()
 {
+    this->exist = false;
 }
 
-CObjectData::CObjectData(OBJECT_ID id)
+CObjectData::CObjectData(OBJECT_ID id, bool exist)
 {
+    this->exist = exist;
     this->objectId = id;
 }
-CObjectData::CObjectData(OBJECT_ID id, Transform *transform)
+CObjectData::CObjectData(OBJECT_ID id, bool exist, Transform *transform)
 {
+    this->exist = exist;
     this->objectId = id;
 
     if (transform == NULL)

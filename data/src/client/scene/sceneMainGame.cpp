@@ -67,45 +67,6 @@ bool SceneMainGame::init()
     Transform skyboxTransform = Transform(Vector3f(), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f));
     skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
 
-    Transform staticColliderTransforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(180, 0, 100)),
-        Transform(Vector3f(-140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-        Transform(Vector3f(140, 20, 0), Vector3f_ZERO, Vector3f(3, 20, 3)),
-        Transform(Vector3f(-100, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(-65, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(85, 10, -40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(50, 10, 40), Vector3f_ZERO, Vector3f(10, 10, 10)),
-        Transform(Vector3f(0, 10, 0), Vector3f_ZERO, Vector3f(10, 10, 10)),
-    };
-    Transform staticObjectTranforms[] = {
-        Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),
-        Transform(Vector3f(-140.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-        Transform(Vector3f(125.0f, 1.0f, 0.0f), Vector3f_ZERO, Vector3f(0.03f, 0.07f, 0.03f)),
-        Transform(Vector3f(-100.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(-65.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(85.0, 10.0, -40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(50.0, 10.0, 40), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-        Transform(Vector3f(0.0, 10.0, 0.0), Vector3f_ZERO, Vector3f(10.0f, 10.0f, 10.0f)),
-    };
-    const OBJECT_ID staticObjectIds[] = {
-        OBJECT_TILE,
-        OBJECT_TOWER_R,
-        OBJECT_TOWER_B,
-        OBJECT_WALL_R,
-        OBJECT_WALL_R,
-        OBJECT_WALL_B,
-        OBJECT_WALL_B,
-        OBJECT_WALL_NORMAL,
-    };
-    for (int i = 0; i < SOBJECT_NUMBER; i++)
-    {
-        staticObjectData[i] = CObjectData(staticObjectIds[i], &staticObjectTranforms[i]);
-        if (staticObjectIds[i] != OBJECT_SKYBOX)
-        {
-            staticObjectData[i].collider = CColliderData(COLLIDER_OBB, staticColliderTransforms[i]);
-        }
-    }
-
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);
     falleff = GuiSpriteLoader().load("./data/res/gui/image/effect/death.png", 8, 1);
@@ -165,6 +126,10 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         {
             staticObjectData[id] = data;
         }
+        else if (type == OBJECT_TYPE_DYNAMIC)
+        {
+            dynamicObjectData[id] = data;
+        }
     }
     else if (command == NC_SEND_RESULT_DATA)
     {
@@ -178,34 +143,25 @@ void SceneMainGame::draw3D()
 
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
-    Vector3f *pMyCharaPos = &charaData[myId].transform.position;
-    if (pMyCharaPos->x > -150 && pMyCharaPos->x < 150 && pMyCharaPos->z < 75)
-    {
-        gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);
-        lookMove = *pMyCharaPos;
-    }
-    else
-    {
-        gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
-    }
+    cameraMove();
+
     float lightPos[] = {0, 1000, 300, 1};
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-    //skybox
     ShaderManager::startShader(SID_TEXTURING);
+    //skybox
     objectDrawer->drawObject(skybox);
     ShaderManager::stopShader(SID_TEXTURING);
 
-    //Tile
     ShaderManager::startShader(SID_T_PHONG);
+    //Tile
     objectDrawer->drawObject(staticObjectData[0]);
 
     //色付き壁
-    for (int i = SOBJECT_WALL_R1; i <= SOBJECT_WALL_NORMAL; i++)
+    for (int i = SOBJECT_WALL_R1; i <= SOBJECT_WALL_B2; i++)
     {
         objectDrawer->drawObject(staticObjectData[i]);
     }
-
     ShaderManager::stopShader(SID_T_PHONG);
 
     ShaderManager::startShader(SID_NT_PHONG);
@@ -216,24 +172,35 @@ void SceneMainGame::draw3D()
     }
     //中央壁
     objectDrawer->drawObject(staticObjectData[7]);
-
     //Charactor
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         objectDrawer->drawChara(charaData[i]);
-        // objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
     }
-    //Weapon
+    //Dynamic
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        if (!dynamicObjectData[i].exist)
+        {
+            continue;
+        }
+        objectDrawer->drawObject(dynamicObjectData[i]);
+    }
 
     //Collider
-    for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
-    {
-        objectDrawer->drawCollider(staticObjectData[i].collider);
-    }
-
+    // for (int i = 0; i < MAX_PLAYERS; i++)
+    // {
+    //     objectDrawer->drawCollider(charaData[i].mainBodyData.collider);
+    // }
+    // for (int i = SOBJECT_TILE; i < SOBJECT_NUMBER; i++)
+    // {
+    //     objectDrawer->drawCollider(staticObjectData[i].collider);
+    // }
+    // objectDrawer->drawCollider(dynamicObjectData[0].collider);
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);
+    //TowerStatus
     glPushMatrix();
     glTranslatef(115, 50, -10);
     statusDrawer->drawTeamStatus(Vector2f(0, 0), TEAM_BAMBOO, tStatus[TEAM_BAMBOO], Vector3f(0, 0, 0));
@@ -265,7 +232,7 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-
+    statusDrawer->drawReadySignal(SIGNAL_NULL);
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         CCharaData *pChara = &charaData[i];
@@ -279,6 +246,18 @@ void SceneMainGame::draw2D()
     {
         statusDrawer->drawDeadMessage(1.0f, charaData[myId].spawningTime);
     }
-    statusDrawer->drawReadySignal(SIGNAL_NULL);
     ShaderManager::stopShader(SID_GUI);
+}
+void SceneMainGame::cameraMove()
+{
+    Vector3f *pMyCharaPos = &charaData[myId].transform.position;
+    if (pMyCharaPos->x > -150 && pMyCharaPos->x < 150 && pMyCharaPos->z < 75)
+    {
+        gluLookAt(pMyCharaPos->x, 150, 100 + pMyCharaPos->z, pMyCharaPos->x, 0, pMyCharaPos->z, 0, 1, 0);
+        lookMove = *pMyCharaPos;
+    }
+    else
+    {
+        gluLookAt(lookMove.x, 150, 100 + lookMove.z, lookMove.x, 0, lookMove.z, 0, 1, 0);
+    }
 }

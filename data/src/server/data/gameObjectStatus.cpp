@@ -2,10 +2,16 @@
 
 GameObjectStatus::GameObjectStatus()
 {
+  this->exist = false;
+  this->isUpdated = false;
 }
-GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
+GameObjectStatus::GameObjectStatus(OBJECT_ID id, Transform *transform, Collider *collider)
 {
-  this->objectId = OBJECT_NUMBER;
+  this->exist = true;
+  this->isUpdated = true;
+
+  this->objectId = id;
+
   if (transform == NULL)
   {
     this->transform = Transform();
@@ -21,7 +27,11 @@ GameObjectStatus::GameObjectStatus(Transform *transform, Collider *collider)
     this->collider = *collider;
   }
 }
-
+void GameObjectStatus::killObject()
+{
+  this->exist = false;
+  this->isUpdated = true;
+}
 void GameObjectStatus::clearTransform()
 {
   this->transform = this->initTransform;
@@ -29,7 +39,7 @@ void GameObjectStatus::clearTransform()
 
 CObjectData GameObjectStatus::getDataForClient()
 {
-  CObjectData ret(this->objectId, &this->transform);
+  CObjectData ret(this->objectId, this->exist, &this->transform);
 
   if (0 < this->collider.obbs.size())
   {

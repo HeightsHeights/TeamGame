@@ -12,7 +12,7 @@ CharaStatus::CharaStatus()
 CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
 {
     this->atkMode = false;
-    this->haveWeapon = false;
+
     this->teamId = id;
     this->hp = MAX_CHARA_HP;
     this->spawningTime = 0;
@@ -28,16 +28,13 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
     }
 
     Collider mainCollider(Obb(this->transform.position + Vector3f(0.0f, 10.0f, 0.0f), Touple3f(3.0f, 10.0f, 3.0f)));
-    mainBody = new GameObjectStatus(NULL, &mainCollider);
-
-    mainBody->objectId = (id == TEAM_MUSH) ? OBJECT_MUSH : OBJECT_BAMBOO;
+    mainBody = new GameObjectStatus((id == TEAM_MUSH) ? OBJECT_MUSH : OBJECT_BAMBOO, NULL, &mainCollider);
 
     float handSize = 1.5f;
     Vector3f handPos[HAND_NUMBER] = {
         Vector3f(2.5f, 1.5f, 0.0f),
         Vector3f(-2.5f, 1.5f, 0.0f),
     };
-
     Transform handInitTramsform[HAND_NUMBER] = {
         Transform(handPos[HAND_LEFT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
         Transform(handPos[HAND_RIGHT], Vector3f_ZERO, Vector3f(1.0f, 1.0f, 1.0f) * handSize),
@@ -45,11 +42,11 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
     for (int i = HAND_RIGHT; i < HAND_NUMBER; i++)
     {
         Collider handCollider(Sphere(handPos[HAND_NUMBER], handSize));
-        hands[i] = new GameObjectStatus(&handInitTramsform[i], &handCollider);
-        hands[i]->objectId = OBJECT_CHARA_HAND;
+        hands[i] = new GameObjectStatus(OBJECT_CHARA_HAND, &handInitTramsform[i], &handCollider);
     }
 
     lookingDirection = (id == TEAM_MUSH) ? Vector3f(1.0f, 0.0f, 0.0f) : Vector3f(-1.0f, 0.0f, 0.0f);
+
     weapon = NULL;
 }
 
@@ -69,13 +66,14 @@ void CharaStatus::move(Vector3f moveDir)
     //当たり判定を動かす
     Collider tmpCollider = this->mainBody->collider;
 
-    //見る
-
+    //足元を見る
     if (!checkGround(tmpCollider))
     {
+        //落ちる
         transform.position.y -= 0.1;
         this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
 
+        //落下死
         if (transform.position.y < -20 && this->hp != 0)
         {
             this->hp = 0;
@@ -84,24 +82,58 @@ void CharaStatus::move(Vector3f moveDir)
     }
     else
     {
+        //壁を確認
         tmpCollider.move(moveDir * speedValue);
         if (!checkWall(tmpCollider))
         {
-            //大丈夫なら更新
+            //移動可能なら更新
             transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
         }
     }
+    //入力値に向きを合わせる
     if (moveDir != Vector3f_ZERO)
     {
         lookingDirection = moveDir.normalize();
     }
-    // transform.position += moveDir * speedValue;
 }
 void CharaStatus::setPos(Vector3f pos)
 {
     this->transform.position = pos;
     this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
+}
+
+void CharaStatus::grab(GameObjectStatus *dynamicObjects)
+{
+    //武器を持っていない
+    if (weapon != NULL)
+    {
+        return;
+    }
+
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        GameObjectStatus *pObject = &dynamicObjects[i];
+        //オブジェクトは存在する
+        if (!pObject->exist)
+        {
+            continue;
+        }
+        //取得可能範囲内
+        if (Collider::isCollision(this->mainBody->collider, pObject->collider))
+        {
+            //武器を更新
+            pObject->killObject();
+            Vector3f tmpPos = this->hands[HAND_RIGHT]->transform.position + Vector3f(0.0f, 1.0f, 0.0f);
+            Transform tmpTransform = pObject->transform;
+            tmpTransform.position = tmpPos;
+            tmpTransform.scale /= 1.5;
+            Collider tmpCollider = pObject->collider;
+            tmpCollider.setPos(tmpPos);
+            weapon = new GameObjectStatus(pObject->objectId, &tmpTransform, &tmpCollider);
+            break;
+        }
+    }
 }
 
 bool CharaStatus::attack()
@@ -159,6 +191,7 @@ bool CharaStatus::checkWall(Collider collider)
 CCharaData CharaStatus::getDataForClient()
 {
     CCharaData ret;
+
     ret.teamId = this->teamId;
     ret.hp = this->hp;
     ret.spawningTime = this->spawningTime / SPAWNING_RATIO;
@@ -169,6 +202,13 @@ CCharaData CharaStatus::getDataForClient()
     for (int i = 0; i < HAND_NUMBER; i++)
     {
         ret.handData[i] = this->hands[i]->getDataForClient();
+    }
+
+    ret.haveWeapon = false;
+    if (this->weapon != NULL)
+    {
+        ret.haveWeapon = true;
+        ret.weaponData = this->weapon->getDataForClient();
     }
 
     return ret;

@@ -20,10 +20,12 @@ public:
 
   unsigned int hp;
   unsigned int spawningTime;
+  bool haveWeapon;
   Transform transform;
 
   CObjectData mainBodyData;
   CObjectData handData[HAND_NUMBER];
+  CObjectData weaponData;
 
   Vector3f lookingDirection;
 };

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../../common//gameData/resultData.h"
+#include "../../../common//gameData/resultId.h"
 #include "../../render/gui/image/guiImageLoader.h"
 #include "../../render/gui/text/guiTextLoader.h"
 #include "../../render/gui/sprite/guiSpriteLoader.h"
 #include "../../../common/gameData/teamStatus.h"
-#include "../../../common/gameData/teamData.h"
+#include "../../../common/gameData/teamId.h"
 #include "../../../common/gameData/signalId.h"
 
 #define UNIT_WIDTH 50

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./resultData.h"
+#include "./resultId.h"
 
 #define MAX_TEAM_HP 999
 
@@ -19,5 +19,6 @@ class TeamStatus
 
     unsigned int hp;
     bool buff[BUFF_NUMBER];
+    unsigned int buffTimer[BUFF_NUMBER];
     RESULT_ID result;
 };

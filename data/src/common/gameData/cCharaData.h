@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./teamData.h"
+#include "./teamId.h"
 #include "../../common/math/vector/vector3f.h"
 #include "../../common/object/transform.h"
 #include "./cObjectData.h"

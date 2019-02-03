@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../common/gameData/teamData.h"
+#include "../../common/gameData/teamId.h"
 #include "../../common/controllerParam/controllerParam.h"
 
 class ClientData

@@ -35,6 +35,9 @@ private:
   void charaSpawningProcess(int id);
   void charaMovingProcess(int id);
   void charaGrabbingProcess(int id);
+  void charaAttackingProcess(int id);
+
+  void objectMovingProcess(int id);
 
 public:
   SceneMainGame() : BaseScene() {}

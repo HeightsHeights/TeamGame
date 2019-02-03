@@ -6,6 +6,7 @@ TeamStatus::TeamStatus()
     for (int i = 0; i < BUFF_NUMBER; i++)
     {
         buff[i] = false;
+        buffTimer[i] = 0;
     }
     result = RESULT_NULL;
 }

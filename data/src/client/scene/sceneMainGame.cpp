@@ -107,10 +107,13 @@ bool SceneMainGame::init()
 }
 SCENE_ID SceneMainGame::reactController(ControllerParam param)
 {
-    DataBlock data;
-    data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
-    data.setData(&param, sizeof(ControllerParam));
-    NetworkManager::sendData(data, data.getDataSize());
+    if (result == RESULT_NULL)
+    {
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_CONTROLLER_PARAM);
+        data.setData(&param, sizeof(ControllerParam));
+        NetworkManager::sendData(data, data.getDataSize());
+    }
     return SI_MAIN;
 }
 SCENE_ID SceneMainGame::executeCommand(int command)

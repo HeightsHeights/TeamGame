@@ -54,7 +54,7 @@ int ThreadManager::controllerThread(void *data)
         {
             SDL_AtomicDecRef((SDL_atomic_t *)data);
         }
-        SDL_Delay(4);
+        SDL_Delay(5);
     }
     return 1;
 }

@@ -166,6 +166,16 @@ SCENE_ID SceneMainGame::upDate()
                         progress = PROGRESS_FINISHING;
                         sendSignal(SIGNAL_FINISH);
                         sendResult((i == TEAM_BAMBOO) ? RESULT_MUSH_WIN : RESULT_BAMBOO_WIN);
+
+                        for (int i = 0; i < TEAM_NUMBER; i++)
+                        {
+                            DataBlock data;
+                            data.setCommand2DataBlock(NC_SEND_TEAM_STATUS);
+                            data.setData(&i, sizeof(TEAM_ID));
+                            data.setData(&tStatus[i], sizeof(TeamStatus));
+                            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+                        }
+
                         timer = 2000;
                         break;
                     }
@@ -218,6 +228,10 @@ SCENE_ID SceneMainGame::upDate()
 
 void SceneMainGame::sendData()
 {
+    if (progress == PROGRESS_FINISHING)
+    {
+        return;
+    }
     if (gameInitable)
     {
         DataBlock data;

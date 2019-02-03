@@ -2,7 +2,7 @@
 
 #include "./resultId.h"
 
-#define MAX_TEAM_HP 15 * 50
+#define MAX_TEAM_HP 50
 
 typedef enum
 {

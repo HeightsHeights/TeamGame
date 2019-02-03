@@ -121,8 +121,8 @@ void WiiRemote::scanButton(ControllerParam *param)
     }
     else
     {
-        param->buttonDown[[CT_FINISH] = false;
-        param->buttonUp[[CT_FINISH] = true;
+        param->buttonDown[CT_FINISH] = false;
+        param->buttonUp[CT_FINISH] = true;
     }
 
     for (int i = 0; i < 12; i++)

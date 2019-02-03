@@ -2,8 +2,8 @@
 
 const unsigned int MAX_SPRITE[EFFECT_NUMBER] = {
     5,
-    0,
-    0,
+    9,
+    6,
 };
 
 EffectData::EffectData()

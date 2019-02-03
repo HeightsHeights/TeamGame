@@ -21,13 +21,13 @@ bool SceneMainGame::init()
 
     const std::string spriteName[EFFECT_NUMBER] = {
         "effect/explosion",
-        "effect/death",
-        "effect/death",
+        "effect/up",
+        "effect/dead",
     };
 
     const unsigned int spriteDivisionNum[EFFECT_NUMBER][2] = {
         {7, 1},
-        {8, 1},
+        {10, 1},
         {8, 1},
     };
 

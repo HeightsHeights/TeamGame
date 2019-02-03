@@ -30,6 +30,7 @@ bool StatusDrawer::init()
             "signals/ready",
             "signals/go",
             "signals/finish",
+            "result/winner",
             "result/winmush",
             "result/winbamboo",
             "dead/youAreDead",
@@ -219,10 +220,15 @@ void StatusDrawer::drawReadySignal(SIGNAL_ID id, Vector2f pos)
     }
     else if (id == SIGNAL_FINISH)
     {
-
         signalSize = 6;
         imageId = IMAGE_FINISH;
     }
+    else if (id == SIGNAL_WINNER)
+    {
+
+        signalSize = 6;
+        imageId = IMAGE_WINNER;
+        }
     else
     {
         return;

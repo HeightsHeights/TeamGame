@@ -6,7 +6,7 @@
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
 
-#define MAX_CHARA_HP 100
+#define MAX_CHARA_HP 50
 
 class CharaStatus
 {
@@ -49,6 +49,8 @@ public:
   bool attack();
   // void weaponThrow(bool haveWeapon);
   void weaponEvent(GameObjectStatus *dynamicObjects);
+  bool damage(unsigned int damageValue, Collider collider);
+  void died();
 
   CCharaData getDataForClient();
 };

@@ -2,9 +2,10 @@
 
 #include "./resultId.h"
 
-#define MAX_TEAM_HP 999
+#define MAX_TEAM_HP 100
 
-typedef enum {
+typedef enum
+{
     BUFF_ATK = 0,
     BUFF_HP = 1,
     BUFF_SPEED = 2,
@@ -20,5 +21,4 @@ class TeamStatus
     unsigned int hp;
     bool buff[BUFF_NUMBER];
     unsigned int buffTimer[BUFF_NUMBER];
-    RESULT_ID result;
 };

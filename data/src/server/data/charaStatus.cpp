@@ -77,8 +77,7 @@ void CharaStatus::move(Vector3f moveDir)
         //落下死
         if (this->transform.position.y < -20 && this->hp != 0)
         {
-            this->hp = 0;
-            this->spawningTime = 10 * SPAWNING_RATIO - 1;
+            this->died();
         }
     }
     else
@@ -214,6 +213,34 @@ bool CharaStatus::checkWall(Collider collider)
         }
     }
     return false;
+}
+bool CharaStatus::damage(unsigned int damageValue, Collider collider)
+{
+    if (Collider::isCollision(this->mainBody->collider, collider))
+    {
+        if (this->hp <= damageValue)
+        {
+            this->died();
+
+            return true;
+        }
+        else
+        {
+            this->hp -= damageValue;
+        }
+    }
+    return false;
+}
+void CharaStatus::died()
+{
+    this->hp = 0;
+    this->spawningTime = 10 * SPAWNING_RATIO - 1;
+
+    if (weapon != NULL)
+    {
+        delete weapon;
+        weapon = NULL;
+    }
 }
 
 CCharaData CharaStatus::getDataForClient()

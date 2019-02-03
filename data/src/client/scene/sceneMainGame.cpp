@@ -19,6 +19,7 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 bool SceneMainGame::init()
 {
     signal = SIGNAL_NULL;
+    result = RESULT_NULL;
     const std::string spriteName[EFFECT_NUMBER] = {
         "effect/explosion",
         "effect/up",
@@ -127,7 +128,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
         NetworkManager::recvData(&id, sizeof(TEAM_ID));
         NetworkManager::recvData(&tStatus[id], sizeof(TeamStatus));
     }
-    else if (command == NC_SEND_RESULT_DATA)
+    else if (command == NC_SEND_CHARA_DATA)
     {
         int id;
         NetworkManager::recvData(&id, sizeof(int));
@@ -176,7 +177,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     }
     else if (command == NC_SEND_RESULT_DATA)
     {
-        // NetworkManager::recvData(&gResult, sizeof(GameResult));
+        NetworkManager::recvData(&result, sizeof(RESULT_ID));
     }
     return nextScene;
 }
@@ -217,7 +218,10 @@ void SceneMainGame::draw3D()
     //Charactor
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
-        objectDrawer->drawChara(charaData[i]);
+        if (charaData[i].hp > 0)
+        {
+            objectDrawer->drawChara(charaData[i]);
+        }
     }
     //Dynamic
     for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
@@ -238,14 +242,14 @@ void SceneMainGame::draw3D()
     // {
     //     objectDrawer->drawCollider(staticObjectData[i].collider);
     // }
-    // for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
-    // {
-    //     if (!dynamicObjectData[i].exist)
-    //     {
-    //         continue;
-    //     }
-    //     objectDrawer->drawCollider(dynamicObjectData[0].collider);
-    // }
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        if (!dynamicObjectData[i].exist)
+        {
+            continue;
+        }
+        objectDrawer->drawCollider(dynamicObjectData[i].collider);
+    }
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);
@@ -304,7 +308,11 @@ void SceneMainGame::draw2D()
 
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
-    statusDrawer->drawResult(RESULT_NULL, Vector2f_ZERO);
+    if (signal == SIGNAL_WINNER)
+    {
+        statusDrawer->drawResult(result, Vector2f_ZERO);
+        statusDrawer->drawReadySignal(signal, Vector2f_ZERO);
+    }
     if (charaData[myId].hp == 0)
     {
         statusDrawer->drawDeadMessage(1.0f, charaData[myId].spawningTime);

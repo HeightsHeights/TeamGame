@@ -14,7 +14,8 @@
 class StatusDrawer
 {
 private:
-  typedef enum {
+  typedef enum
+  {
     IMAGE_0 = 0,
     IMAGE_1 = 1,
     IMAGE_2 = 2,
@@ -37,10 +38,11 @@ private:
     IMAGE_READY = 19,
     IMAGE_GO = 20,
     IMAGE_FINISH = 21,
-    IMAGE_MUSH_WIN = 22,
-    IMAGE_BAMBOO_WIN = 23,
-    IMAGE_YOU_ARE_DEAD = 24,
-    IMAGE_NUMBER = 25,
+    IMAGE_WINNER = 22,
+    IMAGE_MUSH_WIN = 23,
+    IMAGE_BAMBOO_WIN = 24,
+    IMAGE_YOU_ARE_DEAD = 25,
+    IMAGE_NUMBER = 26,
   } IMAGE_ID;
   GuiImage *image[IMAGE_NUMBER];
 

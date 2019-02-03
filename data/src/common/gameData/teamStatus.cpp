@@ -8,5 +8,4 @@ TeamStatus::TeamStatus()
         buff[i] = false;
         buffTimer[i] = 0;
     }
-    result = RESULT_NULL;
 }

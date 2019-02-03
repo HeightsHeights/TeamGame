@@ -17,7 +17,8 @@
  * 機能2：
 ******************************************************************************/
 
-typedef enum {
+typedef enum
+{
   PROGRESS_WAITING = 0,
   PROGRESS_GAMING = 1,
   PROGRESS_FINISHING = 2,
@@ -40,9 +41,10 @@ private:
 
   bool gameInitable;
 
-  void upDate();
+  SCENE_ID upDate();
   void sendData();
   void sendSignal(SIGNAL_ID signal);
+  void sendResult(RESULT_ID resultData);
 
   void charaSpawningProcess(int id);
   void charaMovingProcess(int id);
@@ -50,6 +52,7 @@ private:
   void charaAttackingProcess(int id);
 
   void objectMovingProcess(int id);
+  bool towerDamageProcess(int id, Collider collider, unsigned int damageValue);
 
 public:
   SceneMainGame() : BaseScene() {}

@@ -78,13 +78,14 @@ SCENE_ID SceneMainGame::executeCommand(int command, int pos)
 SCENE_ID SceneMainGame::dataProcessing()
 {
     SCENE_ID nextScene = SI_MAIN;
-    upDate();
+    nextScene = upDate();
     sendData();
     return nextScene;
 }
 
-void SceneMainGame::upDate()
+SCENE_ID SceneMainGame::upDate()
 {
+    SCENE_ID nextScene = SI_MAIN;
     if (gameInitable)
     {
         itemSpawner = ItemSpawner(&dynamicObjectStatus[0]);
@@ -108,9 +109,26 @@ void SceneMainGame::upDate()
         }
         else if (timer == 300)
         {
+            timer--;
             sendSignal(SIGNAL_GO);
         }
-        return;
+        return nextScene;
+    }
+    else if (progress == PROGRESS_FINISHING)
+    {
+        timer--;
+        if (timer == 1000)
+        {
+            sendSignal(SIGNAL_WINNER);
+        }
+        else if (timer == 0)
+        {
+            DataBlock data;
+            data.setCommand2DataBlock(NC_FINISH);
+            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+            nextScene = SI_NUMBER;
+        }
+        return nextScene;
     }
 
     itemSpawner.update();
@@ -128,6 +146,36 @@ void SceneMainGame::upDate()
         {
             if (pObject->objectId == OBJECT_BOMB)
             {
+
+                Collider bombCollider = Collider(Sphere(pObject->transform.position, 13));
+                for (int i = 0; i < MAX_PLAYERS; i++)
+                {
+                    if (cStatus[i].hp > 0)
+                    {
+                        if (cStatus[i].damage(10, bombCollider))
+                        {
+                            DataBlock data;
+                            data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
+                            EFFECT_ID id = EFFECT_DEAD;
+                            data.setData(&id, sizeof(EFFECT_ID));
+                            data.setData(cStatus[i].transform.position, sizeof(Vector3f));
+                            NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+                        }
+                    }
+                }
+
+                for (int i = 0; i < TEAM_NUMBER; i++)
+                {
+                    if (towerDamageProcess(i, bombCollider, 5))
+                    {
+                        progress = PROGRESS_FINISHING;
+                        sendSignal(SIGNAL_FINISH);
+                        sendResult((i == TEAM_BAMBOO) ? RESULT_MUSH_WIN : RESULT_BAMBOO_WIN);
+                        timer = 2000;
+                        break;
+                    }
+                }
+
                 pObject->killObject();
                 ItemSpawner::currentItemNum--;
 
@@ -151,8 +199,13 @@ void SceneMainGame::upDate()
         charaMovingProcess(i);
 
         //grabbing
-        charaGrabbingProcess(i);
+        if (cStatus[i].hp > 0)
+        {
+            charaGrabbingProcess(i);
+        }
     }
+
+    return nextScene;
 }
 
 void SceneMainGame::sendData()
@@ -177,7 +230,7 @@ void SceneMainGame::sendData()
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
+        data.setCommand2DataBlock(NC_SEND_CHARA_DATA);
         data.setData(&i, sizeof(int));
         CCharaData charaData = cStatus[i].getDataForClient();
         data.setData(&charaData, sizeof(CCharaData));
@@ -235,6 +288,13 @@ void SceneMainGame::sendSignal(SIGNAL_ID signal)
     data.setData(&signal, sizeof(SIGNAL_ID));
     NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
 }
+void SceneMainGame::sendResult(RESULT_ID resultData)
+{
+    DataBlock data;
+    data.setCommand2DataBlock(NC_SEND_RESULT_DATA);
+    data.setData(&resultData, sizeof(RESULT_ID));
+    NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+}
 void SceneMainGame::charaSpawningProcess(int id)
 {
     CharaStatus *pChara = &cStatus[id];
@@ -275,4 +335,21 @@ void SceneMainGame::objectMovingProcess(int id)
 {
     GameObjectStatus *pObject = &dynamicObjectStatus[id];
     *pObject = ObjectController(&staticObjectStatus[0]).moveObject(*pObject);
+}
+
+bool SceneMainGame::towerDamageProcess(int id, Collider collider, unsigned int damageValue)
+{
+    if (Collider::isCollision(staticObjectStatus[SOBJECT_TOWER_R + id].collider, collider))
+    {
+        if (tStatus[id].hp <= damageValue)
+        {
+            tStatus[id].hp = 0;
+            return true;
+        }
+        else
+        {
+            tStatus[id].hp -= damageValue;
+        }
+    }
+    return false;
 }

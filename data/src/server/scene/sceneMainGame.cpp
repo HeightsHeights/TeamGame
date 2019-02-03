@@ -152,7 +152,7 @@ SCENE_ID SceneMainGame::upDate()
                 {
                     if (cStatus[i].hp > 0)
                     {
-                        if (cStatus[i].damage(10, bombCollider))
+                        if (cStatus[i].damage(pObject->damageValue, bombCollider))
                         {
                             sendEffect(EFFECT_DEAD, cStatus[i].transform.position);
                         }
@@ -161,7 +161,7 @@ SCENE_ID SceneMainGame::upDate()
 
                 for (int i = 0; i < TEAM_NUMBER; i++)
                 {
-                    if (towerDamageProcess(i, bombCollider, 5))
+                    if (towerDamageProcess(i, bombCollider, pObject->damageValue))
                     {
                         progress = PROGRESS_FINISHING;
                         sendSignal(SIGNAL_FINISH);
@@ -274,20 +274,6 @@ void SceneMainGame::sendData()
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         dynamicObjectStatus[i].isUpdated = false;
     }
-    for (int i = 0; i < MAX_EFFECT; i++)
-    {
-        EffectData *pEffect = &effects[i];
-        if (!pEffect->exist)
-        {
-            continue;
-        }
-
-        DataBlock data;
-        data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
-        // data.setData(&type, sizeof(OBJECT_TYPE));
-        // data.setData(&objectData, sizeof(CObjectData));
-        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
-    }
 }
 void SceneMainGame::sendSignal(SIGNAL_ID signal)
 {
@@ -397,7 +383,13 @@ void SceneMainGame::setBuff(TEAM_ID teamId, BUFF_ID buffId)
         time = 4000;
         if (!tStatus[teamId].buff[buffId])
         {
-            return;
+            for (int i = 0; i < MAX_PLAYERS; i++)
+            {
+                if (teamId == cStatus[i].teamId)
+                {
+                    cStatus[i].damageValue *= 2;
+                }
+            }
         }
     }
     else if (buffId == BUFF_HP)
@@ -432,6 +424,13 @@ void SceneMainGame::resetBuff(TEAM_ID teamId, BUFF_ID buffId)
 {
     if (buffId == BUFF_ATK)
     {
+        for (int i = 0; i < MAX_PLAYERS; i++)
+        {
+            if (teamId == cStatus[i].teamId)
+            {
+                cStatus[i].damageValue /= 2;
+            }
+        }
     }
     else if (buffId == BUFF_SPEED)
     {

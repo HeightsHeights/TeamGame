@@ -6,7 +6,7 @@
 #include "../../common/object/transform.h"
 #include "../collider/collider.h"
 
-#define MAX_CHARA_HP 50
+#define MAX_CHARA_HP 100
 
 class CharaStatus
 {
@@ -31,6 +31,7 @@ public:
 
   unsigned int hp;
   unsigned int spawningTime;
+  unsigned int damageValue;
 
   Transform transform;
   Vector3f lookingDirection;

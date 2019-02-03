@@ -18,6 +18,7 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
     this->spawningTime = 0;
     this->speedValue = 0.1f;
     this->throwingSpeed = 0.4f;
+    this->damageValue = 50;
 
     if (transform == NULL)
     {
@@ -157,6 +158,7 @@ void CharaStatus::weaponThrow(GameObjectStatus *dynamicObjects)
             pObject->state = ITEM_STATE_IS_THROWN;
             pObject->speed = direction * throwingSpeed;
             pObject->accel = GRAVITY;
+            pObject->damageValue = this->damageValue;
             delete weapon;
             this->weapon = NULL;
             break;

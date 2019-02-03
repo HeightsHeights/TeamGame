@@ -7,7 +7,8 @@
 
 #define GRAVITY Vector3f(0.0f, -0.004f, 0.0f)
 
-typedef enum {
+typedef enum
+{
   ITEM_STATE_NULL = 0,
   ITEM_STATE_IS_THROWN = 1,
   ITEM_STATE_COLLISION = 2,
@@ -25,6 +26,7 @@ public:
   bool exist;
   bool isUpdated;
   ITEM_STATE state;
+  unsigned int damageValue;
 
   OBJECT_ID objectId;
 

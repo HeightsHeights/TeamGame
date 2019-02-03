@@ -65,7 +65,7 @@ bool SceneMainGame::init()
     }
 
     Transform skyboxTransform = Transform(Vector3f(), Vector3f_ZERO, Vector3f(220.0f, 90.0f, 170.0f));
-    skybox = CObjectData(OBJECT_SKYBOX, &skyboxTransform);
+    skybox = CObjectData(OBJECT_SKYBOX, true, &skyboxTransform);
 
     trialpart = ParticleLoader().load("./data/res/gui/image/effect/slash.png", 3, 3, 1000);
     explosion = GuiSpriteLoader().load("./data/res/gui/image/effect/explosion.png", 7, 1);

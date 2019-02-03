@@ -6,7 +6,7 @@
 
 #define ITEM_MAX MAX_DYNAMIC_OBJECTS - 15
 #define ITEM_RATIO_BOMB 90
-#define POSITION_TABLE_NUM 10
+#define POSITION_TABLE_NUM 30
 
 class ItemSpawner
 {

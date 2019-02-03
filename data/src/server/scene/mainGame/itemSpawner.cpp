@@ -13,6 +13,28 @@ Vector3f positionTable[POSITION_TABLE_NUM] = {
     Vector3f(-80.0f, 0.0f, 0.0f),
     Vector3f(100.0f, 0.0f, 0.0f),
     Vector3f(-100.0f, 0.0f, 0.0f),
+
+    Vector3f(20.0f, 0.0f, 40.0f),
+    Vector3f(-20.0f, 0.0f, 40.0f),
+    Vector3f(40.0f, 0.0f, 40.0f),
+    Vector3f(-40.0f, 0.0f, 40.0f),
+    Vector3f(60.0f, 0.0f, 40.0f),
+    Vector3f(-60.0f, 0.0f, 40.0f),
+    Vector3f(80.0f, 0.0f, 40.0f),
+    Vector3f(-80.0f, 0.0f, 40.0f),
+    Vector3f(100.0f, 0.0f, 40.0f),
+    Vector3f(-100.0f, 0.0f, 40.0f),
+
+    Vector3f(20.0f, 0.0f, -40.0f),
+    Vector3f(-20.0f, 0.0f, -40.0f),
+    Vector3f(40.0f, 0.0f, -40.0f),
+    Vector3f(-40.0f, 0.0f, -40.0f),
+    Vector3f(60.0f, 0.0f, -40.0f),
+    Vector3f(-60.0f, 0.0f, -40.0f),
+    Vector3f(80.0f, 0.0f, -40.0f),
+    Vector3f(-80.0f, 0.0f, -40.0f),
+    Vector3f(100.0f, 0.0f, -40.0f),
+    Vector3f(-100.0f, 0.0f, -40.0f),
 };
 
 ItemSpawner::ItemSpawner()
@@ -21,7 +43,7 @@ ItemSpawner::ItemSpawner()
 ItemSpawner::ItemSpawner(GameObjectStatus *dynamicGameObjects)
 {
     this->dynamicGameObjects = dynamicGameObjects;
-    this->counter = RingCounter(0, 0, 100);
+    this->counter = RingCounter(0, 0, 500);
     Random::init();
 }
 
@@ -43,7 +65,7 @@ void ItemSpawner::spawnItem()
     int i;
     for (i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
     {
-        if (dynamicGameObjects[i].exist)
+        if (!dynamicGameObjects[i].exist)
         {
             break;
         }

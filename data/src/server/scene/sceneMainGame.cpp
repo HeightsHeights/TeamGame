@@ -87,6 +87,7 @@ void SceneMainGame::upDate()
 {
     if (gameInitable)
     {
+        itemSpawner = ItemSpawner(&dynamicObjectStatus[0]);
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
             Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
@@ -101,14 +102,25 @@ void SceneMainGame::upDate()
             dynamicObjectStatus[0] = GameObjectStatus(OBJECT_JEWEL_B, &tmpTransform, &tmpCollider);
         }
     }
+    itemSpawner.update();
     for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
     {
         //moving
-        if (!dynamicObjectStatus[i].exist)
+        GameObjectStatus *pObject = &dynamicObjectStatus[i];
+        if (!pObject->exist)
         {
             continue;
         }
         objectMovingProcess(i);
+
+        // if (pObject->state == ITEM_STATE_COLLISION)
+        // {
+        //     if (pObject->objectId == OBJECT_BOMB)
+        //     {
+        //         pObject->killObject();
+        //         ItemSpawner::currentItemNum--;
+        //     }
+        // }
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
@@ -120,18 +132,6 @@ void SceneMainGame::upDate()
 
         //grabbing
         charaGrabbingProcess(i);
-        // if (clientsData[i].controllerParam.buttonDown[CT_DECITION_OR_ATTACK] && !clientsData[i].controllerParam.buttonState[CT_DECITION_OR_ATTACK] && !cStatus[i].atkMode)
-        // {
-        //     cStatus[i].atkMode = true;
-        // }
-        // if (!cStatus[i].atkMode)
-        // {
-        //     cStatus[i].atkMode = cStatus[i].attack();
-        // }
-        // if (clientsData[i].controllerParam.buttonDown[CT_GRUB] && !clientsData[i].controllerParam.buttonState[CT_GRUB] || cStatus[i].haveWeapon == true)
-        // {
-        //     cStatus[i].weaponThrow(cStatus[i].haveWeapon);
-        // }
     }
 }
 
@@ -231,5 +231,5 @@ void SceneMainGame::charaGrabbingProcess(int id)
 void SceneMainGame::objectMovingProcess(int id)
 {
     GameObjectStatus *pObject = &dynamicObjectStatus[id];
-    *pObject = ObjectController(&staticObjectStatus[0]).moveObject(*pObject);
+    *pObject = ObjectController(&staticObjectStatus[0], &cStatus[0]).moveObject(*pObject);
 }

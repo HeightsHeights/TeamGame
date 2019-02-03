@@ -4,11 +4,13 @@ GameObjectStatus::GameObjectStatus()
 {
   this->exist = false;
   this->isUpdated = false;
+  this->state = ITEM_STATE_NULL;
 }
 GameObjectStatus::GameObjectStatus(OBJECT_ID id, Transform *transform, Collider *collider)
 {
   this->exist = true;
   this->isUpdated = true;
+  this->state = ITEM_STATE_NULL;
 
   this->objectId = id;
 

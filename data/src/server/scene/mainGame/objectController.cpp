@@ -3,9 +3,10 @@
 ObjectController::ObjectController()
 {
 }
-ObjectController::ObjectController(GameObjectStatus *staticObjects)
+ObjectController::ObjectController(GameObjectStatus *staticObjects, CharaStatus *chara)
 {
     this->staticObjects = staticObjects;
+    this->chara = chara;
 }
 bool ObjectController::checkGround(Collider collider)
 {
@@ -28,6 +29,8 @@ bool ObjectController::checkChara(Collider collider)
 
 GameObjectStatus ObjectController::moveObject(GameObjectStatus object)
 {
+    bool isCollision = false;
+
     //当たり判定を動かす
     Collider tmpCollider = object.collider;
 
@@ -40,11 +43,16 @@ GameObjectStatus ObjectController::moveObject(GameObjectStatus object)
         if (object.transform.position.y < -20)
         {
             object.killObject();
+            ItemSpawner::currentItemNum--;
         }
     }
     else
     {
         object.speed.y = 0;
+        if (object.state == ITEM_STATE_IS_THROWN)
+        {
+            isCollision = true;
+        }
         if (object.speed.magnitude() < 0.01f)
         {
             object.speed = Vector3f_ZERO;
@@ -59,8 +67,20 @@ GameObjectStatus ObjectController::moveObject(GameObjectStatus object)
     tmpCollider.move(object.speed);
     if (checkWall(tmpCollider))
     {
+        if (object.state == ITEM_STATE_IS_THROWN)
+        {
+            isCollision = true;
+        }
         //移動可能なら更新
         object.speed = Vector3f(0.0f, object.speed.y, 0.0f);
+    }
+    if (checkChara(object.collider) && object.objectId == OBJECT_BOMB && object.state == ITEM_STATE_IS_THROWN)
+    {
+        isCollision = true;
+    }
+    if (isCollision)
+    {
+        object.state = ITEM_STATE_COLLISION;
     }
     object.transform.position += object.speed;
     object.collider = tmpCollider;

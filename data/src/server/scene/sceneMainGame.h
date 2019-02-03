@@ -8,7 +8,7 @@
 #include "../../common/gameData/clientNum.h"
 #include "../data/gameObjectStatus.h"
 #include "../data/charaStatus.h"
-
+#include "./mainGame/itemSpawner.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -24,8 +24,8 @@ private:
 
   GameObjectStatus staticObjectStatus[SOBJECT_NUMBER];
   GameObjectStatus dynamicObjectStatus[MAX_DYNAMIC_OBJECTS];
-
   TeamStatus tStatus[TEAM_NUMBER];
+  ItemSpawner itemSpawner;
 
   bool gameInitable;
 

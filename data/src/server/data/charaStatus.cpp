@@ -155,6 +155,7 @@ void CharaStatus::weaponThrow(GameObjectStatus *dynamicObjects)
             tmpCollider.setPos(tmpPos);
             *pObject = GameObjectStatus(weapon->objectId, &tmpTransform, &tmpCollider);
             Vector3f direction = this->lookingDirection + Vector3f(0.0f, 1.0f, 0.0f);
+            pObject->state = ITEM_STATE_IS_THROWN;
             pObject->speed = direction * throwingSpeed;
             pObject->accel = GRAVITY;
             delete weapon;

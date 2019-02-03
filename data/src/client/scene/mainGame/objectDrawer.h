@@ -2,6 +2,8 @@
 
 #include "../../render/objRawModel/objRawModel.h"
 #include "../../../common/gameData/cCharaData.h"
+#include "../../render/gui/sprite/guiSprite.h"
+#include "./effect.h"
 
 class ObjectDrawer
 {
@@ -16,4 +18,5 @@ public:
   void drawChara(CCharaData chara);
   void drawObject(CObjectData object);
   void drawCollider(CColliderData collider);
+  void drawEffect(Effect effect, GuiSprite *sprite);
 };

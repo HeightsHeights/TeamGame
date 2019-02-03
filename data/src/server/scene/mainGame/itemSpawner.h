@@ -7,14 +7,17 @@
 class ItemSpawner
 {
 private:
+  static int currentItemNum;
   RingCounter counter;
+  GameObjectStatus *dynamicGameObjects;
 
-  //table
-  //
+  void spawnItem();
+  void spawnBomb();
+  void spawnJewel();
+
 public:
   ItemSpawner();
   ItemSpawner(GameObjectStatus *dynamicGameObjects);
 
   void update();
-  void spawnItem();
 };

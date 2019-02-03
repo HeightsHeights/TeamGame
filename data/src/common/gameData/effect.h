@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../common/math/vector/vector3f.h"
-#include "../../../common/math/ringCounter/ringCounter.h"
-#include "../../../common/gameData/effectId.h"
+#include "../math/vector/vector3f.h"
+#include "../math/ringCounter/ringCounter.h"
+#include "./effectId.h"
 class Effect
 {
 private:

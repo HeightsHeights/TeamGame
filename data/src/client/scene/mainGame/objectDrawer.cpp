@@ -74,5 +74,5 @@ void ObjectDrawer::drawCollider(CColliderData collider)
 }
 void ObjectDrawer::drawEffect(Effect effect, GuiSprite *sprite)
 {
-    sprite[effect.getId()].draw(effect.getSpriteNum());
+    sprite[effect.getId()].draw(effect.getSpriteNum(), NULL);
 }

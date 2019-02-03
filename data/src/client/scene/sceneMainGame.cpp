@@ -196,14 +196,14 @@ void SceneMainGame::draw3D()
     // {
     //     objectDrawer->drawCollider(staticObjectData[i].collider);
     // }
-    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
-    {
-        if (!dynamicObjectData[i].exist)
-        {
-            continue;
-        }
-        objectDrawer->drawCollider(dynamicObjectData[0].collider);
-    }
+    // for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    // {
+    //     if (!dynamicObjectData[i].exist)
+    //     {
+    //         continue;
+    //     }
+    //     objectDrawer->drawCollider(dynamicObjectData[0].collider);
+    // }
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);

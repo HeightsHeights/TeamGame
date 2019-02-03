@@ -4,7 +4,7 @@
 #include "../../common/object/transform.h"
 #include "./cColliderData.h"
 
-#define MAX_DYNAMIC_OBJECTS 100
+#define MAX_DYNAMIC_OBJECTS 50
 
 typedef enum {
   OBJECT_TYPE_STATIC = 0,

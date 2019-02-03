@@ -3,7 +3,7 @@
 #include "../../render/objRawModel/objRawModel.h"
 #include "../../../common/gameData/cCharaData.h"
 #include "../../render/gui/sprite/guiSprite.h"
-#include "./effect.h"
+#include "../../../common/gameData/effect.h"
 
 class ObjectDrawer
 {

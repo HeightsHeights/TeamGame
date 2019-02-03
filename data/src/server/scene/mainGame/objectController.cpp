@@ -1,12 +1,12 @@
 #include "./objectController.h"
 
+#include "../../../common/gameData/clientNum.h"
 ObjectController::ObjectController()
 {
 }
-ObjectController::ObjectController(GameObjectStatus *staticObjects, CharaStatus *chara)
+ObjectController::ObjectController(GameObjectStatus *staticObjects)
 {
     this->staticObjects = staticObjects;
-    this->chara = chara;
 }
 bool ObjectController::checkGround(Collider collider)
 {
@@ -23,8 +23,12 @@ bool ObjectController::checkWall(Collider collider)
     }
     return false;
 }
-bool ObjectController::checkChara(Collider collider)
+bool ObjectController::checkChara(GameObjectStatus object)
 {
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+    }
+    return true;
 }
 
 GameObjectStatus ObjectController::moveObject(GameObjectStatus object)
@@ -73,10 +77,6 @@ GameObjectStatus ObjectController::moveObject(GameObjectStatus object)
         }
         //移動可能なら更新
         object.speed = Vector3f(0.0f, object.speed.y, 0.0f);
-    }
-    if (checkChara(object.collider) && object.objectId == OBJECT_BOMB && object.state == ITEM_STATE_IS_THROWN)
-    {
-        isCollision = true;
     }
     if (isCollision)
     {

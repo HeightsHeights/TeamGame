@@ -3,7 +3,7 @@
 #include "../../render/objRawModel/objRawModel.h"
 #include "../../../common/gameData/cCharaData.h"
 #include "../../render/gui/sprite/guiSprite.h"
-#include "../../../common/gameData/effect.h"
+#include "../../../common/gameData/effectData.h"
 
 class ObjectDrawer
 {
@@ -18,5 +18,5 @@ public:
   void drawChara(CCharaData chara);
   void drawObject(CObjectData object);
   void drawCollider(CColliderData collider);
-  void drawEffect(Effect effect, GuiSprite *sprite);
+  void drawEffect(EffectData effect, GuiSprite *sprite);
 };

@@ -113,14 +113,14 @@ void SceneMainGame::upDate()
         }
         objectMovingProcess(i);
 
-        // if (pObject->state == ITEM_STATE_COLLISION)
-        // {
-        //     if (pObject->objectId == OBJECT_BOMB)
-        //     {
-        //         pObject->killObject();
-        //         ItemSpawner::currentItemNum--;
-        //     }
-        // }
+        if (pObject->state == ITEM_STATE_COLLISION)
+        {
+            if (pObject->objectId == OBJECT_BOMB)
+            {
+                pObject->killObject();
+                ItemSpawner::currentItemNum--;
+            }
+        }
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
@@ -175,7 +175,8 @@ void SceneMainGame::sendData()
     }
     for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
     {
-        if (!dynamicObjectStatus[i].isUpdated)
+        GameObjectStatus *pObject = &dynamicObjectStatus[i];
+        if (!pObject->isUpdated)
         {
             continue;
         }
@@ -189,6 +190,20 @@ void SceneMainGame::sendData()
         data.setData(&objectData, sizeof(CObjectData));
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         dynamicObjectStatus[i].isUpdated = false;
+    }
+    for (int i = 0; i < MAX_EFFECT; i++)
+    {
+        EffectData *pEffect = &effects[i];
+        if (!pEffect->exist)
+        {
+            continue;
+        }
+
+        DataBlock data;
+        data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
+        // data.setData(&type, sizeof(OBJECT_TYPE));
+        // data.setData(&objectData, sizeof(CObjectData));
+        NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 }
 
@@ -231,5 +246,5 @@ void SceneMainGame::charaGrabbingProcess(int id)
 void SceneMainGame::objectMovingProcess(int id)
 {
     GameObjectStatus *pObject = &dynamicObjectStatus[id];
-    *pObject = ObjectController(&staticObjectStatus[0], &cStatus[0]).moveObject(*pObject);
+    *pObject = ObjectController(&staticObjectStatus[0]).moveObject(*pObject);
 }

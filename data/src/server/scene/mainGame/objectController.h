@@ -8,14 +8,13 @@ class ObjectController
 {
 private:
   GameObjectStatus *staticObjects;
-  CharaStatus *chara;
 
   bool checkGround(Collider collider);
   bool checkWall(Collider collider);
-  bool checkChara(Collider collider);
 
 public:
   ObjectController();
-  ObjectController(GameObjectStatus *staticObjects, CharaStatus *chara);
+  ObjectController(GameObjectStatus *staticObjects);
   GameObjectStatus moveObject(GameObjectStatus object);
+  bool checkChara(GameObjectStatus object);
 };

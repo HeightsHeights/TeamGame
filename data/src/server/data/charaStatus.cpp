@@ -147,14 +147,14 @@ void CharaStatus::weaponThrow(GameObjectStatus *dynamicObjects)
         GameObjectStatus *pObject = &dynamicObjects[i];
         if (!pObject->exist)
         {
-            Vector3f tmpPos = this->transform.position + Vector3f(0.0f, 20.0f, 0.0f);
+            Vector3f direction = this->lookingDirection + Vector3f(0.0f, 1.0f, 0.0f);
+            Vector3f tmpPos = this->transform.position + Vector3f(0.0f, 10.0f, 0.0f);
             Transform tmpTransform = this->weapon->transform;
             tmpTransform.position = tmpPos;
             tmpTransform.scale *= 1.5;
             Collider tmpCollider = weapon->collider;
             tmpCollider.setPos(tmpPos);
             *pObject = GameObjectStatus(weapon->objectId, &tmpTransform, &tmpCollider);
-            Vector3f direction = this->lookingDirection + Vector3f(0.0f, 1.0f, 0.0f);
             pObject->state = ITEM_STATE_IS_THROWN;
             pObject->speed = direction * throwingSpeed;
             pObject->accel = GRAVITY;

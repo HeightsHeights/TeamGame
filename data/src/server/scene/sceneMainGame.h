@@ -9,6 +9,7 @@
 #include "../data/gameObjectStatus.h"
 #include "../data/charaStatus.h"
 #include "./mainGame/itemSpawner.h"
+#include "../../common/gameData/effectData.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
@@ -26,6 +27,7 @@ private:
   GameObjectStatus dynamicObjectStatus[MAX_DYNAMIC_OBJECTS];
   TeamStatus tStatus[TEAM_NUMBER];
   ItemSpawner itemSpawner;
+  EffectData effects[MAX_EFFECT];
 
   bool gameInitable;
 

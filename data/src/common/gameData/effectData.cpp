@@ -1,10 +1,10 @@
-#include "./effect.h"
+#include "./effectData.h"
 
-Effect::Effect()
+EffectData::EffectData()
 {
     this->exist = false;
 }
-Effect::Effect(EFFECT_ID id, Vector3f position, unsigned int maxSpriteNum, int span)
+EffectData::EffectData(EFFECT_ID id, Vector3f position, unsigned int maxSpriteNum, int span)
 {
     this->exist = true;
     this->id = id;
@@ -13,7 +13,7 @@ Effect::Effect(EFFECT_ID id, Vector3f position, unsigned int maxSpriteNum, int s
     this->counter = RingCounter(0, 0, span);
     this->currentSpriteNum = 0;
 }
-void Effect::update()
+void EffectData::update()
 {
     ++counter;
     if (counter.isMax())
@@ -25,11 +25,11 @@ void Effect::update()
         }
     }
 }
-EFFECT_ID Effect::getId()
+EFFECT_ID EffectData::getId()
 {
     return this->id;
 }
-unsigned int Effect::getSpriteNum()
+unsigned int EffectData::getSpriteNum()
 {
     return this->currentSpriteNum;
 }

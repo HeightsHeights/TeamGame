@@ -23,6 +23,7 @@ class SceneMainGame : public BaseScene
 private:
   ObjRawModel *objects[OBJECT_NUMBER];
 
+  GuiSprite *sprites[EFFECT_NUMBER];
   GuiSprite *explosion;
   GuiSprite *falleff;
   Particle *trialpart;
@@ -32,6 +33,7 @@ private:
   CObjectData staticObjectData[SOBJECT_NUMBER];
   CObjectData dynamicObjectData[MAX_DYNAMIC_OBJECTS];
   ObjectDrawer *objectDrawer;
+  EffectData effects[MAX_EFFECT];
 
   TeamStatus tStatus[TEAM_NUMBER];
   StatusDrawer *statusDrawer;

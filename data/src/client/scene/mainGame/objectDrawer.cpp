@@ -72,7 +72,7 @@ void ObjectDrawer::drawCollider(CColliderData collider)
     pObjects[id]->draw();
     glPopMatrix();
 }
-void ObjectDrawer::drawEffect(EffectData effect, GuiSprite *sprite)
+void ObjectDrawer::drawEffect(EffectData effect, GuiSprite **sprite)
 {
-    sprite[effect.getId()].draw(effect.getSpriteNum(), NULL);
+    sprite[effect.getId()]->draw(effect.getSpriteNum(), NULL);
 }

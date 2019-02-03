@@ -92,14 +92,6 @@ void SceneMainGame::upDate()
         {
             Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
-
-            Vector3f tmpPos(-20.0f, 20.0f, 0.0f);
-            // Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(1.5f, 1.5f, 1.5f));
-            // Collider tmpCollider(Sphere(tmpPos, 3));
-            // dynamicObjectStatus[0] = GameObjectStatus(OBJECT_BOMB, &tmpTransform, &tmpCollider);
-            Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(5.0f, 5.0f, 5.0f));
-            Collider tmpCollider(Sphere(tmpPos, 4));
-            dynamicObjectStatus[0] = GameObjectStatus(OBJECT_JEWEL_B, &tmpTransform, &tmpCollider);
         }
     }
     itemSpawner.update();
@@ -119,6 +111,15 @@ void SceneMainGame::upDate()
             {
                 pObject->killObject();
                 ItemSpawner::currentItemNum--;
+
+                //effect
+                //当たり判定処理
+                DataBlock data;
+                data.setCommand2DataBlock(NC_SEND_EFFECT_DATA);
+                EFFECT_ID id = EFFECT_BOMB;
+                data.setData(&id, sizeof(EFFECT_ID));
+                data.setData(&pObject->transform.position, sizeof(Vector3f));
+                NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
             }
         }
     }

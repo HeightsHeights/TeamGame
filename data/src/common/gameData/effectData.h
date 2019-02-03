@@ -16,7 +16,7 @@ private:
 
 public:
   EffectData();
-  EffectData(EFFECT_ID id, Vector3f position, unsigned int maxSpriteNum, int span);
+  EffectData(EFFECT_ID id, Vector3f position, int span);
 
   void update();
   EFFECT_ID getId();

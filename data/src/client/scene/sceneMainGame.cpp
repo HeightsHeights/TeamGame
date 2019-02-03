@@ -19,6 +19,27 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 bool SceneMainGame::init()
 {
 
+    const std::string spriteName[EFFECT_NUMBER] = {
+        "effect/explosion",
+        "effect/death",
+        "effect/death",
+    };
+
+    const unsigned int spriteDivisionNum[EFFECT_NUMBER][2] = {
+        {7, 1},
+        {8, 1},
+        {8, 1},
+    };
+
+    for (int i = 0; i < EFFECT_NUMBER; i++)
+    {
+        sprites[i] = GuiSpriteLoader().load((PNG_DIR_PATH + spriteName[i] + PNG_FILE_EXTENSION).c_str(), spriteDivisionNum[i][0], spriteDivisionNum[i][1]);
+        if (sprites[i] == NULL)
+        {
+            return false;
+        }
+    }
+
     const std::string objFileDir[OBJECT_NUMBER] = {
         "cube/",
         "map/",
@@ -131,6 +152,24 @@ SCENE_ID SceneMainGame::executeCommand(int command)
             dynamicObjectData[id] = data;
         }
     }
+    else if (command == NC_SEND_EFFECT_DATA)
+    {
+        EFFECT_ID id;
+        Vector3f position;
+        NetworkManager::recvData(&id, sizeof(EFFECT_ID));
+        NetworkManager::recvData(&position, sizeof(Vector3f));
+
+        for (int i = 0; i < MAX_EFFECT; i++)
+        {
+            EffectData *pEffect = &effects[i];
+            if (pEffect->exist)
+            {
+                continue;
+            }
+            *pEffect = EffectData(id, position, 10);
+            break;
+        }
+    }
     else if (command == NC_SEND_RESULT_DATA)
     {
         // NetworkManager::recvData(&gResult, sizeof(GameResult));
@@ -140,7 +179,6 @@ SCENE_ID SceneMainGame::executeCommand(int command)
 
 void SceneMainGame::draw3D()
 {
-
     gluPerspective(60, WINDOW_WIDTH / WINDOW_HEIGHT, 1.0, 800);
 
     cameraMove();
@@ -228,6 +266,20 @@ void SceneMainGame::draw3D()
     //         explosioon_emission = 0;
     // }
     // falleff->draw(w++, &dst, 1.0f, Vector3f(-100, 100, 0));
+
+    for (int i = 0; i < MAX_EFFECT; i++)
+    {
+        EffectData *pEffect = &effects[i];
+        if (pEffect->exist)
+        {
+            continue;
+        }
+        pEffect->update();
+        if (pEffect->exist)
+        {
+            objectDrawer->drawEffect(*pEffect, &sprites[0]);
+        }
+    }
     ShaderManager::stopShader(SID_BILLBOARD);
 
     // ShaderManager::startShader(SID_PARTICLE);

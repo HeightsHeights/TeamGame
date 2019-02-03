@@ -18,5 +18,5 @@ public:
   void drawChara(CCharaData chara);
   void drawObject(CObjectData object);
   void drawCollider(CColliderData collider);
-  void drawEffect(EffectData effect, GuiSprite *sprite);
+  void drawEffect(EffectData effect, GuiSprite **sprite);
 };

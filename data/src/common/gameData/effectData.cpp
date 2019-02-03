@@ -1,15 +1,21 @@
 #include "./effectData.h"
 
+const unsigned int MAX_SPRITE[EFFECT_NUMBER] = {
+    0,
+    0,
+    0,
+};
+
 EffectData::EffectData()
 {
     this->exist = false;
 }
-EffectData::EffectData(EFFECT_ID id, Vector3f position, unsigned int maxSpriteNum, int span)
+EffectData::EffectData(EFFECT_ID id, Vector3f position, int span)
 {
     this->exist = true;
     this->id = id;
     this->position = position;
-    this->maxSpriteNum = maxSpriteNum;
+    this->maxSpriteNum = MAX_SPRITE[id];
     this->counter = RingCounter(0, 0, span);
     this->currentSpriteNum = 0;
 }

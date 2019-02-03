@@ -33,6 +33,14 @@ int RingCounter::getCount()
 {
     return this->num;
 }
+bool RingCounter::isMin()
+{
+    return this->num == this->min;
+}
+bool RingCounter::isMax()
+{
+    return this->num == this->max;
+}
 
 int RingCounter::operator++()
 {

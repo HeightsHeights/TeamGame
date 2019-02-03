@@ -2,21 +2,23 @@
 
 class RingCounter
 {
-  private:
-    int num;
+private:
+  int num;
 
-    int min;
-    int max;
+  int min;
+  int max;
 
-  public:
-    RingCounter();
-    RingCounter(const int initialValue, const int min, const int max);
+public:
+  RingCounter();
+  RingCounter(const int initialValue, const int min, const int max);
 
-    int increment();
-    int decrement();
+  int increment();
+  int decrement();
 
-    int getCount();
+  int getCount();
+  bool isMin();
+  bool isMax();
 
-    int operator++();
-    int operator--();
+  int operator++();
+  int operator--();
 };

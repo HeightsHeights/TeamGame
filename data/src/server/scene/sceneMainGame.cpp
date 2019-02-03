@@ -92,8 +92,27 @@ void SceneMainGame::upDate()
         {
             Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
+
+            timer = 1000;
+            progress = PROGRESS_WAITING;
         }
     }
+
+    if (progress == PROGRESS_WAITING)
+    {
+        timer--;
+        if (timer == 0)
+        {
+            progress = PROGRESS_GAMING;
+            sendSignal(SIGNAL_NULL);
+        }
+        else if (timer == 300)
+        {
+            sendSignal(SIGNAL_GO);
+        }
+        return;
+    }
+
     itemSpawner.update();
     for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
     {
@@ -144,6 +163,8 @@ void SceneMainGame::sendData()
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
         gameInitable = false;
+
+        sendSignal(SIGNAL_READY);
     }
     for (int i = 0; i < TEAM_NUMBER; i++)
     {
@@ -207,7 +228,13 @@ void SceneMainGame::sendData()
         NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
     }
 }
-
+void SceneMainGame::sendSignal(SIGNAL_ID signal)
+{
+    DataBlock data;
+    data.setCommand2DataBlock(NC_SEND_SIGNAL);
+    data.setData(&signal, sizeof(SIGNAL_ID));
+    NetworkManager::sendData(ALL_CLIENTS, data, data.getDataSize());
+}
 void SceneMainGame::charaSpawningProcess(int id)
 {
     CharaStatus *pChara = &cStatus[id];

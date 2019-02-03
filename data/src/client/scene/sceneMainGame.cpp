@@ -18,7 +18,7 @@ SceneMainGame::SceneMainGame(WindowManager *window, ConfigData *config) : BaseSc
 }
 bool SceneMainGame::init()
 {
-
+    signal = SIGNAL_NULL;
     const std::string spriteName[EFFECT_NUMBER] = {
         "effect/explosion",
         "effect/death",
@@ -170,6 +170,10 @@ SCENE_ID SceneMainGame::executeCommand(int command)
             break;
         }
     }
+    else if (command == NC_SEND_SIGNAL)
+    {
+        NetworkManager::recvData(&signal, sizeof(SIGNAL_ID));
+    }
     else if (command == NC_SEND_RESULT_DATA)
     {
         // NetworkManager::recvData(&gResult, sizeof(GameResult));
@@ -291,7 +295,7 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    statusDrawer->drawReadySignal(SIGNAL_NULL);
+    statusDrawer->drawReadySignal(signal, Vector2f_ZERO);
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         CCharaData *pChara = &charaData[i];
@@ -300,7 +304,7 @@ void SceneMainGame::draw2D()
 
     statusDrawer->drawTeamStatus(Vector2f(-465, 310), TEAM_MUSH, tStatus[TEAM_MUSH]);
     statusDrawer->drawTeamStatus(Vector2f(65, 310), TEAM_BAMBOO, tStatus[TEAM_BAMBOO]);
-    statusDrawer->drawResult(RESULT_NULL);
+    statusDrawer->drawResult(RESULT_NULL, Vector2f_ZERO);
     if (charaData[myId].hp == 0)
     {
         statusDrawer->drawDeadMessage(1.0f, charaData[myId].spawningTime);

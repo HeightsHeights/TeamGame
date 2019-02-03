@@ -21,6 +21,7 @@
 class SceneMainGame : public BaseScene
 {
 private:
+  SIGNAL_ID signal;
   ObjRawModel *objects[OBJECT_NUMBER];
 
   GuiSprite *sprites[EFFECT_NUMBER];

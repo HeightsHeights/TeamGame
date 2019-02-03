@@ -27,10 +27,11 @@ bool StatusDrawer::init()
             "main/spbuff",
             "main/lifemush",
             "main/lifebamboo",
-            "readySignals/ready",
-            "readySignals/go",
-            "result/win",
-            "result/lose",
+            "signals/ready",
+            "signals/go",
+            "signals/finish",
+            "result/winmush",
+            "result/winbamboo",
             "dead/youAreDead",
         };
 
@@ -179,7 +180,7 @@ void StatusDrawer::drawTeamStatus(Vector2f pos, TEAM_ID id, TeamStatus status, V
     }
 }
 
-void StatusDrawer::drawResult(RESULT_ID result)
+void StatusDrawer::drawResult(RESULT_ID result, Vector2f pos)
 {
     if (result == RESULT_NULL)
     {
@@ -200,7 +201,7 @@ void StatusDrawer::drawDeadMessage(float size, unsigned int spawningTime)
     dst = GuiRect(-480 * size, 120 * size, 480 * 2 * size, 120 * size);
     image[IMAGE_YOU_ARE_DEAD]->draw(NULL, &dst);
 }
-void StatusDrawer::drawReadySignal(SIGNAL_ID id)
+void StatusDrawer::drawReadySignal(SIGNAL_ID id, Vector2f pos)
 {
     const float signalUnit = 100;
     float signalSize;
@@ -216,10 +217,16 @@ void StatusDrawer::drawReadySignal(SIGNAL_ID id)
         signalSize = 3;
         imageId = IMAGE_GO;
     }
+    else if (id == SIGNAL_FINISH)
+    {
+
+        signalSize = 6;
+        imageId = IMAGE_FINISH;
+    }
     else
     {
         return;
     }
-    GuiRect dst = GuiRect(-signalUnit * signalSize / 2, signalUnit / 2, signalUnit * signalSize, signalUnit);
+    GuiRect dst = GuiRect(-signalUnit * signalSize / 2 + pos.x, signalUnit / 2 + pos.y, signalUnit * signalSize, signalUnit);
     image[imageId]->draw(NULL, &dst);
 }

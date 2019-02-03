@@ -10,16 +10,25 @@
 #include "../data/charaStatus.h"
 #include "./mainGame/itemSpawner.h"
 #include "../../common/gameData/effectData.h"
+#include "../../common/gameData/signalId.h"
 /******************************************************************************
  * class SceneMainGame
  * 機能1：
  * 機能2：
 ******************************************************************************/
 
+typedef enum {
+  PROGRESS_WAITING = 0,
+  PROGRESS_GAMING = 1,
+  PROGRESS_FINISHING = 2,
+  PROGRESS_NUMBER = 3,
+} GAME_PROGRESS;
+
 class SceneMainGame : public BaseScene
 {
 private:
   unsigned int timer;
+  GAME_PROGRESS progress;
 
   CharaStatus cStatus[MAX_PLAYERS];
 
@@ -33,6 +42,7 @@ private:
 
   void upDate();
   void sendData();
+  void sendSignal(SIGNAL_ID signal);
 
   void charaSpawningProcess(int id);
   void charaMovingProcess(int id);

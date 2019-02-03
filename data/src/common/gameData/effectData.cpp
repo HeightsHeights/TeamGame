@@ -1,9 +1,9 @@
 #include "./effectData.h"
 
 const unsigned int MAX_SPRITE[EFFECT_NUMBER] = {
-    0,
-    0,
-    0,
+    5,
+    9,
+    6,
 };
 
 EffectData::EffectData()

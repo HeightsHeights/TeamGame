@@ -74,5 +74,9 @@ void ObjectDrawer::drawCollider(CColliderData collider)
 }
 void ObjectDrawer::drawEffect(EffectData effect, GuiSprite **sprite)
 {
-    sprite[effect.getId()]->draw(effect.getSpriteNum(), NULL);
+    glPushMatrix();
+    glTranslatef(effect.position.x - 10, effect.position.y + 30, effect.position.z - 15);
+    GuiRect dst = {0, 0, 100, 100};
+    sprite[effect.getId()]->draw(effect.getSpriteNum(), &dst);
+    glPopMatrix();
 }

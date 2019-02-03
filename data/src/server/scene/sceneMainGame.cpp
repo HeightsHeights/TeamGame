@@ -3,21 +3,21 @@
 #include "../network/networkManager.h"
 #include "../../common/network/dataBlock/dataBlock.h"
 #include "../../common/controllerParam/controllerParam.h"
-
+#include "./mainGame/objectController.h"
 #include <stdio.h>
 
 bool SceneMainGame::init()
 {
     gameInitable = true;
     Collider staticColliders[] = {
-        Collider(Obb(Vector3f(-7, 0, 0), Touple3f(143, 0, 72))),    //床
-        Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),   //塔
-        Collider(Obb(Vector3f(125, 20, 0), Touple3f(3, 20, 3))),    //塔
-        Collider(Obb(Vector3f(-100, 10, 40), Touple3f(2, 10, 20))), //壁
-        Collider(Obb(Vector3f(-65, 10, -40), Touple3f(2, 10, 20))), //壁
-        Collider(Obb(Vector3f(85, 10, -40), Touple3f(2, 10, 20))),  //壁
-        Collider(Obb(Vector3f(50, 10, 40), Touple3f(2, 10, 20))),   //壁
-        Collider(Obb(Vector3f(0, 10, 0), Touple3f(2, 10, 20))),     //壁
+        Collider(Obb(Vector3f(-7, 0, 0), Touple3f(143, 0.01f, 72))), //床
+        Collider(Obb(Vector3f(-140, 20, 0), Touple3f(3, 20, 3))),    //塔
+        Collider(Obb(Vector3f(125, 20, 0), Touple3f(3, 20, 3))),     //塔
+        Collider(Obb(Vector3f(-100, 10, 40), Touple3f(2, 10, 20))),  //壁
+        Collider(Obb(Vector3f(-65, 10, -40), Touple3f(2, 10, 20))),  //壁
+        Collider(Obb(Vector3f(85, 10, -40), Touple3f(2, 10, 20))),   //壁
+        Collider(Obb(Vector3f(50, 10, 40), Touple3f(2, 10, 20))),    //壁
+        Collider(Obb(Vector3f(0, 10, 0), Touple3f(2, 10, 20))),      //壁
     };
     Transform staticObjectTranforms[] = {
         Transform(Vector3f(0, 0, 0), Vector3f_ZERO, Vector3f(20.0f, 1.0f, 10.0f)),              //床
@@ -92,7 +92,7 @@ void SceneMainGame::upDate()
             Transform charaTransform = Transform(Vector3f(20.0f, 0.0f, 0), Vector3f_ZERO, Vector3f(1.0f, 3.0f, 1.0f));
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
 
-            Vector3f tmpPos(-20.0f, 5.0f, 0.0f);
+            Vector3f tmpPos(-20.0f, 20.0f, 0.0f);
             // Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(1.5f, 1.5f, 1.5f));
             // Collider tmpCollider(Sphere(tmpPos, 3));
             // dynamicObjectStatus[0] = GameObjectStatus(OBJECT_BOMB, &tmpTransform, &tmpCollider);
@@ -100,6 +100,15 @@ void SceneMainGame::upDate()
             Collider tmpCollider(Sphere(tmpPos, 4));
             dynamicObjectStatus[0] = GameObjectStatus(OBJECT_JEWEL_B, &tmpTransform, &tmpCollider);
         }
+    }
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        //moving
+        if (!dynamicObjectStatus[i].exist)
+        {
+            continue;
+        }
+        objectMovingProcess(i);
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
@@ -218,4 +227,9 @@ void SceneMainGame::charaGrabbingProcess(int id)
     {
         cStatus[id].weaponEvent(&dynamicObjectStatus[0]);
     }
+}
+void SceneMainGame::objectMovingProcess(int id)
+{
+    GameObjectStatus *pObject = &dynamicObjectStatus[id];
+    *pObject = ObjectController(&staticObjectStatus[0]).moveObject(*pObject);
 }

@@ -35,6 +35,7 @@ public:
   Transform transform;
   Vector3f lookingDirection;
 
+  float throwingSpeed;
   float speedValue;
   Vector3f speed;
   Vector3f accel;

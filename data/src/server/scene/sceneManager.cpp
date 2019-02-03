@@ -36,10 +36,14 @@ bool SceneManager::init()
 bool SceneManager::executeCommand(int command, int pos)
 {
     bool endFlag = false;
-    sceneId = scenes[sceneId]->executeCommand(command, pos);
-    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    SCENE_ID nextScene = scenes[sceneId]->executeCommand(command, pos);
+    if (nextScene < 0 || SI_NUMBER <= nextScene)
     {
         endFlag = true;
+    }
+    else
+    {
+        sceneId = nextScene;
     }
     return endFlag;
 }
@@ -47,10 +51,14 @@ bool SceneManager::executeCommand(int command, int pos)
 bool SceneManager::dataProcessing()
 {
     bool endFlag = false;
-    sceneId = scenes[sceneId]->dataProcessing();
-    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    SCENE_ID nextScene = scenes[sceneId]->dataProcessing();
+    if (nextScene < 0 || SI_NUMBER <= nextScene)
     {
         endFlag = true;
+    }
+    else
+    {
+        sceneId = nextScene;
     }
     return endFlag;
 }

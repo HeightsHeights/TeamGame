@@ -38,10 +38,14 @@ bool SceneManager::init(WindowManager *window, ConfigData *config)
 bool SceneManager::reactController(ControllerParam param)
 {
     bool endFlag = false;
-    sceneId = scenes[sceneId]->reactController(param);
-    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    SCENE_ID nextScene = scenes[sceneId]->reactController(param);
+    if (nextScene < 0 || SI_NUMBER <= nextScene)
     {
         endFlag = true;
+    }
+    else
+    {
+        sceneId = nextScene;
     }
     return endFlag;
 }
@@ -49,10 +53,14 @@ bool SceneManager::reactController(ControllerParam param)
 bool SceneManager::executeCommand(int command)
 {
     bool endFlag = false;
-    sceneId = scenes[sceneId]->executeCommand(command);
-    if (sceneId < 0 || SI_NUMBER <= sceneId)
+    SCENE_ID nextScene = scenes[sceneId]->executeCommand(command);
+    if (nextScene < 0 || SI_NUMBER <= nextScene)
     {
         endFlag = true;
+    }
+    else
+    {
+        sceneId = nextScene;
     }
     return endFlag;
 }

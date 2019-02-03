@@ -17,6 +17,7 @@ CharaStatus::CharaStatus(TEAM_ID id, Transform *transform)
     this->hp = MAX_CHARA_HP;
     this->spawningTime = 0;
     this->speedValue = 0.1f;
+    this->throwingSpeed = 0.4f;
 
     if (transform == NULL)
     {
@@ -70,11 +71,11 @@ void CharaStatus::move(Vector3f moveDir)
     if (!checkGround(tmpCollider))
     {
         //落ちる
-        transform.position.y -= 0.1;
+        this->transform.position.y -= 0.1;
         this->mainBody->collider.move(Vector3f(0.0f, -0.3f, 0.0f));
 
         //落下死
-        if (transform.position.y < -20 && this->hp != 0)
+        if (this->transform.position.y < -20 && this->hp != 0)
         {
             this->hp = 0;
             this->spawningTime = 10 * SPAWNING_RATIO - 1;
@@ -87,14 +88,14 @@ void CharaStatus::move(Vector3f moveDir)
         if (!checkWall(tmpCollider))
         {
             //移動可能なら更新
-            transform.position += moveDir * speedValue;
+            this->transform.position += moveDir * speedValue;
             this->mainBody->collider = tmpCollider;
         }
     }
     //入力値に向きを合わせる
     if (moveDir != Vector3f_ZERO)
     {
-        lookingDirection = moveDir.normalize();
+        this->lookingDirection = moveDir.normalize();
     }
 }
 void CharaStatus::setPos(Vector3f pos)
@@ -146,13 +147,16 @@ void CharaStatus::weaponThrow(GameObjectStatus *dynamicObjects)
         GameObjectStatus *pObject = &dynamicObjects[i];
         if (!pObject->exist)
         {
-            Vector3f tmpPos = this->transform.position;
+            Vector3f tmpPos = this->transform.position + Vector3f(0.0f, 20.0f, 0.0f);
             Transform tmpTransform = this->weapon->transform;
             tmpTransform.position = tmpPos;
             tmpTransform.scale *= 1.5;
             Collider tmpCollider = weapon->collider;
             tmpCollider.setPos(tmpPos);
             *pObject = GameObjectStatus(weapon->objectId, &tmpTransform, &tmpCollider);
+            Vector3f direction = this->lookingDirection + Vector3f(0.0f, 1.0f, 0.0f);
+            pObject->speed = direction * throwingSpeed;
+            pObject->accel = GRAVITY;
             delete weapon;
             this->weapon = NULL;
             break;

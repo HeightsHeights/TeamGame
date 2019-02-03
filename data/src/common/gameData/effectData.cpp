@@ -1,7 +1,7 @@
 #include "./effectData.h"
 
 const unsigned int MAX_SPRITE[EFFECT_NUMBER] = {
-    0,
+    5,
     0,
     0,
 };

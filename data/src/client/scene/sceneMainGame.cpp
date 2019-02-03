@@ -166,7 +166,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
             {
                 continue;
             }
-            *pEffect = EffectData(id, position, 10);
+            *pEffect = EffectData(id, position, 5);
             break;
         }
     }
@@ -270,7 +270,7 @@ void SceneMainGame::draw3D()
     for (int i = 0; i < MAX_EFFECT; i++)
     {
         EffectData *pEffect = &effects[i];
-        if (pEffect->exist)
+        if (!pEffect->exist)
         {
             continue;
         }

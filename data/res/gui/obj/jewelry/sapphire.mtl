@@ -1,8 +1,8 @@
-# Blender MTL File: 'emerald.blend'
+# Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl Emerald
-Ns 96.078431
+newmtl Emerald.001
+Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.004513 0.800000
 Ks 0.625726 0.625726 0.625726

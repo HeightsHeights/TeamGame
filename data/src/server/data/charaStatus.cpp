@@ -102,15 +102,19 @@ void CharaStatus::setPos(Vector3f pos)
     this->transform.position = pos;
     this->mainBody->collider.setPos(pos + Vector3f(0.0f, 10.0f, 0.0f));
 }
-
+void CharaStatus::weaponEvent(GameObjectStatus *dynamicObjects)
+{ //武器を持っているか
+    if (this->weapon == NULL)
+    {
+        grab(dynamicObjects);
+    }
+    else
+    {
+        weaponThrow(dynamicObjects);
+    }
+}
 void CharaStatus::grab(GameObjectStatus *dynamicObjects)
 {
-    //武器を持っていない
-    if (weapon != NULL)
-    {
-        return;
-    }
-
     for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
     {
         GameObjectStatus *pObject = &dynamicObjects[i];
@@ -135,7 +139,26 @@ void CharaStatus::grab(GameObjectStatus *dynamicObjects)
         }
     }
 }
-
+void CharaStatus::weaponThrow(GameObjectStatus *dynamicObjects)
+{
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        GameObjectStatus *pObject = &dynamicObjects[i];
+        if (!pObject->exist)
+        {
+            Vector3f tmpPos = this->transform.position;
+            Transform tmpTransform = this->weapon->transform;
+            tmpTransform.position = tmpPos;
+            tmpTransform.scale *= 1.5;
+            Collider tmpCollider = weapon->collider;
+            tmpCollider.setPos(tmpPos);
+            *pObject = GameObjectStatus(weapon->objectId, &tmpTransform, &tmpCollider);
+            delete weapon;
+            this->weapon = NULL;
+            break;
+        }
+    }
+}
 bool CharaStatus::attack()
 {
     this->hands[HAND_LEFT]->speed.z = 0.5f;

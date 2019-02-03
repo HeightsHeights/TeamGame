@@ -93,9 +93,12 @@ void SceneMainGame::upDate()
             cStatus[i] = CharaStatus(clientsData[i].teamId, &charaTransform);
 
             Vector3f tmpPos(-20.0f, 5.0f, 0.0f);
-            Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(1.5f, 1.5f, 1.5f));
-            Collider tmpCollider(Sphere(tmpPos, 3));
-            dynamicObjectStatus[0] = GameObjectStatus(OBJECT_BOMB, &tmpTransform, &tmpCollider);
+            // Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(1.5f, 1.5f, 1.5f));
+            // Collider tmpCollider(Sphere(tmpPos, 3));
+            // dynamicObjectStatus[0] = GameObjectStatus(OBJECT_BOMB, &tmpTransform, &tmpCollider);
+            Transform tmpTransform = Transform(tmpPos, Vector3f_ZERO, Vector3f(5.0f, 5.0f, 5.0f));
+            Collider tmpCollider(Sphere(tmpPos, 4));
+            dynamicObjectStatus[0] = GameObjectStatus(OBJECT_JEWEL_B, &tmpTransform, &tmpCollider);
         }
     }
     for (int i = 0; i < MAX_PLAYERS; i++)
@@ -210,8 +213,9 @@ void SceneMainGame::charaMovingProcess(int id)
 }
 void SceneMainGame::charaGrabbingProcess(int id)
 {
-    if (clientsData[id].controllerParam.buttonDown[CT_GRUB])
+    ControllerParam *controller = &clientsData[id].controllerParam;
+    if (controller->buttonDown[CT_GRUB] && !controller->buttonState[CT_GRUB])
     {
-        cStatus[id].grab(&dynamicObjectStatus[0]);
+        cStatus[id].weaponEvent(&dynamicObjectStatus[0]);
     }
 }

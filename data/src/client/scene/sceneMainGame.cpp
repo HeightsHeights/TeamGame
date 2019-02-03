@@ -155,7 +155,7 @@ void SceneMainGame::draw3D()
 
     ShaderManager::startShader(SID_T_PHONG);
     //Tile
-    objectDrawer->drawObject(staticObjectData[0]);
+    // objectDrawer->drawObject(staticObjectData[0]);
 
     //色付き壁
     for (int i = SOBJECT_WALL_R1; i <= SOBJECT_WALL_B2; i++)
@@ -196,7 +196,14 @@ void SceneMainGame::draw3D()
     // {
     //     objectDrawer->drawCollider(staticObjectData[i].collider);
     // }
-    // objectDrawer->drawCollider(dynamicObjectData[0].collider);
+    for (int i = 0; i < MAX_DYNAMIC_OBJECTS; i++)
+    {
+        if (!dynamicObjectData[i].exist)
+        {
+            continue;
+        }
+        objectDrawer->drawCollider(dynamicObjectData[0].collider);
+    }
     ShaderManager::stopShader(SID_NT_PHONG);
 
     ShaderManager::startShader(SID_BILLBOARD);

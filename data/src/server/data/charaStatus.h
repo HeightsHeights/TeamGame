@@ -20,6 +20,9 @@ private:
   bool checkGround(Collider collider);
   bool checkWall(Collider collider);
 
+  void grab(GameObjectStatus *dynamicObjects);
+  void weaponThrow(GameObjectStatus *dynamicObjects);
+
 public:
   CharaStatus();
   CharaStatus(TEAM_ID id, Transform *transform);
@@ -43,8 +46,8 @@ public:
   void move(Vector3f moveDir);
   void setPos(Vector3f pos);
   bool attack();
-  void weaponThrow(bool haveWeapon);
-  void grab(GameObjectStatus *dynamicObjects);
+  // void weaponThrow(bool haveWeapon);
+  void weaponEvent(GameObjectStatus *dynamicObjects);
 
   CCharaData getDataForClient();
 };

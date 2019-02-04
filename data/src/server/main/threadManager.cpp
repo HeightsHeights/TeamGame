@@ -29,7 +29,7 @@ int ThreadManager::dataProcessingThread(void *data)
         {
             SDL_AtomicDecRef((SDL_atomic_t *)data);
         }
-        SDL_Delay(5);
+        SDL_Delay(20);
     }
     return 1;
 }

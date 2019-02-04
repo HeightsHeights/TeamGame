@@ -58,5 +58,5 @@ public:
   bool exist;
   OBJECT_ID objectId;
   Transform transform;
-  CColliderData collider;
+  // CColliderData collider;
 };

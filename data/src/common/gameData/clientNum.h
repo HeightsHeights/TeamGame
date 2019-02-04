@@ -1,3 +1,3 @@
 #pragma once
 
-#define MAX_PLAYERS 2
+#define MAX_PLAYERS 4

@@ -44,7 +44,7 @@ bool SceneTitle::init()
             "configFrames/configFrame01.png",
             "configFrames/configFrame02.png",
         };
-    // AudioManager::playBGM(BGM_TITLE_OR_SELECT);
+    AudioManager::playBGM(BGM_TITLE_OR_SELECT);
 
     config = ConfigLoader().load("cPrevConfig");
     subconfig = config;

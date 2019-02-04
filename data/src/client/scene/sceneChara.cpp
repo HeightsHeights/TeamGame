@@ -106,15 +106,15 @@ SCENE_ID SceneChara::reactController(ControllerParam param)
         mypos.y = 0;
     }
 
-    // if (secount > mypos.x || secount < mypos[0].x)
-    // {
-    //     secount = mypos.x;
-    //     AudioManager::playSE(SE_CURSOR);
-    // }
+    if (secount > mypos.x || secount < mypos.x)
+    {
+        secount = mypos.x;
+        AudioManager::playSE(SE_CURSOR);
+    }
 
     if (mypos.y == 1 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
     {
-        // AudioManager::playSE(SE_DECISION);
+        AudioManager::playSE(SE_DECISION);
         DataBlock data;
         data.setCommand2DataBlock(NC_MOVE_SCENE);
         NetworkManager::sendData(data, data.getDataSize());
@@ -141,7 +141,8 @@ SCENE_ID SceneChara::executeCommand(int command)
     SCENE_ID nextScene = SI_CHARASELECT;
     if (command == NC_MOVE_SCENE)
     {
-        AudioManager::stopBGM(BGM_TITLE_OR_SELECT);
+        AudioManager::fadeOutBGM(BGM_TITLE_OR_SELECT, 3000);
+        AudioManager::fadeInBGM(BGM_MAIN, 3000);
         nextScene = SI_MAIN;
     }
     else if (command == NC_FINISH)

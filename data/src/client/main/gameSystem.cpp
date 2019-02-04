@@ -74,11 +74,11 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
-    // if (!AudioManager::init())
-    // {
-    //     fprintf(stderr, "Error --> AudioManager::init()\n");
-    //     return false;
-    // }
+    if (!AudioManager::init())
+    {
+        fprintf(stderr, "Error --> AudioManager::init()\n");
+        return false;
+    }
 
     if (!SceneManager::init(window, config))
     {

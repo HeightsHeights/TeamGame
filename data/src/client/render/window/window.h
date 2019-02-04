@@ -17,6 +17,7 @@ class WindowManager
 {
 private:
   SDL_Window *window;
+  SDL_GLContext glcontext;
   SDL_Renderer *renderer;
   bool initSDLWindow(const char *windowName);
   bool initOpenGL(int argc, char *argv[]);

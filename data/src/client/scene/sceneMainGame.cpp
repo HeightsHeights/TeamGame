@@ -4,6 +4,7 @@
 #include "../../common/network/networkCommand.h"
 #include "../network/networkManager.h"
 #include "../render/shader/shaderManager.h"
+#include "../audio/audioManager.h"
 
 #define PNG_DIR_PATH "./data/res/gui/image/"
 #define PNG_FILE_EXTENSION ".png"
@@ -121,6 +122,7 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     SCENE_ID nextScene = SI_MAIN;
     if (command == NC_FINISH)
     {
+        AudioManager::fadeOutBGM(BGM_WIN, 2000);
         nextScene = SI_NUMBER;
     }
     else if (command == NC_SEND_TEAM_STATUS)
@@ -169,12 +171,29 @@ SCENE_ID SceneMainGame::executeCommand(int command)
                 continue;
             }
             *pEffect = EffectData(id, position, 5);
+            if (id == EFFECT_BOMB)
+            {
+                AudioManager::playSE(SE_EXPLOSION);
+            }
+            else if (id == EFFECT_UP)
+            {
+                AudioManager::playSE(SE_BUFF);
+            }
             break;
         }
     }
     else if (command == NC_SEND_SIGNAL)
     {
         NetworkManager::recvData(&signal, sizeof(SIGNAL_ID));
+        if (signal == SIGNAL_WINNER)
+        {
+            AudioManager::fadeInBGM(BGM_WIN, 2000);
+        }
+        else if (signal == SIGNAL_FINISH)
+        {
+            AudioManager::fadeOutBGM(BGM_MAIN, 2000);
+            AudioManager::playSE(SE_WHISTLE);
+        }
     }
     else if (command == NC_SEND_RESULT_DATA)
     {

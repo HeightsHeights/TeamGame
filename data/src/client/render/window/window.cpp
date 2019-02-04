@@ -16,6 +16,11 @@ WindowManager::WindowManager(int argc, char *argv[], const char *windowName)
 bool WindowManager::initSDLWindow(const char *windowName)
 {
     window = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+    glcontext = SDL_GL_CreateContext(window);
+    SDL_GL_SetSwapInterval(1);
+    glClearColor(0, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     if (window == NULL)
     {
         fprintf(stderr, "Error --> SDL_CreateWindow()\n");

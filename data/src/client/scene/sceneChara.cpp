@@ -141,8 +141,7 @@ SCENE_ID SceneChara::executeCommand(int command)
     SCENE_ID nextScene = SI_CHARASELECT;
     if (command == NC_MOVE_SCENE)
     {
-        AudioManager::fadeOutBGM(BGM_TITLE_OR_SELECT, 3000);
-        AudioManager::fadeInBGM(BGM_MAIN, 3000);
+        AudioManager::fadeOutBGM(BGM_TITLE_OR_SELECT, 300);
         nextScene = SI_MAIN;
     }
     else if (command == NC_FINISH)

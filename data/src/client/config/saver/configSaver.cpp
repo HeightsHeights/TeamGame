@@ -5,7 +5,7 @@ bool ConfigSaver::writeFile()
 {
     file << "Name: " + data->name << std::endl;
     file << "ServerAddress: " + data->serverAddress << std::endl;
-    file << "WiiRemoteId: " + data->wiiRemoteId;
+    file << "WiiRemoteId: " + data->wiiRemoteId << std::endl;
 }
 
 bool ConfigSaver::save(std::string fileName, ConfigData *data)

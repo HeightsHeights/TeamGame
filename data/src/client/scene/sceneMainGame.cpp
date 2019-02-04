@@ -183,14 +183,18 @@ SCENE_ID SceneMainGame::executeCommand(int command)
     else if (command == NC_SEND_SIGNAL)
     {
         NetworkManager::recvData(&signal, sizeof(SIGNAL_ID));
-        if (signal == SIGNAL_WINNER)
+        if (signal == SIGNAL_GO)
         {
-            AudioManager::fadeInBGM(BGM_WIN, 2000);
+            AudioManager::playBGM(BGM_MAIN);
+        }
+        else if (signal == SIGNAL_WINNER)
+        {
+            AudioManager::playBGM(BGM_WIN);
         }
         else if (signal == SIGNAL_FINISH)
         {
-            AudioManager::fadeOutBGM(BGM_MAIN, 2000);
             AudioManager::playSE(SE_WHISTLE);
+            AudioManager::fadeOutBGM(BGM_MAIN, 1000);
         }
     }
     else if (command == NC_SEND_RESULT_DATA)

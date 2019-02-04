@@ -19,7 +19,8 @@ typedef enum {
   SE_EXPLOSION = 6,
   SE_MISS = 7,
   SE_WHISTLE = 8,
-  SE_NUMBER = 9,
+  SE_BUFF = 9,
+  SE_NUMBER = 10,
 } SE_ID;
 
 class AudioManager

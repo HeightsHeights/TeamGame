@@ -8,7 +8,6 @@
 #include "../render/objRawModel/objModelLoader.h"
 #include "./mainGame/statusDrawer.h"
 #include "../render/gui/sprite/guiSpriteLoader.h"
-#include "../render/particle/particleLoader.h"
 #include "../../common/math/ringCounter/ringCounter.h"
 #include "./mainGame/objectDrawer.h"
 
@@ -26,7 +25,6 @@ private:
   ObjRawModel *objects[OBJECT_NUMBER];
 
   GuiSprite *sprites[EFFECT_NUMBER];
-  Particle *trialpart;
 
   CObjectData skybox;
   CCharaData charaData[MAX_PLAYERS];

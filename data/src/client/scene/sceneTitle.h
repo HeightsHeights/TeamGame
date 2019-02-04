@@ -6,7 +6,6 @@
 #include "./sceneBase.h"
 
 #include "../render/objRawModel/objModelLoader.h"
-#include "../render/xLoader/xLoader.h"
 #include "../../common/math/vector/vectorSet.h"
 #include "../render/gui/image/guiImageLoader.h"
 #include "../render/gui/text/guiTextLoader.h"
@@ -36,7 +35,7 @@ public:
     IMAGE_NUMBER = 12,
   } IMAGE_ID;
 
-    typedef enum {
+  typedef enum {
     TEXT_SAVE = 0,
     TEXT_CANCEL = 1,
     TEXT_RESET = 2,

@@ -155,10 +155,12 @@ SCENE_ID SceneTitle::reactController(ControllerParam param)
         }
         else if (position[1].y == 3 && position[1].x == 3 && param.buttonDown[CT_DECITION_OR_ATTACK] && !param.buttonState[CT_DECITION_OR_ATTACK])
         {
+#ifdef _ENABLE_WII
             if (!ControllerManager::connectWiiRemote(subconfig->wiiRemoteId.c_str()))
             {
                 fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
             }
+#endif
         }
 
         if (param.buttonDown[CT_CANCEL] && !param.buttonState[CT_CANCEL])

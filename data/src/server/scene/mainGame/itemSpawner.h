@@ -5,7 +5,7 @@
 #include "../../data/gameObjectStatus.h"
 
 #define ITEM_MAX MAX_DYNAMIC_OBJECTS - 15
-#define ITEM_RATIO_BOMB 95
+#define ITEM_RATIO_BOMB 70
 #define POSITION_TABLE_NUM 30
 
 class ItemSpawner

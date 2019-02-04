@@ -411,9 +411,16 @@ void SceneMainGame::setBuff(TEAM_ID teamId, BUFF_ID buffId)
         time = 500;
         for (int i = 0; i < MAX_PLAYERS; i++)
         {
-            if (teamId == cStatus[i].teamId)
+            CharaStatus *pChara = &cStatus[i];
+            if (teamId == pChara->teamId)
             {
-                cStatus[i].hp = MAX_CHARA_HP;
+                if (pChara->hp == 0)
+                {
+                    pChara->setPos((pChara->teamId == TEAM_MUSH) ? Vector3f(-20.0f, 0.0f, 0.0f) : Vector3f(20.0f, 0.0f, 0.0f));
+                    pChara->spawningTime = 0;
+                }
+
+                pChara->hp = MAX_CHARA_HP;
             }
         }
     }

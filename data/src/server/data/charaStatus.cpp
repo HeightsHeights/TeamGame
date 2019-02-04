@@ -267,6 +267,11 @@ CCharaData CharaStatus::getDataForClient()
         ret.haveWeapon = true;
         ret.weaponData = this->weapon->getDataForClient();
     }
+    else
+    {
+        ret.haveWeapon = false;
+        ret.weaponData = CObjectData();
+    }
 
     return ret;
 }

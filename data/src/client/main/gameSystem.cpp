@@ -92,14 +92,6 @@ bool GameSystem::init(int argc, char *argv[])
         return false;
     }
 
-#ifdef _ENABLE_WII
-    if (!ControllerManager::connectWiiRemote(config->wiiRemoteId.c_str()))
-    {
-        fprintf(stderr, "Error --> ControllerManager::connectWiiRemoteController()\n");
-        return false;
-    }
-#endif
-
     if (!ThreadManager::init(&atm))
     {
         fprintf(stderr, "Error --> ThreadManager::init()\n");

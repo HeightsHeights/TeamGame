@@ -304,7 +304,8 @@ void SceneMainGame::draw3D()
 void SceneMainGame::draw2D()
 {
     ShaderManager::startShader(SID_GUI);
-    statusDrawer->drawReadySignal(signal, Vector2f_ZERO);
+    if (signal != SIGNAL_WINNER)
+        statusDrawer->drawReadySignal(signal, Vector2f_ZERO);
     for (int i = 0; i < MAX_PLAYERS; i++)
     {
         CCharaData *pChara = &charaData[i];
